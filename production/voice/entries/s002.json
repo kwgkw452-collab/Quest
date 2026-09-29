@@ -1,0 +1,857 @@
+{
+  "storyOrEventId": "s002",
+  "storyNumber": "002",
+  "sourceId": "S002",
+  "entries": [
+    {
+      "voiceKey": "voice_c01_s002_001",
+      "characterCode": "c01",
+      "characterId": 1,
+      "characterName": "Pico",
+      "storyId": "s002",
+      "eventId": null,
+      "sequence": 1,
+      "dialogueText": "Wow! Look at those buildings!",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "16f2631e20439ee7ac509f4baaf5ea1bb896f731f4483ab7c5224324421d91fb"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/S002.js",
+        "line": 19,
+        "stepIndex": 6
+      },
+      "provider": "elevenlabs",
+      "voiceId": "XJ2fW4ybq7HouelYYGcL",
+      "voiceName": "Cherry Twinkle",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "pico_initial_learner_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 0.8,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c01_pico/voice_c01_s002_001_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "002",
+      "sourceId": "S002",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c02_s002_001",
+      "characterCode": "c02",
+      "characterId": 2,
+      "characterName": "Kong",
+      "storyId": "s002",
+      "eventId": null,
+      "sequence": 1,
+      "dialogueText": "What a big city!",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "fbd65e9826cc5df8d6ad2dffd5700786694244294421dff2463a660318d79cdf"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/S002.js",
+        "line": 24,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "6kvJeRKXugeztFfd9EVP",
+      "voiceName": "Adrian",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "kong_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c02_kong/voice_c02_s002_001_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "002",
+      "sourceId": "S002",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c01_s002_002",
+      "characterCode": "c01",
+      "characterId": 1,
+      "characterName": "Pico",
+      "storyId": "s002",
+      "eventId": null,
+      "sequence": 2,
+      "dialogueText": "Everyone is wearing a headset.",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "a7fa08d4b022b6d2efcf5d5f4aaac358b0949d8915153a5548158258d6cad7b1"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/S002.js",
+        "line": 29,
+        "stepIndex": 8
+      },
+      "provider": "elevenlabs",
+      "voiceId": "XJ2fW4ybq7HouelYYGcL",
+      "voiceName": "Cherry Twinkle",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "pico_initial_learner_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 0.8,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c01_pico/voice_c01_s002_002_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "002",
+      "sourceId": "S002",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c02_s002_002",
+      "characterCode": "c02",
+      "characterId": 2,
+      "characterName": "Kong",
+      "storyId": "s002",
+      "eventId": null,
+      "sequence": 2,
+      "dialogueText": "People are not talking.",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "352a346fa26a67d2c125ee70cda45415a0cf33f83e581c9755de2c81d2b4ac0c"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/S002.js",
+        "line": 34,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "6kvJeRKXugeztFfd9EVP",
+      "voiceName": "Adrian",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "kong_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c02_kong/voice_c02_s002_002_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "002",
+      "sourceId": "S002",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c01_s002_003",
+      "characterCode": "c01",
+      "characterId": 1,
+      "characterName": "Pico",
+      "storyId": "s002",
+      "eventId": null,
+      "sequence": 3,
+      "dialogueText": "They talk by using their headsets.",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "b23c7ccac86269c66c943406792c059b44b5040e7b9bd5745765608558218c65"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/S002.js",
+        "line": 39,
+        "stepIndex": 10
+      },
+      "provider": "elevenlabs",
+      "voiceId": "XJ2fW4ybq7HouelYYGcL",
+      "voiceName": "Cherry Twinkle",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "pico_initial_learner_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 0.8,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c01_pico/voice_c01_s002_003_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "002",
+      "sourceId": "S002",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c03_s002_001",
+      "characterCode": "c03",
+      "characterId": 3,
+      "characterName": "Saki",
+      "storyId": "s002",
+      "eventId": null,
+      "sequence": 1,
+      "dialogueText": "Help me... Can you hear me?",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "3775c433da3a6f02ba386b747a4e345ed3bad779046054433eff8290710f7600"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/S002.js",
+        "line": 50,
+        "stepIndex": 14
+      },
+      "provider": "elevenlabs",
+      "voiceId": "iukn3a1vSSNFmdi5NZS4",
+      "voiceName": "Paula Paw",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "saki_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c03_saki/voice_c03_s002_001_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "002",
+      "sourceId": "S002",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c01_s002_004",
+      "characterCode": "c01",
+      "characterId": 1,
+      "characterName": "Pico",
+      "storyId": "s002",
+      "eventId": null,
+      "sequence": 4,
+      "dialogueText": "Master! She needs help.",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "1ff81d0a2ff356c27834d225df7331f9a10395d9955c9558e8efed9ab0f8cdcd"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/S002.js",
+        "line": 55,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "XJ2fW4ybq7HouelYYGcL",
+      "voiceName": "Cherry Twinkle",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "pico_initial_learner_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 0.8,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c01_pico/voice_c01_s002_004_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "002",
+      "sourceId": "S002",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c03_s002_002",
+      "characterCode": "c03",
+      "characterId": 3,
+      "characterName": "Saki",
+      "storyId": "s002",
+      "eventId": null,
+      "sequence": 2,
+      "dialogueText": "You can hear me?",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "8300ab13228273c1fb70d740dd38e9014627db23acbdd6d003d7f2eb5b901e41"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/S002.js",
+        "line": 64,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "iukn3a1vSSNFmdi5NZS4",
+      "voiceName": "Paula Paw",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "saki_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c03_saki/voice_c03_s002_002_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "002",
+      "sourceId": "S002",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c03_s002_003",
+      "characterCode": "c03",
+      "characterId": 3,
+      "characterName": "Saki",
+      "storyId": "s002",
+      "eventId": null,
+      "sequence": 3,
+      "dialogueText": "I did it! I can talk!",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "0ccab7b45d5044627c6524859ceed63f654f97ff2bcdcf1bb3eae23ecf48c324"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/S002.js",
+        "line": 87,
+        "stepIndex": 30
+      },
+      "provider": "elevenlabs",
+      "voiceId": "iukn3a1vSSNFmdi5NZS4",
+      "voiceName": "Paula Paw",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "saki_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c03_saki/voice_c03_s002_003_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "002",
+      "sourceId": "S002",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c01_s002_005",
+      "characterCode": "c01",
+      "characterId": 1,
+      "characterName": "Pico",
+      "storyId": "s002",
+      "eventId": null,
+      "sequence": 5,
+      "dialogueText": "Yes! That is your real voice!",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "b64eb659c07734296bbdfc24407ae4f41ba3721b751d0fd56a0ab9905136dbc6"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/S002.js",
+        "line": 95,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "XJ2fW4ybq7HouelYYGcL",
+      "voiceName": "Cherry Twinkle",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "pico_initial_learner_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 0.8,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c01_pico/voice_c01_s002_005_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "002",
+      "sourceId": "S002",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c03_s002_004",
+      "characterCode": "c03",
+      "characterId": 3,
+      "characterName": "Saki",
+      "storyId": "s002",
+      "eventId": null,
+      "sequence": 4,
+      "dialogueText": "I don't use my voice here.",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "bbc4f4059c3ea7c884f94fc0e7f103ab8bd1bb8c9c6c74228154c27d1452a61e"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/S002.js",
+        "line": 100,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "iukn3a1vSSNFmdi5NZS4",
+      "voiceName": "Paula Paw",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "saki_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c03_saki/voice_c03_s002_004_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "002",
+      "sourceId": "S002",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c03_s002_005",
+      "characterCode": "c03",
+      "characterId": 3,
+      "characterName": "Saki",
+      "storyId": "s002",
+      "eventId": null,
+      "sequence": 5,
+      "dialogueText": "But I like my voice.",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "d4512878b68f002b971ec2bb168a6032f6e26c136b73ca7e7314f03be7f5de6c"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/S002.js",
+        "line": 105,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "iukn3a1vSSNFmdi5NZS4",
+      "voiceName": "Paula Paw",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "saki_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c03_saki/voice_c03_s002_005_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "002",
+      "sourceId": "S002",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c03_s002_006",
+      "characterCode": "c03",
+      "characterId": 3,
+      "characterName": "Saki",
+      "storyId": "s002",
+      "eventId": null,
+      "sequence": 6,
+      "dialogueText": "I want to see other cities.",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "c8a4ea2057df4aa48a85ccabe2ac73f015abb78975e5c726052066f4d3789d82"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/S002.js",
+        "line": 110,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "iukn3a1vSSNFmdi5NZS4",
+      "voiceName": "Paula Paw",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "saki_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c03_saki/voice_c03_s002_006_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "002",
+      "sourceId": "S002",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c03_s002_007",
+      "characterCode": "c03",
+      "characterId": 3,
+      "characterName": "Saki",
+      "storyId": "s002",
+      "eventId": null,
+      "sequence": 7,
+      "dialogueText": "I want to use my voice more and make many friends.",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "0796e8999d433da513a49547181e6a3bf18fb4e7a4973c3ba5616d4703f295d8"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/S002.js",
+        "line": 115,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "iukn3a1vSSNFmdi5NZS4",
+      "voiceName": "Paula Paw",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "saki_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c03_saki/voice_c03_s002_007_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "002",
+      "sourceId": "S002",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c03_s002_008",
+      "characterCode": "c03",
+      "characterId": 3,
+      "characterName": "Saki",
+      "storyId": "s002",
+      "eventId": null,
+      "sequence": 8,
+      "dialogueText": "Can I go with you?",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "958db8e03c7c009a23884aed1a4afb19c1b6b5240600913721d505d2afe98cf4"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/S002.js",
+        "line": 120,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "iukn3a1vSSNFmdi5NZS4",
+      "voiceName": "Paula Paw",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "saki_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c03_saki/voice_c03_s002_008_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "002",
+      "sourceId": "S002",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c01_s002_006",
+      "characterCode": "c01",
+      "characterId": 1,
+      "characterName": "Pico",
+      "storyId": "s002",
+      "eventId": null,
+      "sequence": 6,
+      "dialogueText": "Master, answer her!",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "9d884786ef71a9dfeafa5125fa53d4b8dbc76fbb2abb6c881319831225214ed1"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/S002.js",
+        "line": 125,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "XJ2fW4ybq7HouelYYGcL",
+      "voiceName": "Cherry Twinkle",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "pico_initial_learner_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 0.8,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c01_pico/voice_c01_s002_006_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "002",
+      "sourceId": "S002",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c03_s002_009",
+      "characterCode": "c03",
+      "characterId": 3,
+      "characterName": "Saki",
+      "storyId": "s002",
+      "eventId": null,
+      "sequence": 9,
+      "dialogueText": "Thank you! Let's go!",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "28283dfb5f2744c160f6a938352578aa6e153383d11defe5b6a5e8435b6d389c"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/S002.js",
+        "line": 135,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "iukn3a1vSSNFmdi5NZS4",
+      "voiceName": "Paula Paw",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "saki_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c03_saki/voice_c03_s002_009_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "002",
+      "sourceId": "S002",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    }
+  ]
+}

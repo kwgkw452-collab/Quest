@@ -1,0 +1,123 @@
+{
+  "schemaVersion": "2.1",
+  "profiles": {
+    "pico_initial_learner_v1": {
+      "characterCode": "c01",
+      "status": "approved",
+      "speed": 0.8,
+      "notes": "Final approved production speed and gain.",
+      "characterCodes": [
+        "c01"
+      ],
+      "gain": 1
+    },
+    "kong_natural_v1": {
+      "characterCode": "c02",
+      "status": "approved",
+      "speed": 1,
+      "notes": "Final approved production speed and gain.",
+      "characterCodes": [
+        "c02"
+      ],
+      "gain": 1
+    },
+    "saki_natural_v1": {
+      "characterCode": "c03",
+      "status": "approved",
+      "speed": 1,
+      "notes": "Final approved production speed and gain.",
+      "characterCodes": [
+        "c03"
+      ],
+      "gain": 1
+    },
+    "bernie_natural_v1": {
+      "characterCode": "c04",
+      "status": "approved",
+      "speed": 1,
+      "notes": "Final approved production speed and gain.",
+      "characterCodes": [
+        "c04"
+      ],
+      "gain": 1
+    },
+    "season_tree_final_v1": {
+      "characterCode": "c05",
+      "characterCodes": [
+        "c05"
+      ],
+      "status": "approved",
+      "speed": 1,
+      "gain": 1,
+      "notes": "Final approved production speed and gain."
+    },
+    "shop_owner_final_v1": {
+      "characterCode": "c06",
+      "characterCodes": [
+        "c06"
+      ],
+      "status": "approved",
+      "speed": 1,
+      "gain": 1,
+      "notes": "Final approved production speed and gain."
+    },
+    "shop_clerk_final_v1": {
+      "characterCode": "c07",
+      "characterCodes": [
+        "c07"
+      ],
+      "status": "approved",
+      "speed": 1,
+      "gain": 1,
+      "notes": "Final approved production speed and gain."
+    },
+    "traveler_a_c_final_v1": {
+      "characterCode": "c08",
+      "characterCodes": [
+        "c08",
+        "c10"
+      ],
+      "status": "approved",
+      "speed": 0.95,
+      "gain": 1,
+      "notes": "Final approved production speed and gain."
+    },
+    "traveler_b_final_v1": {
+      "characterCode": "c09",
+      "characterCodes": [
+        "c09"
+      ],
+      "status": "approved",
+      "speed": 0.95,
+      "gain": 1,
+      "notes": "Final approved production speed and gain."
+    },
+    "local_woman_townsperson_final_v1": {
+      "characterCode": "c11",
+      "characterCodes": [
+        "c11",
+        "c12"
+      ],
+      "status": "approved",
+      "speed": 0.95,
+      "gain": 1,
+      "notes": "Final approved production speed and gain."
+    },
+    "fruit_monster_initial_v1": {
+      "characterCode": "c13",
+      "characterCodes": ["c13"],
+      "status": "approved",
+      "speed": 1,
+      "gain": 1,
+      "notes": "m001 Fruit Monster dedicated profile."
+    },
+    "face_parts_monster_learner_v1": {
+      "characterCode": "c14",
+      "characterCodes": ["c14"],
+      "status": "approved",
+      "speed": 0.9,
+      "gain": 1,
+      "notes": "m004 Face Parts Monster dedicated learner-friendly profile."
+    }
+  }
+}

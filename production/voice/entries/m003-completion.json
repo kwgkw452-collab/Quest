@@ -1,0 +1,457 @@
+{
+  "storyOrEventId": "m003-completion",
+  "storyNumber": "003",
+  "sourceId": "m003-completion",
+  "entries": [
+    {
+      "voiceKey": "voice_c05_m003_001",
+      "characterCode": "c05",
+      "characterId": 5,
+      "characterName": "Season Tree",
+      "storyId": "m003-completion",
+      "eventId": null,
+      "sequence": 1,
+      "dialogueText": "Thank you very much!",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "3a478b70978819645bee44fabadca972ca72f1af55c6a70fb1d27cd7b051d727"
+      },
+      "sourceLocation": {
+        "file": "data/monsters.js",
+        "line": 244,
+        "stepIndex": 0
+      },
+      "provider": "elevenlabs",
+      "voiceId": "6sFKzaJr574YWVu4UuJF",
+      "voiceName": "Cornelius",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "season_tree_final_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c05_season_tree/voice_c05_m003_001_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "003",
+      "sourceId": "m003-completion",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c05_m003_002",
+      "characterCode": "c05",
+      "characterId": 5,
+      "characterName": "Season Tree",
+      "storyId": "m003-completion",
+      "eventId": null,
+      "sequence": 2,
+      "dialogueText": "I feel better.",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "18b54db1cd198fe42404a8943805ee2ec827eda6c86a08e614a4919425f5fb12"
+      },
+      "sourceLocation": {
+        "file": "data/monsters.js",
+        "line": 245,
+        "stepIndex": 1
+      },
+      "provider": "elevenlabs",
+      "voiceId": "6sFKzaJr574YWVu4UuJF",
+      "voiceName": "Cornelius",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "season_tree_final_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c05_season_tree/voice_c05_m003_002_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "003",
+      "sourceId": "m003-completion",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c05_m003_003",
+      "characterCode": "c05",
+      "characterId": 5,
+      "characterName": "Season Tree",
+      "storyId": "m003-completion",
+      "eventId": null,
+      "sequence": 3,
+      "dialogueText": "Many animals and birds will come to me!",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "352e6f1ef428721b098992d3cb834563c51a1b386e0ac0c22f5f25234936c8c7"
+      },
+      "sourceLocation": {
+        "file": "data/monsters.js",
+        "line": 246,
+        "stepIndex": 2
+      },
+      "provider": "elevenlabs",
+      "voiceId": "6sFKzaJr574YWVu4UuJF",
+      "voiceName": "Cornelius",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "season_tree_final_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c05_season_tree/voice_c05_m003_003_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "003",
+      "sourceId": "m003-completion",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c05_m003_004",
+      "characterCode": "c05",
+      "characterId": 5,
+      "characterName": "Season Tree",
+      "storyId": "m003-completion",
+      "eventId": null,
+      "sequence": 4,
+      "dialogueText": "But something is strange.",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "2a60676da17587cb8e61abd72da37d9d9141943da14e2eb5c0f2484f404d90ed"
+      },
+      "sourceLocation": {
+        "file": "data/monsters.js",
+        "line": 248,
+        "stepIndex": 3
+      },
+      "provider": "elevenlabs",
+      "voiceId": "6sFKzaJr574YWVu4UuJF",
+      "voiceName": "Cornelius",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "season_tree_final_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c05_season_tree/voice_c05_m003_004_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "003",
+      "sourceId": "m003-completion",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c05_m003_005",
+      "characterCode": "c05",
+      "characterId": 5,
+      "characterName": "Season Tree",
+      "storyId": "m003-completion",
+      "eventId": null,
+      "sequence": 5,
+      "dialogueText": "Summer is too hot.",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "1035b72b9e6cdf9ced2993d239256c252268e6c1027a6db44c7871e932824dec"
+      },
+      "sourceLocation": {
+        "file": "data/monsters.js",
+        "line": 249,
+        "stepIndex": 4
+      },
+      "provider": "elevenlabs",
+      "voiceId": "6sFKzaJr574YWVu4UuJF",
+      "voiceName": "Cornelius",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "season_tree_final_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c05_season_tree/voice_c05_m003_005_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "003",
+      "sourceId": "m003-completion",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c05_m003_006",
+      "characterCode": "c05",
+      "characterId": 5,
+      "characterName": "Season Tree",
+      "storyId": "m003-completion",
+      "eventId": null,
+      "sequence": 6,
+      "dialogueText": "Winter is too short.",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "a7188e17c48a7b5f72562e2d44e280d086d00edac1e18d9d00254a2cee99c4f1"
+      },
+      "sourceLocation": {
+        "file": "data/monsters.js",
+        "line": 250,
+        "stepIndex": 5
+      },
+      "provider": "elevenlabs",
+      "voiceId": "6sFKzaJr574YWVu4UuJF",
+      "voiceName": "Cornelius",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "season_tree_final_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c05_season_tree/voice_c05_m003_006_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "003",
+      "sourceId": "m003-completion",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c05_m003_007",
+      "characterCode": "c05",
+      "characterId": 5,
+      "characterName": "Season Tree",
+      "storyId": "m003-completion",
+      "eventId": null,
+      "sequence": 7,
+      "dialogueText": "Animals need trees.",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "f92d0733cca2d4c3d0171293ad9fc55014f691a50736fc7b9c63d1932c794e3f"
+      },
+      "sourceLocation": {
+        "file": "data/monsters.js",
+        "line": 253,
+        "stepIndex": 6
+      },
+      "provider": "elevenlabs",
+      "voiceId": "6sFKzaJr574YWVu4UuJF",
+      "voiceName": "Cornelius",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "season_tree_final_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c05_season_tree/voice_c05_m003_007_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "003",
+      "sourceId": "m003-completion",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c05_m003_008",
+      "characterCode": "c05",
+      "characterId": 5,
+      "characterName": "Season Tree",
+      "storyId": "m003-completion",
+      "eventId": null,
+      "sequence": 8,
+      "dialogueText": "Birds need trees, too.",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "dedf2fe546c9755f2c4fc23a2fd3c2c0b183073cc96fea111ff7a39b64d75f57"
+      },
+      "sourceLocation": {
+        "file": "data/monsters.js",
+        "line": 254,
+        "stepIndex": 7
+      },
+      "provider": "elevenlabs",
+      "voiceId": "6sFKzaJr574YWVu4UuJF",
+      "voiceName": "Cornelius",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "season_tree_final_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c05_season_tree/voice_c05_m003_008_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "003",
+      "sourceId": "m003-completion",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c05_m003_009",
+      "characterCode": "c05",
+      "characterId": 5,
+      "characterName": "Season Tree",
+      "storyId": "m003-completion",
+      "eventId": null,
+      "sequence": 9,
+      "dialogueText": "We live together.",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "7c5810e836f2e92cccdd698bdbba61f15468c6369b9164886abf5025fe2936e8"
+      },
+      "sourceLocation": {
+        "file": "data/monsters.js",
+        "line": 255,
+        "stepIndex": 8
+      },
+      "provider": "elevenlabs",
+      "voiceId": "6sFKzaJr574YWVu4UuJF",
+      "voiceName": "Cornelius",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "season_tree_final_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c05_season_tree/voice_c05_m003_009_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "003",
+      "sourceId": "m003-completion",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    }
+  ]
+}

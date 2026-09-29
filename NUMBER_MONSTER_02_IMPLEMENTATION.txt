@@ -1,0 +1,38 @@
+Eigo DE Quest - ナンバー・モンスター（Monster ID 02）実装記録
+
+登録ID: m002（入力 02 / 2 / M002 もm002へ正規化）
+名称: ナンバー・モンスター
+Question ID: word.single-digit-number
+辞書: number.single-digit.v1
+正答: one, two, three, four, five, six, seven, eight, nine
+必要な異なる正答数: 3
+
+画像状態:
+- normal: images/monsters/m002_normal.png
+- attack: images/monsters/m002_attack.png（登録済み・Version 1.0では未使用）
+- reaction: images/monsters/m002_reaction.png
+- purify: images/monsters/m002_purify.png
+- smile: images/monsters/m002_smile.png
+- defeated: smileと同じ画像（既存互換）
+- optional state未登録時: normalへ安全にフォールバック
+
+Graphic Flow:
+- 正解1・2回目: reaction 650ms → normal
+- 正解3回目: reaction 650ms → purify 1000ms → smile維持
+- Monster Databaseのbattle.graphicFlowで設定し、Monster ID分岐なし
+
+演出:
+- intro / success: number-monster-hit
+- Effect Database + CSSによる赤フラッシュと軽いシェイク
+- 数字が飛ぶ専用演出と音声は既存機能・素材がないため未追加
+
+責務:
+- Monster固有データ: Monster Database
+- 数字語彙・別名: Word Dictionary Database
+- 問題文・正答候補: Question Database
+- 判定: Question Manager（公開API変更なし）
+- 音声認識: 既存Speech Engine（変更なし）
+- 表示状態解決: Asset Resolver / Monster Presenter
+
+Story本文は変更していない。
+Question Manager / Pico Break / Monster Battleの公開仕様は変更していない。

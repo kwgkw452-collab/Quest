@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Eigo DE Quest - Communication Runtime V1 Dev Playtest</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script>window.__EIGO_DEV_MODE__ = true;</script>
+</head>
+<body>
+  <main id="game" aria-live="polite">
+    <section id="scene" class="scene">
+      <div id="background" class="background"></div>
+      <div id="blue-filter" class="blue-filter" hidden></div>
+      <div id="item-layer" class="item-layer"></div>
+      <div id="character-layer" class="character-layer"></div>
+      <section id="media-layer" class="media-layer" hidden></section>
+      <section id="dialogue-box" class="dialogue-box">
+        <div id="speaker" class="speaker">ピコ</div>
+        <div id="message" class="message">Communication Runtime V1 Dev Playtest</div>
+        <div id="recognized-text" class="recognized-text" hidden></div>
+        <div id="controls" class="controls"></div>
+      </section>
+    </section>
+  </main>
+  <script src="engine/config.js"></script>
+  <script src="data/communication-concept-catalog.js"></script>
+  <script src="data/communication-action-catalog.js"></script>
+  <script src="data/communication-task-specs.js?v=communication-runtime-data-spec-v1-phase1-playtest-fix1"></script>
+  <script src="data/communication-recognition-dictionaries.js?v=growing-recognition-knowledge-v1-phase2-promotion"></script>
+  <script src="data/local-judge-profiles.js"></script>
+  <script src="data/pico-support-profiles.js"></script>
+  <script src="engine/services/speech-normalizer.js"></script>
+  <script src="engine/services/speech-recognition-adapter.js"></script>
+  <script src="engine/services/speech-engine.js"></script>
+  <script src="engine/services/speech-start-controller.js"></script>
+  <script src="engine/managers/dialog-manager.js"></script>
+  <script src="engine/services/local-communication-judge-provider.js?v=growing-recognition-knowledge-v1"></script>
+  <script src="engine/services/communication-judge-adapter.js"></script>
+  <script src="engine/services/communication-judge-gateway.js"></script>
+  <script src="engine/services/support-focus-resolver.js"></script>
+  <script src="engine/services/local-pico-support-provider.js"></script>
+  <script src="engine/controllers/communication-task-progress-controller.js?v=communication-runtime-phase1-realmic-trace-v1"></script>
+  <script src="engine/presenters/communication-task-presenter.js"></script>
+  <script>DialogManager.init({
+    dialogueBox: document.getElementById("dialogue-box"), speaker: document.getElementById("speaker"),
+    message: document.getElementById("message"), recognizedText: document.getElementById("recognized-text"),
+    controls: document.getElementById("controls")
+  });</script>
+  <script src="dev/central-candidate-store-config.js?v=growing-recognition-knowledge-v1-phase7"></script>
+  <script src="dev/central-candidate-store-provider.js?v=growing-recognition-knowledge-v1-phase8-rebuilt"></script>
+  <script src="dev/communication-task-v1-playtest.js?v=growing-recognition-knowledge-v1-phase10-sample-local-only"></script>
+</body>
+</html>

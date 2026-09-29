@@ -1,0 +1,244 @@
+{
+  "schemaVersion": "2.1",
+  "provider": "elevenlabs",
+  "profiles": {
+    "c01": {
+      "characterId": 1,
+      "characterName": "Pico",
+      "voiceName": "Cherry Twinkle",
+      "voiceId": "XJ2fW4ybq7HouelYYGcL",
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "provider": "elevenlabs",
+      "profileId": "pico",
+      "languageCode": "en",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "speed": 0.8,
+        "gain": 1
+      },
+      "assignmentStatus": "approved"
+    },
+    "c02": {
+      "characterId": 2,
+      "characterName": "Kong",
+      "voiceName": "Adrian",
+      "voiceId": "6kvJeRKXugeztFfd9EVP",
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "provider": "elevenlabs",
+      "profileId": "kong",
+      "languageCode": "en",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "speed": 1,
+        "gain": 1
+      },
+      "assignmentStatus": "approved"
+    },
+    "c03": {
+      "characterId": 3,
+      "characterName": "Saki",
+      "voiceName": "Paula Paw",
+      "voiceId": "iukn3a1vSSNFmdi5NZS4",
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "provider": "elevenlabs",
+      "profileId": "saki",
+      "languageCode": "en",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "speed": 1,
+        "gain": 1
+      },
+      "assignmentStatus": "approved"
+    },
+    "c04": {
+      "characterId": 4,
+      "characterName": "Bernie",
+      "voiceName": "Jett - Gritty and Spunky Young Hero",
+      "voiceId": "6IwYbsNENZgAB1dtBZDp",
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "provider": "elevenlabs",
+      "profileId": "bernie",
+      "languageCode": "en",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "speed": 1,
+        "gain": 1
+      },
+      "assignmentStatus": "approved"
+    },
+    "c05": {
+      "characterId": 5,
+      "characterName": "Season Tree",
+      "provider": "elevenlabs",
+      "voiceName": "Cornelius",
+      "voiceId": "6sFKzaJr574YWVu4UuJF",
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "assignmentStatus": "approved",
+      "profileId": "season_tree",
+      "languageCode": "en",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "speed": 1,
+        "gain": 1
+      }
+    },
+    "c06": {
+      "characterId": 6,
+      "characterName": "Shop Owner",
+      "provider": "elevenlabs",
+      "voiceName": "Bill - Mimicking, Deep and Unnatural",
+      "voiceId": "WKtSiwnucIJgM5cTHARA",
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "assignmentStatus": "approved",
+      "profileId": "shop_owner",
+      "languageCode": "en",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "speed": 1,
+        "gain": 1
+      }
+    },
+    "c07": {
+      "characterId": 7,
+      "characterName": "Shop Clerk",
+      "provider": "elevenlabs",
+      "voiceName": "Cyrien - The Charming Rogue",
+      "voiceId": "AFkIMdmeB0MMrr1tgGds",
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "assignmentStatus": "approved",
+      "profileId": "shop_clerk",
+      "languageCode": "en",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "speed": 1,
+        "gain": 1
+      }
+    },
+    "c08": {
+      "characterId": 8,
+      "characterName": "Traveler A",
+      "provider": "elevenlabs",
+      "voiceName": "Liam",
+      "voiceId": "TX3LPaxmHKxFdv7VOQHJ",
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "assignmentStatus": "approved",
+      "profileId": "traveler_a_c",
+      "languageCode": "en",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "speed": 0.95,
+        "gain": 1
+      }
+    },
+    "c09": {
+      "characterId": 9,
+      "characterName": "Traveler B",
+      "provider": "elevenlabs",
+      "voiceName": "Jessica",
+      "voiceId": "cgSgspJ2msm6clMCkdW9",
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "assignmentStatus": "approved",
+      "profileId": "traveler_b",
+      "languageCode": "en",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "speed": 0.95,
+        "gain": 1
+      }
+    },
+    "c10": {
+      "characterId": 10,
+      "characterName": "Traveler C",
+      "provider": "elevenlabs",
+      "voiceName": "Liam",
+      "voiceId": "TX3LPaxmHKxFdv7VOQHJ",
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "assignmentStatus": "approved",
+      "profileId": "traveler_a_c",
+      "languageCode": "en",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "speed": 0.95,
+        "gain": 1
+      }
+    },
+    "c11": {
+      "characterId": 11,
+      "characterName": "Local Woman",
+      "provider": "elevenlabs",
+      "voiceName": "Alice",
+      "voiceId": "Xb7hH8MSUJpSbSDYk0k2",
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "assignmentStatus": "approved",
+      "profileId": "local_woman_townsperson",
+      "languageCode": "en",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "speed": 0.95,
+        "gain": 1
+      }
+    },
+    "c12": {
+      "characterId": 12,
+      "characterName": "Townsperson",
+      "provider": "elevenlabs",
+      "voiceName": "Alice",
+      "voiceId": "Xb7hH8MSUJpSbSDYk0k2",
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "assignmentStatus": "approved",
+      "profileId": "local_woman_townsperson",
+      "languageCode": "en",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "speed": 0.95,
+        "gain": 1
+      }
+    },
+    "c13": {
+      "characterId": 13,
+      "characterName": "Fruit Monster",
+      "voiceName": "Fruit Monster",
+      "voiceId": "hU9xpIwLBrQ7ueYNjP7b",
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "provider": "elevenlabs",
+      "profileId": "fruit_monster",
+      "languageCode": "en",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "speed": 1,
+        "gain": 1
+      },
+      "assignmentStatus": "approved"
+    },
+    "c14": {
+      "characterId": 14,
+      "characterName": "Face Parts Monster",
+      "voiceName": "Face Parts Monster",
+      "voiceId": "yK2Ny0mq8WplixhD1td3",
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "provider": "elevenlabs",
+      "profileId": "face_parts_monster",
+      "languageCode": "en",
+      "outputFormat": "mp3_44100_128",
+      "voiceSettings": {
+        "speed": 0.9,
+        "gain": 1
+      },
+      "assignmentStatus": "approved"
+    }
+  }
+}

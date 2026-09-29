@@ -1,0 +1,1157 @@
+{
+  "storyOrEventId": "s004",
+  "storyNumber": "003",
+  "sourceId": "S004",
+  "entries": [
+    {
+      "voiceKey": "voice_c04_s004_001",
+      "characterCode": "c04",
+      "characterId": 4,
+      "characterName": "Bernie",
+      "storyId": "s004",
+      "eventId": null,
+      "sequence": 1,
+      "dialogueText": "I'm Bernie.",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "29187602ab9e37e0ef78367fb827ea47b3d26494e3eed8087029bcb9dd49e51d"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/S004.js",
+        "line": 31,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "6IwYbsNENZgAB1dtBZDp",
+      "voiceName": "Jett - Gritty and Spunky Young Hero",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "bernie_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c04_bernie/voice_c04_s004_001_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "003",
+      "sourceId": "S004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c04_s004_002",
+      "characterCode": "c04",
+      "characterId": 4,
+      "characterName": "Bernie",
+      "storyId": "s004",
+      "eventId": null,
+      "sequence": 2,
+      "dialogueText": "I am a chef.",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "99ea63ee5066f3b7025d3e8b0c9ec8c661997c75e55a90fb932c65c9cc35bfaf"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/S004.js",
+        "line": 35,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "6IwYbsNENZgAB1dtBZDp",
+      "voiceName": "Jett - Gritty and Spunky Young Hero",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "bernie_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c04_bernie/voice_c04_s004_002_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "003",
+      "sourceId": "S004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c04_s004_003",
+      "characterCode": "c04",
+      "characterId": 4,
+      "characterName": "Bernie",
+      "storyId": "s004",
+      "eventId": null,
+      "sequence": 3,
+      "dialogueText": "I was a good chef. But I can't cook well now.",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "05e2b71e36ead0309d28f579b6146377e1107cb6df9592a9f9560794d34aed88"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/S004.js",
+        "line": 39,
+        "stepIndex": 11
+      },
+      "provider": "elevenlabs",
+      "voiceId": "6IwYbsNENZgAB1dtBZDp",
+      "voiceName": "Jett - Gritty and Spunky Young Hero",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "bernie_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c04_bernie/voice_c04_s004_003_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "003",
+      "sourceId": "S004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c04_s004_004",
+      "characterCode": "c04",
+      "characterId": 4,
+      "characterName": "Bernie",
+      "storyId": "s004",
+      "eventId": null,
+      "sequence": 4,
+      "dialogueText": "No...",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "2d5e8b40a728cdea272c2e372deb61ef6cc2f7e0a747bdf45a68acf8939969cd"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/S004.js",
+        "line": 48,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "6IwYbsNENZgAB1dtBZDp",
+      "voiceName": "Jett - Gritty and Spunky Young Hero",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "bernie_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c04_bernie/voice_c04_s004_004_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "003",
+      "sourceId": "S004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c04_s004_005",
+      "characterCode": "c04",
+      "characterId": 4,
+      "characterName": "Bernie",
+      "storyId": "s004",
+      "eventId": null,
+      "sequence": 5,
+      "dialogueText": "I can't cook well.",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "154cbd093ac620e455943b74d3a369443cb5eb8614d7437b217a8a4759f407c1"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/S004.js",
+        "line": 52,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "6IwYbsNENZgAB1dtBZDp",
+      "voiceName": "Jett - Gritty and Spunky Young Hero",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "bernie_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c04_bernie/voice_c04_s004_005_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "003",
+      "sourceId": "S004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c02_s004_001",
+      "characterCode": "c02",
+      "characterId": 2,
+      "characterName": "Kong",
+      "storyId": "s004",
+      "eventId": null,
+      "sequence": 1,
+      "dialogueText": "Oh, no! I'm very hungry!",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "e098cd2f030f3f566f60176cca346a7b1206371097c6522aeb49e5c8c254efcd"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/S004.js",
+        "line": 61,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "6kvJeRKXugeztFfd9EVP",
+      "voiceName": "Adrian",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "kong_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c02_kong/voice_c02_s004_001_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "003",
+      "sourceId": "S004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c03_s004_001",
+      "characterCode": "c03",
+      "characterId": 3,
+      "characterName": "Saki",
+      "storyId": "s004",
+      "eventId": null,
+      "sequence": 1,
+      "dialogueText": "He looks sad.",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "f9310b3a219c136d75058a16109268a1ccbe0d57d9ec6b6b1fbd2a9efc4af93f"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/S004.js",
+        "line": 69,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "iukn3a1vSSNFmdi5NZS4",
+      "voiceName": "Paula Paw",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "saki_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c03_saki/voice_c03_s004_001_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "003",
+      "sourceId": "S004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c04_s004_006",
+      "characterCode": "c04",
+      "characterId": 4,
+      "characterName": "Bernie",
+      "storyId": "s004",
+      "eventId": null,
+      "sequence": 6,
+      "dialogueText": "Good! One more!",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "76fdb6262d130dba805461a3bad2f7113b0faf541f6ec78851d7a8db4439118c"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/S004.js",
+        "line": 90,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "6IwYbsNENZgAB1dtBZDp",
+      "voiceName": "Jett - Gritty and Spunky Young Hero",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "bernie_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c04_bernie/voice_c04_s004_006_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "003",
+      "sourceId": "S004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c04_s004_007",
+      "characterCode": "c04",
+      "characterId": 4,
+      "characterName": "Bernie",
+      "storyId": "s004",
+      "eventId": null,
+      "sequence": 7,
+      "dialogueText": "Great! One last food!",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "8ad8a07a94d3c6fdda5a0847bd84cb647988ebdbf8149a6943d127ac663e7831"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/S004.js",
+        "line": 104,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "6IwYbsNENZgAB1dtBZDp",
+      "voiceName": "Jett - Gritty and Spunky Young Hero",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "bernie_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c04_bernie/voice_c04_s004_007_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "003",
+      "sourceId": "S004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c04_s004_008",
+      "characterCode": "c04",
+      "characterId": 4,
+      "characterName": "Bernie",
+      "storyId": "s004",
+      "eventId": null,
+      "sequence": 8,
+      "dialogueText": "Now, I will cook!",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "591c1272e834a941ac6b7e3c8f6594e83eb54672f72303063e5e7fd691c739ba"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/S004.js",
+        "line": 118,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "6IwYbsNENZgAB1dtBZDp",
+      "voiceName": "Jett - Gritty and Spunky Young Hero",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "bernie_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c04_bernie/voice_c04_s004_008_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "003",
+      "sourceId": "S004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c04_s004_009",
+      "characterCode": "c04",
+      "characterId": 4,
+      "characterName": "Bernie",
+      "storyId": "s004",
+      "eventId": null,
+      "sequence": 9,
+      "dialogueText": "I did it! The food is ready!",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "f60098da656c58bf46b857b9ecbd7b0981e03686cacdf3b8dc9139aa5debf694"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/S004.js",
+        "line": 124,
+        "stepIndex": 43
+      },
+      "provider": "elevenlabs",
+      "voiceId": "6IwYbsNENZgAB1dtBZDp",
+      "voiceName": "Jett - Gritty and Spunky Young Hero",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "bernie_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c04_bernie/voice_c04_s004_009_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "003",
+      "sourceId": "S004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c04_s004_010",
+      "characterCode": "c04",
+      "characterId": 4,
+      "characterName": "Bernie",
+      "storyId": "s004",
+      "eventId": null,
+      "sequence": 10,
+      "dialogueText": "Is it good?",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "4b0003c9f1db147ea70bb0a6385e60c8f52e9c4e10c8200fc4f60b1e4fc61ad7"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/S004.js",
+        "line": 133,
+        "stepIndex": 47
+      },
+      "provider": "elevenlabs",
+      "voiceId": "6IwYbsNENZgAB1dtBZDp",
+      "voiceName": "Jett - Gritty and Spunky Young Hero",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "bernie_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c04_bernie/voice_c04_s004_010_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "003",
+      "sourceId": "S004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c04_s004_011",
+      "characterCode": "c04",
+      "characterId": 4,
+      "characterName": "Bernie",
+      "storyId": "s004",
+      "eventId": null,
+      "sequence": 11,
+      "dialogueText": "Thank you! I can cook!",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "672ac0670202740735e81f3fa369c6d8f99e1bb038e6cdfd09a6ee2d1bafc147"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/S004.js",
+        "line": 140,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "6IwYbsNENZgAB1dtBZDp",
+      "voiceName": "Jett - Gritty and Spunky Young Hero",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "bernie_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c04_bernie/voice_c04_s004_011_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "003",
+      "sourceId": "S004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c02_s004_002",
+      "characterCode": "c02",
+      "characterId": 2,
+      "characterName": "Kong",
+      "storyId": "s004",
+      "eventId": null,
+      "sequence": 2,
+      "dialogueText": "There is a lot of food in the world!",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "d7f7dab7f015a71a68f2e5dd6105ab186482643826c9fb1ccec7c72e63be9fc8"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/S004.js",
+        "line": 156,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "6kvJeRKXugeztFfd9EVP",
+      "voiceName": "Adrian",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "kong_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c02_kong/voice_c02_s004_002_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "003",
+      "sourceId": "S004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c02_s004_003",
+      "characterCode": "c02",
+      "characterId": 2,
+      "characterName": "Kong",
+      "storyId": "s004",
+      "eventId": null,
+      "sequence": 3,
+      "dialogueText": "French food! Italian food! Chinese food!",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "2bef84853d6d40243453993e77230ea2b5843e9f983027a759638f65bfc1bf96"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/S004.js",
+        "line": 160,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "6kvJeRKXugeztFfd9EVP",
+      "voiceName": "Adrian",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "kong_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c02_kong/voice_c02_s004_003_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "003",
+      "sourceId": "S004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c02_s004_004",
+      "characterCode": "c02",
+      "characterId": 2,
+      "characterName": "Kong",
+      "storyId": "s004",
+      "eventId": null,
+      "sequence": 4,
+      "dialogueText": "Fruits! Vegetables! Drinks!",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "6de02405f3c07ccc4898b28a7de63ebbf1ef888b143cbfea51aa19b2898e5888"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/S004.js",
+        "line": 164,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "6kvJeRKXugeztFfd9EVP",
+      "voiceName": "Adrian",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "kong_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c02_kong/voice_c02_s004_004_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "003",
+      "sourceId": "S004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c02_s004_005",
+      "characterCode": "c02",
+      "characterId": 2,
+      "characterName": "Kong",
+      "storyId": "s004",
+      "eventId": null,
+      "sequence": 5,
+      "dialogueText": "And more!",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "420b75ad893f484601b2112758ad05c547e00684f0dae492a5a36a709e17a583"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/S004.js",
+        "line": 168,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "6kvJeRKXugeztFfd9EVP",
+      "voiceName": "Adrian",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "kong_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c02_kong/voice_c02_s004_005_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "003",
+      "sourceId": "S004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c02_s004_006",
+      "characterCode": "c02",
+      "characterId": 2,
+      "characterName": "Kong",
+      "storyId": "s004",
+      "eventId": null,
+      "sequence": 6,
+      "dialogueText": "Let's go and find them!",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "0062c64abd30ae48fab69c9f0d698f236c076dae3d6aa002ece5285577cef195"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/S004.js",
+        "line": 172,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "6kvJeRKXugeztFfd9EVP",
+      "voiceName": "Adrian",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "kong_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c02_kong/voice_c02_s004_006_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "003",
+      "sourceId": "S004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c04_s004_012",
+      "characterCode": "c04",
+      "characterId": 4,
+      "characterName": "Bernie",
+      "storyId": "s004",
+      "eventId": null,
+      "sequence": 12,
+      "dialogueText": "Food from around the world...",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "bd48c39bdd30af6fa5cbc11ecbe6a6a04efadcccd121dfbd1ed615f41d7dece9"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/S004.js",
+        "line": 176,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "6IwYbsNENZgAB1dtBZDp",
+      "voiceName": "Jett - Gritty and Spunky Young Hero",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "bernie_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c04_bernie/voice_c04_s004_012_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "003",
+      "sourceId": "S004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c04_s004_013",
+      "characterCode": "c04",
+      "characterId": 4,
+      "characterName": "Bernie",
+      "storyId": "s004",
+      "eventId": null,
+      "sequence": 13,
+      "dialogueText": "I want to see it!",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "811f2fda8d77f240eafa3363290fd68f6c8e11e0be2ac2a8cd1ae90428c7ee1e"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/S004.js",
+        "line": 181,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "6IwYbsNENZgAB1dtBZDp",
+      "voiceName": "Jett - Gritty and Spunky Young Hero",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "bernie_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c04_bernie/voice_c04_s004_013_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "003",
+      "sourceId": "S004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c04_s004_014",
+      "characterCode": "c04",
+      "characterId": 4,
+      "characterName": "Bernie",
+      "storyId": "s004",
+      "eventId": null,
+      "sequence": 14,
+      "dialogueText": "Really!?",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "fa0a04cece83d97fb57d0cff82233e4712f30accfffbac6fde19430d33705ee6"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/S004.js",
+        "line": 190,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "6IwYbsNENZgAB1dtBZDp",
+      "voiceName": "Jett - Gritty and Spunky Young Hero",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "bernie_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c04_bernie/voice_c04_s004_014_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "003",
+      "sourceId": "S004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c04_s004_015",
+      "characterCode": "c04",
+      "characterId": 4,
+      "characterName": "Bernie",
+      "storyId": "s004",
+      "eventId": null,
+      "sequence": 15,
+      "dialogueText": "OK! I will go with you!",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "f57dac3a0842dd3b0143b60673aefdeeb6b12eeb9133f69dfcbb7ff664c134c7"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/S004.js",
+        "line": 194,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "6IwYbsNENZgAB1dtBZDp",
+      "voiceName": "Jett - Gritty and Spunky Young Hero",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "bernie_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c04_bernie/voice_c04_s004_015_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "003",
+      "sourceId": "S004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c04_s004_016",
+      "characterCode": "c04",
+      "characterId": 4,
+      "characterName": "Bernie",
+      "storyId": "s004",
+      "eventId": null,
+      "sequence": 16,
+      "dialogueText": "I will cook for you!",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "b927bb233a85338328b942093b3fe0ae11671ccf45f4570f5a2e53ceaa8fe6ab"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/S004.js",
+        "line": 198,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "6IwYbsNENZgAB1dtBZDp",
+      "voiceName": "Jett - Gritty and Spunky Young Hero",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "bernie_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c04_bernie/voice_c04_s004_016_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "003",
+      "sourceId": "S004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    }
+  ]
+}

@@ -1,0 +1,2757 @@
+{
+  "storyOrEventId": "st004",
+  "storyNumber": "004",
+  "sourceId": "st004",
+  "entries": [
+    {
+      "voiceKey": "voice_c06_st004_001",
+      "characterCode": "c06",
+      "characterId": 6,
+      "characterName": "Shop Owner",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 1,
+      "dialogueText": "I'm waiting for you.",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "0182fbb985572e60cdfe546cc395a05ee1e384fed2990c9f48de49857d7886dc"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 21,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "WKtSiwnucIJgM5cTHARA",
+      "voiceName": "Bill - Mimicking, Deep and Unnatural",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "shop_owner_final_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c06_shop_owner/voice_c06_st004_001_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c06_st004_002",
+      "characterCode": "c06",
+      "characterId": 6,
+      "characterName": "Shop Owner",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 2,
+      "dialogueText": "Which do you want?",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "0aa106740a5aaf151f797e8a7cf085173ebc057bf78f5fac418d6970fd209edc"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 23,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "WKtSiwnucIJgM5cTHARA",
+      "voiceName": "Bill - Mimicking, Deep and Unnatural",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "shop_owner_final_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c06_shop_owner/voice_c06_st004_002_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c06_st004_003",
+      "characterCode": "c06",
+      "characterId": 6,
+      "characterName": "Shop Owner",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 3,
+      "dialogueText": "Which do you want?",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "0aa106740a5aaf151f797e8a7cf085173ebc057bf78f5fac418d6970fd209edc"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 28,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "WKtSiwnucIJgM5cTHARA",
+      "voiceName": "Bill - Mimicking, Deep and Unnatural",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "shop_owner_final_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c06_shop_owner/voice_c06_st004_002_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "Reuse planned asset from audio/voice/c06_shop_owner/voice_c06_st004_002_v1.mp3; same character, text, and voice conditions.",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c06_st004_004",
+      "characterCode": "c06",
+      "characterId": 6,
+      "characterName": "Shop Owner",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 4,
+      "dialogueText": "Which do you want?",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "0aa106740a5aaf151f797e8a7cf085173ebc057bf78f5fac418d6970fd209edc"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 32,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "WKtSiwnucIJgM5cTHARA",
+      "voiceName": "Bill - Mimicking, Deep and Unnatural",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "shop_owner_final_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c06_shop_owner/voice_c06_st004_002_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "Reuse planned asset from audio/voice/c06_shop_owner/voice_c06_st004_002_v1.mp3; same character, text, and voice conditions.",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c06_st004_005",
+      "characterCode": "c06",
+      "characterId": 6,
+      "characterName": "Shop Owner",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 5,
+      "dialogueText": "OK.",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "b814aabdde112d89d45105c3205482949a86d7bbc33040034db21f7a85c84c4a"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 38,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "WKtSiwnucIJgM5cTHARA",
+      "voiceName": "Bill - Mimicking, Deep and Unnatural",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "shop_owner_final_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c06_shop_owner/voice_c06_st004_005_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c06_st004_006",
+      "characterCode": "c06",
+      "characterId": 6,
+      "characterName": "Shop Owner",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 6,
+      "dialogueText": "OK.",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "b814aabdde112d89d45105c3205482949a86d7bbc33040034db21f7a85c84c4a"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 40,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "WKtSiwnucIJgM5cTHARA",
+      "voiceName": "Bill - Mimicking, Deep and Unnatural",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "shop_owner_final_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c06_shop_owner/voice_c06_st004_005_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "Reuse planned asset from audio/voice/c06_shop_owner/voice_c06_st004_005_v1.mp3; same character, text, and voice conditions.",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c06_st004_007",
+      "characterCode": "c06",
+      "characterId": 6,
+      "characterName": "Shop Owner",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 7,
+      "dialogueText": "OK.",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "b814aabdde112d89d45105c3205482949a86d7bbc33040034db21f7a85c84c4a"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 43,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "WKtSiwnucIJgM5cTHARA",
+      "voiceName": "Bill - Mimicking, Deep and Unnatural",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "shop_owner_final_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c06_shop_owner/voice_c06_st004_005_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "Reuse planned asset from audio/voice/c06_shop_owner/voice_c06_st004_005_v1.mp3; same character, text, and voice conditions.",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c06_st004_008",
+      "characterCode": "c06",
+      "characterId": 6,
+      "characterName": "Shop Owner",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 8,
+      "dialogueText": "OK.",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "b814aabdde112d89d45105c3205482949a86d7bbc33040034db21f7a85c84c4a"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 46,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "WKtSiwnucIJgM5cTHARA",
+      "voiceName": "Bill - Mimicking, Deep and Unnatural",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "shop_owner_final_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c06_shop_owner/voice_c06_st004_005_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "Reuse planned asset from audio/voice/c06_shop_owner/voice_c06_st004_005_v1.mp3; same character, text, and voice conditions.",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c02_st004_001",
+      "characterCode": "c02",
+      "characterId": 2,
+      "characterName": "Kong",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 1,
+      "dialogueText": "Wow!",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "4a7d6d3e8888a86b41c710f1d44c43d9ec7a4f97dce4f1ec3c0fb124ca0188de"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 61,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "6kvJeRKXugeztFfd9EVP",
+      "voiceName": "Adrian",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "kong_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c02_kong/voice_c02_st004_001_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c02_st004_002",
+      "characterCode": "c02",
+      "characterId": 2,
+      "characterName": "Kong",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 2,
+      "dialogueText": "I want to eat bananas.",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "7e57f8bc022e45714c4075966a70bc5fc425318f85bf246eed7df9403a5adcce"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 62,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "6kvJeRKXugeztFfd9EVP",
+      "voiceName": "Adrian",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "kong_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c02_kong/voice_c02_st004_002_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c04_st004_001",
+      "characterCode": "c04",
+      "characterId": 4,
+      "characterName": "Bernie",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 1,
+      "dialogueText": "So much food!",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "24d92a642e761bf777d8fb3c2c0bf012739c887db960d8ccbbd76cf534f1e7da"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 63,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "6IwYbsNENZgAB1dtBZDp",
+      "voiceName": "Jett - Gritty and Spunky Young Hero",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "bernie_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c04_bernie/voice_c04_st004_001_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c02_st004_003",
+      "characterCode": "c02",
+      "characterId": 2,
+      "characterName": "Kong",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 3,
+      "dialogueText": "Wow! Bananas!",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "38b6e5b450eb1df78970fb7b0e5385aec5d2898e56ed5ed5f16a729346f8b080"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 66,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "6kvJeRKXugeztFfd9EVP",
+      "voiceName": "Adrian",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "kong_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c02_kong/voice_c02_st004_003_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c02_st004_004",
+      "characterCode": "c02",
+      "characterId": 2,
+      "characterName": "Kong",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 4,
+      "dialogueText": "I want to eat bananas!",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "89434fc5f600ff07c7f38c544dd34f35ca7cef38c6d3d9c34fcd5751980f1293"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 67,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "6kvJeRKXugeztFfd9EVP",
+      "voiceName": "Adrian",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "kong_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c02_kong/voice_c02_st004_004_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c02_st004_005",
+      "characterCode": "c02",
+      "characterId": 2,
+      "characterName": "Kong",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 5,
+      "dialogueText": "Banana, please!",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "d6336b2af474c8f9f3f52dcd819475a166030cf17791b480c0be11c180114d67"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 68,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "6kvJeRKXugeztFfd9EVP",
+      "voiceName": "Adrian",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "kong_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c02_kong/voice_c02_st004_005_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c07_st004_001",
+      "characterCode": "c07",
+      "characterId": 7,
+      "characterName": "Shop Clerk",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 1,
+      "dialogueText": "Ten gold.",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "a655cfec66dffa50938fbfe0a894a5dcc40a49f14c08c3c2927953e1785b21ed"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 69,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "AFkIMdmeB0MMrr1tgGds",
+      "voiceName": "Cyrien - The Charming Rogue",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "shop_clerk_final_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c07_shop_clerk/voice_c07_st004_001_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c02_st004_006",
+      "characterCode": "c02",
+      "characterId": 2,
+      "characterName": "Kong",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 6,
+      "dialogueText": "Ten!?",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "44c8a17def2ad0db1f0a4abbfc7eccf6744f3f702f2e47e50fbc6d5174e58796"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 70,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "6kvJeRKXugeztFfd9EVP",
+      "voiceName": "Adrian",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "kong_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c02_kong/voice_c02_st004_006_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c02_st004_007",
+      "characterCode": "c02",
+      "characterId": 2,
+      "characterName": "Kong",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 7,
+      "dialogueText": "OK!",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "c79a4f748fb9d3b7d944cc1037977d40d3a3e56da9bbd6f6aa81f447b2cb7fc5"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 71,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "6kvJeRKXugeztFfd9EVP",
+      "voiceName": "Adrian",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "kong_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c02_kong/voice_c02_st004_007_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c04_st004_002",
+      "characterCode": "c04",
+      "characterId": 4,
+      "characterName": "Bernie",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 2,
+      "dialogueText": "What's this?",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "ddfd032cce17828b78f39a45ec9eb7e08706234daff45da0498cf931407c07a6"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 74,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "6IwYbsNENZgAB1dtBZDp",
+      "voiceName": "Jett - Gritty and Spunky Young Hero",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "bernie_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c04_bernie/voice_c04_st004_002_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c07_st004_002",
+      "characterCode": "c07",
+      "characterId": 7,
+      "characterName": "Shop Clerk",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 2,
+      "dialogueText": "Dragon pepper.",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "791572fe3d7a2270c0661ae7a9008605ea75ae73b2e4a97e905a7b1f80e350f0"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 75,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "AFkIMdmeB0MMrr1tgGds",
+      "voiceName": "Cyrien - The Charming Rogue",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "shop_clerk_final_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c07_shop_clerk/voice_c07_st004_002_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c04_st004_003",
+      "characterCode": "c04",
+      "characterId": 4,
+      "characterName": "Bernie",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 3,
+      "dialogueText": "Dragon pepper?",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "3684fdefe28874e85a2aa97eb789ac5d7ac6663818ec54dcf4539b7c8283992f"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 76,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "6IwYbsNENZgAB1dtBZDp",
+      "voiceName": "Jett - Gritty and Spunky Young Hero",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "bernie_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c04_bernie/voice_c04_st004_003_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c07_st004_003",
+      "characterCode": "c07",
+      "characterId": 7,
+      "characterName": "Shop Clerk",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 3,
+      "dialogueText": "Very hot!",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "c465be02a4c0404ee25b98ea6f551de1241ebec8605f60e1ec50f90f1975cde1"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 77,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "AFkIMdmeB0MMrr1tgGds",
+      "voiceName": "Cyrien - The Charming Rogue",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "shop_clerk_final_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c07_shop_clerk/voice_c07_st004_003_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c04_st004_004",
+      "characterCode": "c04",
+      "characterId": 4,
+      "characterName": "Bernie",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 4,
+      "dialogueText": "I want it!",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "259d85f9a7cbbe5b1729f1d1cebb772dde0cd17fdeda65661e45e089f2631103"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 78,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "6IwYbsNENZgAB1dtBZDp",
+      "voiceName": "Jett - Gritty and Spunky Young Hero",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "bernie_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c04_bernie/voice_c04_st004_004_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c07_st004_004",
+      "characterCode": "c07",
+      "characterId": 7,
+      "characterName": "Shop Clerk",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 4,
+      "dialogueText": "Which do you like better?",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "43617554c5547b78aa7f512152ce28538ac68dc62951fba51d489f76498976be"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 81,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "AFkIMdmeB0MMrr1tgGds",
+      "voiceName": "Cyrien - The Charming Rogue",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "shop_clerk_final_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c07_shop_clerk/voice_c07_st004_004_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c07_st004_005",
+      "characterCode": "c07",
+      "characterId": 7,
+      "characterName": "Shop Clerk",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 5,
+      "dialogueText": "OK!",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "c79a4f748fb9d3b7d944cc1037977d40d3a3e56da9bbd6f6aa81f447b2cb7fc5"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 85,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "AFkIMdmeB0MMrr1tgGds",
+      "voiceName": "Cyrien - The Charming Rogue",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "shop_clerk_final_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c07_shop_clerk/voice_c07_st004_005_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c08_st004_001",
+      "characterCode": "c08",
+      "characterId": 8,
+      "characterName": "Traveler A",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 1,
+      "dialogueText": "There is a black forest in the north.",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "7a6bf3f16ce0f27e731e139e4c684b27eb39ae8c8e975315e357f0b106bbe6c7"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 88,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "TX3LPaxmHKxFdv7VOQHJ",
+      "voiceName": "Liam",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "traveler_a_c_final_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 0.95,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c08_traveler_a/voice_c08_st004_001_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c09_st004_001",
+      "characterCode": "c09",
+      "characterId": 9,
+      "characterName": "Traveler B",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 1,
+      "dialogueText": "People see a blue light in the desert at night.",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "f70ce1cee0be1e14f70a372ec938e0b5b4066305ee3196dd7eb65215d1afa0ac"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 89,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "cgSgspJ2msm6clMCkdW9",
+      "voiceName": "Jessica",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "traveler_b_final_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 0.95,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c09_traveler_b/voice_c09_st004_001_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c10_st004_001",
+      "characterCode": "c10",
+      "characterId": 10,
+      "characterName": "Traveler C",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 1,
+      "dialogueText": "There is an old castle in the mountains.",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "57e4b6ca9c41a709572e73ace989794faa6dd4b5f7cee3ff450ab4ce4a14120f"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 90,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "TX3LPaxmHKxFdv7VOQHJ",
+      "voiceName": "Liam",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "traveler_a_c_final_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 0.95,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c10_traveler_c/voice_c10_st004_001_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c11_st004_001",
+      "characterCode": "c11",
+      "characterId": 11,
+      "characterName": "Local Woman",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 1,
+      "dialogueText": "Where are you from?",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "63265a79774350462d4ce11d5a90687ff8e6f2511bb512e0409be568b6be7046"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 93,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "Xb7hH8MSUJpSbSDYk0k2",
+      "voiceName": "Alice",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "local_woman_townsperson_final_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 0.95,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c11_local_woman/voice_c11_st004_001_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c03_st004_001",
+      "characterCode": "c03",
+      "characterId": 3,
+      "characterName": "Saki",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 1,
+      "dialogueText": "I'm from Future City.",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "01dc1e47a8f5600b2b7d940cab33a3fdec9c519f30b521babaa75b46f91d8503"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 94,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "iukn3a1vSSNFmdi5NZS4",
+      "voiceName": "Paula Paw",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "saki_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c03_saki/voice_c03_st004_001_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c11_st004_002",
+      "characterCode": "c11",
+      "characterId": 11,
+      "characterName": "Local Woman",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 2,
+      "dialogueText": "Do you like this town?",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "ea803945c900b965ad09581e0299a7c1650273ed4d0642cd1c17ba0e044a09dc"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 95,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "Xb7hH8MSUJpSbSDYk0k2",
+      "voiceName": "Alice",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "local_woman_townsperson_final_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 0.95,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c11_local_woman/voice_c11_st004_002_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c03_st004_002",
+      "characterCode": "c03",
+      "characterId": 3,
+      "characterName": "Saki",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 2,
+      "dialogueText": "Yes! I love it!",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "efdc35e09d292d1af1cdb61d1ef32de776e1b5598091f5d784265051cd5086f7"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 96,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "iukn3a1vSSNFmdi5NZS4",
+      "voiceName": "Paula Paw",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "saki_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c03_saki/voice_c03_st004_002_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c11_st004_003",
+      "characterCode": "c11",
+      "characterId": 11,
+      "characterName": "Local Woman",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 3,
+      "dialogueText": "Me too!",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "c4955bb7d8453786aeb66317de1e8009058be7c86bdb92bfc2e98c38b3435ada"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 97,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "Xb7hH8MSUJpSbSDYk0k2",
+      "voiceName": "Alice",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "local_woman_townsperson_final_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 0.95,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c11_local_woman/voice_c11_st004_003_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c03_st004_003",
+      "characterCode": "c03",
+      "characterId": 3,
+      "characterName": "Saki",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 3,
+      "dialogueText": "It's fun!",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "52387eced1e3c9d5d9f181390600572eadbdc23ef825c47a7736765ee2d6882a"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 98,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "iukn3a1vSSNFmdi5NZS4",
+      "voiceName": "Paula Paw",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "saki_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c03_saki/voice_c03_st004_003_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c01_st004_001",
+      "characterCode": "c01",
+      "characterId": 1,
+      "characterName": "Pico",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 1,
+      "dialogueText": "Let's go!",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "4455be73df06b0d173582d85f4e48a9d5ab9b02279c6d289e09f5c000e28ca29"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 99,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "XJ2fW4ybq7HouelYYGcL",
+      "voiceName": "Cherry Twinkle",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "pico_initial_learner_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 0.8,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c01_pico/voice_c01_st004_001_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c01_st004_002",
+      "characterCode": "c01",
+      "characterId": 1,
+      "characterName": "Pico",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 2,
+      "dialogueText": "Saki?",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "cd6aed634380a0f686c972a68c25799177bd7225263bf9bdcfe9b6677be3a9b1"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 108,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "XJ2fW4ybq7HouelYYGcL",
+      "voiceName": "Cherry Twinkle",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "pico_initial_learner_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 0.8,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c01_pico/voice_c01_st004_002_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c03_st004_004",
+      "characterCode": "c03",
+      "characterId": 3,
+      "characterName": "Saki",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 4,
+      "dialogueText": "Yes...",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "a43de6857ecefcf7aec5dd2dad7f7e750e6e28816f2819cf751754b3593bb660"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 109,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "iukn3a1vSSNFmdi5NZS4",
+      "voiceName": "Paula Paw",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "saki_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c03_saki/voice_c03_st004_004_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c03_st004_005",
+      "characterCode": "c03",
+      "characterId": 3,
+      "characterName": "Saki",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 5,
+      "dialogueText": "Master...",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "24ae7b04b7e4db032a7d5367e3a1554162685f9c93a4d362e9f1a18261141e2f"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 110,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "iukn3a1vSSNFmdi5NZS4",
+      "voiceName": "Paula Paw",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "saki_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c03_saki/voice_c03_st004_005_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c03_st004_006",
+      "characterCode": "c03",
+      "characterId": 3,
+      "characterName": "Saki",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 6,
+      "dialogueText": "I love this town.",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "e3040c234220faada4ad9ef121e08ae318d3d8b2631ebdf3ff80e3f91c8b7b65"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 111,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "iukn3a1vSSNFmdi5NZS4",
+      "voiceName": "Paula Paw",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "saki_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c03_saki/voice_c03_st004_006_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c03_st004_007",
+      "characterCode": "c03",
+      "characterId": 3,
+      "characterName": "Saki",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 7,
+      "dialogueText": "I want to talk with many people.",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "c694cc7a031d743142842bd34ebe3658dfb9a33d9cb078d71594d0f87f04678e"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 112,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "iukn3a1vSSNFmdi5NZS4",
+      "voiceName": "Paula Paw",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "saki_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c03_saki/voice_c03_st004_007_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c03_st004_008",
+      "characterCode": "c03",
+      "characterId": 3,
+      "characterName": "Saki",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 8,
+      "dialogueText": "I want to stay here.",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "b2d88cc102307b297fce9ddba1b8332cb8b897c200388fb9ed38f132ae9de3cd"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 113,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "iukn3a1vSSNFmdi5NZS4",
+      "voiceName": "Paula Paw",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "saki_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c03_saki/voice_c03_st004_008_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c03_st004_009",
+      "characterCode": "c03",
+      "characterId": 3,
+      "characterName": "Saki",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 9,
+      "dialogueText": "Yes.",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "5f9a2b795615ba6a3d5455fd5624d773fbca5bcd16249c421fd37411dc9837da"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 123,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "iukn3a1vSSNFmdi5NZS4",
+      "voiceName": "Paula Paw",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "saki_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c03_saki/voice_c03_st004_009_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c03_st004_010",
+      "characterCode": "c03",
+      "characterId": 3,
+      "characterName": "Saki",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 10,
+      "dialogueText": "Pico?",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "aa5f93d6365fe7d3d350a060914d85406f9cf942ea390fa29a31b9bf23351183"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 127,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "iukn3a1vSSNFmdi5NZS4",
+      "voiceName": "Paula Paw",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "saki_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c03_saki/voice_c03_st004_010_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c01_st004_003",
+      "characterCode": "c01",
+      "characterId": 1,
+      "characterName": "Pico",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 3,
+      "dialogueText": "Yes?",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "b8b7cfdf4758ef90476310dd4bffc7be69cdefdf57c1b98935a2fdc474fab753"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 128,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "XJ2fW4ybq7HouelYYGcL",
+      "voiceName": "Cherry Twinkle",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "pico_initial_learner_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 0.8,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c01_pico/voice_c01_st004_003_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c03_st004_011",
+      "characterCode": "c03",
+      "characterId": 3,
+      "characterName": "Saki",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 11,
+      "dialogueText": "Call me!",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "16ed390029ab7998766afbcb0b503701d3337ffeb01579bcf15eb7d6b4212392"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 129,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "iukn3a1vSSNFmdi5NZS4",
+      "voiceName": "Paula Paw",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "saki_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c03_saki/voice_c03_st004_011_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c01_st004_004",
+      "characterCode": "c01",
+      "characterId": 1,
+      "characterName": "Pico",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 4,
+      "dialogueText": "OK!",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "c79a4f748fb9d3b7d944cc1037977d40d3a3e56da9bbd6f6aa81f447b2cb7fc5"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 130,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "XJ2fW4ybq7HouelYYGcL",
+      "voiceName": "Cherry Twinkle",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "pico_initial_learner_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 0.8,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c01_pico/voice_c01_st004_004_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c03_st004_012",
+      "characterCode": "c03",
+      "characterId": 3,
+      "characterName": "Saki",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 12,
+      "dialogueText": "Can you hear me?",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "37e79c35d4fee75c4b225c6b8caa30481e72868356f37bd2f53c43aac43e9a29"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 131,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "iukn3a1vSSNFmdi5NZS4",
+      "voiceName": "Paula Paw",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "saki_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c03_saki/voice_c03_st004_012_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c01_st004_005",
+      "characterCode": "c01",
+      "characterId": 1,
+      "characterName": "Pico",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 5,
+      "dialogueText": "Yes! I can hear you!",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "7e9629d6a9e3bb8245df60512e8fc569533c5b7fd03a7b06574fd8b76dd3c060"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 132,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "XJ2fW4ybq7HouelYYGcL",
+      "voiceName": "Cherry Twinkle",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "pico_initial_learner_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 0.8,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c01_pico/voice_c01_st004_005_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c03_st004_013",
+      "characterCode": "c03",
+      "characterId": 3,
+      "characterName": "Saki",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 13,
+      "dialogueText": "It's not goodbye.",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "eb38992aaadd8d8823c1eba86395fd5daf89bb93794fb4a573ee2bf50a942f95"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 133,
+        "stepIndex": 63
+      },
+      "provider": "elevenlabs",
+      "voiceId": "iukn3a1vSSNFmdi5NZS4",
+      "voiceName": "Paula Paw",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "saki_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c03_saki/voice_c03_st004_013_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c03_st004_014",
+      "characterCode": "c03",
+      "characterId": 3,
+      "characterName": "Saki",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 14,
+      "dialogueText": "See you again, Master!",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "fbeeaa60ae2bb3bf0805715a67f5580fd7797081f661252a99eca276d6a1864c"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 134,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "iukn3a1vSSNFmdi5NZS4",
+      "voiceName": "Paula Paw",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "saki_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c03_saki/voice_c03_st004_014_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c03_st004_015",
+      "characterCode": "c03",
+      "characterId": 3,
+      "characterName": "Saki",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 15,
+      "dialogueText": "Thank you!",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "3afdda2c098fc8346a9f2e0ba06ec9c6188411cf78cc7934cfd8b666ce632f55"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 144,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "iukn3a1vSSNFmdi5NZS4",
+      "voiceName": "Paula Paw",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "saki_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c03_saki/voice_c03_st004_015_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c03_st004_016",
+      "characterCode": "c03",
+      "characterId": 3,
+      "characterName": "Saki",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 16,
+      "dialogueText": "See you!",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "b85e335c228acb9216783405b917ea818b8eef57dd9629d259506cb49ea4e519"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 145,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "iukn3a1vSSNFmdi5NZS4",
+      "voiceName": "Paula Paw",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "saki_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c03_saki/voice_c03_st004_016_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c12_st004_001",
+      "characterCode": "c12",
+      "characterId": 12,
+      "characterName": "Townsperson",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 1,
+      "dialogueText": "Hello!",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "334d016f755cd6dc58c53a86e183882f8ec14f52fb05345887c8a5edd42c87b7"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 153,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "Xb7hH8MSUJpSbSDYk0k2",
+      "voiceName": "Alice",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "local_woman_townsperson_final_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 0.95,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c12_townsperson/voice_c12_st004_001_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c03_st004_017",
+      "characterCode": "c03",
+      "characterId": 3,
+      "characterName": "Saki",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 17,
+      "dialogueText": "Hello!",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "334d016f755cd6dc58c53a86e183882f8ec14f52fb05345887c8a5edd42c87b7"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 155,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "iukn3a1vSSNFmdi5NZS4",
+      "voiceName": "Paula Paw",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "saki_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c03_saki/voice_c03_st004_017_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c01_st004_006",
+      "characterCode": "c01",
+      "characterId": 1,
+      "characterName": "Pico",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 6,
+      "dialogueText": "Let's go, Master!",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "32be37e1d1d25d2b59f55bdf32cac0e3a846f1e1dc9790b382cc0457f557ebbe"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 165,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "XJ2fW4ybq7HouelYYGcL",
+      "voiceName": "Cherry Twinkle",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "pico_initial_learner_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 0.8,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c01_pico/voice_c01_st004_006_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c03_st004_018",
+      "characterCode": "c03",
+      "characterId": 3,
+      "characterName": "Saki",
+      "storyId": "st004",
+      "eventId": null,
+      "sequence": 18,
+      "dialogueText": "See you, Master!",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "685495ab252aaf0281eca39d2b5ceb9356428c8ff05e1138c1fb6e848d299bb9"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/story-saki-departure.js",
+        "line": 169,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "iukn3a1vSSNFmdi5NZS4",
+      "voiceName": "Paula Paw",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "saki_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c03_saki/voice_c03_st004_018_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "004",
+      "sourceId": "st004",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    }
+  ]
+}

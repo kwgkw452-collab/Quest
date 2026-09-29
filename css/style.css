@@ -1,0 +1,713 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background: #000;
+  color: #fff;
+  font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif;
+  overflow: hidden;
+}
+
+button, input {
+  font: inherit;
+}
+
+#game, .scene {
+  width: 100%;
+  height: 100%;
+}
+
+.scene {
+  position: relative;
+  overflow: hidden;
+  background: #000;
+}
+
+.background {
+  position: absolute;
+  inset: 0;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  transition: opacity 1.2s ease, filter .75s ease;
+}
+
+.scene.battle-damage-1 .background {
+  filter: brightness(.82) saturate(.94);
+}
+
+.scene.battle-damage-2 .background {
+  filter: brightness(.64) saturate(.86);
+}
+
+.scene.battle-damage-3 .background {
+  filter: brightness(.46) saturate(.76);
+}
+
+.blue-filter {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: rgba(24, 67, 150, 0.34);
+  pointer-events: none;
+}
+
+.item-layer,
+.character-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.item-layer {
+  z-index: 4;
+}
+
+.character-layer {
+  z-index: 5;
+}
+
+.item-image {
+  position: absolute;
+  left: 50%;
+  bottom: 23%;
+  max-width: min(46vw, 430px);
+  max-height: 48vh;
+  transform: translateX(-50%);
+  object-fit: contain;
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, .55));
+}
+
+.event-fullscreen {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  transform: none;
+  object-fit: cover;
+  filter: none;
+}
+
+.character-image {
+  position: absolute;
+  bottom: 24%;
+  max-width: min(42vw, 430px);
+  max-height: 57vh;
+  object-fit: contain;
+  filter: drop-shadow(0 12px 20px rgba(0, 0, 0, .6));
+}
+
+.character-image.center {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.character-image.left {
+  left: 7%;
+}
+
+.character-image.right {
+  right: 7%;
+}
+
+.sleep-character {
+  position: absolute;
+  left: 50%;
+  top: 24%;
+  max-width: min(50vw, 460px);
+  max-height: 46vh;
+  transform: translateX(-50%);
+  object-fit: contain;
+  filter: drop-shadow(0 12px 20px rgba(0, 0, 0, .7));
+}
+
+.zzz {
+  position: absolute;
+  left: 62%;
+  top: 17%;
+  font-size: clamp(28px, 5vw, 56px);
+  font-weight: 800;
+  letter-spacing: .12em;
+  animation: floatZ 2s ease-in-out infinite;
+  text-shadow: 0 0 12px rgba(255,255,255,.8);
+}
+
+@keyframes floatZ {
+  0%, 100% { transform: translateY(0); opacity: .65; }
+  50% { transform: translateY(-16px); opacity: 1; }
+}
+
+.dialogue-box {
+  position: absolute;
+  left: 3%;
+  right: 3%;
+  bottom: 3%;
+  z-index: 10;
+  min-height: 0;
+  max-height: 24%;
+  padding: 8px 16px;
+  border: 4px solid #fff;
+  border-radius: 16px;
+  background: rgba(0, 0, 0, .88);
+  box-shadow: 0 0 0 4px rgba(0,0,0,.7), 0 12px 35px rgba(0,0,0,.55);
+  overflow-y: auto;
+}
+
+.speaker {
+  min-height: 1.15em;
+  margin-bottom: 3px;
+  color: #ffd34d;
+  font-weight: 800;
+  font-size: clamp(16px, 1.8vw, 23px);
+}
+
+.message {
+  white-space: pre-wrap;
+  line-height: 1.32;
+  font-size: clamp(15px, 1.75vw, 22px);
+}
+
+.recognized-text {
+  margin-top: 6px;
+  padding: 6px 10px;
+  border-left: 4px solid #6ee7ff;
+  color: #bff5ff;
+  background: rgba(0, 100, 130, .18);
+  font-size: clamp(16px, 1.8vw, 22px);
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 7px;
+}
+
+.control-button {
+  min-width: 110px;
+  padding: 7px 15px;
+  border: 2px solid #fff;
+  border-radius: 10px;
+  background: #151515;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.control-button:hover,
+.control-button:focus {
+  background: #fff;
+  color: #000;
+}
+
+.control-button:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+
+.control-button:disabled:hover,
+.control-button:disabled:focus {
+  background: #151515;
+  color: #fff;
+}
+
+.text-input {
+  min-width: min(100%, 360px);
+  padding: 11px 14px;
+  border: 2px solid #fff;
+  border-radius: 8px;
+  background: #fff;
+  color: #111;
+}
+
+.opening-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255,255,255,.8) 0 1px, transparent 2px),
+    radial-gradient(circle at 70% 35%, rgba(255,255,255,.65) 0 1px, transparent 2px),
+    radial-gradient(circle at 45% 75%, rgba(255,255,255,.5) 0 1px, transparent 2px),
+    #000;
+  background-size: 130px 130px, 170px 170px, 210px 210px, auto;
+}
+
+.opening-layer.hidden {
+  display: none;
+}
+
+.crawl-text {
+  position: absolute;
+  right: -15%;
+  top: 12%;
+  width: 85%;
+  color: #f5cf45;
+  text-align: center;
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 800;
+  font-size: clamp(30px, 6vw, 78px);
+  line-height: 1.3;
+  text-shadow: 0 0 14px rgba(245,207,69,.35);
+  transform: rotate(-12deg) scale(.65);
+  animation: cinematicCrawl 10s linear forwards;
+}
+
+@keyframes cinematicCrawl {
+  0% {
+    transform: translate(30%, -15%) rotate(-12deg) scale(.45);
+    opacity: 0;
+  }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% {
+    transform: translate(-65%, 55%) rotate(-12deg) scale(1.65);
+    opacity: 0;
+  }
+}
+
+.opening-panel {
+  position: absolute;
+  inset: 6%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+  padding: 28px;
+  border: 2px solid rgba(255,255,255,.45);
+  border-radius: 20px;
+  background: rgba(0,0,0,.88);
+  text-align: center;
+  overflow-y: auto;
+}
+
+.opening-panel h1 {
+  margin: 0;
+  color: #ffd34d;
+  font-size: clamp(28px, 5vw, 60px);
+}
+
+.opening-panel p {
+  max-width: 980px;
+  margin: 0;
+  white-space: pre-wrap;
+  line-height: 1.8;
+  font-size: clamp(17px, 2vw, 24px);
+}
+
+.notice-title {
+  color: #ffdd63;
+  font-weight: 900;
+  font-size: clamp(24px, 3vw, 36px);
+}
+
+.notice-accent {
+  color: #7ee7ff;
+}
+
+/* たいせつなお約束画面：読みやすさと1画面表示を両立 */
+.opening-panel.notice-panel {
+  inset: 4%;
+  justify-content: center;
+  gap: 15px;
+  padding: 22px 30px;
+  overflow-y: auto;
+}
+
+.opening-panel.notice-panel p {
+  width: min(94%, 1120px);
+  max-width: 1120px;
+  line-height: 1.55;
+  font-size: clamp(17px, 1.85vw, 23px);
+}
+
+.opening-panel.notice-panel .notice-title {
+  flex: 0 0 auto;
+  font-size: clamp(26px, 3vw, 38px);
+}
+
+.opening-panel.notice-panel .control-button {
+  flex: 0 0 auto;
+  margin-top: 4px;
+  padding: 9px 20px;
+}
+
+@media (max-height: 720px) {
+  .opening-panel.notice-panel {
+    inset: 3%;
+    gap: 10px;
+    padding: 14px 20px;
+  }
+
+  .opening-panel.notice-panel p {
+    line-height: 1.4;
+    font-size: clamp(14px, 1.55vw, 19px);
+  }
+
+  .opening-panel.notice-panel .notice-title {
+    font-size: clamp(22px, 2.5vw, 31px);
+  }
+}
+
+.fade-out {
+  opacity: 0 !important;
+  transition: opacity .9s ease;
+}
+
+/* 既存EffectManagerで使う短い暗転解除。m004専用Engineは持たせない。 */
+.scene-fade-in {
+  animation: sceneFadeIn .9s ease-out both;
+}
+
+@keyframes sceneFadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.screen-flash {
+  animation: flash .55s ease;
+}
+
+/* Campの暗さから朝の光へ、約3秒かけて自然に明るくする。 */
+.morning-fade-in {
+  animation: morningFadeIn 3s ease-out both;
+}
+
+@keyframes morningFadeIn {
+  0% { filter: brightness(.16); }
+  35% { filter: brightness(.38); }
+  100% { filter: brightness(1); }
+}
+
+@keyframes flash {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(2.2); }
+}
+
+.shake {
+  animation: shake .6s ease;
+}
+
+/* Databaseから選ぶ、赤フラッシュ＋軽いシェイクの共通Monster hit演出。 */
+.number-monster-hit {
+  animation: numberMonsterHit .6s ease;
+}
+
+@keyframes numberMonsterHit {
+  0%, 100% { transform: translateX(0); box-shadow: inset 0 0 0 0 rgba(255, 20, 20, 0); }
+  20% { transform: translateX(-10px); box-shadow: inset 0 0 0 100vmax rgba(255, 28, 28, .5); }
+  40% { transform: translateX(8px); box-shadow: inset 0 0 0 100vmax rgba(255, 28, 28, .28); }
+  60% { transform: translateX(-6px); box-shadow: inset 0 0 0 100vmax rgba(255, 28, 28, .18); }
+  80% { transform: translateX(4px); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-12px); }
+  40% { transform: translateX(10px); }
+  60% { transform: translateX(-8px); }
+  80% { transform: translateX(6px); }
+}
+
+@media (max-width: 700px) {
+  .dialogue-box {
+    left: 2%;
+    right: 2%;
+    bottom: 2%;
+    min-height: 0;
+    max-height: 30%;
+    padding: 7px 12px;
+  }
+
+  .character-image {
+    bottom: 31%;
+    max-height: 48vh;
+  }
+
+  .item-image {
+    bottom: 32%;
+  }
+}
+
+
+.opening-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000;
+}
+
+.opening-skip {
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  z-index: 2;
+  min-width: auto;
+  opacity: .8;
+}
+
+/* Camp Engine: 選出された同行Characterの共通自動配置。 */
+.story-character.camp-character {
+  bottom: 14%;
+  max-width: min(30vw, 330px);
+  max-height: 43vh;
+}
+
+/* Camp only: lower the shared dialogue slightly without affecting other scenes. */
+#scene:has(#background[style*="bg_camp.png"]) > .dialogue-box {
+  bottom: 1.5%;
+}
+.story-character.camp-slot-left { left: 7%; }
+.story-character.camp-slot-center { left: 50%; transform: translateX(-50%); }
+.story-character.camp-slot-right { right: 7%; }
+.camp-zzz.camp-slot-left { left: 20%; top: 28%; }
+.camp-zzz.camp-slot-center { left: 54%; top: 25%; }
+.camp-zzz.camp-slot-right { left: 82%; top: 28%; }
+
+@media (max-width: 700px) {
+  #scene:has(#background[style*="bg_camp.png"]) > .dialogue-box { bottom: .5%; }
+  .story-character.camp-character { max-width: 31vw; max-height: 36vh; }
+  .story-character.camp-slot-left { left: 2%; }
+  .story-character.camp-slot-right { right: 2%; }
+  .camp-zzz.camp-slot-left { left: 16%; top: 32%; }
+  .camp-zzz.camp-slot-center { left: 53%; top: 29%; }
+  .camp-zzz.camp-slot-right { left: 83%; top: 32%; }
+}
+
+/* Monster撃破：爆発光から暗転し、撃破画像を画面へ大きく見せる。 */
+.scene.battle-explosion::after,
+.scene.battle-blackout::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.scene.battle-explosion::after {
+  animation: battleExplosion .75s ease-in-out both;
+}
+
+.scene.battle-blackout::after {
+  background: #000;
+}
+
+.scene.battle-fruit-reveal [data-monster-state="defeated"] {
+  animation: battleFruitReveal 1s cubic-bezier(.18, .8, .24, 1) both;
+}
+
+/* 疑似Camp専用。通常CampやMorningの速度には影響させない。 */
+.scene.pseudo-camp-transition {
+  transition: opacity 3s ease-in-out;
+}
+
+.scene.pseudo-camp-dark {
+  opacity: 0;
+}
+
+@keyframes battleExplosion {
+  0% { background: rgba(255, 255, 255, 0); }
+  28% { background: rgba(255, 250, 205, 1); }
+  58% { background: rgba(255, 255, 255, 1); }
+  100% { background: rgba(0, 0, 0, 1); }
+}
+
+@keyframes battleFruitReveal {
+  0% { opacity: 0; transform: translateX(-50%) scale(.72); filter: brightness(2.4); }
+  55% { opacity: 1; transform: translateX(-50%) scale(1.08); filter: brightness(1.35); }
+  100% { opacity: 1; transform: translateX(-50%) scale(1); filter: brightness(1); }
+}
+
+
+/* ===== 共通モジュール配置 ===== */
+.story-character {
+  position: absolute;
+  object-fit: contain;
+  filter: drop-shadow(0 12px 20px rgba(0, 0, 0, .7));
+}
+.pos-center-low { left: 50%; bottom: 24%; transform: translateX(-50%); }
+.pos-left-low { left: 10%; bottom: 23%; }
+.pos-right-low { right: 8%; bottom: 20%; }
+.st004-farewell-pico { left: 68%; bottom: 18%; transform: translateX(-50%); }
+.st004-saki-pico-low { left: 50%; bottom: 17%; transform: translateX(-50%); }
+.s004-left-upper { left: 25%; bottom: 35%; transform: translateX(-50%); }
+.s004-center-upper { left: 50%; bottom: 35%; transform: translateX(-50%); }
+.size-small { max-width: min(25vw, 250px); max-height: 38vh; }
+.size-medium { max-width: min(42vw, 430px); max-height: 57vh; }
+.size-large { max-width: min(42vw, 430px); max-height: 43vh; }
+.story-character.monster-giant-tree {
+  left: 50%;
+  bottom: 20%;
+  width: auto;
+  height: 78vh;
+  max-width: none;
+  max-height: none;
+  transform: translateX(-50%);
+}
+.story-character.monster-layer-stack {
+  left: 50%; bottom: 24%; transform: translateX(-50%);
+  width: min(42vw, 430px); height: min(57vh, 480px);
+}
+.monster-layer-stack img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain;
+}
+.monster-face-parts img[data-face-layer="eyes"][data-face-side="left"] {
+  clip-path: inset(0 50% 0 0);
+  transform: translate(3%, -15%);
+}
+.monster-face-parts img[data-face-layer="eyes"][data-face-side="right"] {
+  clip-path: inset(0 0 0 50%);
+  transform: translate(-3%, -15%);
+}
+.monster-face-parts img[data-face-layer="ears"][data-face-side="left"] {
+  clip-path: inset(0 50% 0 0);
+  transform: translateX(-4%) scale(0.93);
+  transform-origin: center;
+}
+.monster-face-parts img[data-face-layer="ears"][data-face-side="right"] {
+  clip-path: inset(0 0 0 50%);
+  transform: translateX(4%) scale(0.93);
+  transform-origin: center;
+}
+.monster-face-parts img[data-face-layer="mouth"] {
+  transform: translateY(14%) scale(0.62);
+  transform-origin: center;
+}
+.monster-face-parts img[data-face-layer="smile"] {
+  transform: translate(-1%, 14%) scale(0.50);
+  transform-origin: center;
+}
+.zzz-right { left: 69%; top: 25%; }
+.dialogue-box.dialogue-compact { min-height: 0; max-height: 24%; padding: 12px 20px; }
+
+@media (max-width: 700px) {
+  .pos-center-low { bottom: 31%; }
+  .pos-left-low { left: 5%; bottom: 28%; }
+  .pos-right-low { right: 2%; bottom: 26%; }
+  .st004-farewell-pico { left: 66%; bottom: 24%; transform: translateX(-50%); }
+  .st004-saki-pico-low { left: 50%; bottom: 22%; transform: translateX(-50%); }
+  .s004-left-upper { left: 25%; bottom: 40%; transform: translateX(-50%); }
+  .s004-center-upper { left: 50%; bottom: 40%; transform: translateX(-50%); }
+  .size-small { max-width: 28vw; max-height: 32vh; }
+  .size-medium { max-height: 48vh; }
+
+  .size-large { max-width: 48vw; max-height: 36vh; }
+  .zzz-right { left: 74%; top: 28%; }
+  .dialogue-box.dialogue-compact { min-height: 0; max-height: 25%; padding: 10px 14px; }
+}
+
+/* Engine 2.0 alpha8: 共通動画レイヤー */
+.media-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 35;
+  background: #000;
+  overflow: hidden;
+}
+
+.media-layer[hidden] {
+  display: none;
+}
+
+.story-video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000;
+}
+
+.video-skip {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  z-index: 2;
+}
+
+/* Pico Break: API待ち、数話間隔、ランダム、伏線・噂の共通割り込み画面 */
+.pico-break-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  padding: 5vw;
+  background: rgba(4, 12, 30, .82);
+  backdrop-filter: blur(5px);
+  opacity: 0;
+  transition: opacity .18s ease;
+}
+
+.pico-break-layer.show { opacity: 1; }
+.pico-break-layer[hidden] { display: none; }
+
+.pico-break-card {
+  width: min(760px, 92vw);
+  padding: clamp(24px, 5vw, 54px);
+  border: 4px solid #fff;
+  border-radius: 28px;
+  background: linear-gradient(145deg, rgba(31, 79, 150, .97), rgba(42, 20, 94, .97));
+  box-shadow: 0 22px 70px rgba(0, 0, 0, .65), inset 0 0 40px rgba(255, 255, 255, .08);
+  text-align: center;
+  transform: translateY(16px) scale(.97);
+  transition: transform .18s ease;
+}
+
+.pico-break-layer.show .pico-break-card { transform: translateY(0) scale(1); }
+.pico-break-badge { font-weight: 900; letter-spacing: .18em; color: #8ff4ff; }
+.pico-break-title { margin: .45em 0; color: #ffe36d; font-size: clamp(25px, 4vw, 46px); }
+.pico-break-text { min-height: 3em; white-space: pre-wrap; line-height: 1.7; font-size: clamp(18px, 2.5vw, 28px); }
+.pico-break-close { margin-top: 18px; }
+
+/* Experimental build only: Pico Breakを実際に呼び出す確認パネル */
+.pico-break-demo {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 30;
+  width: min(430px, calc(100vw - 24px));
+  padding: 14px;
+  border: 2px solid #8ff4ff;
+  border-radius: 16px;
+  background: rgba(5, 16, 38, .94);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .55);
+  color: #fff;
+}
+
+.pico-break-demo strong { color: #ffe36d; font-size: 1.15rem; }
+.pico-break-demo p { margin: 8px 0 10px; line-height: 1.45; }
+.pico-break-demo-controls { display: flex; flex-wrap: wrap; gap: 8px; }
+.pico-break-demo .control-button { min-width: 0; padding: 8px 12px; font-size: .95rem; }
+
+@media (max-width: 700px) {
+  .pico-break-demo { top: 6px; right: 6px; width: calc(100vw - 12px); }
+}
+
+/* st004 MAP / KEY: keep both choices visible while the shared speech UI is open. */
+#scene:has(#background[style*="s004_map_key_choice_final.png"]) > .dialogue-box {
+  top: 25%;
+  bottom: auto;
+  left: 24%;
+  right: 24%;
+  max-height: 18%;
+  padding: 8px 16px;
+}
+
+@media (max-width: 700px) {
+  #scene:has(#background[style*="s004_map_key_choice_final.png"]) > .dialogue-box {
+    top: 24%;
+    bottom: auto;
+    left: 8%;
+    right: 8%;
+    max-height: 22%;
+    padding: 6px 10px;
+  }
+}

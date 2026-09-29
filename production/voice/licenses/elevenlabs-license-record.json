@@ -1,0 +1,15 @@
+{
+  "licenseId": "elevenlabs_pending_verification",
+  "provider": "ElevenLabs",
+  "verificationStatus": "pending",
+  "accountPlan": null,
+  "termsUrl": null,
+  "termsCheckedAt": null,
+  "commercialUseConfirmed": null,
+  "attributionRequired": null,
+  "voiceLibraryUseConfirmed": null,
+  "evidenceRef": null,
+  "effectiveFrom": null,
+  "effectiveTo": null,
+  "notes": "契約、商用利用、Attribution、Voice Library利用条件はProduction採用前に人間が確認する。未確認事項を許諾済みとして扱わない。"
+}

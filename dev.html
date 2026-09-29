@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Eigo DE Quest - Dev Jump V1.0</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script>window.__EIGO_DEV_MODE__ = true; window.__EIGO_DEV_SAVE__ = true;</script>
+  <script src="dev/formal-speech-trace.js?v=communicative-formal-trace-v1"></script>
+</head>
+<body>
+  <main id="game" aria-live="polite">
+    <section id="scene" class="scene">
+      <div id="background" class="background"></div>
+      <div id="blue-filter" class="blue-filter" hidden></div>
+      <div id="item-layer" class="item-layer"></div>
+      <div id="character-layer" class="character-layer"></div>
+      <section id="media-layer" class="media-layer" hidden></section>
+      <section id="opening-layer" class="opening-layer hidden"></section>
+      <section id="pico-break-layer" class="pico-break-layer" hidden>
+        <article id="pico-break-card" class="pico-break-card">
+          <div class="pico-break-badge">PICO BREAK</div>
+          <h2 id="pico-break-title" class="pico-break-title"></h2>
+          <p id="pico-break-text" class="pico-break-text"></p>
+          <button id="pico-break-close" class="control-button pico-break-close" type="button">冒険にもどる</button>
+        </article>
+      </section>
+      <section id="dialogue-box" class="dialogue-box" hidden>
+        <div id="speaker" class="speaker"></div>
+        <div id="message" class="message"></div>
+        <div id="recognized-text" class="recognized-text" hidden></div>
+        <div id="controls" class="controls"></div>
+      </section>
+    </section>
+  </main>
+
+  <script src="engine/config.js"></script>
+  <script src="data/poses.js"></script>
+  <script src="data/characters.js"></script>
+  <script src="data/backgrounds.js"></script>
+  <script src="data/items.js"></script>
+  <script src="data/audio.js"></script>
+  <script src="data/audio-mix-profile.js"></script>
+  <script src="data/voice-profiles.js"></script>
+  <script src="data/videos.js"></script>
+  <script src="data/effects.js"></script>
+  <script src="data/word-dictionaries.js?v=qm-playtest-v1-fix1"></script>
+  <script src="data/monsters.js"></script>
+  <script src="data/questions.js?v=s005-phase-a2-v1"></script>
+  <script src="data/lottery-pools.js?v=s005-phase-a2-v1"></script>
+  <script src="data/m004.js"></script>
+  <script src="data/communicative-judge-rules.js?v=s005-registry-instance-fix-v1"></script>
+  <script src="data/pico-breaks.js"></script>
+  <script src="data/camps.js"></script>
+  <script src="data/mornings.js"></script>
+  <script src="engine/services/asset-resolver.js"></script>
+  <script src="engine/services/speech-normalizer.js?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1"></script>
+  <script src="engine/services/legacy-speech-trace.js?v=legacy-speech-runtime-trace-v1"></script>
+  <script src="engine/services/speech-recognition-adapter.js?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1"></script>
+  <script src="engine/services/speech-engine.js?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1"></script>
+  <script src="engine/services/speech-start-controller.js?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1"></script>
+  <script src="engine/services/lottery-engine.js?v=s005-phase-a2-v1"></script>
+  <script src="engine/services/local-communicative-judge.js?v=s005-rule-real-browser-trace-v1"></script>
+  <script src="engine/services/communicative-judge.js?v=s005-rule-real-browser-trace-v1"></script>
+  <script src="engine/services/communicative-question-adapter.js?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1"></script>
+  <script src="engine/services/speech.js"></script>
+  <script src="engine/services/opening.js"></script>
+  <script src="engine/services/pico-break-store.js"></script>
+  <script src="engine/services/pico-break-catalog.js"></script>
+  <script src="engine/services/monster-battle-data.js"></script>
+  <script src="engine/managers/dialog-manager.js"></script>
+  <script src="engine/managers/character-manager.js"></script>
+  <script src="engine/managers/monster-manager.js"></script>
+  <script src="engine/managers/question-manager.js?v=s005-rule-real-browser-trace-v1"></script>
+  <script src="engine/presenters/communicative-question-presenter.js?v=s005-listening-ui-v1"></script>
+  <script src="engine/controllers/communicative-question-flow-controller.js?v=s005-phase-a2-v1"></script>
+  <script src="engine/managers/camp-manager.js"></script>
+  <script src="engine/managers/morning-manager.js"></script>
+  <script src="engine/managers/monster-battle-presenter.js"></script>
+  <script src="engine/managers/monster-battle-manager.js"></script>
+  <script src="engine/services/m004-battle-extension.js"></script>
+  <script src="engine/managers/effect-manager.js"></script>
+  <script src="engine/managers/audio-manager.js"></script>
+  <script src="engine/services/dialogue-voice-controller.js"></script>
+  <script src="engine/managers/video-manager.js"></script>
+  <script src="engine/managers/save-manager.js"></script>
+  <script src="engine/managers/pico-break-manager.js"></script>
+  <script src="engine/core/core.js"></script>
+  <script src="engine/commands/story-commands.js"></script>
+  <script src="engine/core/story-compiler.js"></script>
+  <script src="engine/core/story-registry.js"></script>
+  <script src="engine/core/story-events.js"></script>
+  <script src="engine/core/story-engine.js?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1"></script>
+  <script src="engine/core/event-system.js"></script>
+  <script src="engine/core/scene-manager.js"></script>
+  <script src="engine/stories/S001.js"></script>
+  <script src="engine/stories/m001.js"></script>
+  <script src="engine/stories/S002.js"></script>
+  <script src="engine/stories/S003.js"></script>
+  <script src="engine/stories/S004.js"></script>
+  <script src="engine/stories/story-saki-departure.js"></script>
+  <script src="engine/stories/m004.js"></script>
+  <script src="engine/stories/S005.js?v=s005-local-judge-runtime-fix-v1"></script>
+  <script src="data/s005-communicative-judge-rules.js?v=s005-rule-real-browser-trace-v1"></script>
+  <script src="dev/dev-jump-runtime-trace.js"></script>
+  <script src="dev/dev-checkpoints.js"></script>
+  <script src="dev/dev-jump-manager.js"></script>
+  <script src="dev/dev-jump-ui.js"></script>
+  <script src="dev/communicative-judge-pilot.js?v=communicative-formal-trace-v1"></script>
+  <script src="dev/communicative-question-manager-playtest.js?v=communicative-formal-trace-v1"></script>
+</body>
+</html>

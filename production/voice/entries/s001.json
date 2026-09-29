@@ -1,0 +1,207 @@
+{
+  "storyOrEventId": "s001",
+  "storyNumber": "001",
+  "sourceId": "S001",
+  "entries": [
+    {
+      "voiceKey": "voice_c02_s001_001",
+      "characterCode": "c02",
+      "characterId": 2,
+      "characterName": "Kong",
+      "storyId": "s001",
+      "eventId": null,
+      "sequence": 1,
+      "dialogueText": "WHERE ARE YOU FROM!?",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "cebc4aec35e46012fb0794850c06af2a015cacae09d93821328712e4c14c750f"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/S001.js",
+        "line": 51,
+        "stepIndex": 33
+      },
+      "provider": "elevenlabs",
+      "voiceId": "6kvJeRKXugeztFfd9EVP",
+      "voiceName": "Adrian",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "kong_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c02_kong/voice_c02_s001_001_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "001",
+      "sourceId": "S001",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c02_s001_002",
+      "characterCode": "c02",
+      "characterId": 2,
+      "characterName": "Kong",
+      "storyId": "s001",
+      "eventId": null,
+      "sequence": 2,
+      "dialogueText": "My body is so big. But I am very shy. I want friends. But I say something, people go away... why?",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "35dc7ab95e5facdc57897691fa01e5bc0c2ae8a7dd2371f4155b535a154fd87e"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/S001.js",
+        "line": 56,
+        "stepIndex": 38
+      },
+      "provider": "elevenlabs",
+      "voiceId": "6kvJeRKXugeztFfd9EVP",
+      "voiceName": "Adrian",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "kong_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c02_kong/voice_c02_s001_002_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "001",
+      "sourceId": "S001",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c02_s001_003",
+      "characterCode": "c02",
+      "characterId": 2,
+      "characterName": "Kong",
+      "storyId": "s001",
+      "eventId": null,
+      "sequence": 3,
+      "dialogueText": "What's your name?",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "56e8908ad76682304d68ca9cd055ca9d6b96ff2f8077d1041567dde66aed9724"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/S001.js",
+        "line": 58,
+        "stepIndex": 40
+      },
+      "provider": "elevenlabs",
+      "voiceId": "6kvJeRKXugeztFfd9EVP",
+      "voiceName": "Adrian",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "kong_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c02_kong/voice_c02_s001_003_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "001",
+      "sourceId": "S001",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    },
+    {
+      "voiceKey": "voice_c02_s001_005",
+      "characterCode": "c02",
+      "characterId": 2,
+      "characterName": "Kong",
+      "storyId": "s001",
+      "eventId": null,
+      "sequence": 5,
+      "dialogueText": "My friend! Let's go!",
+      "dialogueHash": {
+        "algorithm": "sha256",
+        "value": "f2521386ec36c6d4d1392bb49612cb60df18ccae73e0c3933e13ad2caa68d02b"
+      },
+      "sourceLocation": {
+        "file": "engine/stories/S001.js",
+        "line": 62,
+        "stepIndex": null
+      },
+      "provider": "elevenlabs",
+      "voiceId": "6kvJeRKXugeztFfd9EVP",
+      "voiceName": "Adrian",
+      "voiceLocale": null,
+      "modelLabel": "Eleven v3",
+      "modelId": "eleven_v3",
+      "speedProfileRef": "kong_natural_v1",
+      "audioTags": [],
+      "deliveryInstructions": null,
+      "generationText": null,
+      "generationSettings": {
+        "modelId": "eleven_v3",
+        "languageCode": "en",
+        "outputFormat": "mp3_44100_128",
+        "voiceSettings": {
+          "speed": 1,
+          "gain": 1
+        }
+      },
+      "runtimeFile": "audio/voice/c02_kong/voice_c02_s001_005_v1.mp3",
+      "version": 1,
+      "status": "planned",
+      "generatedAt": null,
+      "adoptedAt": null,
+      "licenseRef": "elevenlabs_pending_verification",
+      "notes": "",
+      "history": [],
+      "storyNumber": "001",
+      "sourceId": "S001",
+      "dialogueType": "fixed",
+      "voiceEligible": true
+    }
+  ]
+}
