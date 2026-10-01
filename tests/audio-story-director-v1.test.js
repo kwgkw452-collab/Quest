@@ -33,7 +33,9 @@ Object.entries(assets).forEach(([key, file]) => {
 
 const manager = read("engine/managers/audio-manager.js");
 assert(manager.includes('"zephyrFriendship"'), "FRIENDSHIP must use Zephyr duplicate prevention");
-assert(manager.includes("function fade("));
+assert(manager.includes("function animateTrack("));
+assert(manager.includes("function animatePolicy("));
+assert(manager.includes("function applyCanonicalMix("));
 assert(manager.includes("options.crossfadeMs"));
 assert(manager.includes("options.fadeToVolume"));
 

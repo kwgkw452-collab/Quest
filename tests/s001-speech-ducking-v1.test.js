@@ -51,7 +51,9 @@ vm.runInContext(fs.readFileSync(path.join(root, "engine/managers/audio-manager.j
   assert(Math.abs(0.52 * 0.25 - 0.13) < 0.000001, "Silent Tears speech volume must be 0.13");
 
   const audioKeys = Object.keys(context.AudioManager).sort();
-  assert.deepStrictEqual(audioKeys, ["ensureContextRunning", "getAudioContext", "playBgm", "playSe", "playVoice", "stopAll", "stopBgm", "unlock"].sort());
+  assert.deepStrictEqual(audioKeys, ["ensureContextRunning", "enterDialogueVoiceMode", "enterSpeechMode",
+    "exitDialogueVoiceMode", "exitSpeechMode", "getAudioContext", "getState", "playBgm", "playSe",
+    "playVoice", "stopAll", "stopBgm", "unlock"].sort());
 
   const story = fs.readFileSync(path.join(root, "engine/stories/S001.js"), "utf8");
   assert(story.includes('C.question("word.hello", null, { speechDucking: { restore: false } })'));
@@ -60,9 +62,9 @@ vm.runInContext(fs.readFileSync(path.join(root, "engine/managers/audio-manager.j
   assert(!/C\.stopBgm\([^\n]*\),\n\s*C\.question\("word\.(japan|yes)"/.test(story));
 
   const manager = fs.readFileSync(path.join(root, "engine/managers/audio-manager.js"), "utf8");
-  assert(manager.includes("ratio: options.ratio === undefined ? 0.25"));
-  assert(manager.includes("duckMs: options.duckMs === undefined ? 300"));
-  assert(manager.includes("restoreMs: options.restoreMs === undefined ? 600"));
+  assert(manager.includes('animatePolicy("speech", profile.ratio === undefined ? 0.25'));
+  assert(manager.includes("profile.duckMs === undefined ? 300 : profile.duckMs"));
+  assert(manager.includes("profile.restoreMs === undefined ? 600 : profile.restoreMs"));
 
   const events = [];
   context.QuestionDatabase = {

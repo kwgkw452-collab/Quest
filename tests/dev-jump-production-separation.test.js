@@ -44,9 +44,9 @@ Object.entries(storyHashes).forEach(([file, expected]) => assert.strictEqual(has
 const audio = read("engine/managers/audio-manager.js");
 const s001 = read("engine/stories/S001.js");
 const opening = read("engine/services/opening.js");
-assert(audio.includes("ratio: options.ratio === undefined ? 0.25"));
-assert(audio.includes("duckMs: options.duckMs === undefined ? 300"));
-assert(audio.includes("restoreMs: options.restoreMs === undefined ? 600"));
+assert(audio.includes('animatePolicy("speech", profile.ratio === undefined ? 0.25'));
+assert(audio.includes("profile.duckMs === undefined ? 300 : profile.duckMs"));
+assert(audio.includes("profile.restoreMs === undefined ? 600 : profile.restoreMs"));
 assert(opening.includes('volume: 0.23'));
 assert.strictEqual((s001.match(/C\.bgm\("zephyrFields", \{ loop: true, volume: 0\.46/g) || []).length, 3);
 assert(s001.includes('C.bgm("kongEmotionalSilentTears", { loop: true, volume: 0.52'));

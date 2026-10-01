@@ -5,15 +5,24 @@
   var voices = [];
   var dialogueVoices = [];
   var effects = [];
-  var fadeSerial = 0;
   var speechDucking = null;
   var radioTraceSerial = 0;
   var canonicalAudioContext = null;
   var unlockAttempted = false;
   var unlockPromise = null;
-  var dialogueDuckCount = 0;
-  var dialogueDuckAudio = null;
-  var dialogueDuckNormalVolume = null;
+  var bgmTracks = [];
+  var audioState = {
+    currentBgmAsset: null,
+    baseBgmVolume: 0,
+    effectiveBgmVolume: 0,
+    fadeState: "idle",
+    duckState: {
+      dialogue: { multiplier: 1, owners: 0, serial: 0 },
+      speech: { multiplier: 1, serial: 0 }
+    },
+    speechMode: { active: false, preserveBgm: false, held: false },
+    voicePlaying: 0
+  };
 
   function voiceTrace(event, detail, extra) {
     try { console.log("[VoiceTrace] " + event, Object.assign({}, detail || {}, extra || {})); } catch (_) {}
@@ -84,26 +93,93 @@
     return window.AudioMixProfile && AudioMixProfile.ducking && AudioMixProfile.ducking.dialogueVoice || {};
   }
 
-  function beginDialogueDucking() {
-    dialogueDuckCount += 1;
-    if (dialogueDuckCount !== 1 || !bgm || bgm.paused) return;
-    var profile = dialogueDuckProfile();
-    var ratio = profile.ratio === undefined ? 0.35 : Number(profile.ratio);
-    dialogueDuckAudio = bgm;
-    dialogueDuckNormalVolume = bgm.volume;
-    fade(bgm, bgm.volume, bgm.volume * ratio, profile.duckMs === undefined ? 160 : profile.duckMs);
+  function speechDuckProfile() {
+    return window.AudioMixProfile && AudioMixProfile.ducking && AudioMixProfile.ducking.speechRecognition || {};
   }
 
-  function finishDialogueDucking() {
-    if (dialogueDuckCount > 0) dialogueDuckCount -= 1;
-    if (dialogueDuckCount !== 0) return;
-    var current = dialogueDuckAudio;
-    var normal = dialogueDuckNormalVolume;
-    dialogueDuckAudio = null;
-    dialogueDuckNormalVolume = null;
-    if (!current || current.paused || bgm !== current || normal === null) return;
+  function policyMultiplier() {
+    return audioState.duckState.dialogue.multiplier * audioState.duckState.speech.multiplier;
+  }
+
+  function clampVolume(value) {
+    return Math.max(0, Math.min(1, Number(value) || 0));
+  }
+
+  function applyBgmTrackVolume(track) {
+    if (!track || !track.audio) return;
+    var effective = clampVolume(track.baseVolume * track.envelope * policyMultiplier());
+    track.audio.volume = effective;
+    if (track.audio === bgm) {
+      audioState.currentBgmAsset = track.asset;
+      audioState.baseBgmVolume = track.baseVolume;
+      audioState.effectiveBgmVolume = effective;
+      audioState.fadeState = track.fadeState;
+    }
+  }
+
+  function oneShotPolicy(type, keyOrPath) {
+    var definition = window.AudioDatabase && AudioDatabase.assets && AudioDatabase.assets[keyOrPath];
+    var category = definition && definition.category ? definition.category : (type === "se" ? "SE" : "VOICE");
+    var policy = window.AudioMixProfile && AudioMixProfile.oneShots && AudioMixProfile.oneShots[category] || {};
+    return { category: category, duckable: policy.duckable === true };
+  }
+
+  function applyOneShotVolume(audio) {
+    var metadata = audio && audio.__eigoMixPolicy;
+    if (!metadata) return;
+    var multiplier = metadata.duckable ? audioState.duckState.dialogue.multiplier : 1;
+    audio.volume = clampVolume(metadata.baseVolume * multiplier);
+  }
+
+  function applyCanonicalMix() {
+    bgmTracks.slice().forEach(applyBgmTrackVolume);
+    effects.concat(voices).forEach(applyOneShotVolume);
+  }
+
+  function animatePolicy(kind, target, durationMs) {
+    var state = audioState.duckState[kind];
+    var serial = ++state.serial;
+    var from = state.multiplier;
+    var duration = Math.max(0, Number(durationMs) || 0);
+    var startedAt = Date.now();
+    if (!duration) {
+      state.multiplier = target;
+      applyCanonicalMix();
+      return Promise.resolve();
+    }
+    return new Promise(function (resolve) {
+      function tick() {
+        if (serial !== state.serial) return resolve();
+        var progress = Math.min(1, (Date.now() - startedAt) / duration);
+        state.multiplier = from + ((target - from) * progress);
+        applyCanonicalMix();
+        if (progress >= 1) return resolve();
+        setTimeout(tick, 40);
+      }
+      tick();
+    });
+  }
+
+  function enterDialogueVoiceMode() {
+    audioState.duckState.dialogue.owners += 1;
+    audioState.voicePlaying += 1;
+    var owner = { active: true };
+    if (audioState.duckState.dialogue.owners === 1) {
+      var profile = dialogueDuckProfile();
+      animatePolicy("dialogue", profile.ratio === undefined ? 0.35 : Number(profile.ratio),
+        profile.duckMs === undefined ? 160 : profile.duckMs);
+    }
+    return owner;
+  }
+
+  function exitDialogueVoiceMode(owner) {
+    if (!owner || !owner.active) return Promise.resolve();
+    owner.active = false;
+    audioState.duckState.dialogue.owners = Math.max(0, audioState.duckState.dialogue.owners - 1);
+    audioState.voicePlaying = Math.max(0, audioState.voicePlaying - 1);
+    if (audioState.duckState.dialogue.owners !== 0) return Promise.resolve();
     var profile = dialogueDuckProfile();
-    fade(current, current.volume, normal, profile.restoreMs === undefined ? 280 : profile.restoreMs);
+    return animatePolicy("dialogue", 1, profile.restoreMs === undefined ? 280 : profile.restoreMs);
   }
 
   function safePlay(audio) {
@@ -137,29 +213,48 @@
     if (!audio) return;
     if (audio.__eigoRadioTrace) voiceTrace("radio-stop", audio.__eigoRadioTrace);
     if (typeof audio.__eigoDialogueComplete === "function") audio.__eigoDialogueComplete("stopped");
+    if (audio.__eigoBgmTrack) {
+      audio.__eigoBgmTrack.serial += 1;
+      audio.__eigoBgmTrack.fadeState = "stopped";
+      var trackIndex = bgmTracks.indexOf(audio.__eigoBgmTrack);
+      if (trackIndex !== -1) bgmTracks.splice(trackIndex, 1);
+    }
     audio.pause();
     try { audio.currentTime = 0; } catch (_) {}
+    if (!bgm && audioState.currentBgmAsset && audio.__eigoBgmTrack &&
+        audioState.currentBgmAsset === audio.__eigoBgmTrack.asset) {
+      audioState.currentBgmAsset = null;
+      audioState.baseBgmVolume = 0;
+      audioState.effectiveBgmVolume = 0;
+      audioState.fadeState = "idle";
+    }
   }
 
-  function fade(audio, from, to, durationMs, onComplete) {
-    var token = ++fadeSerial;
+  function animateTrack(track, property, to, durationMs, label, onComplete) {
+    if (!track) return Promise.resolve();
+    var token = ++track.serial;
     var duration = Math.max(0, Number(durationMs) || 0);
     var startedAt = Date.now();
-    audio.volume = Math.max(0, Math.min(1, from));
+    var from = track[property];
+    track.fadeState = label || "fading";
     if (!duration) {
-      audio.volume = Math.max(0, Math.min(1, to));
+      track[property] = to;
+      track.fadeState = "idle";
+      applyBgmTrackVolume(track);
       if (onComplete) onComplete();
       return Promise.resolve();
     }
-    return new Promise(function (resolveFade) {
+    return new Promise(function (resolve) {
       function tick() {
-        if (token !== fadeSerial && audio.paused) return resolveFade();
+        if (token !== track.serial) return resolve();
         var progress = Math.min(1, (Date.now() - startedAt) / duration);
-        audio.volume = Math.max(0, Math.min(1, from + ((to - from) * progress)));
+        track[property] = from + ((to - from) * progress);
+        applyBgmTrackVolume(track);
         if (progress >= 1) {
+          track.fadeState = "idle";
+          applyBgmTrackVolume(track);
           if (onComplete) onComplete();
-          resolveFade();
-          return;
+          return resolve();
         }
         setTimeout(tick, 40);
       }
@@ -167,49 +262,79 @@
     });
   }
 
+  function createBgmTrack(audio, asset, baseVolume, envelope) {
+    var track = {
+      audio: audio,
+      asset: asset,
+      baseVolume: clampVolume(baseVolume),
+      envelope: envelope === undefined ? 1 : envelope,
+      fadeState: "idle",
+      serial: 0
+    };
+    audio.__eigoBgmTrack = track;
+    bgmTracks.push(track);
+    return track;
+  }
+
+  function resetHeldSpeechPolicy() {
+    speechDucking = null;
+    if (!audioState.speechMode.active) {
+      audioState.speechMode.held = false;
+      audioState.duckState.speech.serial += 1;
+      audioState.duckState.speech.multiplier = 1;
+    }
+  }
+
   function playBgm(keyOrPath, options) {
     options = options || {};
-    speechDucking = null;
+    resetHeldSpeechPolicy();
     var path = resolve("bgm", keyOrPath);
     var targetVolume = (options.volume === undefined ? 1 : options.volume) * mixAssetGain(keyOrPath);
     if (bgm && bgm.src && bgm.getAttribute("src") === path && !bgm.paused) {
-      if (options.fadeInMs) fade(bgm, bgm.volume, targetVolume, options.fadeInMs);
+      var existingTrack = bgm.__eigoBgmTrack || createBgmTrack(bgm, keyOrPath, targetVolume, 1);
+      if (options.fadeInMs) animateTrack(existingTrack, "baseVolume", targetVolume, options.fadeInMs, "base-volume");
+      else {
+        existingTrack.baseVolume = targetVolume;
+        existingTrack.envelope = 1;
+        applyBgmTrackVolume(existingTrack);
+      }
       return bgm;
     }
     var previous = bgm;
     var next = new Audio(path);
     next.loop = options.loop !== false;
-    next.volume = options.fadeInMs || options.crossfadeMs ? 0 : targetVolume;
     next.preload = "auto";
+    var nextTrack = createBgmTrack(next, keyOrPath, targetVolume, options.fadeInMs || options.crossfadeMs ? 0 : 1);
     bgm = next;
-    if (dialogueDuckCount > 0) {
-      var profile = dialogueDuckProfile();
-      dialogueDuckAudio = next;
-      dialogueDuckNormalVolume = targetVolume;
-      targetVolume *= profile.ratio === undefined ? 0.35 : Number(profile.ratio);
-    }
+    applyBgmTrackVolume(nextTrack);
     safePlay(next);
     if (previous) {
-      if (options.crossfadeMs) fade(previous, previous.volume, 0, options.crossfadeMs, function () { stop(previous); });
+      var previousTrack = previous.__eigoBgmTrack;
+      if (options.crossfadeMs && previousTrack) {
+        animateTrack(previousTrack, "envelope", 0, options.crossfadeMs, "crossfade-out", function () { stop(previous); });
+      }
       else stop(previous);
     }
     if (options.fadeInMs || options.crossfadeMs) {
-      fade(next, 0, targetVolume, options.fadeInMs || options.crossfadeMs);
+      animateTrack(nextTrack, "envelope", 1, options.fadeInMs || options.crossfadeMs,
+        options.crossfadeMs ? "crossfade-in" : "fade-in");
     }
     if (options.fadeToVolume !== undefined) {
-      fade(next, targetVolume, options.fadeToVolume, options.fadeToMs || 0);
+      animateTrack(nextTrack, "baseVolume", options.fadeToVolume * mixAssetGain(keyOrPath),
+        options.fadeToMs || 0, "base-volume");
     }
     return next;
   }
 
   function stopBgm() {
     var options = arguments[0] || {};
-    speechDucking = null;
+    resetHeldSpeechPolicy();
     var current = bgm;
     bgm = null;
     if (!current) return Promise.resolve();
-    if (options.fadeOutMs) {
-      return fade(current, current.volume, 0, options.fadeOutMs, function () { stop(current); });
+    var currentTrack = current.__eigoBgmTrack;
+    if (options.fadeOutMs && currentTrack) {
+      return animateTrack(currentTrack, "envelope", 0, options.fadeOutMs, "fade-out", function () { stop(current); });
     }
     stop(current);
     return Promise.resolve();
@@ -240,7 +365,13 @@
       if (active) return active;
     }
     var audio = new Audio(path);
-    audio.volume = options.volume === undefined ? 1 : options.volume;
+    var policy = oneShotPolicy(type, keyOrPath);
+    audio.__eigoMixPolicy = {
+      category: policy.category,
+      duckable: policy.duckable,
+      baseVolume: options.volume === undefined ? 1 : options.volume
+    };
+    applyOneShotVolume(audio);
     audio.preload = "auto";
     collection.push(audio);
     audio.addEventListener("ended", function () {
@@ -292,7 +423,7 @@
     var mixNodes = [];
     var resolveCompletion;
     var completion = new Promise(function (resolve) { resolveCompletion = resolve; });
-    beginDialogueDucking();
+    var voiceModeOwner = enterDialogueVoiceMode();
 
     function disposeRadio() {
       radioNodes.forEach(function (node) { try { node.disconnect(); } catch (_) {} });
@@ -311,7 +442,7 @@
       if (dialogueIndex !== -1) dialogueVoices.splice(dialogueIndex, 1);
       var voiceIndex = voices.indexOf(audio);
       if (voiceIndex !== -1) voices.splice(voiceIndex, 1);
-      finishDialogueDucking();
+      exitDialogueVoiceMode(voiceModeOwner);
       resolveCompletion({ status: status, error: error && error.message ? error.message : null });
     }
 
@@ -419,7 +550,9 @@
             mixNodes.push(source);
             if (kong) {
             var kongGain = mixContext.createGain();
-            kongGain.gain.value = 1.65;
+            var processing = window.AudioMixProfile && AudioMixProfile.characterProcessing &&
+              AudioMixProfile.characterProcessing.c02 || {};
+            kongGain.gain.value = processing.webAudioGain === undefined ? 1 : Number(processing.webAudioGain);
             var kongLimiter = mixContext.createDynamicsCompressor();
             kongLimiter.threshold.value = -3;
             kongLimiter.knee.value = 0;
@@ -477,6 +610,13 @@
     if (window.DialogueVoiceController && typeof DialogueVoiceController.onAudioStopAll === "function") {
       DialogueVoiceController.onAudioStopAll();
     }
+    speechDucking = null;
+    audioState.speechMode.active = false;
+    audioState.speechMode.preserveBgm = false;
+    audioState.speechMode.held = false;
+    audioState.duckState.speech.serial += 1;
+    audioState.duckState.speech.multiplier = 1;
+    applyCanonicalMix();
   }
 
   function stopOneShots() {
@@ -491,46 +631,77 @@
 
   function armSpeechDucking(options) {
     options = options || {};
-    var profile = window.AudioMixProfile && AudioMixProfile.ducking && AudioMixProfile.ducking.speechRecognition || {};
-    if (options.ratio === undefined && profile.ratio !== undefined) options.ratio = profile.ratio;
-    if (options.duckMs === undefined && profile.duckMs !== undefined) options.duckMs = profile.duckMs;
-    if (options.restoreMs === undefined && profile.restoreMs !== undefined) options.restoreMs = profile.restoreMs;
     if (speechDucking && speechDucking.active) return;
     speechDucking = {
       armed: true,
       active: false,
-      audio: null,
-      normalVolume: null,
-      ratio: options.ratio === undefined ? 0.25 : options.ratio,
-      duckMs: options.duckMs === undefined ? 300 : options.duckMs,
-      restoreMs: options.restoreMs === undefined ? 600 : options.restoreMs
+      restore: options.restore !== false
     };
+  }
+
+  async function enterSpeechMode(options) {
+    options = options || {};
+    var preserveBgm = options.preserveBgm === true;
+    stopOneShots();
+    audioState.speechMode.active = true;
+    audioState.speechMode.preserveBgm = preserveBgm;
+    audioState.speechMode.held = false;
+    if (!preserveBgm) {
+      audioState.duckState.speech.serial += 1;
+      audioState.duckState.speech.multiplier = 1;
+      applyCanonicalMix();
+      await stopBgm(options.stopOptions);
+      return true;
+    }
+    var profile = speechDuckProfile();
+    await animatePolicy("speech", profile.ratio === undefined ? 0.25 : Number(profile.ratio),
+      profile.duckMs === undefined ? 300 : profile.duckMs);
+    return !!(bgm && !bgm.paused);
+  }
+
+  async function exitSpeechMode(options) {
+    options = options || {};
+    var restore = options.restore !== false;
+    audioState.speechMode.active = false;
+    audioState.speechMode.held = !restore;
+    if (!restore) return;
+    var profile = speechDuckProfile();
+    await animatePolicy("speech", 1, profile.restoreMs === undefined ? 600 : profile.restoreMs);
+    audioState.speechMode.preserveBgm = false;
   }
 
   async function beginSpeechDucking() {
     if (!speechDucking || !speechDucking.armed) return false;
-    stopOneShots();
     if (speechDucking.active) return true;
-    if (!bgm || bgm.paused) return false;
     speechDucking.active = true;
-    speechDucking.audio = bgm;
-    speechDucking.normalVolume = bgm.volume;
-    await fade(bgm, bgm.volume, bgm.volume * speechDucking.ratio, speechDucking.duckMs);
-    return true;
+    return enterSpeechMode({ preserveBgm: true });
   }
 
   async function finishSpeechDucking(restore) {
     var current = speechDucking;
-    if (current && restore === false) return;
     speechDucking = null;
-    if (!current || !current.active || !current.audio || current.audio.paused) return;
-    if (restore && bgm === current.audio) {
-      await fade(current.audio, current.audio.volume, current.normalVolume, current.restoreMs);
-    }
+    if (!current || !current.active) return;
+    await exitSpeechMode({ restore: restore !== false });
   }
 
   function speechDuckingIsArmed() {
     return !!(speechDucking && speechDucking.armed);
+  }
+
+  function getAudioState() {
+    return {
+      currentBgmAsset: audioState.currentBgmAsset,
+      baseBgmVolume: audioState.baseBgmVolume,
+      effectiveBgmVolume: audioState.effectiveBgmVolume,
+      fadeState: audioState.fadeState,
+      duckState: {
+        dialogueMultiplier: audioState.duckState.dialogue.multiplier,
+        dialogueOwners: audioState.duckState.dialogue.owners,
+        speechMultiplier: audioState.duckState.speech.multiplier
+      },
+      speechMode: Object.assign({}, audioState.speechMode),
+      voicePlaying: audioState.voicePlaying
+    };
   }
 
   window.AudioManager = {
@@ -541,7 +712,12 @@
     stopAll: stopAll,
     unlock: unlock,
     ensureContextRunning: ensureCanonicalAudioContextRunning,
-    getAudioContext: getCanonicalAudioContext
+    getAudioContext: getCanonicalAudioContext,
+    getState: getAudioState,
+    enterDialogueVoiceMode: enterDialogueVoiceMode,
+    exitDialogueVoiceMode: exitDialogueVoiceMode,
+    enterSpeechMode: enterSpeechMode,
+    exitSpeechMode: exitSpeechMode
   };
   window.SpeechAudioDuckingInternal = {
     arm: armSpeechDucking,

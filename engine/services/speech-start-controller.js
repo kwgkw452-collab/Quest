@@ -5,6 +5,7 @@
   // Question判定・Morning分類・Story進行は担当しない。
   var activePromise = null;
   var startSerial = 0;
+  var releaseSpeechModeOnListenEnd = false;
 
   function prepare() {
     try {
@@ -12,7 +13,12 @@
         DialogueVoiceController.stop();
       }
       if (window.SpeechAudioDuckingInternal && SpeechAudioDuckingInternal.isArmed()) {
+        releaseSpeechModeOnListenEnd = false;
         return Promise.resolve(SpeechAudioDuckingInternal.begin());
+      }
+      if (window.AudioManager && typeof AudioManager.enterSpeechMode === "function") {
+        releaseSpeechModeOnListenEnd = true;
+        return Promise.resolve(AudioManager.enterSpeechMode({ preserveBgm: false }));
       }
       if (window.AudioManager && typeof AudioManager.stopAll === "function") AudioManager.stopAll();
       return Promise.resolve();
@@ -38,9 +44,21 @@
     }
 
     activePromise = activePromise.then(function (heard) {
+      if (releaseSpeechModeOnListenEnd && window.AudioManager && typeof AudioManager.exitSpeechMode === "function") {
+        releaseSpeechModeOnListenEnd = false;
+        Promise.resolve(AudioManager.exitSpeechMode({ restore: true })).catch(function (error) {
+          console.warn("Audio restore after speech recognition failed:", error);
+        });
+      }
       if (serial === startSerial) activePromise = null;
       return heard;
     }, function (error) {
+      if (releaseSpeechModeOnListenEnd && window.AudioManager && typeof AudioManager.exitSpeechMode === "function") {
+        releaseSpeechModeOnListenEnd = false;
+        Promise.resolve(AudioManager.exitSpeechMode({ restore: true })).catch(function (restoreError) {
+          console.warn("Audio restore after speech recognition failed:", restoreError);
+        });
+      }
       if (serial === startSerial) activePromise = null;
       throw error;
     });
@@ -50,6 +68,7 @@
   function cancel() {
     startSerial += 1;
     activePromise = null;
+    releaseSpeechModeOnListenEnd = false;
     if (window.SpeechEngine && typeof SpeechEngine.stop === "function") SpeechEngine.stop();
   }
 
