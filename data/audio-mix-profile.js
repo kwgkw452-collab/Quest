@@ -9,9 +9,13 @@
       c03: 1.0,
       c04: 1.0
     },
-    assets: {},
+    assets: {
+      // Bazaar crowd stays audible, but no longer masks the opening dialogue.
+      bazaarCrowd: 0.33
+    },
     ducking: {
-      speechRecognition: { ratio: 0.25, duckMs: 300, restoreMs: 600 }
+      speechRecognition: { ratio: 0.25, duckMs: 300, restoreMs: 600 },
+      dialogueVoice: { ratio: 0.35, duckMs: 160, restoreMs: 280 }
     },
     fades: { normalInMs: 700, normalOutMs: 500, crossfadeMs: 1200 }
   };

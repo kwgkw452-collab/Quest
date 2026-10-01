@@ -51,7 +51,7 @@ vm.runInContext(fs.readFileSync(path.join(root, "engine/managers/audio-manager.j
   assert(Math.abs(0.52 * 0.25 - 0.13) < 0.000001, "Silent Tears speech volume must be 0.13");
 
   const audioKeys = Object.keys(context.AudioManager).sort();
-  assert.deepStrictEqual(audioKeys, ["playBgm", "playSe", "playVoice", "stopAll", "stopBgm"].sort());
+  assert.deepStrictEqual(audioKeys, ["ensureContextRunning", "getAudioContext", "playBgm", "playSe", "playVoice", "stopAll", "stopBgm", "unlock"].sort());
 
   const story = fs.readFileSync(path.join(root, "engine/stories/S001.js"), "utf8");
   assert(story.includes('C.question("word.hello", null, { speechDucking: { restore: false } })'));

@@ -83,14 +83,13 @@ function harness(resumeResult, rejectPlay) {
   ];
   for (const event of expected) assert(pending.events.some(([actual]) => actual === event), event);
   assert.strictEqual(pending.events.find(([event]) => event === "radio-graph-connected")[1].route, "filtered");
-  assert.strictEqual(pending.contexts[0].state, "closed");
+  assert.strictEqual(pending.contexts[0].state, "running", "canonical AudioContext remains reusable");
 
   const rejected = harness(() => Promise.reject(new Error("resume-denied")));
   const fallback = rejected.context.DialogueVoiceAudioInternal.play("fallback-key", { voiceEffect: "radio" });
   await flush();
   assert.strictEqual(fallback.audio.playCount, 1, "fallback playback must remain unchanged");
-  assert(rejected.events.some(([event, detail]) => event === "radio-resume-rejected" && detail.error.includes("resume-denied")));
-  assert(rejected.events.some(([event, detail]) => event === "radio-fallback-enter" && detail.reason === "resume-rejected"));
+  assert(rejected.events.some(([event, detail]) => event === "radio-fallback-enter" && detail.reason === "context-not-running"));
   rejected.context.DialogueVoiceAudioInternal.stop();
   assert(rejected.events.some(([event]) => event === "radio-stop"));
   assert.strictEqual((await fallback.completion).status, "stopped");

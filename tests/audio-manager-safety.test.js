@@ -101,7 +101,8 @@ context.AudioManager.stopBgm();
 assert.strictEqual(firstBgm.paused, true, "stopBgm must stop the Opening theme");
 
 assert.deepStrictEqual(Object.keys(context.AudioManager).sort(),
-  ["playBgm", "playSe", "playVoice", "stopAll", "stopBgm"].sort(), "Public API names must remain unchanged");
+  ["ensureContextRunning", "getAudioContext", "playBgm", "playSe", "playVoice", "stopAll", "stopBgm", "unlock"].sort(),
+  "Audio Foundation API must expose the mobile lifecycle controls");
 assert.strictEqual(context.AudioManager.playBgm.length, 2);
 assert.strictEqual(context.AudioManager.stopBgm.length, 0);
 assert.strictEqual(context.AudioManager.playSe.length, 2);

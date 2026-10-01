@@ -174,7 +174,7 @@ const hash = file => crypto.createHash("sha256").update(fs.readFileSync(path.joi
   assert.strictEqual(profileContext.AudioMixProfile.ducking.speechRecognition.duckMs, 300); // 46
   assert.strictEqual(profileContext.AudioMixProfile.ducking.speechRecognition.restoreMs, 600); // 47
   assert(read("engine/managers/morning-manager.js").includes("うまく聞き取れなかったピコ。")); // 48 Morning V1.1
-  assert(/window\.AudioManager\s*=\s*\{\s*playBgm: playBgm,\s*stopBgm: stopBgm,\s*playSe: playSe,\s*playVoice: playVoice,\s*stopAll: stopAll\s*\}/.test(read("engine/managers/audio-manager.js"))); // 49 public API
+  assert(/window\.AudioManager\s*=\s*\{[\s\S]*?playBgm: playBgm,[\s\S]*?stopAll: stopAll,[\s\S]*?unlock: unlock/.test(read("engine/managers/audio-manager.js"))); // 49 public API
   assert(/window\.SpeechStartController\s*=\s*\{\s*prepare: prepare,\s*startListening: startListening,\s*cancel: cancel,/.test(read("engine/services/speech-start-controller.js"))); // 50
   assert(read("dev/dev-jump-manager.js").includes("AudioManager.stopAll()")); // 51 Dev cleanup
   assert(read("docs/VOICE_PRODUCTION_MANIFEST_SCHEMA.md").includes("ttsService")); // 52 separate manifest

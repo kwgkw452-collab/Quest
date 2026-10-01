@@ -173,7 +173,7 @@ function controlHarness() {
   assert.strictEqual(graph.sourceAudio, effected.audio);
   normal.context.DialogueVoiceAudioInternal.stop();
   assert.strictEqual((await effected.completion).status, "stopped");
-  assert(graph.closed && graph.nodes.every(node => node.disconnected));
+  assert(!graph.closed && graph.nodes.every(node => node.disconnected), "canonical context remains open while per-voice nodes disconnect");
   for (const mode of ["unavailable", "construct", "resume", "filter"]) {
     const fallback = audioHarness(mode);
     const tracked = fallback.context.DialogueVoiceAudioInternal.play("radio", { voiceEffect: "radio" });

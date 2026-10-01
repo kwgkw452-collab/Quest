@@ -8,6 +8,12 @@
   var fadeSerial = 0;
   var speechDucking = null;
   var radioTraceSerial = 0;
+  var canonicalAudioContext = null;
+  var unlockAttempted = false;
+  var unlockPromise = null;
+  var dialogueDuckCount = 0;
+  var dialogueDuckAudio = null;
+  var dialogueDuckNormalVolume = null;
 
   function voiceTrace(event, detail, extra) {
     try { console.log("[VoiceTrace] " + event, Object.assign({}, detail || {}, extra || {})); } catch (_) {}
@@ -15,6 +21,89 @@
 
   function resolve(type, keyOrPath) {
     return window.AssetManager ? AssetManager.audio(type, keyOrPath) : keyOrPath;
+  }
+
+  function mixAssetGain(keyOrPath) {
+    var value = window.AudioMixProfile && AudioMixProfile.assets ?
+      Number(AudioMixProfile.assets[keyOrPath]) : 1;
+    return Number.isFinite(value) ? Math.max(0, value) : 1;
+  }
+
+  function audioContextType() {
+    return window.AudioContext || window.webkitAudioContext || null;
+  }
+
+  function getCanonicalAudioContext() {
+    if (canonicalAudioContext) return canonicalAudioContext;
+    var ContextType = audioContextType();
+    if (!ContextType) return null;
+    try { canonicalAudioContext = new ContextType(); } catch (_) { canonicalAudioContext = null; }
+    return canonicalAudioContext;
+  }
+
+  async function ensureCanonicalAudioContextRunning() {
+    var context = getCanonicalAudioContext();
+    if (!context) return false;
+    if (context.state === "suspended" && typeof context.resume === "function") {
+      try { await context.resume(); } catch (_) { return false; }
+    }
+    // Minimal test/legacy shims may not expose state; real browsers must report running.
+    return context.state === undefined || context.state === "running";
+  }
+
+  function unlock() {
+    if (unlockAttempted) return unlockPromise || Promise.resolve(false);
+    unlockAttempted = true;
+    unlockPromise = (async function () {
+      var contextRunning = await ensureCanonicalAudioContextRunning();
+      var mediaUnlocked = false;
+      try {
+        var probe = new Audio("data:audio/wav;base64,UklGRiwAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQgAAACAgICAgICA");
+        probe.volume = 0;
+        var outcome = probe.play();
+        if (outcome && typeof outcome.then === "function") await outcome;
+        probe.pause();
+        mediaUnlocked = true;
+      } catch (_) { /* Unlock failure must never block game progress. */ }
+      return contextRunning || mediaUnlocked;
+    })().catch(function () { return false; });
+    return unlockPromise;
+  }
+
+  function installUnlockGesture() {
+    if (!window.document || typeof document.addEventListener !== "function") return;
+    var events = ["pointerdown", "touchend", "click", "keydown"];
+    function firstGesture() {
+      events.forEach(function (name) { document.removeEventListener(name, firstGesture, true); });
+      unlock();
+    }
+    events.forEach(function (name) { document.addEventListener(name, firstGesture, true); });
+  }
+
+  function dialogueDuckProfile() {
+    return window.AudioMixProfile && AudioMixProfile.ducking && AudioMixProfile.ducking.dialogueVoice || {};
+  }
+
+  function beginDialogueDucking() {
+    dialogueDuckCount += 1;
+    if (dialogueDuckCount !== 1 || !bgm || bgm.paused) return;
+    var profile = dialogueDuckProfile();
+    var ratio = profile.ratio === undefined ? 0.35 : Number(profile.ratio);
+    dialogueDuckAudio = bgm;
+    dialogueDuckNormalVolume = bgm.volume;
+    fade(bgm, bgm.volume, bgm.volume * ratio, profile.duckMs === undefined ? 160 : profile.duckMs);
+  }
+
+  function finishDialogueDucking() {
+    if (dialogueDuckCount > 0) dialogueDuckCount -= 1;
+    if (dialogueDuckCount !== 0) return;
+    var current = dialogueDuckAudio;
+    var normal = dialogueDuckNormalVolume;
+    dialogueDuckAudio = null;
+    dialogueDuckNormalVolume = null;
+    if (!current || current.paused || bgm !== current || normal === null) return;
+    var profile = dialogueDuckProfile();
+    fade(current, current.volume, normal, profile.restoreMs === undefined ? 280 : profile.restoreMs);
   }
 
   function safePlay(audio) {
@@ -82,7 +171,7 @@
     options = options || {};
     speechDucking = null;
     var path = resolve("bgm", keyOrPath);
-    var targetVolume = options.volume === undefined ? 1 : options.volume;
+    var targetVolume = (options.volume === undefined ? 1 : options.volume) * mixAssetGain(keyOrPath);
     if (bgm && bgm.src && bgm.getAttribute("src") === path && !bgm.paused) {
       if (options.fadeInMs) fade(bgm, bgm.volume, targetVolume, options.fadeInMs);
       return bgm;
@@ -93,6 +182,12 @@
     next.volume = options.fadeInMs || options.crossfadeMs ? 0 : targetVolume;
     next.preload = "auto";
     bgm = next;
+    if (dialogueDuckCount > 0) {
+      var profile = dialogueDuckProfile();
+      dialogueDuckAudio = next;
+      dialogueDuckNormalVolume = targetVolume;
+      targetVolume *= profile.ratio === undefined ? 0.35 : Number(profile.ratio);
+    }
     safePlay(next);
     if (previous) {
       if (options.crossfadeMs) fade(previous, previous.volume, 0, options.crossfadeMs, function () { stop(previous); });
@@ -197,22 +292,15 @@
     var mixNodes = [];
     var resolveCompletion;
     var completion = new Promise(function (resolve) { resolveCompletion = resolve; });
+    beginDialogueDucking();
 
     function disposeRadio() {
       radioNodes.forEach(function (node) { try { node.disconnect(); } catch (_) {} });
       radioNodes = [];
-      if (radioContext) {
-        var context = radioContext;
-        radioContext = null;
-        try { Promise.resolve(context.close()).catch(function () {}); } catch (_) {}
-      }
+      radioContext = null;
       mixNodes.forEach(function (node) { try { node.disconnect(); } catch (_) {} });
       mixNodes = [];
-      if (mixContext) {
-        var mix = mixContext;
-        mixContext = null;
-        try { Promise.resolve(mix.close()).catch(function () {}); } catch (_) {}
-      }
+      mixContext = null;
     }
 
     function complete(status, error) {
@@ -223,6 +311,7 @@
       if (dialogueIndex !== -1) dialogueVoices.splice(dialogueIndex, 1);
       var voiceIndex = voices.indexOf(audio);
       if (voiceIndex !== -1) voices.splice(voiceIndex, 1);
+      finishDialogueDucking();
       resolveCompletion({ status: status, error: error && error.message ? error.message : null });
     }
 
@@ -243,15 +332,20 @@
     }
 
     if (radio) {
-      var AudioContextType = window.AudioContext || window.webkitAudioContext;
+      var AudioContextType = audioContextType();
       if (AudioContextType) {
         try {
-          radioContext = new AudioContextType();
+          radioContext = getCanonicalAudioContext();
           voiceTrace("radio-context-created", traceDetail, { contextState: radioContext.state });
           voiceTrace("radio-resume-before", traceDetail, { contextState: radioContext.state });
-          Promise.resolve(typeof radioContext.resume === "function" ? radioContext.resume() : null).then(function () {
+          ensureCanonicalAudioContextRunning().then(function (running) {
             voiceTrace("radio-resume-resolved", traceDetail, { contextState: radioContext && radioContext.state });
             if (settled) return;
+            if (!running) {
+              voiceTrace("radio-fallback-enter", traceDetail, { reason: "context-not-running" });
+              startPlayback();
+              return;
+            }
             try {
               var highPass = radioContext.createBiquadFilter();
               highPass.type = "highpass";
@@ -301,11 +395,6 @@
               disposeRadio();
             }
             startPlayback();
-          }, function (error) {
-            voiceTrace("radio-resume-rejected", traceDetail, { error: String(error), contextState: radioContext && radioContext.state });
-            voiceTrace("radio-fallback-enter", traceDetail, { reason: "resume-rejected", error: String(error) });
-            disposeRadio();
-            startPlayback();
           });
         } catch (error) {
           voiceTrace("radio-fallback-enter", traceDetail, { reason: "context-or-resume-threw", error: String(error) });
@@ -317,13 +406,18 @@
         startPlayback();
       }
     } else if (kong || bernie) {
-      var MixContextType = window.AudioContext || window.webkitAudioContext;
+      var MixContextType = audioContextType();
       if (MixContextType) {
         try {
-          mixContext = new MixContextType();
-          var source = mixContext.createMediaElementSource(audio);
-          mixNodes.push(source);
-          if (kong) {
+          mixContext = getCanonicalAudioContext();
+          ensureCanonicalAudioContextRunning().then(function (running) {
+            if (!running || settled) {
+              startPlayback();
+              return;
+            }
+            var source = mixContext.createMediaElementSource(audio);
+            mixNodes.push(source);
+            if (kong) {
             var kongGain = mixContext.createGain();
             kongGain.gain.value = 1.65;
             var kongLimiter = mixContext.createDynamicsCompressor();
@@ -336,7 +430,7 @@
             kongGain.connect(kongLimiter);
             kongLimiter.connect(mixContext.destination);
             mixNodes.push(kongGain, kongLimiter);
-          } else {
+            } else {
             var lowMid = mixContext.createBiquadFilter();
             lowMid.type = "peaking";
             lowMid.frequency.value = 320;
@@ -351,10 +445,9 @@
             lowMid.connect(presence);
             presence.connect(mixContext.destination);
             mixNodes.push(lowMid, presence);
-          }
-          Promise.resolve(typeof mixContext.resume === "function" ? mixContext.resume() : null).then(startPlayback, function () {
+            }
             startPlayback();
-          });
+          }).catch(function () { startPlayback(); });
         } catch (error) {
           disposeRadio();
           startPlayback();
@@ -445,7 +538,10 @@
     stopBgm: stopBgm,
     playSe: playSe,
     playVoice: playVoice,
-    stopAll: stopAll
+    stopAll: stopAll,
+    unlock: unlock,
+    ensureContextRunning: ensureCanonicalAudioContextRunning,
+    getAudioContext: getCanonicalAudioContext
   };
   window.SpeechAudioDuckingInternal = {
     arm: armSpeechDucking,
@@ -458,4 +554,5 @@
     stop: stopDialogueVoices,
     isPlaying: function () { return dialogueVoices.length > 0; }
   };
+  installUnlockGesture();
 })();

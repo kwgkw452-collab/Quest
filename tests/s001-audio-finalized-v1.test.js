@@ -81,6 +81,6 @@ assert(!otherStorySources.includes("picoWakeUp"));
 assert(!otherStorySources.includes("kongEmotionalSilentTears"));
 
 const audioManager = read("engine/managers/audio-manager.js");
-assert(/window\.AudioManager\s*=\s*\{\s*playBgm: playBgm,\s*stopBgm: stopBgm,\s*playSe: playSe,\s*playVoice: playVoice,\s*stopAll: stopAll\s*\}/.test(audioManager));
+assert(/window\.AudioManager\s*=\s*\{[\s\S]*?playBgm: playBgm,[\s\S]*?stopAll: stopAll,[\s\S]*?unlock: unlock/.test(audioManager));
 
 console.log("S001 Audio Finalized V1 regression test: PASS");
