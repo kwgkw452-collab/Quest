@@ -180,7 +180,7 @@ function field(label) {
     ok(devHtml.includes(`src="${script}?v=${unifiedVersion}"`), `${script} uses the unified Formal runtime version`);
   }
   for (const script of ["data/questions.js"]) {
-    ok(devHtml.includes(`src="${script}?v=s005-phase-a2-v1"`), `${script} loads Phase A-2 in dev`);
+    ok(devHtml.includes(`src="${script}?v=mobile-ui-story-polish-v1-1"`), `${script} loads the current production version in dev`);
   }
   ok(devHtml.includes('src="data/communicative-judge-rules.js?v=s005-registry-instance-fix-v1"'));
   ok(devHtml.includes('src="engine/services/local-communicative-judge.js?v=s005-rule-real-browser-trace-v1"'));
@@ -193,7 +193,7 @@ function field(label) {
   for (const script of speechStartScripts) {
     const version = script === "engine/managers/question-manager.js" ?
       "s005-rule-real-browser-trace-v1" : script === "engine/presenters/communicative-question-presenter.js" ?
-      "s005-listening-ui-v1" : "s005-phase-a2-v1";
+      "mobile-ui-story-polish-v1-1" : "s005-phase-a2-v1";
     ok(devHtml.includes(`src="${script}?v=${version}"`), `${script} uses the current version in dev`);
     ok(indexHtml.includes(`src="${script}?v=${version}"`), `${script} uses the current version in index`);
   }
@@ -380,7 +380,7 @@ function field(label) {
   ok(read("dev/communicative-judge-pilot.js").includes("window.CommunicativeJudgePilot"), "Existing Pilot remains present");
 
   ok(!/fetch\s*\(|XMLHttpRequest|API_KEY|Gemini|OpenAI/.test(source), "No Provider, fetch, or API key is added");
-  equal(hash("index.html"), "c99068ee785e67531a68ed155c588cee3039d82fba23e07e819f8efeedd7a91c");
+  equal(hash("index.html"), "1df2e93a5f4f161dc4114e352acbdd1e390471882e80e08b9295a7ec06c45f2f");
   equal(hash("data/questions.js"), "7f94f150fff8ef7af49e4bd7f86614900eafb0fb1d3d772861142feb68d75904");
   equal(hash("engine/managers/question-manager.js"), "98047b0cb21bd12f4fd5e2c432ea28836a6b82b7b0a3067639781ad538d87c6d");
   equal(hash("engine/services/speech-engine.js"), "3318e03a55a2506fccfeca2481d0b286e69074c63f5539d73b1b5b27e6371264");

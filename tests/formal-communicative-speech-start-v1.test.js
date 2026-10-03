@@ -274,7 +274,7 @@ async function pendingFormal(plan) {
   for (const file of formalAssets) {
     const version = file === "engine/managers/question-manager.js" ?
       "s005-rule-real-browser-trace-v1" : file === "engine/presenters/communicative-question-presenter.js" ?
-      "s005-listening-ui-v1" : "s005-phase-a2-v1";
+      "mobile-ui-story-polish-v1-1" : "s005-phase-a2-v1";
     assert(indexHtml.includes(`${file}?v=${version}`));
     assert(devHtml.includes(`${file}?v=${version}`));
   }

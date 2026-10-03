@@ -13,7 +13,7 @@ const protectedHashes = {
   "data/monsters.js": "af1afabcf11f4536eacb69b8370c465273b1b9adce8e98b94b69bac4e38b8073",
   "data/mornings.js": "89007415f111ab883dd2a10b47e9a7026608bfd377dd8ee1ec7ad0f5d9027470",
   "data/word-dictionaries.js": "8c8c49386c8bd935cbb40d1f067441f3f032f423a579c8193d3b95d167d68d89",
-  "dev.html": "973c246fb3c40becac0f50d01296c343640f555376c05219343ac129019c8fe1",
+  "dev.html": "34f5f6cf9a9f844701c95edac8196670573ba97a7786c5cc73ce169eca4de8f1",
   "dev/communicative-question-manager-playtest.js": "1cce50bfddfa360319fdd335333ccd785f30dac5d0f255dc626860f2ade0f87e",
   "engine/commands/story-commands.js": "d51dff6ca978d9f7df844448048302949f0b5d5c412badce98d67686f173b3e0",
   "engine/managers/monster-battle-manager.js": "0451a45a75e35c9c4418f40126e55d8659cbbf407deca78089f9c12058026ee3",
@@ -43,7 +43,7 @@ for (const [file, expected] of Object.entries(protectedHashes)) {
 
 const index = read("index.html");
 const ordered = [
-  "data/questions.js?v=s005-phase-a2-v1",
+  "data/questions.js?v=mobile-ui-story-polish-v1-1",
   "data/communicative-judge-rules.js?v=s005-registry-instance-fix-v1",
   "engine/services/speech-normalizer.js?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1",
   "engine/services/speech-recognition-adapter.js?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1",
@@ -52,9 +52,9 @@ const ordered = [
   "engine/services/local-communicative-judge.js?v=s005-rule-real-browser-trace-v1",
   "engine/services/communicative-judge.js?v=s005-rule-real-browser-trace-v1",
   "engine/services/communicative-question-adapter.js?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1",
-  "engine/managers/dialog-manager.js?v=ui-japanese-v1",
+  "engine/managers/dialog-manager.js?v=mobile-ui-story-polish-v1-1",
   "engine/managers/question-manager.js?v=s005-rule-real-browser-trace-v1",
-  "engine/presenters/communicative-question-presenter.js?v=s005-listening-ui-v1",
+  "engine/presenters/communicative-question-presenter.js?v=mobile-ui-story-polish-v1-1",
   "engine/controllers/communicative-question-flow-controller.js?v=s005-phase-a2-v1",
   "engine/core/core.js?v=finite-rescue-runtime-wiring-v1",
   "engine/commands/story-commands.js",

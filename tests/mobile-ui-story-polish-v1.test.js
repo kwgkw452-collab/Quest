@@ -10,12 +10,12 @@ const read = file => fs.readFileSync(path.join(root, file), "utf8");
 const hash = file => crypto.createHash("sha256").update(read(file)).digest("hex");
 
 const css = read("css/style.css");
-assert(css.includes("--dialog-control-font-size: 15px"));
-assert(css.includes("--dialog-control-min-height: 40px"));
-assert(css.includes("--dialog-speaker-font-size: 14px"));
-assert(css.includes("--speech-status-font-size: 13px"));
 assert(css.includes("--dialog-control-font-size: 14px"));
-assert(css.includes("--dialog-control-min-height: 38px"));
+assert(css.includes("--dialog-control-min-height: 32px"));
+assert(css.includes("--dialog-speaker-font-size: 13px"));
+assert(css.includes("--speech-status-font-size: 12px"));
+assert(css.includes("--dialog-control-font-size: 13px"));
+assert(css.includes("--dialog-control-min-height: 28px"));
 assert(css.includes("font-size: var(--dialog-speaker-font-size)"));
 assert(css.includes("font-size: var(--speech-status-font-size)"));
 assert(css.includes("min-height: var(--dialog-control-min-height)"));
@@ -46,8 +46,8 @@ const questions = read("data/questions.js");
 assert(questions.includes('prompt: "バナナかオレンジ、好きなほうを英語で答えてください。"'));
 assert(questions.includes('answers: ["orange", "banana", "no thank you"]'));
 
-assert(read("index.html").includes("css/style.css?v=mobile-ui-story-polish-v1"));
-assert(read("dev.html").includes("css/style.css?v=mobile-ui-story-polish-v1"));
+assert(read("index.html").includes("css/style.css?v=mobile-ui-story-polish-v1-1"));
+assert(read("dev.html").includes("css/style.css?v=mobile-ui-story-polish-v1-1"));
 
 // Locked subsystems must remain byte-identical to the Phase 1 source.
 assert.strictEqual(hash("engine/managers/audio-manager.js"), "182aa2fe8eb13a63605abba978da850baa338112975b14f31745c2f44e44d00f");

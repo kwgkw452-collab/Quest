@@ -63,10 +63,9 @@ const additional = [
 const html = ["index.html", "dev.html"];
 for (const page of html) {
   const source = read(page);
-  for (const asset of ["data/questions.js", "engine/controllers/communicative-question-flow-controller.js"]) {
-    assert(source.includes(asset + "?v=s005-phase-a2-v1"), page + ": " + asset);
-  }
-  assert(source.includes("engine/presenters/communicative-question-presenter.js?v=s005-listening-ui-v1"));
+  assert(source.includes("data/questions.js?v=mobile-ui-story-polish-v1-1"), page + ": data/questions.js");
+  assert(source.includes("engine/controllers/communicative-question-flow-controller.js?v=s005-phase-a2-v1"), page + ": flow controller");
+  assert(source.includes("engine/presenters/communicative-question-presenter.js?v=mobile-ui-story-polish-v1-1"));
   assert(source.includes("engine/stories/S005.js?v=s005-local-judge-runtime-fix-v1"));
   for (const asset of ["engine/services/local-communicative-judge.js",
     "engine/services/communicative-judge.js", "engine/managers/question-manager.js",

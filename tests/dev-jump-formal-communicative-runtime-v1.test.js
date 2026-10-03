@@ -13,7 +13,7 @@ const devHtml = read("dev.html");
 const scripts = Array.from(devHtml.matchAll(/<script\s+src="([^"]+)"/g), match => match[1]);
 
 const productionHashes = {
-  "index.html": "c99068ee785e67531a68ed155c588cee3039d82fba23e07e819f8efeedd7a91c",
+  "index.html": "1df2e93a5f4f161dc4114e352acbdd1e390471882e80e08b9295a7ec06c45f2f",
   "data/questions.js": "7f94f150fff8ef7af49e4bd7f86614900eafb0fb1d3d772861142feb68d75904",
   "data/communicative-judge-rules.js": "acae74a247318a54ef09ac75c04c444c14dedc798c67abf3b793fc0529dd9279",
   "engine/services/local-communicative-judge.js": "d124c63e412c4e6553026141361ab608da5603bd29854f93f6b8c06bf1f57e58",
@@ -30,7 +30,7 @@ for (const [file, expected] of Object.entries(productionHashes)) {
 }
 
 const ordered = [
-  "data/questions.js?v=s005-phase-a2-v1",
+  "data/questions.js?v=mobile-ui-story-polish-v1-1",
   "data/communicative-judge-rules.js?v=s005-registry-instance-fix-v1",
   "engine/services/speech-normalizer.js?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1",
   "engine/services/speech-recognition-adapter.js?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1",
@@ -39,9 +39,9 @@ const ordered = [
   "engine/services/local-communicative-judge.js?v=s005-rule-real-browser-trace-v1",
   "engine/services/communicative-judge.js?v=s005-rule-real-browser-trace-v1",
   "engine/services/communicative-question-adapter.js?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1",
-  "engine/managers/dialog-manager.js",
+  "engine/managers/dialog-manager.js?v=mobile-ui-story-polish-v1-1",
   "engine/managers/question-manager.js?v=s005-rule-real-browser-trace-v1",
-  "engine/presenters/communicative-question-presenter.js?v=s005-listening-ui-v1",
+  "engine/presenters/communicative-question-presenter.js?v=mobile-ui-story-polish-v1-1",
   "engine/controllers/communicative-question-flow-controller.js?v=s005-phase-a2-v1",
   "engine/core/core.js",
   "engine/core/story-engine.js?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1"

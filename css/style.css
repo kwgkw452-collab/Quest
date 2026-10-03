@@ -3,10 +3,10 @@
 }
 
 :root {
-  --dialog-control-font-size: 15px;
-  --dialog-control-min-height: 40px;
-  --dialog-speaker-font-size: 14px;
-  --speech-status-font-size: 13px;
+  --dialog-control-font-size: 14px;
+  --dialog-control-min-height: 32px;
+  --dialog-speaker-font-size: 13px;
+  --speech-status-font-size: 12px;
 }
 
 html, body {
@@ -167,11 +167,12 @@ button, input {
 }
 
 .speaker {
-  min-height: 1.15em;
-  margin-bottom: 3px;
+  min-height: 0;
+  margin-bottom: 2px;
   color: #ffd34d;
-  font-weight: 800;
+  font-weight: 700;
   font-size: var(--dialog-speaker-font-size);
+  line-height: 1.15;
 }
 
 .message {
@@ -181,13 +182,26 @@ button, input {
 }
 
 .recognized-text {
-  margin-top: 6px;
-  padding: 6px 10px;
-  border-left: 4px solid #6ee7ff;
+  margin-top: 3px;
+  padding: 2px 8px;
+  border-left: 3px solid #6ee7ff;
   color: #bff5ff;
   background: rgba(0, 100, 130, .18);
   font-size: var(--speech-status-font-size);
-  line-height: 1.35;
+  line-height: 1.2;
+}
+
+.dialogue-box.speech-listening {
+  padding: 4px 10px;
+  border-width: 3px;
+}
+
+.dialogue-box.speech-listening .speaker {
+  margin-bottom: 1px;
+}
+
+.dialogue-box.speech-listening .message {
+  line-height: 1.2;
 }
 
 .controls {
@@ -201,7 +215,7 @@ button, input {
   width: auto;
   min-width: 0;
   min-height: var(--dialog-control-min-height);
-  padding: 5px 12px;
+  padding: 2px 10px;
   border: 2px solid #fff;
   border-radius: 10px;
   background: #151515;
@@ -209,7 +223,7 @@ button, input {
   cursor: pointer;
   font-weight: 800;
   font-size: var(--dialog-control-font-size);
-  line-height: 1.2;
+  line-height: 1.1;
 }
 
 .control-button:hover,
@@ -348,7 +362,8 @@ button, input {
 .opening-panel.notice-panel .control-button {
   flex: 0 0 auto;
   margin-top: 4px;
-  padding: 9px 20px;
+  min-height: var(--dialog-control-min-height);
+  padding: 2px 10px;
 }
 
 @media (max-height: 720px) {
@@ -430,10 +445,10 @@ button, input {
 
 @media (max-width: 700px) {
   :root {
-    --dialog-control-font-size: 14px;
-    --dialog-control-min-height: 38px;
-    --dialog-speaker-font-size: 13px;
-    --speech-status-font-size: 13px;
+    --dialog-control-font-size: 13px;
+    --dialog-control-min-height: 28px;
+    --dialog-speaker-font-size: 12px;
+    --speech-status-font-size: 12px;
   }
 
   .dialogue-box {
@@ -457,8 +472,8 @@ button, input {
 
 @media (min-width: 701px) {
   :root {
-    --dialog-speaker-font-size: 15px;
-    --speech-status-font-size: 14px;
+    --dialog-speaker-font-size: 13px;
+    --speech-status-font-size: 12px;
   }
 }
 

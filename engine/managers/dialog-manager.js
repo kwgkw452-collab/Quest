@@ -92,8 +92,16 @@
     els.dialogueBox.hidden = true;
   }
 
+  function setSpeechLayout(active) {
+    var classList = els.dialogueBox && els.dialogueBox.classList;
+    if (!classList) return;
+    if (active) classList.add("speech-listening");
+    else classList.remove("speech-listening");
+  }
+
   function showRecognized(text, prefix) {
     requireInit();
+    setSpeechLayout(true);
     els.recognizedText.hidden = false;
     var visiblePrefix = prefix === undefined ? (GameConfig.recognizedPrefix || "") : prefix;
     els.recognizedText.textContent = /^You said:\s*$/i.test(visiblePrefix) ?
@@ -102,12 +110,14 @@
 
   function showSpeechStatus(speaker, goal, status) {
     show(speaker || "", goal || "", "speech-listening");
+    setSpeechLayout(true);
     els.recognizedText.hidden = false;
     els.recognizedText.textContent = status || "🎤 聞き取り中…";
   }
 
   function hideRecognized() {
     requireInit();
+    setSpeechLayout(false);
     els.recognizedText.hidden = true;
     els.recognizedText.textContent = "";
   }

@@ -15,8 +15,9 @@ const phaseA2Assets = new Set([
   "engine/controllers/communicative-question-flow-controller.js"
 ]);
 const fixedVersions = {
+  "data/questions.js": "mobile-ui-story-polish-v1-1",
   "data/communicative-judge-rules.js": "s005-registry-instance-fix-v1",
-  "engine/presenters/communicative-question-presenter.js": "s005-listening-ui-v1",
+  "engine/presenters/communicative-question-presenter.js": "mobile-ui-story-polish-v1-1",
   "engine/services/local-communicative-judge.js": "s005-rule-real-browser-trace-v1",
   "engine/services/communicative-judge.js": "s005-rule-real-browser-trace-v1",
   "engine/managers/question-manager.js": "s005-rule-real-browser-trace-v1"

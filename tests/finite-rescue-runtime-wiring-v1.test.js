@@ -19,7 +19,7 @@ for (const file of [
   "engine/core/story-engine.js",
   "engine/core/scene-manager.js"
 ]) {
-  const version = file === "engine/managers/dialog-manager.js" ? "ui-japanese-v1" :
+  const version = file === "engine/managers/dialog-manager.js" ? "mobile-ui-story-polish-v1-1" :
     file === "engine/core/story-engine.js" || file === "engine/core/scene-manager.js" ?
       "adventure-return-fix-v1" : "finite-rescue-runtime-wiring-v1";
   assert(index.includes(`${file}?v=${version}`), `${file} cache busting`);
