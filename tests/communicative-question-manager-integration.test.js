@@ -277,14 +277,14 @@ function queueDeferredSpeech(pending, transcript, alternatives) {
     "No Provider, fetch, or API key is added");
   ok(!managerSource.includes("while (true)") && !managerSource.includes("do {"), "Communicative path has no automatic retry loop");
 
-  equal(treeHash("engine/stories"), "f8cbb9d1ec8d9dd3ee4028c1377d16f2763cd2ef02f10938128b068d1d88e163");
+  equal(treeHash("engine/stories"), "93a0332efb2803acf52af0591972edf9bb26a5f76a980875d609973311b0a7b7");
   equal(treeHash("stories"), "d8546e5e7990c8306acb9ad1d82962868cc6ef78520137bf2760a68c877a8fe2");
   equal(hash("data/monsters.js"), "af1afabcf11f4536eacb69b8370c465273b1b9adce8e98b94b69bac4e38b8073");
   equal(hash("engine/managers/monster-battle-manager.js"), "0451a45a75e35c9c4418f40126e55d8659cbbf407deca78089f9c12058026ee3");
   equal(hash("data/mornings.js"), "89007415f111ab883dd2a10b47e9a7026608bfd377dd8ee1ec7ad0f5d9027470");
   equal(hash("engine/managers/morning-manager.js"), "f123747d417d3aa632d84ca828ffa0ff85c8b14f62753ad8a77655e56e819856");
-  equal(hash("index.html"), "1df2e93a5f4f161dc4114e352acbdd1e390471882e80e08b9295a7ec06c45f2f");
-  equal(hash("dev.html"), "34f5f6cf9a9f844701c95edac8196670573ba97a7786c5cc73ce169eca4de8f1");
+  equal(hash("index.html"), "98d052a701ad84988b4fd882532bac5a6583b4ee00f5b0954952b2d1200b2f40");
+  equal(hash("dev.html"), "2119957cd9bd048fc2705677814741820dbac377ee0f3d1913c200bcf8817749");
   equal(hash("engine/services/speech-engine.js"), "3318e03a55a2506fccfeca2481d0b286e69074c63f5539d73b1b5b27e6371264");
   equal(hash("engine/services/speech-start-controller.js"), "73ea61ec3cc4a2532b220f298d2e48d8e66d03fac9901cbf4662bc89c65a883b");
   equal(hash("engine/services/communicative-question-adapter.js"), "1fe6fbb7090c6d61c666771edcab963b23596ba399e59fa3650503d4c3473e3f");

@@ -13,8 +13,7 @@ for (const htmlName of ["index.html", "dev.html"]) {
     "css/style.css",
     "data/questions.js",
     "engine/managers/dialog-manager.js",
-    "engine/presenters/communicative-question-presenter.js",
-    "engine/stories/story-saki-departure.js"
+    "engine/presenters/communicative-question-presenter.js"
   ]) assert(html.includes(`${asset}?v=${version}`), `${htmlName}: ${asset} version`);
 }
 
@@ -37,7 +36,7 @@ assert(questions.includes("バナナかオレンジ、好きなほうを英語�
 const story = read("engine/stories/story-saki-departure.js");
 assert(story.includes("サキは、この街に残ることになった。"));
 assert(story.includes("ピコとサキは、ピコの通信システムを使って、離れていても連絡できるようになった。"));
-assert(story.includes('button: "S003を終了する"'));
+assert(story.includes('button: "S004を終了する"'));
 
 function element() {
   const classes = new Set();

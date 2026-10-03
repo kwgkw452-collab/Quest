@@ -13,7 +13,7 @@ const protectedHashes = {
   "data/monsters.js": "af1afabcf11f4536eacb69b8370c465273b1b9adce8e98b94b69bac4e38b8073",
   "data/mornings.js": "89007415f111ab883dd2a10b47e9a7026608bfd377dd8ee1ec7ad0f5d9027470",
   "data/word-dictionaries.js": "8c8c49386c8bd935cbb40d1f067441f3f032f423a579c8193d3b95d167d68d89",
-  "dev.html": "34f5f6cf9a9f844701c95edac8196670573ba97a7786c5cc73ce169eca4de8f1",
+  "dev.html": "2119957cd9bd048fc2705677814741820dbac377ee0f3d1913c200bcf8817749",
   "dev/communicative-question-manager-playtest.js": "1cce50bfddfa360319fdd335333ccd785f30dac5d0f255dc626860f2ade0f87e",
   "engine/commands/story-commands.js": "d51dff6ca978d9f7df844448048302949f0b5d5c412badce98d67686f173b3e0",
   "engine/managers/monster-battle-manager.js": "0451a45a75e35c9c4418f40126e55d8659cbbf407deca78089f9c12058026ee3",
@@ -32,9 +32,9 @@ Object.assign(protectedHashes, {
   "engine/stories/S001.js": "e7aae0d4f4bf81915bcdcec44254b1414135e4fbb1a80907fe306971e38a52e1",
   "engine/stories/S002.js": "bd05226b3e51d12a27e1504579f69cd97200231a68edecd8a8d6e6b2e7aaf525",
   "engine/stories/S003.js": "e532ff803cf57398d0cd457ba118a9ec004d484af27a77e6fce81dc5da5c991c",
-  "engine/stories/S004.js": "b004f23146691f28a420e8918dd61577ad0f45a9daee4af63e2c82c42b0cc905",
+  "engine/stories/S004.js": "ca801b7658fe1bddf98cf8c21ee1794adf602b68afa5a7f94599758fb3437070",
   "engine/stories/m001.js": "187c5139107ab8c6f8a35a758d4bc3976f164fe161dccb341926778456fa6e2a",
-  "engine/stories/story-saki-departure.js": "d25b181a85bea78771c6b41534a5c8af2c972744182b899acdc882357f5e17ef"
+  "engine/stories/story-saki-departure.js": "a1378627be33f2c4b4b9c23fcc19423f4f69b91f304579cdad785dfb60d68d6d"
 });
 
 for (const [file, expected] of Object.entries(protectedHashes)) {

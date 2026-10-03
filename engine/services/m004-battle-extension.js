@@ -4,7 +4,8 @@
   var canonical = ["eyes", "nose", "mouth", "ears"];
   var japanese = { eyes: "目", nose: "鼻", mouth: "口", ears: "耳" };
   var recognitionAliases = {
-    i: "eyes", hi: "eyes",
+    i: "eyes", hi: "eyes", ice: "eyes",
+    no: "nose",
     ear: "ears", year: "ears", years: "ears", yeah: "ears",
     mouse: "mouth"
   };
@@ -57,7 +58,12 @@
   MonsterBattleData.canonicalAnswer = function (monster, answer) {
     var exact = originalCanonicalAnswer(monster, answer);
     if (exact || !monster || monster.monsterId !== "m004") return exact;
-    return recognitionAliases[normalizeRecognition(answer)] || null;
+    var alias = recognitionAliases[normalizeRecognition(answer)] || null;
+    if (!alias) return null;
+    var context = MonsterBattleManager.getContext();
+    if (!context || context.monsterId !== "m004") return null;
+    var accepted = Array.isArray(context.acceptedAnswers) ? context.acceptedAnswers : [];
+    return accepted.indexOf(alias) === -1 ? alias : null;
   };
 
   function remainingWords() {

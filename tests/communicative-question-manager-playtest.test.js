@@ -380,7 +380,7 @@ function field(label) {
   ok(read("dev/communicative-judge-pilot.js").includes("window.CommunicativeJudgePilot"), "Existing Pilot remains present");
 
   ok(!/fetch\s*\(|XMLHttpRequest|API_KEY|Gemini|OpenAI/.test(source), "No Provider, fetch, or API key is added");
-  equal(hash("index.html"), "1df2e93a5f4f161dc4114e352acbdd1e390471882e80e08b9295a7ec06c45f2f");
+  equal(hash("index.html"), "98d052a701ad84988b4fd882532bac5a6583b4ee00f5b0954952b2d1200b2f40");
   equal(hash("data/questions.js"), "7f94f150fff8ef7af49e4bd7f86614900eafb0fb1d3d772861142feb68d75904");
   equal(hash("engine/managers/question-manager.js"), "98047b0cb21bd12f4fd5e2c432ea28836a6b82b7b0a3067639781ad538d87c6d");
   equal(hash("engine/services/speech-engine.js"), "3318e03a55a2506fccfeca2481d0b286e69074c63f5539d73b1b5b27e6371264");
@@ -390,7 +390,7 @@ function field(label) {
   equal(hash("engine/services/local-communicative-judge.js"), "d124c63e412c4e6553026141361ab608da5603bd29854f93f6b8c06bf1f57e58");
   equal(hash("data/communicative-judge-rules.js"), "acae74a247318a54ef09ac75c04c444c14dedc798c67abf3b793fc0529dd9279");
   equal(hash("dev/communicative-judge-pilot.js"), "96b9dc24d72b9d7bc9857662e9a81dac170ea329da6f59930850d9eb8023bc7d");
-  equal(treeHash("engine/stories"), "f8cbb9d1ec8d9dd3ee4028c1377d16f2763cd2ef02f10938128b068d1d88e163");
+  equal(treeHash("engine/stories"), "93a0332efb2803acf52af0591972edf9bb26a5f76a980875d609973311b0a7b7");
   equal(treeHash("stories"), "d8546e5e7990c8306acb9ad1d82962868cc6ef78520137bf2760a68c877a8fe2");
   equal(hash("data/monsters.js"), "af1afabcf11f4536eacb69b8370c465273b1b9adce8e98b94b69bac4e38b8073");
   equal(hash("engine/managers/monster-battle-manager.js"), "0451a45a75e35c9c4418f40126e55d8659cbbf407deca78089f9c12058026ee3");

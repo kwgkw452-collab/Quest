@@ -169,7 +169,7 @@
       C.hideDialogue(),
       C.se("zephyrGo", { volume: 0.25, stopAllBefore: true }),
       C.wait(3000),
-      C.dialogue("サキ（遠くから）", "See you, Master!", { button: "S003を終了する", voiceKey: "voice_c03_st004_018", supportText: "さようなら、マスター！" }),
+      C.dialogue("サキ（遠くから）", "See you, Master!", { button: "S004を終了する", voiceKey: "voice_c03_st004_018", supportText: "さようなら、マスター！" }),
       C.effect("fadeOut")
     ]
   };

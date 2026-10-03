@@ -86,7 +86,7 @@ const protectedHashes = {
   "engine/presenters/communicative-question-presenter.js": "8272cb38358bd5f4e4190a826e75bd07143eee3f8fd1f24e731e9263413a2e67",
   "engine/controllers/communicative-question-flow-controller.js": "8bf9a35dc37a6296b8afc0924e41824f3ae8a7a71f5eefbc5a624f05828f200e",
   "engine/core/story-engine.js": "ecca2bac442d5002fec99d8f9e826756bee6afd2efd24a093c187d041f5afbeb",
-  "engine/stories/S004.js": "b004f23146691f28a420e8918dd61577ad0f45a9daee4af63e2c82c42b0cc905",
+  "engine/stories/S004.js": "ca801b7658fe1bddf98cf8c21ee1794adf602b68afa5a7f94599758fb3437070",
   "data/monsters.js": "af1afabcf11f4536eacb69b8370c465273b1b9adce8e98b94b69bac4e38b8073",
   "data/mornings.js": "89007415f111ab883dd2a10b47e9a7026608bfd377dd8ee1ec7ad0f5d9027470",
   "engine/managers/monster-battle-manager.js": "0451a45a75e35c9c4418f40126e55d8659cbbf407deca78089f9c12058026ee3",

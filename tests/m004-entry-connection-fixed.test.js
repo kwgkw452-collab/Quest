@@ -56,8 +56,8 @@ vm.runInContext(read("engine/core/scene-manager.js"), context, { filename: "engi
   assert.equal(state.storyId, "S005");
   assert.equal(context.SceneManager.getCurrentStoryId(), "S005");
 
-  assert(read("engine/stories/story-saki-departure.js").includes('button: "S003を終了する"'),
-    "st004 ending display must identify S003 without changing its m004 route");
+  assert(read("engine/stories/story-saki-departure.js").includes('button: "S004を終了する"'),
+    "st004 ending display must identify the user-facing S004 without changing its m004 route");
 
   assert(read("engine/managers/monster-manager.js").includes("definition.presentation.splitLayers"),
     "m004 face-balance split layers must remain data-driven");

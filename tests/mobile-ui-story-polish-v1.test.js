@@ -39,7 +39,7 @@ const communication = departure.indexOf("ピコとサキは、ピコの通信シ
 const notGoodbye = departure.indexOf('C.dialogue("サキ", "It\'s not goodbye.",');
 assert(yes >= 0 && yes < remain && remain < callConnected);
 assert(callConnected < communication && communication < notGoodbye);
-assert(departure.includes('button: "S003を終了する"'));
+assert(departure.includes('button: "S004を終了する"'));
 assert(!departure.includes('button: "004を終了する"'));
 
 const questions = read("data/questions.js");

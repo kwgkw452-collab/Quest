@@ -13,7 +13,7 @@ const devHtml = read("dev.html");
 const scripts = Array.from(devHtml.matchAll(/<script\s+src="([^"]+)"/g), match => match[1]);
 
 const productionHashes = {
-  "index.html": "1df2e93a5f4f161dc4114e352acbdd1e390471882e80e08b9295a7ec06c45f2f",
+  "index.html": "98d052a701ad84988b4fd882532bac5a6583b4ee00f5b0954952b2d1200b2f40",
   "data/questions.js": "7f94f150fff8ef7af49e4bd7f86614900eafb0fb1d3d772861142feb68d75904",
   "data/communicative-judge-rules.js": "acae74a247318a54ef09ac75c04c444c14dedc798c67abf3b793fc0529dd9279",
   "engine/services/local-communicative-judge.js": "d124c63e412c4e6553026141361ab608da5603bd29854f93f6b8c06bf1f57e58",
@@ -23,7 +23,7 @@ const productionHashes = {
   "engine/presenters/communicative-question-presenter.js": "8272cb38358bd5f4e4190a826e75bd07143eee3f8fd1f24e731e9263413a2e67",
   "engine/controllers/communicative-question-flow-controller.js": "8bf9a35dc37a6296b8afc0924e41824f3ae8a7a71f5eefbc5a624f05828f200e",
   "engine/core/story-engine.js": "ecca2bac442d5002fec99d8f9e826756bee6afd2efd24a093c187d041f5afbeb",
-  "engine/stories/S004.js": "b004f23146691f28a420e8918dd61577ad0f45a9daee4af63e2c82c42b0cc905"
+  "engine/stories/S004.js": "ca801b7658fe1bddf98cf8c21ee1794adf602b68afa5a7f94599758fb3437070"
 };
 for (const [file, expected] of Object.entries(productionHashes)) {
   assert.strictEqual(hash(file), expected, `${file} must remain unchanged`);

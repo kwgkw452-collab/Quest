@@ -222,7 +222,7 @@
         supportText: "みんなのために料理するよ！",
         supportSpeaker: "ピコ"
       }),
-      C.dialogue("", "バーニーが仲間に加わった！", { button: "S004を終了する" }),
+      C.dialogue("", "バーニーが仲間に加わった！", { button: "S003を終了する" }),
       C.addCompanion(4),
       C.save(),
       C.stopBgm({ fadeOutMs: 700 }),

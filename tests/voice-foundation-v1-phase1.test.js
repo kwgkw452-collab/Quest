@@ -162,7 +162,7 @@ const hash = file => crypto.createHash("sha256").update(fs.readFileSync(path.joi
     "engine/stories/S001.js": "e7aae0d4f4bf81915bcdcec44254b1414135e4fbb1a80907fe306971e38a52e1",
     "engine/stories/S002.js": "bd05226b3e51d12a27e1504579f69cd97200231a68edecd8a8d6e6b2e7aaf525",
     "engine/stories/S003.js": "e532ff803cf57398d0cd457ba118a9ec004d484af27a77e6fce81dc5da5c991c",
-    "engine/stories/S004.js": "b004f23146691f28a420e8918dd61577ad0f45a9daee4af63e2c82c42b0cc905"
+    "engine/stories/S004.js": "ca801b7658fe1bddf98cf8c21ee1794adf602b68afa5a7f94599758fb3437070"
   };
   Object.entries(storyHashes).forEach(([file, expected]) => assert.strictEqual(hash(file), expected)); // 40 Story bytes
   assert.strictEqual(hash("data/audio.js"), "e6c8de637d7946c9fe0107dea262a632e8fa2d703941db5169777a98bbdf4b56"); // 41 Audio assets bytes
