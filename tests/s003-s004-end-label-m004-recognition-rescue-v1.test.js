@@ -22,10 +22,10 @@ assert(s004Runtime.includes('nextStoryId: "m004"'));
 for (const page of ["index.html", "dev.html"]) {
   const html = read(page);
   for (const asset of [
-    "engine/services/m004-battle-extension.js",
     "engine/stories/S004.js",
     "engine/stories/story-saki-departure.js"
   ]) assert(html.includes(asset + "?v=s003-s004-end-label-m004-rescue-v1"), page + ": " + asset);
+  assert(html.includes("engine/services/m004-battle-extension.js?v=m004-ears-recognition-rescue-v1"));
 }
 
 let battleContext = { monsterId: "m004", acceptedAnswers: [] };
@@ -65,7 +65,8 @@ const acceptanceCases = [
   ["eyes", "eyes", "eyes"], ["eyes", "ice", "eyes"],
   ["nose", "nose", "nose"], ["nose", "no", "nose"],
   ["ear", "ear", "ears"], ["ear", "year", "ears"],
-  ["ears", "ears", "ears"], ["ears", "years", "ears"], ["ears", "year", "ears"]
+  ["ears", "ears", "ears"], ["ears", "years", "ears"], ["ears", "year", "ears"],
+  ["ears", "yes", "ears"]
 ];
 for (const [expected, transcript, canonical] of acceptanceCases) {
   battleContext = { monsterId: "m004", acceptedAnswers: ["eyes", "nose", "mouth", "ears"].filter(word => word !== canonical) };
@@ -78,11 +79,14 @@ battleContext = { monsterId: "m004", acceptedAnswers: ["nose"] };
 assert.strictEqual(context.MonsterBattleData.canonicalAnswer(m004, "no"), null, "nose alias is rejected when nose is not current");
 battleContext = { monsterId: "m004", acceptedAnswers: ["ears"] };
 assert.strictEqual(context.MonsterBattleData.canonicalAnswer(m004, "year"), null, "ear alias is rejected when ears is not current");
+assert.strictEqual(context.MonsterBattleData.canonicalAnswer(m004, "yes"), null, "yes alias is rejected when ears is not current");
 battleContext = { monsterId: "m001", acceptedAnswers: [] };
 assert.strictEqual(context.MonsterBattleData.canonicalAnswer(m004, "no"), null, "alias requires active m004 context");
 assert.strictEqual(context.MonsterBattleData.canonicalAnswer(other, "no"), null, "other Monster does not map no to nose");
 assert.strictEqual(context.MonsterBattleData.canonicalAnswer(other, "ice"), null, "other Monster does not map ice to eyes");
+assert.strictEqual(context.MonsterBattleData.canonicalAnswer(other, "yes"), null, "other Monster does not map yes to ears");
 assert.strictEqual(context.MonsterBattleData.canonicalAnswer({ monsterId: "S005" }, "No."), null, "Story Communication No is isolated");
+assert.strictEqual(context.MonsterBattleData.canonicalAnswer({ monsterId: "S005" }, "Yes."), null, "Story Communication Yes is isolated");
 
 (async () => {
   for (const [expected, transcript, canonical] of acceptanceCases) {

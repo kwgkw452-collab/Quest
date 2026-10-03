@@ -39,9 +39,9 @@
         volume: Math.max(0, Math.min(1, gain)),
         voiceEffect: options.voiceEffect
       });
-      activeAudio = tracked.audio;
+      activeAudio = tracked;
       var completion = await tracked.completion;
-      if (activeAudio === tracked.audio) activeAudio = null;
+      if (activeAudio === tracked) activeAudio = null;
       return result(voiceKey, completion.status, completion.error);
     } catch (error) {
       activeAudio = null;

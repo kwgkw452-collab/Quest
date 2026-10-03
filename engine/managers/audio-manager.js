@@ -8,8 +8,12 @@
   var speechDucking = null;
   var radioTraceSerial = 0;
   var canonicalAudioContext = null;
-  var unlockAttempted = false;
   var unlockPromise = null;
+  var unlockComplete = false;
+  var unlockGestureCleanup = null;
+  var pendingBgmGestureCleanup = null;
+  var pendingBgm = null;
+  var bgmRequestSerial = 0;
   var bgmTracks = [];
   var audioState = {
     currentBgmAsset: null,
@@ -61,8 +65,8 @@
   }
 
   function unlock() {
-    if (unlockAttempted) return unlockPromise || Promise.resolve(false);
-    unlockAttempted = true;
+    if (unlockComplete) return Promise.resolve(true);
+    if (unlockPromise) return unlockPromise;
     unlockPromise = (async function () {
       var contextRunning = await ensureCanonicalAudioContextRunning();
       var mediaUnlocked = false;
@@ -74,19 +78,31 @@
         probe.pause();
         mediaUnlocked = true;
       } catch (_) { /* Unlock failure must never block game progress. */ }
-      return contextRunning || mediaUnlocked;
-    })().catch(function () { return false; });
+      var success = contextRunning || (!audioContextType() && mediaUnlocked);
+      if (success) {
+        unlockComplete = true;
+        if (unlockGestureCleanup) unlockGestureCleanup();
+      }
+      return success;
+    })().catch(function () { return false; }).then(function (success) {
+      unlockPromise = null;
+      return success;
+    });
     return unlockPromise;
   }
 
   function installUnlockGesture() {
     if (!window.document || typeof document.addEventListener !== "function") return;
     var events = ["pointerdown", "touchend", "click", "keydown"];
-    function firstGesture() {
-      events.forEach(function (name) { document.removeEventListener(name, firstGesture, true); });
-      unlock();
+    function cleanup() {
+      events.forEach(function (name) { document.removeEventListener(name, trustedGesture, true); });
+      unlockGestureCleanup = null;
     }
-    events.forEach(function (name) { document.addEventListener(name, firstGesture, true); });
+    function trustedGesture() {
+      return unlock();
+    }
+    unlockGestureCleanup = cleanup;
+    events.forEach(function (name) { document.addEventListener(name, trustedGesture, true); });
   }
 
   function dialogueDuckProfile() {
@@ -285,9 +301,51 @@
     }
   }
 
+  function clearPendingBgm() {
+    pendingBgm = null;
+    if (pendingBgmGestureCleanup) pendingBgmGestureCleanup();
+  }
+
+  function installPendingBgmRetryGesture() {
+    if (pendingBgmGestureCleanup || !window.document || typeof document.addEventListener !== "function") return;
+    var events = ["pointerdown", "touchend", "click", "keydown"];
+    function cleanup() {
+      events.forEach(function (name) { document.removeEventListener(name, retry, true); });
+      pendingBgmGestureCleanup = null;
+    }
+    function retry() { retryPendingBgm(); }
+    pendingBgmGestureCleanup = cleanup;
+    events.forEach(function (name) { document.addEventListener(name, retry, true); });
+  }
+
+  function watchBgmPlayback(audio, requestId) {
+    Promise.resolve(audio && audio.__eigoPlaybackOutcome).then(function (outcome) {
+      if (!audio || requestId !== bgmRequestSerial || audio !== bgm) return;
+      if (outcome && outcome.ok === false) {
+        pendingBgm = { audio: audio, requestId: requestId };
+        installPendingBgmRetryGesture();
+      } else if (pendingBgm && pendingBgm.audio === audio) {
+        clearPendingBgm();
+      }
+    });
+  }
+
+  function retryPendingBgm() {
+    var pending = pendingBgm;
+    if (!pending || pending.requestId !== bgmRequestSerial || pending.audio !== bgm) {
+      clearPendingBgm();
+      return false;
+    }
+    safePlay(pending.audio);
+    watchBgmPlayback(pending.audio, pending.requestId);
+    return true;
+  }
+
   function playBgm(keyOrPath, options) {
     options = options || {};
     resetHeldSpeechPolicy();
+    clearPendingBgm();
+    var requestId = ++bgmRequestSerial;
     var path = resolve("bgm", keyOrPath);
     var targetVolume = (options.volume === undefined ? 1 : options.volume) * mixAssetGain(keyOrPath);
     if (bgm && bgm.src && bgm.getAttribute("src") === path && !bgm.paused) {
@@ -297,6 +355,10 @@
         existingTrack.baseVolume = targetVolume;
         existingTrack.envelope = 1;
         applyBgmTrackVolume(existingTrack);
+      }
+      if (bgm.paused) {
+        safePlay(bgm);
+        watchBgmPlayback(bgm, requestId);
       }
       return bgm;
     }
@@ -308,6 +370,7 @@
     bgm = next;
     applyBgmTrackVolume(nextTrack);
     safePlay(next);
+    watchBgmPlayback(next, requestId);
     if (previous) {
       var previousTrack = previous.__eigoBgmTrack;
       if (options.crossfadeMs && previousTrack) {
@@ -329,6 +392,8 @@
   function stopBgm() {
     var options = arguments[0] || {};
     resetHeldSpeechPolicy();
+    clearPendingBgm();
+    bgmRequestSerial += 1;
     var current = bgm;
     bgm = null;
     if (!current) return Promise.resolve();
@@ -389,84 +454,104 @@
     var radio = options.voiceEffect === "radio";
     var kong = !radio && /^voice_c02_/.test(keyOrPath);
     var bernie = !radio && /^voice_c04_/.test(keyOrPath);
+    var processed = radio || kong || bernie;
+    var voicePath = resolve("voice", keyOrPath);
     var traceDetail = radio ? { traceId: ++radioTraceSerial, voiceKey: keyOrPath, voiceEffect: options.voiceEffect } : null;
     if (radio) voiceTrace("radio-play-request", traceDetail);
     else voiceTrace("normal-voice-play-call", { voiceKey: keyOrPath });
-    var audio = radio || kong || bernie
-      ? new Audio(resolve("voice", keyOrPath))
+    var audio = processed
+      ? new Audio(voicePath)
       : playOneShot("voice", keyOrPath, options, voices);
-    if (kong || bernie) {
-      audio.volume = options.volume === undefined ? 1 : options.volume;
-      audio.preload = "auto";
-      voices.push(audio);
-      audio.addEventListener("ended", function () {
-        var index = voices.indexOf(audio);
-        if (index !== -1) voices.splice(index, 1);
-      }, { once: true });
-    }
-    if (radio) {
-      audio.__eigoRadioTrace = traceDetail;
-      voiceTrace("radio-audio-created", traceDetail, { src: audio.src });
-      audio.volume = options.volume === undefined ? 1 : options.volume;
-      audio.preload = "auto";
-      voices.push(audio);
-    }
-    audio.addEventListener("playing", function () {
-      if (radio) voiceTrace("radio-audio-event-playing", traceDetail);
-      else voiceTrace("normal-voice-playing", { voiceKey: keyOrPath });
-    });
-    dialogueVoices.push(audio);
     var settled = false;
-    var radioContext = null;
-    var radioNodes = [];
-    var mixContext = null;
-    var mixNodes = [];
+    var processingNodes = [];
     var resolveCompletion;
     var completion = new Promise(function (resolve) { resolveCompletion = resolve; });
+    var tracked = { audio: audio, completion: completion };
     var voiceModeOwner = enterDialogueVoiceMode();
 
-    function disposeRadio() {
-      radioNodes.forEach(function (node) { try { node.disconnect(); } catch (_) {} });
-      radioNodes = [];
-      radioContext = null;
-      mixNodes.forEach(function (node) { try { node.disconnect(); } catch (_) {} });
-      mixNodes = [];
-      mixContext = null;
+    function removeFrom(collection, item) {
+      var index = collection.indexOf(item);
+      if (index !== -1) collection.splice(index, 1);
+    }
+
+    function disposeProcessing() {
+      processingNodes.forEach(function (node) { try { node.disconnect(); } catch (_) {} });
+      processingNodes = [];
     }
 
     function complete(status, error) {
       if (settled) return;
       settled = true;
-      disposeRadio();
-      var dialogueIndex = dialogueVoices.indexOf(audio);
-      if (dialogueIndex !== -1) dialogueVoices.splice(dialogueIndex, 1);
-      var voiceIndex = voices.indexOf(audio);
-      if (voiceIndex !== -1) voices.splice(voiceIndex, 1);
+      disposeProcessing();
+      removeFrom(dialogueVoices, audio);
+      removeFrom(voices, audio);
       exitDialogueVoiceMode(voiceModeOwner);
       resolveCompletion({ status: status, error: error && error.message ? error.message : null });
     }
 
-    audio.__eigoDialogueComplete = complete;
-    audio.addEventListener("ended", function () {
-      if (radio) voiceTrace("radio-audio-event-ended", traceDetail);
-      complete("ended");
-    }, { once: true });
-    audio.addEventListener("error", function () { complete("failed", new Error("audio-error")); }, { once: true });
-    audio.addEventListener("abort", function () { complete("failed", new Error("audio-abort")); }, { once: true });
+    function attachDialogueAudio(candidate) {
+      if (processed) {
+        candidate.volume = options.volume === undefined ? 1 : options.volume;
+        candidate.preload = "auto";
+      }
+      if (radio) {
+        candidate.__eigoRadioTrace = traceDetail;
+        voiceTrace("radio-audio-created", traceDetail, { src: candidate.src });
+      }
+      if (processed && voices.indexOf(candidate) === -1) voices.push(candidate);
+      if (dialogueVoices.indexOf(candidate) === -1) dialogueVoices.push(candidate);
+      candidate.__eigoDialogueComplete = complete;
+      candidate.addEventListener("playing", function () {
+        if (radio) voiceTrace("radio-audio-event-playing", traceDetail);
+        else voiceTrace("normal-voice-playing", { voiceKey: keyOrPath });
+      });
+      candidate.addEventListener("ended", function () {
+        if (candidate !== audio) return;
+        if (radio) voiceTrace("radio-audio-event-ended", traceDetail);
+        complete("ended");
+      }, { once: true });
+      candidate.addEventListener("error", function () {
+        if (candidate === audio) complete("failed", new Error("audio-error"));
+      }, { once: true });
+      candidate.addEventListener("abort", function () {
+        if (candidate === audio) complete("failed", new Error("audio-abort"));
+      }, { once: true });
+    }
+
+    attachDialogueAudio(audio);
+
+    function useFreshHtmlAudioFallback(reason, error) {
+      if (settled) return false;
+      var replaced = audio;
+      disposeProcessing();
+      removeFrom(dialogueVoices, replaced);
+      removeFrom(voices, replaced);
+      replaced.__eigoDialogueComplete = null;
+      try { replaced.pause(); } catch (_) {}
+      audio = new Audio(voicePath);
+      tracked.audio = audio;
+      attachDialogueAudio(audio);
+      if (radio) voiceTrace("radio-fallback-enter", traceDetail, {
+        reason: reason,
+        error: error ? String(error) : null,
+        freshAudioElement: true
+      });
+      return true;
+    }
 
     function startPlayback() {
       if (settled) return;
-      safePlay(audio);
-      Promise.resolve(audio.__eigoPlaybackOutcome).then(function (outcome) {
-        if (outcome && outcome.ok === false) complete("failed", outcome.error);
+      var startedAudio = audio;
+      safePlay(startedAudio);
+      Promise.resolve(startedAudio.__eigoPlaybackOutcome).then(function (outcome) {
+        if (startedAudio === audio && outcome && outcome.ok === false) complete("failed", outcome.error);
       });
     }
 
     if (radio) {
-      var AudioContextType = audioContextType();
-      if (AudioContextType) {
+      if (audioContextType()) {
         try {
-          radioContext = getCanonicalAudioContext();
+          var radioContext = getCanonicalAudioContext();
           voiceTrace("radio-context-created", traceDetail, { contextState: radioContext.state });
           voiceTrace("radio-resume-before", traceDetail, { contextState: radioContext.state });
           ensureCanonicalAudioContextRunning().then(function (running) {
@@ -477,6 +562,7 @@
               startPlayback();
               return;
             }
+            var sourceAttempted = false;
             try {
               var highPass = radioContext.createBiquadFilter();
               highPass.type = "highpass";
@@ -509,27 +595,27 @@
               presence.connect(compressor);
               compressor.connect(saturation);
               saturation.connect(radioContext.destination);
+              sourceAttempted = true;
               var source = radioContext.createMediaElementSource(audio);
               voiceTrace("radio-source-created", traceDetail, { contextState: radioContext.state });
-              radioNodes = [source, highPass, lowPass, presence, compressor, saturation];
-              try {
-                source.connect(highPass);
-                voiceTrace("radio-graph-connected", traceDetail, { route: "filtered", contextState: radioContext.state });
-              } catch (error) {
-                voiceTrace("radio-fallback-enter", traceDetail, { reason: "source-filter-connect-failed", error: String(error) });
-                source.connect(radioContext.destination);
-                voiceTrace("radio-graph-connected", traceDetail, { route: "direct", contextState: radioContext.state });
-              }
+              processingNodes = [source, highPass, lowPass, presence, compressor, saturation];
+              source.connect(highPass);
+              voiceTrace("radio-graph-connected", traceDetail, { route: "filtered", contextState: radioContext.state });
             } catch (error) {
-              voiceTrace("radio-fallback-enter", traceDetail, { reason: "graph-initialization-failed", error: String(error) });
-              // An unavailable effect must never prevent the original voice from playing.
-              disposeRadio();
+              if (sourceAttempted) useFreshHtmlAudioFallback("graph-connect-failed-after-source", error);
+              else {
+                disposeProcessing();
+                voiceTrace("radio-fallback-enter", traceDetail, { reason: "graph-initialization-failed", error: String(error) });
+              }
             }
+            startPlayback();
+          }).catch(function (error) {
+            voiceTrace("radio-fallback-enter", traceDetail, { reason: "context-resume-failed", error: String(error) });
             startPlayback();
           });
         } catch (error) {
           voiceTrace("radio-fallback-enter", traceDetail, { reason: "context-or-resume-threw", error: String(error) });
-          disposeRadio();
+          disposeProcessing();
           startPlayback();
         }
       } else {
@@ -537,52 +623,60 @@
         startPlayback();
       }
     } else if (kong || bernie) {
-      var MixContextType = audioContextType();
-      if (MixContextType) {
+      if (audioContextType()) {
         try {
-          mixContext = getCanonicalAudioContext();
+          var mixContext = getCanonicalAudioContext();
           ensureCanonicalAudioContextRunning().then(function (running) {
             if (!running || settled) {
               startPlayback();
               return;
             }
-            var source = mixContext.createMediaElementSource(audio);
-            mixNodes.push(source);
-            if (kong) {
-            var kongGain = mixContext.createGain();
-            var processing = window.AudioMixProfile && AudioMixProfile.characterProcessing &&
-              AudioMixProfile.characterProcessing.c02 || {};
-            kongGain.gain.value = processing.webAudioGain === undefined ? 1 : Number(processing.webAudioGain);
-            var kongLimiter = mixContext.createDynamicsCompressor();
-            kongLimiter.threshold.value = -3;
-            kongLimiter.knee.value = 0;
-            kongLimiter.ratio.value = 20;
-            kongLimiter.attack.value = 0.001;
-            kongLimiter.release.value = 0.08;
-            source.connect(kongGain);
-            kongGain.connect(kongLimiter);
-            kongLimiter.connect(mixContext.destination);
-            mixNodes.push(kongGain, kongLimiter);
-            } else {
-            var lowMid = mixContext.createBiquadFilter();
-            lowMid.type = "peaking";
-            lowMid.frequency.value = 320;
-            lowMid.Q.value = 0.9;
-            lowMid.gain.value = -2.5;
-            var presence = mixContext.createBiquadFilter();
-            presence.type = "peaking";
-            presence.frequency.value = 3200;
-            presence.Q.value = 1.0;
-            presence.gain.value = 2.0;
-            source.connect(lowMid);
-            lowMid.connect(presence);
-            presence.connect(mixContext.destination);
-            mixNodes.push(lowMid, presence);
+            var sourceAttempted = false;
+            try {
+              var routeStart;
+              if (kong) {
+                var kongGain = mixContext.createGain();
+                var processing = window.AudioMixProfile && AudioMixProfile.characterProcessing &&
+                  AudioMixProfile.characterProcessing.c02 || {};
+                kongGain.gain.value = processing.webAudioGain === undefined ? 1 : Number(processing.webAudioGain);
+                var kongLimiter = mixContext.createDynamicsCompressor();
+                kongLimiter.threshold.value = -3;
+                kongLimiter.knee.value = 0;
+                kongLimiter.ratio.value = 20;
+                kongLimiter.attack.value = 0.001;
+                kongLimiter.release.value = 0.08;
+                kongGain.connect(kongLimiter);
+                kongLimiter.connect(mixContext.destination);
+                routeStart = kongGain;
+                processingNodes = [kongGain, kongLimiter];
+              } else {
+                var lowMid = mixContext.createBiquadFilter();
+                lowMid.type = "peaking";
+                lowMid.frequency.value = 320;
+                lowMid.Q.value = 0.9;
+                lowMid.gain.value = -2.5;
+                var presence = mixContext.createBiquadFilter();
+                presence.type = "peaking";
+                presence.frequency.value = 3200;
+                presence.Q.value = 1.0;
+                presence.gain.value = 2.0;
+                lowMid.connect(presence);
+                presence.connect(mixContext.destination);
+                routeStart = lowMid;
+                processingNodes = [lowMid, presence];
+              }
+              sourceAttempted = true;
+              var source = mixContext.createMediaElementSource(audio);
+              processingNodes.unshift(source);
+              source.connect(routeStart);
+            } catch (error) {
+              if (sourceAttempted) useFreshHtmlAudioFallback("character-graph-connect-failed-after-source", error);
+              else disposeProcessing();
             }
             startPlayback();
           }).catch(function () { startPlayback(); });
         } catch (error) {
-          disposeRadio();
+          disposeProcessing();
           startPlayback();
         }
       } else {
@@ -593,7 +687,7 @@
         if (outcome && outcome.ok === false) complete("failed", outcome.error);
       });
     }
-    return { audio: audio, completion: completion };
+    return tracked;
   }
 
   function stopDialogueVoices() {
@@ -700,7 +794,10 @@
         speechMultiplier: audioState.duckState.speech.multiplier
       },
       speechMode: Object.assign({}, audioState.speechMode),
-      voicePlaying: audioState.voicePlaying
+      voicePlaying: audioState.voicePlaying,
+      audioContextState: canonicalAudioContext ? canonicalAudioContext.state : "uninitialized",
+      unlockComplete: unlockComplete,
+      pendingBgm: !!pendingBgm
     };
   }
 

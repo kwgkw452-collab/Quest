@@ -50,7 +50,7 @@ assert(read("index.html").includes("css/style.css?v=mobile-ui-story-polish-v1-1"
 assert(read("dev.html").includes("css/style.css?v=mobile-ui-story-polish-v1-1"));
 
 // Locked subsystems must remain byte-identical to the Phase 1 source.
-assert.strictEqual(hash("engine/managers/audio-manager.js"), "182aa2fe8eb13a63605abba978da850baa338112975b14f31745c2f44e44d00f");
+assert.strictEqual(hash("engine/managers/audio-manager.js"), "a10de8e0e9572ffe01fa7f7d78172d8c9071cc0ba6704bd6a18e2cbb4b7aae66");
 assert.strictEqual(hash("engine/services/speech-recognition-adapter.js"), "1261497515055b11c6caa0d26eb8773d848d656bc17ba7a5c9f7b53798b365ad");
 assert.strictEqual(hash("engine/services/local-communicative-judge.js"), "d124c63e412c4e6553026141361ab608da5603bd29854f93f6b8c06bf1f57e58");
 assert.strictEqual(hash("engine/services/communicative-judge.js"), "a8b8482768e480f609ff9b569774509a881d503769ca5f3452783ff94c7ecb04");

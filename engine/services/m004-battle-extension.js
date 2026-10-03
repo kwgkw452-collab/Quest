@@ -6,7 +6,7 @@
   var recognitionAliases = {
     i: "eyes", hi: "eyes", ice: "eyes",
     no: "nose",
-    ear: "ears", year: "ears", years: "ears", yeah: "ears",
+    ear: "ears", year: "ears", years: "ears", yes: "ears", yeah: "ears",
     mouse: "mouth"
   };
   var lastRemainingWords = canonical.slice();
