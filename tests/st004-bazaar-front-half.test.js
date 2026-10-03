@@ -91,7 +91,7 @@ assert(whichIndex > waitingIndex);
 assert(stayIndex > whichIndex, "Saki must not say she wants to stay during Graphic 6");
 
 const fruitQuestion = context.QuestionDatabase.get("word.orange_or_banana");
-assert.strictEqual(fruitQuestion.prompt, "どっちが好き？ 英語で言ってみよう！");
+assert.strictEqual(fruitQuestion.prompt, "バナナかオレンジ、好きなほうを英語で答えてください。");
 assert.deepStrictEqual(Array.from(fruitQuestion.answers), ["orange", "banana", "no thank you"]);
 
 const normalizeContext = { console, window: {} };

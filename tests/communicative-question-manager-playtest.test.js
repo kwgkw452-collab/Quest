@@ -137,7 +137,7 @@ function field(label) {
   equal(productQuestions.length, 21, "Product Question Database starts with 21 Questions");
   equal(productQuestions.filter(question => question.communicative).length, 1, "Only phrase.are_you_ok is formally Communicative");
   equal(productQuestions.filter(question => !question.communicative).length, 20, "The other 20 product Questions remain Legacy");
-  equal(questionDefinitionHash, "872ca4d0426219eb18ff8982151f3756a607cd87fe77f905a00b8dfed6f9d2bd",
+  equal(questionDefinitionHash, "03287599209d890b0764f7f2423c695f6ca3d49a30e6275b29daab100513ddbf",
     "The 21 Question definition block matches Formal V1");
   ok(!questionSource.includes("dev.communicative.apple-order.playtest"), "Playtest Question is absent from product data");
 
@@ -380,8 +380,8 @@ function field(label) {
   ok(read("dev/communicative-judge-pilot.js").includes("window.CommunicativeJudgePilot"), "Existing Pilot remains present");
 
   ok(!/fetch\s*\(|XMLHttpRequest|API_KEY|Gemini|OpenAI/.test(source), "No Provider, fetch, or API key is added");
-  equal(hash("index.html"), "821675dd5fab9879ff3f403300fdd8924c368f45805b3cd8ff94152e39c8c935");
-  equal(hash("data/questions.js"), "1268c8ad3fdf7f41c484a94842662ed203ea2d2bb874b794899dbb334624d6e5");
+  equal(hash("index.html"), "c99068ee785e67531a68ed155c588cee3039d82fba23e07e819f8efeedd7a91c");
+  equal(hash("data/questions.js"), "7f94f150fff8ef7af49e4bd7f86614900eafb0fb1d3d772861142feb68d75904");
   equal(hash("engine/managers/question-manager.js"), "98047b0cb21bd12f4fd5e2c432ea28836a6b82b7b0a3067639781ad538d87c6d");
   equal(hash("engine/services/speech-engine.js"), "3318e03a55a2506fccfeca2481d0b286e69074c63f5539d73b1b5b27e6371264");
   equal(hash("engine/services/speech-start-controller.js"), "73ea61ec3cc4a2532b220f298d2e48d8e66d03fac9901cbf4662bc89c65a883b");
@@ -390,7 +390,7 @@ function field(label) {
   equal(hash("engine/services/local-communicative-judge.js"), "d124c63e412c4e6553026141361ab608da5603bd29854f93f6b8c06bf1f57e58");
   equal(hash("data/communicative-judge-rules.js"), "acae74a247318a54ef09ac75c04c444c14dedc798c67abf3b793fc0529dd9279");
   equal(hash("dev/communicative-judge-pilot.js"), "96b9dc24d72b9d7bc9857662e9a81dac170ea329da6f59930850d9eb8023bc7d");
-  equal(treeHash("engine/stories"), "6b30c670c977c4159bcd59f94cb4547507cb5a6c8262faeb9d32ae057a17c677");
+  equal(treeHash("engine/stories"), "f8cbb9d1ec8d9dd3ee4028c1377d16f2763cd2ef02f10938128b068d1d88e163");
   equal(treeHash("stories"), "d8546e5e7990c8306acb9ad1d82962868cc6ef78520137bf2760a68c877a8fe2");
   equal(hash("data/monsters.js"), "af1afabcf11f4536eacb69b8370c465273b1b9adce8e98b94b69bac4e38b8073");
   equal(hash("engine/managers/monster-battle-manager.js"), "0451a45a75e35c9c4418f40126e55d8659cbbf407deca78089f9c12058026ee3");

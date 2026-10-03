@@ -122,6 +122,7 @@
       }),
       C.bgm("bazaarMiddleEast", { loop: true, volume: 0.08, fadeInMs: 600 }),
       C.dialogue("サキ", "Yes.", { voiceKey: "voice_c03_st004_009", supportText: "うん。" }),
+      C.dialogue("", "サキは、この街に残ることになった。"),
 
       C.characters([]),
       C.background("images/004/s004_saki_headset_call_final.png"),
@@ -131,6 +132,7 @@
       C.dialogue("ピコ", "OK!", { voiceKey: "voice_c01_st004_004", supportText: "わかったピコ！", voiceEffect: "radio" }),
       C.dialogue("サキ", "Can you hear me?", { voiceKey: "voice_c03_st004_012", supportText: "私の声が聞こえる？", voiceEffect: "radio" }),
       C.dialogue("ピコ", "Yes! I can hear you!", { voiceKey: "voice_c01_st004_005", supportText: "うん！聞こえるピコ！", voiceEffect: "radio" }),
+      C.dialogue("", "ピコとサキは、ピコの通信システムを使って、離れていても連絡できるようになった。"),
       C.dialogue("サキ", "It's not goodbye.", { voiceKey: "voice_c03_st004_013", supportText: "さよならじゃないよ。" }),
       C.dialogue("サキ", "See you again, Master!", { voiceKey: "voice_c03_st004_014", supportText: "またね、マスター！" }),
       C.stopBgm({ fadeOutMs: 500 }),
@@ -167,7 +169,7 @@
       C.hideDialogue(),
       C.se("zephyrGo", { volume: 0.25, stopAllBefore: true }),
       C.wait(3000),
-      C.dialogue("サキ（遠くから）", "See you, Master!", { button: "004を終了する", voiceKey: "voice_c03_st004_018", supportText: "さようなら、マスター！" }),
+      C.dialogue("サキ（遠くから）", "See you, Master!", { button: "S003を終了する", voiceKey: "voice_c03_st004_018", supportText: "さようなら、マスター！" }),
       C.effect("fadeOut")
     ]
   };

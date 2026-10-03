@@ -52,7 +52,11 @@
     if (!active(token)) return;
     var text = String(value || "").trim();
     if (!text) {
-      DialogManager.show("ピコ", withGoal(japaneseGoal ? "🎤 聞き取り中…" : "聞き取り中…"));
+      if (typeof DialogManager.showSpeechStatus === "function") {
+        DialogManager.showSpeechStatus("ピコ", japaneseGoal || "", "🎤 聞き取り中…");
+      } else {
+        DialogManager.show("ピコ", withGoal(japaneseGoal ? "🎤 聞き取り中…" : "聞き取り中…"));
+      }
       return;
     }
     DialogManager.showRecognized(text, "聞き取り中：");

@@ -1,15 +1,12 @@
 "use strict";
 
 const assert = require("node:assert/strict");
-const crypto = require("node:crypto");
 const fs = require("node:fs");
 const path = require("node:path");
 const vm = require("node:vm");
 
 const root = path.resolve(__dirname, "..");
-const original = "/Users/mac/Downloads/Eigo-DE-Quest_005-m004-Entry-Connection-Fixed-V1";
 const read = file => fs.readFileSync(path.join(root, file), "utf8");
-const digest = file => crypto.createHash("sha256").update(fs.readFileSync(file)).digest("hex");
 const calls = [];
 const context = {
   console,

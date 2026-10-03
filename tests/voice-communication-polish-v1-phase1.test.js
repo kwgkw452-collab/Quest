@@ -143,7 +143,7 @@ function controlHarness() {
   support.click("Pico's Support");
   support.click("もう一度聞く");
   assert.strictEqual(support.plays.at(-1)[1].voiceEffect, undefined);
-  support.click("004を終了する");
+  support.click("S003を終了する");
   await farewellNormal;
 
   const normal = audioHarness("ok");

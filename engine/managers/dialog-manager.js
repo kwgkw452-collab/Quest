@@ -100,6 +100,12 @@
       (text || "…") + " と聞こえたよ。" : visiblePrefix + (text || "…");
   }
 
+  function showSpeechStatus(speaker, goal, status) {
+    show(speaker || "", goal || "", "speech-listening");
+    els.recognizedText.hidden = false;
+    els.recognizedText.textContent = status || "🎤 聞き取り中…";
+  }
+
   function hideRecognized() {
     requireInit();
     els.recognizedText.hidden = true;
@@ -166,6 +172,7 @@
     addControl: addControl,
     hide: hide,
     showRecognized: showRecognized,
+    showSpeechStatus: showSpeechStatus,
     hideRecognized: hideRecognized,
     next: next,
     textInput: textInput,

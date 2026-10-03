@@ -124,7 +124,7 @@ function legacyRun(errorCode, choices) {
   assert.strictEqual(sha("engine/managers/question-manager.js"),
     "98047b0cb21bd12f4fd5e2c432ea28836a6b82b7b0a3067639781ad538d87c6d");
   assert.strictEqual(sha("data/questions.js"),
-    "1268c8ad3fdf7f41c484a94842662ed203ea2d2bb874b794899dbb334624d6e5");
+    "7f94f150fff8ef7af49e4bd7f86614900eafb0fb1d3d772861142feb68d75904");
   assert.strictEqual(sha("engine/services/communicative-judge.js"),
     "a8b8482768e480f609ff9b569774509a881d503769ca5f3452783ff94c7ecb04");
 

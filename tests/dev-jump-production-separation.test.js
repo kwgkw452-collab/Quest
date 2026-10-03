@@ -37,7 +37,7 @@ const storyHashes = {
   "engine/stories/S003.js": "e532ff803cf57398d0cd457ba118a9ec004d484af27a77e6fce81dc5da5c991c",
   "engine/stories/S004.js": "b004f23146691f28a420e8918dd61577ad0f45a9daee4af63e2c82c42b0cc905",
   "engine/stories/m001.js": "187c5139107ab8c6f8a35a758d4bc3976f164fe161dccb341926778456fa6e2a",
-  "engine/stories/story-saki-departure.js": "a44a0787a94544fa7bcc8987e01088dd8af77aab90a605d3206e1fd7daa34fe4"
+  "engine/stories/story-saki-departure.js": "d25b181a85bea78771c6b41534a5c8af2c972744182b899acdc882357f5e17ef"
 };
 Object.entries(storyHashes).forEach(([file, expected]) => assert.strictEqual(hash(file), expected, file));
 

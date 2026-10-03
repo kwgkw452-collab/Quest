@@ -2,6 +2,13 @@
   box-sizing: border-box;
 }
 
+:root {
+  --dialog-control-font-size: 15px;
+  --dialog-control-min-height: 40px;
+  --dialog-speaker-font-size: 14px;
+  --speech-status-font-size: 13px;
+}
+
 html, body {
   width: 100%;
   height: 100%;
@@ -164,7 +171,7 @@ button, input {
   margin-bottom: 3px;
   color: #ffd34d;
   font-weight: 800;
-  font-size: clamp(16px, 1.8vw, 23px);
+  font-size: var(--dialog-speaker-font-size);
 }
 
 .message {
@@ -179,7 +186,8 @@ button, input {
   border-left: 4px solid #6ee7ff;
   color: #bff5ff;
   background: rgba(0, 100, 130, .18);
-  font-size: clamp(16px, 1.8vw, 22px);
+  font-size: var(--speech-status-font-size);
+  line-height: 1.35;
 }
 
 .controls {
@@ -190,14 +198,18 @@ button, input {
 }
 
 .control-button {
-  min-width: 110px;
-  padding: 7px 15px;
+  width: auto;
+  min-width: 0;
+  min-height: var(--dialog-control-min-height);
+  padding: 5px 12px;
   border: 2px solid #fff;
   border-radius: 10px;
   background: #151515;
   color: #fff;
   cursor: pointer;
   font-weight: 800;
+  font-size: var(--dialog-control-font-size);
+  line-height: 1.2;
 }
 
 .control-button:hover,
@@ -417,6 +429,13 @@ button, input {
 }
 
 @media (max-width: 700px) {
+  :root {
+    --dialog-control-font-size: 14px;
+    --dialog-control-min-height: 38px;
+    --dialog-speaker-font-size: 13px;
+    --speech-status-font-size: 13px;
+  }
+
   .dialogue-box {
     left: 2%;
     right: 2%;
@@ -433,6 +452,13 @@ button, input {
 
   .item-image {
     bottom: 32%;
+  }
+}
+
+@media (min-width: 701px) {
+  :root {
+    --dialog-speaker-font-size: 15px;
+    --speech-status-font-size: 14px;
   }
 }
 

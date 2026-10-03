@@ -119,7 +119,7 @@ function queueDeferredSpeech(pending, transcript, alternatives) {
   equal(originalQuestions.filter(question => !question.communicative).length, 20, "The other 20 product Questions remain Legacy");
   equal(context.QuestionDatabase.get("phrase.are_you_ok").communicative.conceptId, "social.wellbeing.ask");
   equal(crypto.createHash("sha256").update(questionSource.slice(questionSource.indexOf("  register({"))).digest("hex"),
-    "872ca4d0426219eb18ff8982151f3756a607cd87fe77f905a00b8dfed6f9d2bd",
+    "03287599209d890b0764f7f2423c695f6ca3d49a30e6275b29daab100513ddbf",
     "The 21 product Question definitions match Formal V1");
 
   const legacyBeforeSpeech = speechStarts;
@@ -277,14 +277,14 @@ function queueDeferredSpeech(pending, transcript, alternatives) {
     "No Provider, fetch, or API key is added");
   ok(!managerSource.includes("while (true)") && !managerSource.includes("do {"), "Communicative path has no automatic retry loop");
 
-  equal(treeHash("engine/stories"), "6b30c670c977c4159bcd59f94cb4547507cb5a6c8262faeb9d32ae057a17c677");
+  equal(treeHash("engine/stories"), "f8cbb9d1ec8d9dd3ee4028c1377d16f2763cd2ef02f10938128b068d1d88e163");
   equal(treeHash("stories"), "d8546e5e7990c8306acb9ad1d82962868cc6ef78520137bf2760a68c877a8fe2");
   equal(hash("data/monsters.js"), "af1afabcf11f4536eacb69b8370c465273b1b9adce8e98b94b69bac4e38b8073");
   equal(hash("engine/managers/monster-battle-manager.js"), "0451a45a75e35c9c4418f40126e55d8659cbbf407deca78089f9c12058026ee3");
   equal(hash("data/mornings.js"), "89007415f111ab883dd2a10b47e9a7026608bfd377dd8ee1ec7ad0f5d9027470");
   equal(hash("engine/managers/morning-manager.js"), "f123747d417d3aa632d84ca828ffa0ff85c8b14f62753ad8a77655e56e819856");
-  equal(hash("index.html"), "821675dd5fab9879ff3f403300fdd8924c368f45805b3cd8ff94152e39c8c935");
-  equal(hash("dev.html"), "1fdb2514d04a97690ef4afce781a9bbd5e29cdd1d9d5ef1b5bb7aff4a81b9735");
+  equal(hash("index.html"), "c99068ee785e67531a68ed155c588cee3039d82fba23e07e819f8efeedd7a91c");
+  equal(hash("dev.html"), "973c246fb3c40becac0f50d01296c343640f555376c05219343ac129019c8fe1");
   equal(hash("engine/services/speech-engine.js"), "3318e03a55a2506fccfeca2481d0b286e69074c63f5539d73b1b5b27e6371264");
   equal(hash("engine/services/speech-start-controller.js"), "73ea61ec3cc4a2532b220f298d2e48d8e66d03fac9901cbf4662bc89c65a883b");
   equal(hash("engine/services/communicative-question-adapter.js"), "1fe6fbb7090c6d61c666771edcab963b23596ba399e59fa3650503d4c3473e3f");

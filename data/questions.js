@@ -284,7 +284,7 @@
   register({
     id: "word.orange_or_banana",
     category: "word",
-    prompt: "どっちが好き？ 英語で言ってみよう！",
+    prompt: "バナナかオレンジ、好きなほうを英語で答えてください。",
     answers: ["orange", "banana", "no thank you"],
     success: "",
     failure: "",
