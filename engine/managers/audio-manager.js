@@ -2,7 +2,7 @@
   "use strict";
 
   var RUNTIME_VERSION = "audio-gainnode-unification-v1";
-  var TRACE_VERSION = "gainnode-iphone-runtime-trace-compact-metrics-v1";
+  var TRACE_VERSION = "gainnode-iphone-runtime-trace-latched-v1";
   window.AudioRuntimeVersion = RUNTIME_VERSION;
 
   var bgm = null;
@@ -45,6 +45,7 @@
   var voiceRuntimeTraceState = {
     panelEnabled: runtimeTracePanelEnabled(),
     latest: null,
+    latched: null,
     history: []
   };
 
@@ -83,6 +84,63 @@
     return String(value);
   }
 
+  function createVoiceRuntimeLatch(traceId) {
+    return {
+      traceId: traceId,
+      playingSeen: false,
+      contextState: null,
+      contextId: null,
+      audioPath: null,
+      fallback: null,
+      characterGain: null,
+      processingGain: null,
+      voiceBusGain: null,
+      masterGain: null,
+      graphConnected: false,
+      sourceCreated: false,
+      maxPeak: null,
+      maxRms: null,
+      lastPlayingCurrentTime: null
+    };
+  }
+
+  function latchTraceNumber(current, observed, maximum) {
+    if (observed === null || observed === undefined || !Number.isFinite(Number(observed))) return current;
+    var value = finiteTraceNumber(observed);
+    if (!maximum || current === null) return value;
+    return Math.max(current, value);
+  }
+
+  function updateVoiceRuntimeLatch(event, detail) {
+    detail = detail || {};
+    if (!voiceRuntimeTraceState.latched || event === "enterDialogueVoiceMode" ||
+        voiceRuntimeTraceState.latched.traceId !== detail.traceId) {
+      voiceRuntimeTraceState.latched = createVoiceRuntimeLatch(detail.traceId);
+    }
+    var latched = voiceRuntimeTraceState.latched;
+    var context = detail.audioContext || {};
+    var graph = detail.graph || {};
+    var html = detail.htmlAudio || {};
+    if (context.state && context.state !== "unavailable") latched.contextState = context.state;
+    if (context.contextId) latched.contextId = context.contextId;
+    if (detail.audioPath && detail.audioPath !== "pending") latched.audioPath = detail.audioPath;
+    if (detail.fallback === true) latched.fallback = true;
+    else if (latched.fallback === null && detail.fallback === false) latched.fallback = false;
+    latched.characterGain = latchTraceNumber(latched.characterGain, graph.characterGain, false);
+    latched.processingGain = latchTraceNumber(latched.processingGain, graph.processingGain, false);
+    latched.voiceBusGain = latchTraceNumber(latched.voiceBusGain, graph.voiceBusGain, false);
+    latched.masterGain = latchTraceNumber(latched.masterGain, graph.masterGain, false);
+    latched.graphConnected = latched.graphConnected || graph.destinationConnected === true;
+    latched.sourceCreated = latched.sourceCreated || graph.mediaElementSourceCreated === true;
+    latched.maxPeak = latchTraceNumber(latched.maxPeak, graph.signalPeak, true);
+    latched.maxRms = latchTraceNumber(latched.maxRms, graph.signalRms, true);
+    var playingNow = event === "playing" || (html.paused === false && html.ended !== true);
+    if (playingNow) {
+      latched.playingSeen = true;
+      latched.lastPlayingCurrentTime = latchTraceNumber(latched.lastPlayingCurrentTime, html.currentTime, false);
+    }
+  }
+
   function renderVoiceRuntimeTracePanel() {
     if (!voiceRuntimeTraceState.panelEnabled || !window.document || !document.body) return;
     var panel = document.getElementById("gainnode-runtime-trace-panel");
@@ -105,28 +163,31 @@
     var html = detail.htmlAudio || {};
     var graph = detail.graph || {};
     var context = detail.audioContext || {};
+    var latched = voiceRuntimeTraceState.latched || createVoiceRuntimeLatch(null);
     var outputNode = document.getElementById("gainnode-runtime-trace-output");
     if (!outputNode) return;
     outputNode.textContent = [
-      "Runtime: " + RUNTIME_VERSION + " | Trace: " + TRACE_VERSION + " | Event: " + (latest.event || "waiting"),
-      "Context: " + stringifyTraceValue(context.state) + "/" + stringifyTraceValue(context.contextId) +
-        " | Voice Path: " + stringifyTraceValue(detail.audioPath) +
-        " | Fallback: " + stringifyTraceValue(detail.fallback),
-      "Character: " + stringifyTraceValue(detail.characterId) + " (" + stringifyTraceValue(detail.characterCode) + ")" +
+      "Runtime: " + RUNTIME_VERSION + " | Event: " + (latest.event || "waiting"),
+      "Context: " + stringifyTraceValue(latched.contextState || context.state) + "/" +
+        stringifyTraceValue(latched.contextId || context.contextId) +
+        " | Character: " + stringifyTraceValue(detail.characterId) + " (" + stringifyTraceValue(detail.characterCode) + ")" +
         " | Asset: " + stringifyTraceValue(detail.voiceAssetId),
-      "Character Gain: " + stringifyTraceValue(graph.characterGain) +
-        " | Processing Gain: " + stringifyTraceValue(graph.processingGain),
-      "Voice Bus: " + stringifyTraceValue(graph.voiceBusGain) +
-        " | Master: " + stringifyTraceValue(graph.masterGain) +
-        " | Graph Connected: " + stringifyTraceValue(graph.destinationConnected),
-      "Peak: " + stringifyTraceValue(graph.signalPeak) +
-        " | RMS: " + stringifyTraceValue(graph.signalRms) +
-        " | HTML currentTime: " + stringifyTraceValue(html.currentTime) +
-        " | playing: " + stringifyTraceValue(html.paused === undefined ? undefined : !html.paused)
+      "Path: " + stringifyTraceValue(latched.audioPath || detail.audioPath) +
+        " | Fallback: " + stringifyTraceValue(latched.fallback) +
+        " | Playing Seen: " + stringifyTraceValue(latched.playingSeen),
+      "Gain C/P/V/M: " + stringifyTraceValue(latched.characterGain) + "/" +
+        stringifyTraceValue(latched.processingGain) + "/" + stringifyTraceValue(latched.voiceBusGain) + "/" +
+        stringifyTraceValue(latched.masterGain),
+      "Latched Graph: " + stringifyTraceValue(latched.graphConnected) +
+        " | Source: " + stringifyTraceValue(latched.sourceCreated),
+      "Max Peak: " + stringifyTraceValue(latched.maxPeak) +
+        " | Max RMS: " + stringifyTraceValue(latched.maxRms) +
+        " | Last Playing Time: " + stringifyTraceValue(latched.lastPlayingCurrentTime)
     ].join("\n");
   }
 
   function voiceRuntimeTrace(event, detail) {
+    updateVoiceRuntimeLatch(event, detail);
     var record = { event: event, at: Date.now(), detail: detail || {} };
     voiceRuntimeTraceState.latest = record;
     voiceRuntimeTraceState.history.push(record);
@@ -1205,6 +1266,7 @@
     version: TRACE_VERSION,
     panelEnabled: function () { return voiceRuntimeTraceState.panelEnabled; },
     latest: function () { return voiceRuntimeTraceState.latest; },
+    latched: function () { return voiceRuntimeTraceState.latched; },
     history: function () { return voiceRuntimeTraceState.history.slice(); },
     render: renderVoiceRuntimeTracePanel
   };

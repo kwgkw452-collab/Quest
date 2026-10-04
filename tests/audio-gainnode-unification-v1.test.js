@@ -12,12 +12,18 @@ function runtime(options = {}) {
   const audios = [];
   const nodes = [];
   let sourceConnectFailures = options.sourceConnectFailures || 0;
-  const stats = { contexts: 0, resumes: 0, sources: 0 };
+  const stats = {
+    contexts: 0,
+    resumes: 0,
+    sources: 0,
+    signalSamples: options.signalSamples || [0, 0, 0, 0]
+  };
 
   class FakeAudio {
     constructor(src) {
       this.src = src || "";
       this.paused = true;
+      this.currentTime = 0;
       this.playCount = 0;
       this.listeners = {};
       Object.defineProperty(this, "volume", {
@@ -67,6 +73,16 @@ function runtime(options = {}) {
     createDynamicsCompressor() { return new FakeNode("compressor"); }
     createBiquadFilter() { return new FakeNode("filter"); }
     createWaveShaper() { return new FakeNode("waveshaper"); }
+    createAnalyser() {
+      const analyser = new FakeNode("analyser");
+      analyser.fftSize = 4;
+      analyser.getFloatTimeDomainData = samples => {
+        for (let index = 0; index < samples.length; index += 1) {
+          samples[index] = stats.signalSamples[index] || 0;
+        }
+      };
+      return analyser;
+    }
   }
 
   const context = {
@@ -145,6 +161,35 @@ const close = (actual, expected, label) => assert.ok(Math.abs(actual - expected)
   close(context.AudioManager.getState().effectiveBgmVolume, 0.30, "Speech restore");
   assert.equal(r.stats.contexts, 1, "all paths share one AudioContext");
 
+  const latchedRuntime = runtime({ signalSamples: [0.2, -0.4, 0.1, -0.2] });
+  const latchedVoice = latchedRuntime.context.DialogueVoiceAudioInternal.play("voice_c02_s001_001", { characterGain: 0.82 });
+  latchedVoice.audio.currentTime = 1.25;
+  latchedVoice.audio.emit("playing");
+  latchedVoice.audio.emit("timeupdate");
+  let latched = latchedRuntime.context.GainNodeVoiceRuntimeTrace.latched();
+  assert.equal(latched.playingSeen, true);
+  assert.equal(latched.contextState, "running");
+  assert.equal(latched.graphConnected, true);
+  assert.equal(latched.sourceCreated, true);
+  assert.equal(latched.fallback, false);
+  close(latched.characterGain, 0.82, "latched Character Gain");
+  close(latched.processingGain, 1.10, "latched Processing Gain");
+  close(latched.voiceBusGain, 1, "latched Voice Bus Gain");
+  close(latched.masterGain, 1, "latched Master Gain");
+  close(latched.maxPeak, 0.4, "latched Max Peak");
+  close(latched.maxRms, 0.0313, "latched Max RMS");
+  close(latched.lastPlayingCurrentTime, 1.25, "latched Last Playing Time");
+  latchedRuntime.stats.signalSamples = [0, 0, 0, 0];
+  latchedVoice.audio.paused = true;
+  latchedVoice.audio.emit("ended");
+  await latchedVoice.completion;
+  latched = latchedRuntime.context.GainNodeVoiceRuntimeTrace.latched();
+  assert.equal(latched.graphConnected, true, "cleanup does not clear latched Graph");
+  assert.equal(latched.sourceCreated, true, "cleanup does not clear latched Source");
+  close(latched.maxPeak, 0.4, "cleanup does not clear Max Peak");
+  close(latched.maxRms, 0.0313, "cleanup does not clear Max RMS");
+  close(latched.lastPlayingCurrentTime, 1.25, "cleanup does not clear Last Playing Time");
+
   const fallback = runtime({ sourceConnectFailures: 1 });
   const first = fallback.context.AudioManager.playBgm("futureCityPixel", { volume: 0.30 });
   const replacement = fallback.audios.at(-1);
@@ -161,7 +206,7 @@ const close = (actual, expected, label) => assert.ok(Math.abs(actual - expected)
     for (const asset of ["data/audio-mix-profile.js", "data/voice-profiles.js", "engine/services/dialogue-voice-controller.js"]) {
       assert(html.includes(`${asset}?v=audio-gainnode-unification-v1`), `${page}: ${asset} cache version`);
     }
-    assert(html.includes("engine/managers/audio-manager.js?v=gainnode-iphone-runtime-trace-compact-metrics-v1"), `${page}: trace AudioManager cache version`);
+    assert(html.includes("engine/managers/audio-manager.js?v=gainnode-iphone-runtime-trace-latched-v1"), `${page}: trace AudioManager cache version`);
   }
   console.log("Audio GainNode Unification V1: PASS");
 })().catch(error => { console.error(error); process.exitCode = 1; });

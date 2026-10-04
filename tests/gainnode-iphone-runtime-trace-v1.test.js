@@ -8,7 +8,7 @@ const root = path.resolve(__dirname, "..");
 const read = file => fs.readFileSync(path.join(root, file), "utf8");
 const manager = read("engine/managers/audio-manager.js");
 
-assert(manager.includes('TRACE_VERSION = "gainnode-iphone-runtime-trace-compact-metrics-v1"'));
+assert(manager.includes('TRACE_VERSION = "gainnode-iphone-runtime-trace-latched-v1"'));
 for (const field of [
   "voiceAssetId", "characterId", "voicePath", "audioPath", "audioContext", "htmlAudio",
   "mediaElementSourceCreated", "sourceConnected", "destinationConnected",
@@ -29,14 +29,21 @@ assert(manager.includes("pointer-events:none"));
 assert(manager.includes("z-index:2147483647"));
 assert(!manager.includes("pointer-events:auto"));
 for (const lineLabel of [
-  "Runtime: ", "Context: ", "Character: ", "Character Gain: ",
-  "Voice Bus: ", "Peak: "
-]) assert(manager.includes(`\"${lineLabel}\"`), `missing compact line: ${lineLabel}`);
+  "Runtime: ", "Context: ", "Path: ", "Gain C/P/V/M: ",
+  "Latched Graph: ", "Max Peak: "
+]) assert(manager.includes(`\"${lineLabel}\"`), `missing latched line: ${lineLabel}`);
 for (const metricLabel of [
-  "Trace: ", "Event: ", "Voice Path: ", "Fallback: ", "Asset: ",
-  "Processing Gain: ", "Master: ", "Graph Connected: ", "RMS: ",
-  "HTML currentTime: ", "playing: "
-]) assert(manager.includes(metricLabel), `missing compact metric: ${metricLabel}`);
+  "Event: ", "Character: ", "Asset: ", "Fallback: ", "Playing Seen: ",
+  "Source: ", "Max RMS: ", "Last Playing Time: "
+]) assert(manager.includes(metricLabel), `missing latched metric: ${metricLabel}`);
+for (const latchedField of [
+  "playingSeen", "contextState", "graphConnected", "sourceCreated", "fallback",
+  "characterGain", "processingGain", "voiceBusGain", "masterGain",
+  "maxPeak", "maxRms", "lastPlayingCurrentTime"
+]) assert(manager.includes(latchedField), `missing latched field: ${latchedField}`);
+assert(manager.includes("return Math.max(current, value)"));
+assert(manager.includes('event === "playing"'));
+assert(manager.includes("latched: function () { return voiceRuntimeTraceState.latched; }"));
 
 // Trace build must preserve the known runtime values and known regressions unchanged.
 assert(manager.includes('profile.ratio === undefined ? 0.18 : Number(profile.ratio)'));
@@ -46,7 +53,7 @@ assert(!manager.includes('bgm.getAttribute("src") === path && !bgm.paused'));
 
 for (const page of ["index.html", "dev.html"]) {
   const html = read(page);
-  assert(html.includes("engine/managers/audio-manager.js?v=gainnode-iphone-runtime-trace-compact-metrics-v1"), `${page}: trace runtime cache version`);
+  assert(html.includes("engine/managers/audio-manager.js?v=gainnode-iphone-runtime-trace-latched-v1"), `${page}: trace runtime cache version`);
 }
 
 console.log("GainNode iPhone Runtime Trace V1: PASS");
