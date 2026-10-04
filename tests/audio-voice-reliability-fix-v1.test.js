@@ -230,7 +230,7 @@ async function flush() {
   for (const page of ["index.html", "dev.html"]) {
     const html = read(page);
     assert.match(html, /data\/audio-mix-profile\.js\?v=audio-gainnode-unification-v1/);
-    assert.match(html, /engine\/managers\/audio-manager\.js\?v=gainnode-iphone-runtime-trace-panel-fix-v1/);
+    assert.match(html, /engine\/managers\/audio-manager\.js\?v=gainnode-iphone-runtime-trace-compact-metrics-v1/);
     assert.match(html, /engine\/services\/dialogue-voice-controller\.js\?v=audio-gainnode-unification-v1/);
   }
 

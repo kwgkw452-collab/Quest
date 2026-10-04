@@ -2,7 +2,7 @@
   "use strict";
 
   var RUNTIME_VERSION = "audio-gainnode-unification-v1";
-  var TRACE_VERSION = "gainnode-iphone-runtime-trace-panel-fix-v1";
+  var TRACE_VERSION = "gainnode-iphone-runtime-trace-compact-metrics-v1";
   window.AudioRuntimeVersion = RUNTIME_VERSION;
 
   var bgm = null;
@@ -110,18 +110,19 @@
     outputNode.textContent = [
       "Runtime: " + RUNTIME_VERSION + " | Trace: " + TRACE_VERSION + " | Event: " + (latest.event || "waiting"),
       "Context: " + stringifyTraceValue(context.state) + "/" + stringifyTraceValue(context.contextId) +
-        " | Character: " + stringifyTraceValue(detail.characterId) + " (" + stringifyTraceValue(detail.characterCode) + ")" +
+        " | Voice Path: " + stringifyTraceValue(detail.audioPath) +
+        " | Fallback: " + stringifyTraceValue(detail.fallback),
+      "Character: " + stringifyTraceValue(detail.characterId) + " (" + stringifyTraceValue(detail.characterCode) + ")" +
         " | Asset: " + stringifyTraceValue(detail.voiceAssetId),
-      "Path: " + stringifyTraceValue(detail.voicePath),
-      "HTML playing: " + stringifyTraceValue(html.paused === undefined ? undefined : !html.paused) +
-        " | time: " + stringifyTraceValue(html.currentTime),
-      "Gain C/P/V/M: " + stringifyTraceValue(graph.characterGain) + "/" +
-        stringifyTraceValue(graph.processingGain) + "/" + stringifyTraceValue(graph.voiceBusGain) + "/" +
-        stringifyTraceValue(graph.masterGain),
-      "Graph: " + stringifyTraceValue(graph.destinationConnected) + " | Source: " +
-        stringifyTraceValue(graph.mediaElementSourceCreated) + " | Signal peak/rms: " +
-        stringifyTraceValue(graph.signalPeak) + "/" + stringifyTraceValue(graph.signalRms) +
-        " | Fallback: " + stringifyTraceValue(detail.fallback)
+      "Character Gain: " + stringifyTraceValue(graph.characterGain) +
+        " | Processing Gain: " + stringifyTraceValue(graph.processingGain),
+      "Voice Bus: " + stringifyTraceValue(graph.voiceBusGain) +
+        " | Master: " + stringifyTraceValue(graph.masterGain) +
+        " | Graph Connected: " + stringifyTraceValue(graph.destinationConnected),
+      "Peak: " + stringifyTraceValue(graph.signalPeak) +
+        " | RMS: " + stringifyTraceValue(graph.signalRms) +
+        " | HTML currentTime: " + stringifyTraceValue(html.currentTime) +
+        " | playing: " + stringifyTraceValue(html.paused === undefined ? undefined : !html.paused)
     ].join("\n");
   }
 
@@ -820,6 +821,7 @@
         characterId: characterId,
         characterCode: characterCode,
         voicePath: voicePath,
+        audioPath: (candidate || audio).__eigoAudioPath || (fallbackActive ? "fallback" : "pending"),
         fallback: fallbackActive,
         audioContext: audioContextSnapshot(context),
         htmlAudio: audioElementSnapshot(candidate || audio),
