@@ -8,7 +8,7 @@ const root = path.resolve(__dirname, "..");
 const read = file => fs.readFileSync(path.join(root, file), "utf8");
 const manager = read("engine/managers/audio-manager.js");
 
-assert(manager.includes('TRACE_VERSION = "gainnode-iphone-runtime-trace-v1"'));
+assert(manager.includes('TRACE_VERSION = "gainnode-iphone-runtime-trace-panel-fix-v1"'));
 for (const field of [
   "voiceAssetId", "characterId", "voicePath", "audioContext", "htmlAudio",
   "mediaElementSourceCreated", "sourceConnected", "destinationConnected",
@@ -24,6 +24,10 @@ for (const event of [
 assert(manager.includes('query.get("audioTrace") === "1"'));
 assert(manager.includes('query.get("gainNodeTrace") === "1"'));
 assert(manager.includes('id = "gainnode-runtime-trace-panel"'));
+assert(manager.includes("top:max(4px,env(safe-area-inset-top))"));
+assert(manager.includes("pointer-events:none"));
+assert(manager.includes("z-index:2147483647"));
+assert(!manager.includes("pointer-events:auto"));
 
 // Trace build must preserve the known runtime values and known regressions unchanged.
 assert(manager.includes('profile.ratio === undefined ? 0.18 : Number(profile.ratio)'));
@@ -33,7 +37,7 @@ assert(!manager.includes('bgm.getAttribute("src") === path && !bgm.paused'));
 
 for (const page of ["index.html", "dev.html"]) {
   const html = read(page);
-  assert(html.includes("engine/managers/audio-manager.js?v=gainnode-iphone-runtime-trace-v1"), `${page}: trace runtime cache version`);
+  assert(html.includes("engine/managers/audio-manager.js?v=gainnode-iphone-runtime-trace-panel-fix-v1"), `${page}: trace runtime cache version`);
 }
 
 console.log("GainNode iPhone Runtime Trace V1: PASS");

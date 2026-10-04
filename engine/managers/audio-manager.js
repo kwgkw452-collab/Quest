@@ -2,7 +2,7 @@
   "use strict";
 
   var RUNTIME_VERSION = "audio-gainnode-unification-v1";
-  var TRACE_VERSION = "gainnode-iphone-runtime-trace-v1";
+  var TRACE_VERSION = "gainnode-iphone-runtime-trace-panel-fix-v1";
   window.AudioRuntimeVersion = RUNTIME_VERSION;
 
   var bgm = null;
@@ -90,7 +90,7 @@
       panel = document.createElement("details");
       panel.id = "gainnode-runtime-trace-panel";
       panel.open = true;
-      panel.style.cssText = "position:fixed;left:4px;right:4px;bottom:4px;z-index:2147483647;max-height:45vh;overflow:auto;background:rgba(0,0,0,.9);color:#9ff;font:11px/1.35 monospace;padding:6px;border:1px solid #4cc;white-space:pre-wrap;pointer-events:auto";
+      panel.style.cssText = "position:fixed;left:4px;right:4px;top:max(4px,env(safe-area-inset-top));z-index:2147483647;max-height:25vh;overflow:hidden;background:rgba(0,0,0,.86);color:#9ff;font:8px/1.1 monospace;padding:3px;border:1px solid #4cc;white-space:pre-wrap;pointer-events:none";
       var summary = document.createElement("summary");
       summary.textContent = "GainNode iPhone Runtime Trace";
       panel.appendChild(summary);
@@ -108,23 +108,20 @@
     var outputNode = document.getElementById("gainnode-runtime-trace-output");
     if (!outputNode) return;
     outputNode.textContent = [
-      "Audio Runtime Version: " + RUNTIME_VERSION,
-      "Trace Version: " + TRACE_VERSION,
-      "Event: " + (latest.event || "waiting"),
-      "AudioContext: " + stringifyTraceValue(context.state) + " / " + stringifyTraceValue(context.contextId),
-      "Character: " + stringifyTraceValue(detail.characterId) + " (" + stringifyTraceValue(detail.characterCode) + ")",
-      "Asset: " + stringifyTraceValue(detail.voiceAssetId),
+      "Runtime: " + RUNTIME_VERSION + " | Trace: " + TRACE_VERSION + " | Event: " + (latest.event || "waiting"),
+      "Context: " + stringifyTraceValue(context.state) + "/" + stringifyTraceValue(context.contextId) +
+        " | Character: " + stringifyTraceValue(detail.characterId) + " (" + stringifyTraceValue(detail.characterCode) + ")" +
+        " | Asset: " + stringifyTraceValue(detail.voiceAssetId),
       "Path: " + stringifyTraceValue(detail.voicePath),
-      "HTMLAudio playing: " + stringifyTraceValue(html.paused === undefined ? undefined : !html.paused),
-      "currentTime: " + stringifyTraceValue(html.currentTime),
-      "Character Gain: " + stringifyTraceValue(graph.characterGain),
-      "Processing Gain: " + stringifyTraceValue(graph.processingGain),
-      "Voice Bus: " + stringifyTraceValue(graph.voiceBusGain),
-      "Master: " + stringifyTraceValue(graph.masterGain),
-      "Graph Connected: " + stringifyTraceValue(graph.destinationConnected),
-      "MediaElementSource: " + stringifyTraceValue(graph.mediaElementSourceCreated),
-      "Signal peak/rms: " + stringifyTraceValue(graph.signalPeak) + " / " + stringifyTraceValue(graph.signalRms),
-      "Fallback: " + stringifyTraceValue(detail.fallback)
+      "HTML playing: " + stringifyTraceValue(html.paused === undefined ? undefined : !html.paused) +
+        " | time: " + stringifyTraceValue(html.currentTime),
+      "Gain C/P/V/M: " + stringifyTraceValue(graph.characterGain) + "/" +
+        stringifyTraceValue(graph.processingGain) + "/" + stringifyTraceValue(graph.voiceBusGain) + "/" +
+        stringifyTraceValue(graph.masterGain),
+      "Graph: " + stringifyTraceValue(graph.destinationConnected) + " | Source: " +
+        stringifyTraceValue(graph.mediaElementSourceCreated) + " | Signal peak/rms: " +
+        stringifyTraceValue(graph.signalPeak) + "/" + stringifyTraceValue(graph.signalRms) +
+        " | Fallback: " + stringifyTraceValue(detail.fallback)
     ].join("\n");
   }
 
