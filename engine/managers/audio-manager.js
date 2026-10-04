@@ -2,6 +2,7 @@
   "use strict";
 
   var RUNTIME_VERSION = "audio-gainnode-unification-v1";
+  var TRACE_VERSION = "gainnode-iphone-runtime-trace-v1";
   window.AudioRuntimeVersion = RUNTIME_VERSION;
 
   var bgm = null;
@@ -19,6 +20,8 @@
   var pendingBgm = null;
   var bgmRequestSerial = 0;
   var bgmTracks = [];
+  var voiceTraceSerial = 0;
+  var audioContextTraceSerial = 0;
   var audioState = {
     currentBgmAsset: null,
     baseBgmVolume: 0,
@@ -31,6 +34,108 @@
     speechMode: { active: false, preserveBgm: false, held: false },
     voicePlaying: 0
   };
+
+  function runtimeTracePanelEnabled() {
+    try {
+      var query = new URLSearchParams(window.location.search || "");
+      return query.get("audioTrace") === "1" || query.get("gainNodeTrace") === "1";
+    } catch (_) { return false; }
+  }
+
+  var voiceRuntimeTraceState = {
+    panelEnabled: runtimeTracePanelEnabled(),
+    latest: null,
+    history: []
+  };
+
+  function finiteTraceNumber(value) {
+    var number = Number(value);
+    return Number.isFinite(number) ? Math.round(number * 10000) / 10000 : null;
+  }
+
+  function audioElementSnapshot(audio) {
+    return audio ? {
+      elementId: audio.__eigoTraceElementId || null,
+      currentTime: finiteTraceNumber(audio.currentTime),
+      paused: !!audio.paused,
+      ended: !!audio.ended,
+      readyState: finiteTraceNumber(audio.readyState),
+      networkState: finiteTraceNumber(audio.networkState),
+      muted: !!audio.muted,
+      volume: finiteTraceNumber(audio.volume)
+    } : null;
+  }
+
+  function audioContextSnapshot(context) {
+    return context ? {
+      contextId: context.__eigoTraceContextId || null,
+      state: context.state || "unknown",
+      currentTime: finiteTraceNumber(context.currentTime)
+    } : { contextId: null, state: "unavailable", currentTime: null };
+  }
+
+  function stringifyTraceValue(value) {
+    if (value === undefined) return "-";
+    if (value === null) return "null";
+    if (typeof value === "object") {
+      try { return JSON.stringify(value); } catch (_) { return String(value); }
+    }
+    return String(value);
+  }
+
+  function renderVoiceRuntimeTracePanel() {
+    if (!voiceRuntimeTraceState.panelEnabled || !window.document || !document.body) return;
+    var panel = document.getElementById("gainnode-runtime-trace-panel");
+    if (!panel) {
+      panel = document.createElement("details");
+      panel.id = "gainnode-runtime-trace-panel";
+      panel.open = true;
+      panel.style.cssText = "position:fixed;left:4px;right:4px;bottom:4px;z-index:2147483647;max-height:45vh;overflow:auto;background:rgba(0,0,0,.9);color:#9ff;font:11px/1.35 monospace;padding:6px;border:1px solid #4cc;white-space:pre-wrap;pointer-events:auto";
+      var summary = document.createElement("summary");
+      summary.textContent = "GainNode iPhone Runtime Trace";
+      panel.appendChild(summary);
+      var output = document.createElement("pre");
+      output.id = "gainnode-runtime-trace-output";
+      output.style.cssText = "margin:6px 0 0;white-space:pre-wrap";
+      panel.appendChild(output);
+      document.body.appendChild(panel);
+    }
+    var latest = voiceRuntimeTraceState.latest || {};
+    var detail = latest.detail || {};
+    var html = detail.htmlAudio || {};
+    var graph = detail.graph || {};
+    var context = detail.audioContext || {};
+    var outputNode = document.getElementById("gainnode-runtime-trace-output");
+    if (!outputNode) return;
+    outputNode.textContent = [
+      "Audio Runtime Version: " + RUNTIME_VERSION,
+      "Trace Version: " + TRACE_VERSION,
+      "Event: " + (latest.event || "waiting"),
+      "AudioContext: " + stringifyTraceValue(context.state) + " / " + stringifyTraceValue(context.contextId),
+      "Character: " + stringifyTraceValue(detail.characterId) + " (" + stringifyTraceValue(detail.characterCode) + ")",
+      "Asset: " + stringifyTraceValue(detail.voiceAssetId),
+      "Path: " + stringifyTraceValue(detail.voicePath),
+      "HTMLAudio playing: " + stringifyTraceValue(html.paused === undefined ? undefined : !html.paused),
+      "currentTime: " + stringifyTraceValue(html.currentTime),
+      "Character Gain: " + stringifyTraceValue(graph.characterGain),
+      "Processing Gain: " + stringifyTraceValue(graph.processingGain),
+      "Voice Bus: " + stringifyTraceValue(graph.voiceBusGain),
+      "Master: " + stringifyTraceValue(graph.masterGain),
+      "Graph Connected: " + stringifyTraceValue(graph.destinationConnected),
+      "MediaElementSource: " + stringifyTraceValue(graph.mediaElementSourceCreated),
+      "Signal peak/rms: " + stringifyTraceValue(graph.signalPeak) + " / " + stringifyTraceValue(graph.signalRms),
+      "Fallback: " + stringifyTraceValue(detail.fallback)
+    ].join("\n");
+  }
+
+  function voiceRuntimeTrace(event, detail) {
+    var record = { event: event, at: Date.now(), detail: detail || {} };
+    voiceRuntimeTraceState.latest = record;
+    voiceRuntimeTraceState.history.push(record);
+    if (voiceRuntimeTraceState.history.length > 200) voiceRuntimeTraceState.history.shift();
+    try { console.log("[GAINNODE VOICE TRACE] " + event, record.detail); } catch (_) {}
+    renderVoiceRuntimeTracePanel();
+  }
 
   function audioTrace(event, detail) {
     try { console.log("[AudioTrace] " + event, Object.assign({ runtimeVersion: RUNTIME_VERSION }, detail || {})); } catch (_) {}
@@ -64,6 +169,7 @@
     if (!ContextType) return null;
     try {
       canonicalAudioContext = new ContextType();
+      canonicalAudioContext.__eigoTraceContextId = "canonical-context-" + (++audioContextTraceSerial);
       audioTrace("AUDIO_RUNTIME_VERSION", { version: RUNTIME_VERSION });
       audioTrace("AUDIO_CONTEXT_STATE", { state: canonicalAudioContext.state || "unknown" });
     } catch (error) {
@@ -638,10 +744,93 @@
     var resolveCompletion;
     var completion = new Promise(function (resolveCompletionPromise) { resolveCompletion = resolveCompletionPromise; });
     var tracked = { audio: audio, completion: completion };
+    var runtimeVoiceTraceId = ++voiceTraceSerial;
+    var runtimeElementGeneration = 0;
+    var characterId = characterCode ? Number(characterCode.slice(1)) : null;
+    var voiceGraphTrace = {
+      mediaElementSourceCreated: false,
+      sourceConnected: false,
+      destinationConnected: false,
+      sourceNodeId: null,
+      sourceContextId: null,
+      characterGain: null,
+      processingGain: radio ? null : 1,
+      voiceBusGain: null,
+      masterGain: null,
+      theoreticalPreLimiterGain: null,
+      limiter: null,
+      signalPeak: null,
+      signalRms: null,
+      analyserNode: null
+    };
+    var fallbackActive = false;
     var voiceModeOwner = enterDialogueVoiceMode();
     var characterGainValue = options.characterGain === undefined ?
       (options.volume === undefined ? 1 : Number(options.volume)) : Number(options.characterGain);
     if (!Number.isFinite(characterGainValue)) characterGainValue = 1;
+
+    function sampleVoiceSignal() {
+      var analyser = voiceGraphTrace.analyserNode;
+      if (!analyser || typeof analyser.getFloatTimeDomainData !== "function") return;
+      try {
+        var samples = new Float32Array(analyser.fftSize || 256);
+        analyser.getFloatTimeDomainData(samples);
+        var peak = 0;
+        var sumSquares = 0;
+        for (var sampleIndex = 0; sampleIndex < samples.length; sampleIndex += 1) {
+          var absolute = Math.abs(samples[sampleIndex]);
+          if (absolute > peak) peak = absolute;
+          sumSquares += samples[sampleIndex] * samples[sampleIndex];
+        }
+        voiceGraphTrace.signalPeak = finiteTraceNumber(peak);
+        voiceGraphTrace.signalRms = finiteTraceNumber(Math.sqrt(sumSquares / samples.length));
+        if (voiceGraphTrace.limiter && voiceGraphTrace.limiter.node) {
+          voiceGraphTrace.limiter.reductionDb = finiteTraceNumber(voiceGraphTrace.limiter.node.reduction);
+        }
+      } catch (_) {}
+    }
+
+    function voiceGraphSnapshot() {
+      sampleVoiceSignal();
+      return {
+        mediaElementSourceCreated: voiceGraphTrace.mediaElementSourceCreated,
+        sourceConnected: voiceGraphTrace.sourceConnected,
+        destinationConnected: voiceGraphTrace.destinationConnected,
+        sourceNodeId: voiceGraphTrace.sourceNodeId,
+        sourceContextId: voiceGraphTrace.sourceContextId,
+        characterGain: voiceGraphTrace.characterGain,
+        processingGain: voiceGraphTrace.processingGain,
+        voiceBusGain: voiceGraphTrace.voiceBusGain,
+        masterGain: voiceGraphTrace.masterGain,
+        theoreticalPreLimiterGain: voiceGraphTrace.theoreticalPreLimiterGain,
+        limiter: voiceGraphTrace.limiter ? {
+          threshold: voiceGraphTrace.limiter.threshold,
+          ratio: voiceGraphTrace.limiter.ratio,
+          attack: voiceGraphTrace.limiter.attack,
+          release: voiceGraphTrace.limiter.release,
+          reductionDb: voiceGraphTrace.limiter.reductionDb
+        } : null,
+        signalPeak: voiceGraphTrace.signalPeak,
+        signalRms: voiceGraphTrace.signalRms
+      };
+    }
+
+    function emitVoiceRuntimeTrace(event, candidate, extra) {
+      var context = canonicalAudioContext;
+      voiceRuntimeTrace(event, Object.assign({
+        traceId: runtimeVoiceTraceId,
+        voiceAssetId: keyOrPath,
+        characterId: characterId,
+        characterCode: characterCode,
+        voicePath: voicePath,
+        fallback: fallbackActive,
+        audioContext: audioContextSnapshot(context),
+        htmlAudio: audioElementSnapshot(candidate || audio),
+        graph: voiceGraphSnapshot()
+      }, extra || {}));
+    }
+
+    emitVoiceRuntimeTrace("enterDialogueVoiceMode", audio);
 
     function removeFrom(collection, item) {
       var index = collection.indexOf(item);
@@ -651,6 +840,8 @@
     function disposeProcessing() {
       disconnectNodes(processingNodes);
       processingNodes = [];
+      voiceGraphTrace.destinationConnected = false;
+      voiceGraphTrace.sourceConnected = false;
     }
 
     function complete(status, error) {
@@ -660,10 +851,13 @@
       removeFrom(dialogueVoices, audio);
       removeFrom(voices, audio);
       exitDialogueVoiceMode(voiceModeOwner);
+      emitVoiceRuntimeTrace("exitDialogueVoiceMode", audio, { completionStatus: status, error: error ? String(error) : null });
       resolveCompletion({ status: status, error: error && error.message ? error.message : null });
     }
 
     function attachDialogueAudio(candidate) {
+      runtimeElementGeneration += 1;
+      candidate.__eigoTraceElementId = "voice-element-" + runtimeVoiceTraceId + "-" + runtimeElementGeneration;
       candidate.volume = 1;
       candidate.preload = "auto";
       if (radio) {
@@ -674,16 +868,29 @@
       if (dialogueVoices.indexOf(candidate) === -1) dialogueVoices.push(candidate);
       candidate.__eigoDialogueComplete = complete;
       candidate.addEventListener("playing", function () {
+        emitVoiceRuntimeTrace("playing", candidate);
         if (radio) voiceTrace("radio-audio-event-playing", traceDetail);
         else voiceTrace("normal-voice-playing", { voiceKey: keyOrPath });
       });
+      candidate.addEventListener("timeupdate", function () {
+        if (candidate === audio) emitVoiceRuntimeTrace("timeupdate", candidate);
+      });
       candidate.addEventListener("ended", function () {
         if (candidate !== audio) return;
+        emitVoiceRuntimeTrace("ended", candidate);
         if (radio) voiceTrace("radio-audio-event-ended", traceDetail);
         complete("ended");
       }, { once: true });
-      candidate.addEventListener("error", function () { if (candidate === audio) complete("failed", new Error("audio-error")); }, { once: true });
-      candidate.addEventListener("abort", function () { if (candidate === audio) complete("failed", new Error("audio-abort")); }, { once: true });
+      candidate.addEventListener("error", function () {
+        if (candidate !== audio) return;
+        emitVoiceRuntimeTrace("error", candidate, { error: "audio-error" });
+        complete("failed", new Error("audio-error"));
+      }, { once: true });
+      candidate.addEventListener("abort", function () {
+        if (candidate !== audio) return;
+        emitVoiceRuntimeTrace("error", candidate, { error: "audio-abort" });
+        complete("failed", new Error("audio-abort"));
+      }, { once: true });
     }
 
     attachDialogueAudio(audio);
@@ -698,8 +905,16 @@
       try { replaced.pause(); } catch (_) {}
       audio = new Audio(voicePath);
       tracked.audio = audio;
+      fallbackActive = true;
+      voiceGraphTrace.mediaElementSourceCreated = false;
+      voiceGraphTrace.sourceConnected = false;
+      voiceGraphTrace.destinationConnected = false;
+      voiceGraphTrace.sourceNodeId = null;
+      voiceGraphTrace.sourceContextId = null;
+      voiceGraphTrace.analyserNode = null;
       attachDialogueAudio(audio);
       audio.__eigoAudioPath = "fallback";
+      emitVoiceRuntimeTrace("fallback", audio, { fallbackReason: reason, error: error ? String(error) : null });
       audioTrace("GAINNODE_FALLBACK", { category: "VOICE", voiceKey: keyOrPath, reason: reason, error: error ? String(error) : null });
       if (radio) voiceTrace("radio-fallback-enter", traceDetail, { reason: reason, error: error ? String(error) : null, freshAudioElement: true });
       return true;
@@ -708,8 +923,12 @@
     function startPlayback() {
       if (settled) return;
       var startedAudio = audio;
+      emitVoiceRuntimeTrace("play-call", startedAudio);
       safePlay(startedAudio);
       Promise.resolve(startedAudio.__eigoPlaybackOutcome).then(function (outcome) {
+        emitVoiceRuntimeTrace(outcome && outcome.ok === false ? "play-rejected" : "play-resolved", startedAudio, {
+          playError: outcome && outcome.error ? String(outcome.error) : null
+        });
         if (startedAudio === audio && outcome && outcome.ok === false) complete("failed", outcome.error);
       });
     }
@@ -719,6 +938,7 @@
       if (!buses) throw new Error("voice-bus-unavailable");
       var characterGain = context.createGain();
       setGainValue(characterGain, characterGainValue);
+      voiceGraphTrace.characterGain = finiteTraceNumber(characterGain.gain.value);
       var routeStart = characterGain;
       var routeEnd = characterGain;
       var nodes = [characterGain];
@@ -738,6 +958,7 @@
         saturation.curve = curve; saturation.oversample = "2x";
         var radioOutput = context.createGain();
         setGainValue(radioOutput, radioProfile.outputGain === undefined ? 0.72 : Number(radioProfile.outputGain));
+        voiceGraphTrace.processingGain = finiteTraceNumber(radioOutput.gain.value);
         characterGain.connect(highPass); highPass.connect(lowPass); lowPass.connect(presence); presence.connect(compressor); compressor.connect(saturation); saturation.connect(radioOutput);
         routeEnd = radioOutput;
         nodes = nodes.concat([highPass, lowPass, presence, compressor, saturation, radioOutput]);
@@ -745,8 +966,18 @@
         var kongGain = context.createGain();
         var processing = window.AudioMixProfile && AudioMixProfile.characterProcessing && AudioMixProfile.characterProcessing.c02 || {};
         setGainValue(kongGain, processing.webAudioGain === undefined ? 1 : Number(processing.webAudioGain));
+        voiceGraphTrace.processingGain = finiteTraceNumber(kongGain.gain.value);
         var limiter = context.createDynamicsCompressor();
         limiter.threshold.value = -3; limiter.knee.value = 0; limiter.ratio.value = 20; limiter.attack.value = 0.001; limiter.release.value = 0.08;
+        voiceGraphTrace.theoreticalPreLimiterGain = finiteTraceNumber(characterGain.gain.value * kongGain.gain.value);
+        voiceGraphTrace.limiter = {
+          node: limiter,
+          threshold: finiteTraceNumber(limiter.threshold.value),
+          ratio: finiteTraceNumber(limiter.ratio.value),
+          attack: finiteTraceNumber(limiter.attack.value),
+          release: finiteTraceNumber(limiter.release.value),
+          reductionDb: finiteTraceNumber(limiter.reduction)
+        };
         characterGain.connect(kongGain); kongGain.connect(limiter);
         routeEnd = limiter;
         nodes = nodes.concat([kongGain, limiter]);
@@ -757,10 +988,36 @@
         routeEnd = berniePresence;
         nodes = nodes.concat([lowMid, berniePresence]);
       }
-      routeEnd.connect(buses.voice);
-      var source = context.createMediaElementSource(audio);
+      var analyser = null;
+      if (typeof context.createAnalyser === "function") {
+        analyser = context.createAnalyser();
+        analyser.fftSize = 256;
+        analyser.smoothingTimeConstant = 0;
+        routeEnd.connect(analyser);
+        analyser.connect(buses.voice);
+        nodes.push(analyser);
+        voiceGraphTrace.analyserNode = analyser;
+      } else routeEnd.connect(buses.voice);
+      voiceGraphTrace.voiceBusGain = finiteTraceNumber(buses.voice.gain.value);
+      voiceGraphTrace.masterGain = finiteTraceNumber(buses.master.gain.value);
+      voiceGraphTrace.destinationConnected = true;
+      var source;
+      try {
+        source = context.createMediaElementSource(audio);
+      } catch (sourceError) {
+        emitVoiceRuntimeTrace("media-element-source-create-failed", audio, { error: String(sourceError) });
+        throw sourceError;
+      }
+      voiceGraphTrace.mediaElementSourceCreated = true;
+      voiceGraphTrace.sourceNodeId = "voice-source-" + runtimeVoiceTraceId;
+      voiceGraphTrace.sourceContextId = context.__eigoTraceContextId || null;
+      emitVoiceRuntimeTrace("media-element-source-created", audio);
       if (radio) voiceTrace("radio-source-created", traceDetail, { contextState: context.state });
-      try { source.connect(routeStart); } catch (error) {
+      try {
+        source.connect(routeStart);
+        voiceGraphTrace.sourceConnected = true;
+      } catch (error) {
+        emitVoiceRuntimeTrace("source-connect-failed", audio, { error: String(error) });
         disconnectNodes([source].concat(nodes));
         error.__eigoSourceAttempted = true;
         throw error;
@@ -771,6 +1028,7 @@
       audioTrace("VOICE_PATH", { voiceKey: keyOrPath, path: "web-audio", characterCode: characterCode, radio: radio });
       audioTrace("VOICE_CHARACTER_GAIN", { voiceKey: keyOrPath, gain: characterGainValue });
       audioTrace("VOICE_BUS_GAIN", { gain: canonicalBuses.voice.gain.value });
+      emitVoiceRuntimeTrace("graph-connected", audio);
       if (radio) voiceTrace("radio-graph-connected", traceDetail, { route: "filtered", contextState: context.state });
     }
 
@@ -944,5 +1202,16 @@
     stop: stopDialogueVoices,
     isPlaying: function () { return dialogueVoices.length > 0; }
   };
+  window.GainNodeVoiceRuntimeTrace = {
+    version: TRACE_VERSION,
+    panelEnabled: function () { return voiceRuntimeTraceState.panelEnabled; },
+    latest: function () { return voiceRuntimeTraceState.latest; },
+    history: function () { return voiceRuntimeTraceState.history.slice(); },
+    render: renderVoiceRuntimeTracePanel
+  };
+  if (voiceRuntimeTraceState.panelEnabled && window.document) {
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", renderVoiceRuntimeTracePanel, { once: true });
+    else renderVoiceRuntimeTracePanel();
+  }
   installUnlockGesture();
 })();

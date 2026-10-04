@@ -158,9 +158,10 @@ const close = (actual, expected, label) => assert.ok(Math.abs(actual - expected)
   assert(!manager.includes("kongGain.gain.value = 1.65"), "old Kong 1.65 removed");
   for (const page of ["index.html", "dev.html"]) {
     const html = read(page);
-    for (const asset of ["data/audio-mix-profile.js", "data/voice-profiles.js", "engine/managers/audio-manager.js", "engine/services/dialogue-voice-controller.js"]) {
+    for (const asset of ["data/audio-mix-profile.js", "data/voice-profiles.js", "engine/services/dialogue-voice-controller.js"]) {
       assert(html.includes(`${asset}?v=audio-gainnode-unification-v1`), `${page}: ${asset} cache version`);
     }
+    assert(html.includes("engine/managers/audio-manager.js?v=gainnode-iphone-runtime-trace-v1"), `${page}: trace AudioManager cache version`);
   }
   console.log("Audio GainNode Unification V1: PASS");
 })().catch(error => { console.error(error); process.exitCode = 1; });
