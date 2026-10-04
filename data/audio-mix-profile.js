@@ -1,6 +1,8 @@
 (function () {
   "use strict";
 
+  window.AudioMixProfileVersion = "audio-gainnode-unification-v1";
+
   window.AudioMixProfile = {
     groups: { BGM: 1.0, AMBIENT: 1.0, SE: 1.0, MOTIF: 1.0, VOICE: 1.0 },
     voiceCharacters: {

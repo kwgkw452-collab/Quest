@@ -69,11 +69,30 @@
     return groupGain * characterGain * overrideGain;
   }
 
+  function resolveGainComponents(voiceKey, sceneGain) {
+    var profile = getForVoiceKey(voiceKey);
+    var voiceGroupGain = window.AudioMixProfile && AudioMixProfile.groups
+      ? Number(AudioMixProfile.groups.VOICE)
+      : 1;
+    if (!Number.isFinite(voiceGroupGain)) voiceGroupGain = 1;
+    var characterGain = profile ? Number(profile.gain) : 1;
+    if (!Number.isFinite(characterGain)) characterGain = 1;
+    var resolvedSceneGain = sceneGain === undefined ? 1 : Number(sceneGain);
+    if (!Number.isFinite(resolvedSceneGain)) resolvedSceneGain = 1;
+    return {
+      groupGain: voiceGroupGain,
+      characterGain: characterGain,
+      sceneGain: resolvedSceneGain,
+      effectiveGain: voiceGroupGain * characterGain * resolvedSceneGain
+    };
+  }
+
   window.VoiceProfileDatabase = {
     get: get,
     getForVoiceKey: getForVoiceKey,
     parseVoiceKey: parseVoiceKey,
     resolveGain: resolveGain,
+    resolveGainComponents: resolveGainComponents,
     all: function () { return Object.keys(profiles).sort().map(get); }
   };
 })();

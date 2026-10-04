@@ -59,26 +59,28 @@ vm.runInContext(read("engine/managers/audio-manager.js"), c);
   assert.strictEqual(c.AudioManager.getAudioContext(), c.AudioManager.getAudioContext());
 
   const crowd = c.AudioManager.playBgm("bazaarCrowd", { volume: 0.55 });
-  assert.equal(crowd.volume, 0.18150000000000002, "Bazaar crowd effective volume");
+  assert.equal(crowd.volume, 1, "BGM HTMLAudio remains unity");
+  assert.equal(c.AudioManager.getState().effectiveBgmVolume, 0.18150000000000002, "Bazaar crowd effective GainNode volume");
 
   for (const key of ["voice_c01_s001_001", "voice_c02_s001_001", "voice_c03_s002_001", "voice_c04_s004_001"]) {
     const tracked = c.DialogueVoiceAudioInternal.play(key, { volume: 1 });
     await Promise.resolve();
-    assert.equal(crowd.volume, 0.032670000000000005, key + " ducks BGM");
+    assert.equal(c.AudioManager.getState().effectiveBgmVolume, 0.032670000000000005, key + " ducks BGM");
     tracked.audio.emit("ended");
     await tracked.completion;
-    assert.equal(crowd.volume, 0.18150000000000002, key + " restores BGM");
+    assert.equal(c.AudioManager.getState().effectiveBgmVolume, 0.18150000000000002, key + " restores BGM");
     assert.strictEqual(c.AudioManager.getAudioContext(), c.AudioManager.getAudioContext());
   }
   assert.equal(contextCount, 1, "Kong and Bernie reuse one context");
 
   const interrupted = c.DialogueVoiceAudioInternal.play("voice_c01_s001_001", { volume: 1 });
-  assert.equal(crowd.volume, 0.032670000000000005);
+  assert.equal(c.AudioManager.getState().effectiveBgmVolume, 0.032670000000000005);
   c.DialogueVoiceAudioInternal.stop();
   await interrupted.completion;
-  assert.equal(crowd.volume, 0.18150000000000002, "stop restores BGM");
+  assert.equal(c.AudioManager.getState().effectiveBgmVolume, 0.18150000000000002, "stop restores BGM");
 
   const unrelated = c.AudioManager.playBgm("futureCityPixel", { volume: 0.30 });
-  assert.equal(unrelated.volume, 0.30, "unconfigured BGM gain is unchanged");
+  assert.equal(unrelated.volume, 1, "unconfigured BGM HTMLAudio stays unity");
+  assert.equal(c.AudioManager.getState().effectiveBgmVolume, 0.30, "unconfigured BGM gain is unchanged");
   console.log("Mobile Audio Foundation Fix V1: PASS");
 })().catch(error => { console.error(error); process.exitCode = 1; });

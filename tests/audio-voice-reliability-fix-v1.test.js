@@ -154,8 +154,9 @@ async function flush() {
 
   for (const voice of ["voice_c02_s001_001", "voice_c04_s004_001"]) {
     const r = runtime({ sourceConnectFailures: 1 });
+    const before = r.audios.length;
     const tracked = r.context.DialogueVoiceAudioInternal.play(voice, { volume: 1 });
-    const processedAudio = tracked.audio;
+    const processedAudio = r.audios[before];
     await flush();
     assert.notStrictEqual(tracked.audio, processedAudio, voice + " uses a fresh fallback element");
     assert.equal(processedAudio.playCount, 0, "unsafe processed element is never played");
@@ -168,11 +169,12 @@ async function flush() {
 
   {
     const r = runtime({ sourceConnectFailures: 1 });
+    const before = r.audios.length;
     const radio = r.context.DialogueVoiceAudioInternal.play("voice_c03_st004_010", {
       volume: 1,
       voiceEffect: "radio"
     });
-    const processedAudio = radio.audio;
+    const processedAudio = r.audios[before];
     await flush();
     assert.notStrictEqual(radio.audio, processedAudio, "radio failure uses fresh fallback");
     assert.equal(processedAudio.playCount, 0);
@@ -218,17 +220,18 @@ async function flush() {
     const r = runtime();
     const zephyr = r.context.AudioManager.playBgm("zephyrFields", { volume: 0.20 });
     const tree = r.context.DialogueVoiceAudioInternal.play("voice_c05_s004_001", { volume: 1 });
-    assert.ok(Math.abs(zephyr.volume - 0.036) < 1e-9, "Season Tree dialogue applies calibrated 0.18 duck");
+    assert.ok(Math.abs(r.context.AudioManager.getState().effectiveBgmVolume - 0.036) < 1e-9,
+      "Season Tree dialogue applies calibrated 0.18 duck");
     tree.audio.emit("ended");
     await tree.completion;
-    assert.equal(zephyr.volume, 0.20, "Season Tree dialogue restores BGM");
+    assert.equal(r.context.AudioManager.getState().effectiveBgmVolume, 0.20, "Season Tree dialogue restores BGM");
   }
 
   for (const page of ["index.html", "dev.html"]) {
     const html = read(page);
-    assert.match(html, /data\/audio-mix-profile\.js\?v=audio-mix-duck-calibration-v1/);
-    assert.match(html, /engine\/managers\/audio-manager\.js\?v=audio-mix-duck-calibration-v1/);
-    assert.match(html, /engine\/services\/dialogue-voice-controller\.js\?v=audio-mix-duck-calibration-v1/);
+    assert.match(html, /data\/audio-mix-profile\.js\?v=audio-gainnode-unification-v1/);
+    assert.match(html, /engine\/managers\/audio-manager\.js\?v=audio-gainnode-unification-v1/);
+    assert.match(html, /engine\/services\/dialogue-voice-controller\.js\?v=audio-gainnode-unification-v1/);
   }
 
   assert(read("engine/services/m004-battle-extension.js").includes('yes: "ears"'));

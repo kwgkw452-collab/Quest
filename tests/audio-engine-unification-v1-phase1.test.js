@@ -56,52 +56,55 @@ vm.runInContext(read("engine/managers/audio-manager.js"), context);
   const bgm = context.AudioManager.playBgm("futureCityPixel", { volume: 0.30, fadeInMs: 120 });
   const pico = context.DialogueVoiceAudioInternal.play("voice_c01_s001_001", { volume: 1 });
   await wait(180);
-  assert(Math.abs(bgm.volume - 0.054) < 0.002, "Dialogue Duck remains active after BGM fade-in completes");
+  assert(Math.abs(context.AudioManager.getState().effectiveBgmVolume - 0.054) < 0.002, "Dialogue Duck remains active after BGM fade-in completes");
+  assert.equal(bgm.volume, 1, "HTMLAudio volume remains unity");
   assert.equal(context.AudioManager.getState().duckState.dialogueOwners, 1);
   pico.audio.emit("ended");
   await pico.completion;
   await wait(70);
-  assert(Math.abs(bgm.volume - 0.30) < 0.002, "Voice completion restores canonical base volume");
+  assert(Math.abs(context.AudioManager.getState().effectiveBgmVolume - 0.30) < 0.002, "Voice completion restores canonical base volume");
 
   const kong = context.DialogueVoiceAudioInternal.play("voice_c02_s001_001", { volume: 1 });
   const saki = context.DialogueVoiceAudioInternal.play("voice_c03_s002_001", { volume: 1 });
   await wait(70);
-  assert(Math.abs(bgm.volume - 0.054) < 0.002);
+  assert(Math.abs(context.AudioManager.getState().effectiveBgmVolume - 0.054) < 0.002);
   kong.audio.emit("ended");
   await kong.completion;
   await wait(30);
-  assert(Math.abs(bgm.volume - 0.054) < 0.002, "overlapping Voice keeps Duck until final owner exits");
+  assert(Math.abs(context.AudioManager.getState().effectiveBgmVolume - 0.054) < 0.002, "overlapping Voice keeps Duck until final owner exits");
   saki.audio.emit("ended");
   await saki.completion;
   await wait(70);
-  assert(Math.abs(bgm.volume - 0.30) < 0.002);
+  assert(Math.abs(context.AudioManager.getState().effectiveBgmVolume - 0.30) < 0.002);
 
   for (const key of ["voice_c01_s001_001", "voice_c02_s001_001", "voice_c03_s002_001", "voice_c04_s004_001", "voice_c06_st004_001"]) {
     const tracked = context.DialogueVoiceAudioInternal.play(key, { volume: 1 });
     await wait(70);
-    assert(Math.abs(bgm.volume - 0.054) < 0.002, key + " uses canonical Dialogue policy");
+    assert(Math.abs(context.AudioManager.getState().effectiveBgmVolume - 0.054) < 0.002, key + " uses canonical Dialogue policy");
     context.DialogueVoiceAudioInternal.stop();
     await tracked.completion;
     await wait(70);
-    assert(Math.abs(bgm.volume - 0.30) < 0.002, key + " stop restores base volume");
+    assert(Math.abs(context.AudioManager.getState().effectiveBgmVolume - 0.30) < 0.002, key + " stop restores base volume");
   }
 
   const bernie = context.DialogueVoiceAudioInternal.play("voice_c04_s004_001", { volume: 1 });
   await wait(70);
   const motif = context.AudioManager.playSe("zephyrSuccess", { volume: 0.27 });
   const ordinarySe = context.AudioManager.playSe("battleHit", { volume: 0.80 });
-  assert(Math.abs(motif.volume - 0.0324) < 0.002, "Motif uses its central Dialogue ratio");
-  assert.equal(ordinarySe.volume, 0.80, "ordinary SE remains non-duckable by policy");
+  assert(Math.abs(motif.__eigoGainNode.gain.value * context.AudioManager.getState().busGains.motif - 0.0324) < 0.002,
+    "Motif uses its central Dialogue ratio");
+  assert.equal(ordinarySe.__eigoGainNode.gain.value, 0.80, "ordinary SE remains non-duckable by policy");
   bernie.audio.emit("ended");
   await bernie.completion;
   await wait(70);
-  assert(Math.abs(motif.volume - 0.27) < 0.002, "Motif restores after Dialogue Voice");
+  assert(Math.abs(motif.__eigoGainNode.gain.value * context.AudioManager.getState().busGains.motif - 0.27) < 0.002,
+    "Motif restores after Dialogue Voice");
 
   await context.AudioManager.enterSpeechMode({ preserveBgm: true });
-  assert(Math.abs(bgm.volume - 0.075) < 0.002, "Speech mode uses central multiplier");
+  assert(Math.abs(context.AudioManager.getState().effectiveBgmVolume - 0.075) < 0.002, "Speech mode uses central multiplier");
   assert.equal(context.AudioManager.getState().speechMode.active, true);
   await context.AudioManager.exitSpeechMode({ restore: true });
-  assert(Math.abs(bgm.volume - 0.30) < 0.002, "Speech exit restores base volume");
+  assert(Math.abs(context.AudioManager.getState().effectiveBgmVolume - 0.30) < 0.002, "Speech exit restores base volume");
 
   assert.equal(context.AudioMixProfile.characterProcessing.c02.webAudioGain, 1.10);
   assert(!read("engine/managers/audio-manager.js").includes("kongGain.gain.value = 1.65"));

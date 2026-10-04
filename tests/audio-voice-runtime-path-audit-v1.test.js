@@ -26,19 +26,16 @@ for (const key of voiceKeys) {
 }
 
 const manager = read("engine/managers/audio-manager.js");
-assert(manager.includes('var kong = !radio && /^voice_c02_/.test(keyOrPath)'));
-assert(manager.includes('var bernie = !radio && /^voice_c04_/.test(keyOrPath)'));
-assert(manager.includes('var processed = radio || kong || bernie'));
-assert(manager.includes('mixContext.createMediaElementSource(audio)'));
-assert(manager.includes('radioContext.createMediaElementSource(audio)'));
-assert(manager.includes('routeStart = kongGain'));
+assert(manager.includes('var kong = !radio && characterCode === "c02"'));
+assert(manager.includes('var bernie = !radio && characterCode === "c04"'));
+assert(manager.includes('context.createMediaElementSource(audio)'));
+assert(manager.includes('routeEnd.connect(buses.voice)'));
 assert(manager.includes('source.connect(routeStart)'));
-assert(manager.includes('kongLimiter.connect(mixContext.destination)'));
-assert(manager.includes('routeStart = lowMid'));
-assert(manager.includes('presence.connect(mixContext.destination)'));
-assert(manager.includes('source.connect(highPass)'));
+assert(manager.includes('characterGain.connect(kongGain)'));
+assert(manager.includes('kongGain.connect(limiter)'));
+assert(manager.includes('characterGain.connect(lowMid)'));
 assert(manager.includes('saturation.connect(radioOutput)'));
-assert(manager.includes('radioOutput.connect(radioContext.destination)'));
+assert(manager.includes('routeEnd = radioOutput'));
 assert(!manager.includes("createBufferSource"), "Voice processing is MediaElementSource, not BufferSource");
 assert(manager.includes("var voiceModeOwner = enterDialogueVoiceMode()"));
 assert(manager.includes("exitDialogueVoiceMode(voiceModeOwner)"));
@@ -50,9 +47,9 @@ assert(monsters.includes("postRecoveryBgmVolume: 0.20"));
 
 for (const page of ["index.html", "dev.html"]) {
   const html = read(page);
-  assert(html.includes("data/audio-mix-profile.js?v=audio-mix-duck-calibration-v1"));
-  assert(html.includes("engine/managers/audio-manager.js?v=audio-mix-duck-calibration-v1"));
-  assert(html.includes('engine/services/dialogue-voice-controller.js?v=audio-mix-duck-calibration-v1"'));
+  assert(html.includes("data/audio-mix-profile.js?v=audio-gainnode-unification-v1"));
+  assert(html.includes("engine/managers/audio-manager.js?v=audio-gainnode-unification-v1"));
+  assert(html.includes('engine/services/dialogue-voice-controller.js?v=audio-gainnode-unification-v1"'));
 }
 assert(read("index.html").includes('engine/controllers/pico-support-controller.js?v=audio-mix-duck-calibration-v1"'));
 

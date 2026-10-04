@@ -54,18 +54,20 @@ function harness(resumeResult, rejectPlay) {
 }
 
 (async () => {
+  const plainRuntime = harness(context => { context.state = "running"; return Promise.resolve(); });
+  const normal = plainRuntime.context.DialogueVoiceAudioInternal.play("normal-key", { volume: 1 });
+  await flush();
+  assert.strictEqual(normal.audio.playCount, 1);
+  normal.audio.emit("playing");
+  assert(plainRuntime.events.some(([event]) => event === "normal-voice-play-call"));
+  assert(plainRuntime.events.some(([event]) => event === "normal-voice-playing"));
+  normal.audio.emit("ended");
+  assert.strictEqual((await normal.completion).status, "ended");
+
   let release;
   const pending = harness(context => new Promise(resolve => {
     release = () => { context.state = "running"; resolve(); };
   }));
-  const normal = pending.context.DialogueVoiceAudioInternal.play("normal-key", { volume: 1 });
-  assert.strictEqual(normal.audio.playCount, 1);
-  normal.audio.emit("playing");
-  assert(pending.events.some(([event]) => event === "normal-voice-play-call"));
-  assert(pending.events.some(([event]) => event === "normal-voice-playing"));
-  normal.audio.emit("ended");
-  assert.strictEqual((await normal.completion).status, "ended");
-
   const radio = pending.context.DialogueVoiceAudioInternal.play("radio-key", { voiceEffect: "radio", volume: 1 });
   assert.strictEqual(radio.audio.playCount, 0, "pending resume must retain existing play order");
   assert.deepStrictEqual(pending.events.filter(([event]) => event.startsWith("radio-")).map(([event]) => event), [

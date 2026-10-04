@@ -89,33 +89,37 @@ const close = (actual, expected, message) =>
   const future = context.AudioManager.playBgm("futureCityPixel", { volume: 0.30 });
   const motif = context.AudioManager.playSe("zephyrFriendship", { volume: 0.27 });
   const tree = context.DialogueVoiceAudioInternal.play("voice_c05_m003_001", { volume: 1.0 });
-  close(future.volume, 0.054, "BGM final HTMLAudio volume");
-  close(motif.volume, 0.0324, "Motif final HTMLAudio volume");
+  assert.equal(future.volume, 1, "BGM HTMLAudio stays unity");
+  assert.equal(motif.volume, 1, "Motif HTMLAudio stays unity");
+  close(context.AudioManager.getState().effectiveBgmVolume, 0.054, "BGM final GainNode gain");
+  close(motif.__eigoGainNode.gain.value * context.AudioManager.getState().busGains.motif, 0.0324, "Motif final GainNode gain");
   assert.equal(context.AudioManager.getState().duckState.dialogueOwners, 1);
   tree.audio.emit("ended");
   await tree.completion;
-  close(future.volume, 0.30, "BGM restore");
-  close(motif.volume, 0.27, "Motif restore");
+  close(context.AudioManager.getState().effectiveBgmVolume, 0.30, "BGM restore");
+  close(motif.__eigoGainNode.gain.value * context.AudioManager.getState().busGains.motif, 0.27, "Motif restore");
 
   const beforeKongNodes = nodes.length;
   const kong = context.DialogueVoiceAudioInternal.play("voice_c02_s001_001", { volume: 0.82 });
   await Promise.resolve();
   await Promise.resolve();
-  assert.equal(kong.audio.volume, 0.82);
-  close(future.volume, 0.054, "S001 Kong BGM duck");
+  assert.equal(kong.audio.volume, 1);
+  close(kong.audio.__eigoCharacterGainNode.gain.value, 0.82, "Kong Character GainNode");
+  close(context.AudioManager.getState().effectiveBgmVolume, 0.054, "S001 Kong BGM duck");
   assert(nodes.slice(beforeKongNodes).some(node => node.kind === "gain" && node.gain.value === 1.10),
     "Kong processing uses calibrated central gain");
   kong.audio.emit("ended");
   await kong.completion;
-  close(future.volume, 0.30, "Kong BGM restore");
+  close(context.AudioManager.getState().effectiveBgmVolume, 0.30, "Kong BGM restore");
 
   const bernie = context.DialogueVoiceAudioInternal.play("voice_c04_s004_001", { volume: 0.82 });
   await Promise.resolve();
-  assert.equal(bernie.audio.volume, 0.82);
-  close(future.volume, 0.054, "Bernie BGM duck");
+  assert.equal(bernie.audio.volume, 1);
+  close(bernie.audio.__eigoCharacterGainNode.gain.value, 0.82, "Bernie Character GainNode");
+  close(context.AudioManager.getState().effectiveBgmVolume, 0.054, "Bernie BGM duck");
   bernie.audio.emit("ended");
   await bernie.completion;
-  close(future.volume, 0.30, "Bernie BGM restore");
+  close(context.AudioManager.getState().effectiveBgmVolume, 0.30, "Bernie BGM restore");
 
   const beforeRadioNodes = nodes.length;
   const radio = context.DialogueVoiceAudioInternal.play("voice_c03_st004_010", {
@@ -135,9 +139,9 @@ const close = (actual, expected, message) =>
 
   for (const page of ["index.html", "dev.html"]) {
     const html = read(page);
-    assert.match(html, /data\/audio-mix-profile\.js\?v=audio-mix-duck-calibration-v1/);
-    assert.match(html, /data\/voice-profiles\.js\?v=audio-mix-duck-calibration-v1/);
-    assert.match(html, /engine\/managers\/audio-manager\.js\?v=audio-mix-duck-calibration-v1/);
+    assert.match(html, /data\/audio-mix-profile\.js\?v=audio-gainnode-unification-v1/);
+    assert.match(html, /data\/voice-profiles\.js\?v=audio-gainnode-unification-v1/);
+    assert.match(html, /engine\/managers\/audio-manager\.js\?v=audio-gainnode-unification-v1/);
   }
 
   const manager = read("engine/managers/audio-manager.js");
