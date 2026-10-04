@@ -64,7 +64,7 @@ vm.runInContext(read("engine/managers/audio-manager.js"), c);
   for (const key of ["voice_c01_s001_001", "voice_c02_s001_001", "voice_c03_s002_001", "voice_c04_s004_001"]) {
     const tracked = c.DialogueVoiceAudioInternal.play(key, { volume: 1 });
     await Promise.resolve();
-    assert.equal(crowd.volume, 0.063525, key + " ducks BGM");
+    assert.equal(crowd.volume, 0.032670000000000005, key + " ducks BGM");
     tracked.audio.emit("ended");
     await tracked.completion;
     assert.equal(crowd.volume, 0.18150000000000002, key + " restores BGM");
@@ -73,7 +73,7 @@ vm.runInContext(read("engine/managers/audio-manager.js"), c);
   assert.equal(contextCount, 1, "Kong and Bernie reuse one context");
 
   const interrupted = c.DialogueVoiceAudioInternal.play("voice_c01_s001_001", { volume: 1 });
-  assert.equal(crowd.volume, 0.063525);
+  assert.equal(crowd.volume, 0.032670000000000005);
   c.DialogueVoiceAudioInternal.stop();
   await interrupted.completion;
   assert.equal(crowd.volume, 0.18150000000000002, "stop restores BGM");

@@ -30,11 +30,11 @@ const hash = file => crypto.createHash("sha256").update(fs.readFileSync(path.joi
   assert.strictEqual(parsed.storyOrEventId, "s001"); // 4
   assert.strictEqual(parsed.sequence, "003"); // 5
   assert.strictEqual(profileContext.VoiceProfileDatabase.get("c01").gain, 1.0); // 6
-  assert.strictEqual(profileContext.VoiceProfileDatabase.get("c02").gain, 1.0); // 7
+  assert.strictEqual(profileContext.VoiceProfileDatabase.get("c02").gain, 0.82); // 7
   assert.strictEqual(profileContext.VoiceProfileDatabase.get("c03").gain, 1.0); // 8
-  assert.strictEqual(profileContext.VoiceProfileDatabase.get("c04").gain, 1.0); // 9
+  assert.strictEqual(profileContext.VoiceProfileDatabase.get("c04").gain, 0.82); // 9
   assert.strictEqual(profileContext.AudioMixProfile.groups.VOICE, 1.0); // 10
-  assert.strictEqual(profileContext.VoiceProfileDatabase.resolveGain("voice_c02_s001_003"), 1.0); // 11 group x Character
+  assert.strictEqual(profileContext.VoiceProfileDatabase.resolveGain("voice_c02_s001_003"), 0.82); // 11 group x Character
 
   const pending = [];
   const playbackCalls = [];

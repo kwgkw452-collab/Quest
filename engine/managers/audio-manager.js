@@ -137,13 +137,29 @@
     var definition = window.AudioDatabase && AudioDatabase.assets && AudioDatabase.assets[keyOrPath];
     var category = definition && definition.category ? definition.category : (type === "se" ? "SE" : "VOICE");
     var policy = window.AudioMixProfile && AudioMixProfile.oneShots && AudioMixProfile.oneShots[category] || {};
-    return { category: category, duckable: policy.duckable === true };
+    return {
+      category: category,
+      duckable: policy.duckable === true,
+      dialogueRatio: Number(policy.dialogueRatio)
+    };
+  }
+
+  function motifDialogueMultiplier(metadata) {
+    var dialogueMultiplier = audioState.duckState.dialogue.multiplier;
+    if (!metadata || metadata.category !== "MOTIF" || !Number.isFinite(metadata.dialogueRatio)) {
+      return dialogueMultiplier;
+    }
+    var dialogueProfile = dialogueDuckProfile();
+    var dialogueTarget = dialogueProfile.ratio === undefined ? 0.18 : Number(dialogueProfile.ratio);
+    if (!Number.isFinite(dialogueTarget) || dialogueTarget >= 1) return dialogueMultiplier;
+    var progress = Math.max(0, Math.min(1, (1 - dialogueMultiplier) / (1 - dialogueTarget)));
+    return 1 - ((1 - metadata.dialogueRatio) * progress);
   }
 
   function applyOneShotVolume(audio) {
     var metadata = audio && audio.__eigoMixPolicy;
     if (!metadata) return;
-    var multiplier = metadata.duckable ? audioState.duckState.dialogue.multiplier : 1;
+    var multiplier = metadata.duckable ? motifDialogueMultiplier(metadata) : 1;
     audio.volume = clampVolume(metadata.baseVolume * multiplier);
   }
 
@@ -182,7 +198,7 @@
     var owner = { active: true };
     if (audioState.duckState.dialogue.owners === 1) {
       var profile = dialogueDuckProfile();
-      animatePolicy("dialogue", profile.ratio === undefined ? 0.35 : Number(profile.ratio),
+      animatePolicy("dialogue", profile.ratio === undefined ? 0.18 : Number(profile.ratio),
         profile.duckMs === undefined ? 160 : profile.duckMs);
     }
     return owner;
@@ -434,6 +450,7 @@
     audio.__eigoMixPolicy = {
       category: policy.category,
       duckable: policy.duckable,
+      dialogueRatio: policy.dialogueRatio,
       baseVolume: options.volume === undefined ? 1 : options.volume
     };
     applyOneShotVolume(audio);
@@ -574,7 +591,8 @@
               presence.type = "peaking";
               presence.frequency.value = 1700;
               presence.Q.value = 1.0;
-              presence.gain.value = 12;
+              var radioProfile = window.AudioMixProfile && AudioMixProfile.radioProcessing || {};
+              presence.gain.value = radioProfile.presenceGainDb === undefined ? 4 : Number(radioProfile.presenceGainDb);
               var compressor = radioContext.createDynamicsCompressor();
               compressor.threshold.value = -18;
               compressor.ratio.value = 10;
@@ -590,15 +608,18 @@
               }
               saturation.curve = curve;
               saturation.oversample = "2x";
+              var radioOutput = radioContext.createGain();
+              radioOutput.gain.value = radioProfile.outputGain === undefined ? 0.72 : Number(radioProfile.outputGain);
               highPass.connect(lowPass);
               lowPass.connect(presence);
               presence.connect(compressor);
               compressor.connect(saturation);
-              saturation.connect(radioContext.destination);
+              saturation.connect(radioOutput);
+              radioOutput.connect(radioContext.destination);
               sourceAttempted = true;
               var source = radioContext.createMediaElementSource(audio);
               voiceTrace("radio-source-created", traceDetail, { contextState: radioContext.state });
-              processingNodes = [source, highPass, lowPass, presence, compressor, saturation];
+              processingNodes = [source, highPass, lowPass, presence, compressor, saturation, radioOutput];
               source.connect(highPass);
               voiceTrace("radio-graph-connected", traceDetail, { route: "filtered", contextState: radioContext.state });
             } catch (error) {

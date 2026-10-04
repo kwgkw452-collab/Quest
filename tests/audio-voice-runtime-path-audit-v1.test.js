@@ -37,23 +37,24 @@ assert(manager.includes('kongLimiter.connect(mixContext.destination)'));
 assert(manager.includes('routeStart = lowMid'));
 assert(manager.includes('presence.connect(mixContext.destination)'));
 assert(manager.includes('source.connect(highPass)'));
-assert(manager.includes('saturation.connect(radioContext.destination)'));
+assert(manager.includes('saturation.connect(radioOutput)'));
+assert(manager.includes('radioOutput.connect(radioContext.destination)'));
 assert(!manager.includes("createBufferSource"), "Voice processing is MediaElementSource, not BufferSource");
 assert(manager.includes("var voiceModeOwner = enterDialogueVoiceMode()"));
 assert(manager.includes("exitDialogueVoiceMode(voiceModeOwner)"));
 
 const mix = read("data/audio-mix-profile.js");
-assert(mix.includes("dialogueVoice: { ratio: 0.35"));
+assert(mix.includes("dialogueVoice: { ratio: 0.18"));
 assert(monsters.includes('postRecoveryBgm: "zephyrFields"'));
 assert(monsters.includes("postRecoveryBgmVolume: 0.20"));
 
 for (const page of ["index.html", "dev.html"]) {
   const html = read(page);
-  assert(html.includes("data/audio-mix-profile.js?v=audio-voice-reliability-v1"));
-  assert(html.includes("engine/managers/audio-manager.js?v=audio-voice-reliability-v1"));
-  assert(html.includes('engine/services/dialogue-voice-controller.js?v=audio-voice-reliability-v1"'));
+  assert(html.includes("data/audio-mix-profile.js?v=audio-mix-duck-calibration-v1"));
+  assert(html.includes("engine/managers/audio-manager.js?v=audio-mix-duck-calibration-v1"));
+  assert(html.includes('engine/services/dialogue-voice-controller.js?v=audio-mix-duck-calibration-v1"'));
 }
-assert(read("index.html").includes('engine/controllers/pico-support-controller.js?v=audio-voice-reliability-v1"'));
+assert(read("index.html").includes('engine/controllers/pico-support-controller.js?v=audio-mix-duck-calibration-v1"'));
 
 const s001 = read("engine/stories/S001.js");
 const shortZephyr = [

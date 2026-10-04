@@ -7,6 +7,15 @@
     c02: { characterId: 2, characterKey: "kong", gain: 1.0 },
     c03: { characterId: 3, characterKey: "saki", gain: 1.0 },
     c04: { characterId: 4, characterKey: "bernie", gain: 1.0 },
+    c05: { characterId: 5, characterKey: "season_tree", gain: 1.0 },
+    c06: { characterId: 6, characterKey: "shop_owner", gain: 1.0 },
+    c07: { characterId: 7, characterKey: "shop_clerk", gain: 1.0 },
+    c08: { characterId: 8, characterKey: "traveler_a", gain: 1.0 },
+    c09: { characterId: 9, characterKey: "traveler_b", gain: 1.0 },
+    c10: { characterId: 10, characterKey: "traveler_c", gain: 1.0 },
+    c11: { characterId: 11, characterKey: "local_woman", gain: 1.0 },
+    c12: { characterId: 12, characterKey: "townsperson", gain: 1.0 },
+    c13: { characterId: 13, characterKey: "fruit_monster", gain: 1.0 },
     c14: { characterId: 14, characterKey: "face_parts_monster", gain: 1.0 }
   };
 

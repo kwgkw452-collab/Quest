@@ -49,6 +49,7 @@ function audioHarness(mode) {
     createBiquadFilter() { if (mode === "filter") throw Error("filter failed"); return this.node(); }
     createDynamicsCompressor() { return this.node(); }
     createWaveShaper() { return this.node(); }
+    createGain() { return this.node(); }
     createMediaElementSource(audio) { this.sourceAudio = audio; return this.node(); }
     node() { const node = { frequency: {}, Q: {}, gain: {}, threshold: {}, ratio: {}, attack: {}, release: {},
       connect(destination) { this.destination = destination; }, disconnect() { this.disconnected = true; } };
@@ -159,7 +160,7 @@ function controlHarness() {
   assert.strictEqual(graph.nodes[2].type, "peaking");
   assert.strictEqual(graph.nodes[2].frequency.value, 1700);
   assert.strictEqual(graph.nodes[2].Q.value, 1.0);
-  assert.strictEqual(graph.nodes[2].gain.value, 12);
+  assert.strictEqual(graph.nodes[2].gain.value, 4);
   assert.strictEqual(graph.nodes[3].ratio.value, 10);
   assert.strictEqual(graph.nodes[4].oversample, "2x");
   assert.strictEqual(graph.nodes[4].curve.length, 2048);
@@ -169,7 +170,9 @@ function controlHarness() {
   assert.strictEqual(graph.nodes[1].destination, graph.nodes[2]);
   assert.strictEqual(graph.nodes[2].destination, graph.nodes[3]);
   assert.strictEqual(graph.nodes[3].destination, graph.nodes[4]);
-  assert.strictEqual(graph.nodes[4].destination, graph.destination);
+  assert.strictEqual(graph.nodes[4].destination, graph.nodes[5]);
+  assert.strictEqual(graph.nodes[5].gain.value, 0.72);
+  assert.strictEqual(graph.nodes[5].destination, graph.destination);
   assert.strictEqual(graph.sourceAudio, effected.audio);
   normal.context.DialogueVoiceAudioInternal.stop();
   assert.strictEqual((await effected.completion).status, "stopped");

@@ -218,7 +218,7 @@ async function flush() {
     const r = runtime();
     const zephyr = r.context.AudioManager.playBgm("zephyrFields", { volume: 0.20 });
     const tree = r.context.DialogueVoiceAudioInternal.play("voice_c05_s004_001", { volume: 1 });
-    assert.ok(Math.abs(zephyr.volume - 0.07) < 1e-9, "Season Tree dialogue applies unchanged 0.35 duck");
+    assert.ok(Math.abs(zephyr.volume - 0.036) < 1e-9, "Season Tree dialogue applies calibrated 0.18 duck");
     tree.audio.emit("ended");
     await tree.completion;
     assert.equal(zephyr.volume, 0.20, "Season Tree dialogue restores BGM");
@@ -226,9 +226,9 @@ async function flush() {
 
   for (const page of ["index.html", "dev.html"]) {
     const html = read(page);
-    assert.match(html, /data\/audio-mix-profile\.js\?v=audio-voice-reliability-v1/);
-    assert.match(html, /engine\/managers\/audio-manager\.js\?v=audio-voice-reliability-v1/);
-    assert.match(html, /engine\/services\/dialogue-voice-controller\.js\?v=audio-voice-reliability-v1/);
+    assert.match(html, /data\/audio-mix-profile\.js\?v=audio-mix-duck-calibration-v1/);
+    assert.match(html, /engine\/managers\/audio-manager\.js\?v=audio-mix-duck-calibration-v1/);
+    assert.match(html, /engine\/services\/dialogue-voice-controller\.js\?v=audio-mix-duck-calibration-v1/);
   }
 
   assert(read("engine/services/m004-battle-extension.js").includes('yes: "ears"'));

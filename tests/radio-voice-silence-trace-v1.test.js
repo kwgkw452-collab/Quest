@@ -35,6 +35,7 @@ function harness(resumeResult, rejectPlay) {
     createBiquadFilter() { return this.node(); }
     createDynamicsCompressor() { return this.node(); }
     createWaveShaper() { return this.node(); }
+    createGain() { return this.node(); }
     createMediaElementSource() { return this.node(); }
     node() { return { frequency: {}, Q: {}, gain: {}, threshold: {}, ratio: {}, attack: {}, release: {}, connect() {}, disconnect() {} }; }
     close() { this.state = "closed"; return Promise.resolve(); }
