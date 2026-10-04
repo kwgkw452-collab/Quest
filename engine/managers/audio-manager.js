@@ -2,7 +2,7 @@
   "use strict";
 
   var RUNTIME_VERSION = "audio-gainnode-unification-v1";
-  var TRACE_VERSION = "gainnode-iphone-runtime-trace-latched-v1";
+  var TRACE_VERSION = "iphone-bgm-motif-runtime-trace-v1";
   window.AudioRuntimeVersion = RUNTIME_VERSION;
 
   var bgm = null;
@@ -22,6 +22,9 @@
   var bgmTracks = [];
   var voiceTraceSerial = 0;
   var audioContextTraceSerial = 0;
+  var audioInstanceTraceSerial = 0;
+  var audioLiveTraceTimer = null;
+  var audioLiveTraceLastStart = null;
   var audioState = {
     currentBgmAsset: null,
     baseBgmVolume: 0,
@@ -82,6 +85,96 @@
       try { return JSON.stringify(value); } catch (_) { return String(value); }
     }
     return String(value);
+  }
+
+  function shortAudioSource(audio) {
+    if (!audio) return "-";
+    var source = "";
+    try { source = audio.getAttribute("src") || audio.src || ""; } catch (_) {}
+    source = String(source).split("#")[0].split("?")[0];
+    return source.split("/").pop() || source || "-";
+  }
+
+  function ensureAudioInstanceTrace(audio, asset, category) {
+    if (!audio) return null;
+    if (!audio.__eigoTraceInstanceId) audio.__eigoTraceInstanceId = "a" + (++audioInstanceTraceSerial);
+    if (asset !== undefined) audio.__eigoTraceAssetId = asset;
+    if (category) audio.__eigoTraceCategory = category;
+    return audio.__eigoTraceInstanceId;
+  }
+
+  function noteAudioLiveStart(audio, asset, category) {
+    var instanceId = ensureAudioInstanceTrace(audio, asset, category);
+    audioLiveTraceLastStart = { asset: asset, category: category, instanceId: instanceId };
+    renderVoiceRuntimeTracePanel();
+  }
+
+  function isAudioPlaying(audio) {
+    return !!(audio && audio.paused === false && audio.ended !== true && audio.__eigoStopped !== true);
+  }
+
+  function uniqueManagedAudio() {
+    var result = [];
+    function add(audio) {
+      if (audio && result.indexOf(audio) === -1) result.push(audio);
+    }
+    bgmTracks.forEach(function (track) { add(track && track.audio); });
+    add(bgm);
+    effects.forEach(add);
+    voices.forEach(add);
+    dialogueVoices.forEach(add);
+    return result;
+  }
+
+  function liveAudioSnapshot() {
+    var managed = uniqueManagedAudio();
+    var playing = managed.filter(isAudioPlaying);
+    var currentTrack = bgm && bgm.__eigoBgmTrack ? bgm.__eigoBgmTrack : null;
+    var bgmPlaying = playing.filter(function (audio) { return !!audio.__eigoBgmTrack; });
+    var motifs = playing.filter(function (audio) {
+      return audio.__eigoOneShotMix && audio.__eigoOneShotMix.category === "MOTIF";
+    });
+    var sourceCounts = {};
+    playing.forEach(function (audio) {
+      var name = shortAudioSource(audio);
+      sourceCounts[name] = (sourceCounts[name] || 0) + 1;
+    });
+    var sameSourceMax = 0;
+    var sameSourceName = "none";
+    Object.keys(sourceCounts).forEach(function (name) {
+      if (sourceCounts[name] > sameSourceMax) {
+        sameSourceMax = sourceCounts[name];
+        sameSourceName = name;
+      }
+    });
+    var bgmBus = canonicalBuses ? finiteTraceNumber(canonicalBuses.bgm.gain.value) : null;
+    var motifBus = canonicalBuses ? finiteTraceNumber(canonicalBuses.motif.gain.value) : null;
+    var master = canonicalBuses ? finiteTraceNumber(canonicalBuses.master.gain.value) : null;
+    return {
+      managed: managed,
+      playing: playing,
+      bgmPlaying: bgmPlaying,
+      motifs: motifs,
+      sameSourceMax: sameSourceMax,
+      sameSourceName: sameSourceName,
+      bgm: bgm ? {
+        asset: currentTrack ? currentTrack.asset : bgm.__eigoTraceAssetId,
+        instanceId: ensureAudioInstanceTrace(bgm, currentTrack ? currentTrack.asset : undefined, "BGM"),
+        src: shortAudioSource(bgm),
+        playing: isAudioPlaying(bgm),
+        paused: !!bgm.paused,
+        path: currentTrack ? currentTrack.path : (bgm.__eigoAudioPath || "unknown"),
+        fallback: currentTrack ? currentTrack.path === "fallback" : bgm.__eigoAudioPath === "fallback",
+        baseGain: currentTrack ? finiteTraceNumber(currentTrack.baseVolume) : null,
+        trackGain: currentTrack && currentTrack.gainNode ? finiteTraceNumber(currentTrack.gainNode.gain.value) :
+          (currentTrack && currentTrack.path === "fallback" ? finiteTraceNumber(bgm.volume) : null),
+        busGain: bgmBus,
+        masterGain: master,
+        effectiveGain: currentTrack ? finiteTraceNumber(bgmEffectiveGain(currentTrack)) : null
+      } : null,
+      motifBus: motifBus,
+      master: master
+    };
   }
 
   function createVoiceRuntimeLatch(traceId) {
@@ -148,9 +241,9 @@
       panel = document.createElement("details");
       panel.id = "gainnode-runtime-trace-panel";
       panel.open = true;
-      panel.style.cssText = "position:fixed;left:4px;right:4px;top:max(4px,env(safe-area-inset-top));z-index:2147483647;max-height:25vh;overflow:hidden;background:rgba(0,0,0,.86);color:#9ff;font:8px/1.1 monospace;padding:3px;border:1px solid #4cc;white-space:pre-wrap;pointer-events:none";
+      panel.style.cssText = "position:fixed;left:4px;right:4px;top:max(4px,env(safe-area-inset-top));z-index:2147483647;max-height:none;overflow:visible;background:rgba(0,0,0,.86);color:#9ff;font:8px/1.1 monospace;padding:3px;border:1px solid #4cc;white-space:pre-wrap;pointer-events:none";
       var summary = document.createElement("summary");
-      summary.textContent = "GainNode iPhone Runtime Trace";
+      summary.textContent = "iPhone BGM / Motif Runtime Trace";
       panel.appendChild(summary);
       var output = document.createElement("pre");
       output.id = "gainnode-runtime-trace-output";
@@ -158,32 +251,46 @@
       panel.appendChild(output);
       document.body.appendChild(panel);
     }
-    var latest = voiceRuntimeTraceState.latest || {};
-    var detail = latest.detail || {};
-    var html = detail.htmlAudio || {};
-    var graph = detail.graph || {};
-    var context = detail.audioContext || {};
-    var latched = voiceRuntimeTraceState.latched || createVoiceRuntimeLatch(null);
+    var snapshot = liveAudioSnapshot();
+    var currentBgm = snapshot.bgm;
+    var motifLines = snapshot.motifs.map(function (audio) {
+      var mix = audio.__eigoOneShotMix || {};
+      var gain = finiteTraceNumber(mix.baseGain);
+      return stringifyTraceValue(audio.__eigoTraceAssetId) + " #" + ensureAudioInstanceTrace(audio) +
+        " playing=" + isAudioPlaying(audio) + " path=" + stringifyTraceValue(audio.__eigoAudioPath) +
+        " fallback=" + (audio.__eigoAudioPath === "fallback") + " asset=" + stringifyTraceValue(gain) +
+        " bus=" + stringifyTraceValue(snapshot.motifBus) + " effective=" + stringifyTraceValue(oneShotEffectiveGain(mix));
+    });
     var outputNode = document.getElementById("gainnode-runtime-trace-output");
     if (!outputNode) return;
     outputNode.textContent = [
-      "Runtime: " + RUNTIME_VERSION + " | Trace: " + TRACE_VERSION + " | Event: " + (latest.event || "waiting"),
-      "Context: " + stringifyTraceValue(latched.contextState || context.state) + "/" +
-        stringifyTraceValue(latched.contextId || context.contextId) +
-        " | Character: " + stringifyTraceValue(detail.characterId) + " (" + stringifyTraceValue(detail.characterCode) + ")" +
-        " | Asset: " + stringifyTraceValue(detail.voiceAssetId),
-      "Voice Path: " + stringifyTraceValue(latched.audioPath || detail.audioPath) +
-        " | Latched Fallback: " + stringifyTraceValue(latched.fallback) +
-        " | Playing Seen: " + stringifyTraceValue(latched.playingSeen),
-      "Gain C/P/V/M: " + stringifyTraceValue(latched.characterGain) + "/" +
-        stringifyTraceValue(latched.processingGain) + "/" + stringifyTraceValue(latched.voiceBusGain) + "/" +
-        stringifyTraceValue(latched.masterGain),
-      "Latched Graph: " + stringifyTraceValue(latched.graphConnected) +
-        " | Latched Source: " + stringifyTraceValue(latched.sourceCreated),
-      "Max Peak: " + stringifyTraceValue(latched.maxPeak) +
-        " | Max RMS: " + stringifyTraceValue(latched.maxRms) +
-        " | Last Playing Time: " + stringifyTraceValue(latched.lastPlayingCurrentTime)
+      "Runtime: " + RUNTIME_VERSION + " | Trace: " + TRACE_VERSION,
+      currentBgm ? "BGM: " + stringifyTraceValue(currentBgm.asset) + " #" + currentBgm.instanceId +
+        " src=" + currentBgm.src : "BGM: none",
+      currentBgm ? "state: playing=" + currentBgm.playing + " paused=" + currentBgm.paused +
+        " graph=" + (currentBgm.path === "web-audio") + " fallback=" + currentBgm.fallback : "state: -",
+      currentBgm ? "gain: base=" + stringifyTraceValue(currentBgm.baseGain) +
+        " track=" + stringifyTraceValue(currentBgm.trackGain) + " bus=" + stringifyTraceValue(currentBgm.busGain) +
+        " master=" + stringifyTraceValue(currentBgm.masterGain) + " effective=" + stringifyTraceValue(currentBgm.effectiveGain) : "gain: -",
+      "MOTIF: " + (motifLines.length ? motifLines.join("\nMOTIF: ") : "none"),
+      "COUNT: all=" + snapshot.playing.length + " bgm=" + snapshot.bgmPlaying.length +
+        " motif=" + snapshot.motifs.length + " same-src-max=" + snapshot.sameSourceMax +
+        " (" + snapshot.sameSourceName + ")",
+      "LAST START: " + (audioLiveTraceLastStart ? stringifyTraceValue(audioLiveTraceLastStart.asset) +
+        " / " + stringifyTraceValue(audioLiveTraceLastStart.category) + " / #" + audioLiveTraceLastStart.instanceId : "none")
     ].join("\n");
+  }
+
+  function startAudioLiveTracePanel() {
+    if (!voiceRuntimeTraceState.panelEnabled || !window.document) return;
+    function start() {
+      renderVoiceRuntimeTracePanel();
+      if (!audioLiveTraceTimer && typeof window.setInterval === "function") {
+        audioLiveTraceTimer = window.setInterval(renderVoiceRuntimeTracePanel, 250);
+      }
+    }
+    if (document.body) start();
+    else if (typeof document.addEventListener === "function") document.addEventListener("DOMContentLoaded", start, { once: true });
   }
 
   function voiceRuntimeTrace(event, detail) {
@@ -595,6 +702,7 @@
       path: "pending"
     };
     audio.__eigoBgmTrack = track;
+    ensureAudioInstanceTrace(audio, asset, "BGM");
     audio.volume = 1;
     bgmTracks.push(track);
     return track;
@@ -630,6 +738,7 @@
         replacement.loop = original.loop;
         replacement.preload = "auto";
         replacement.__eigoBgmTrack = track;
+        ensureAudioInstanceTrace(replacement, track.asset, "BGM");
         track.audio = replacement;
         bgm = replacement;
       }
@@ -637,6 +746,7 @@
       audioTrace("BGM_PATH", { asset: track.asset, path: "fallback", reason: reason });
       audioTrace("GAINNODE_FALLBACK", { category: "BGM", asset: track.asset, reason: reason, error: error ? String(error) : null });
       if (applyBgmFallbackGain(track)) {
+        noteAudioLiveStart(track.audio, track.asset, "BGM");
         safePlay(track.audio);
         watchBgmPlayback(track.audio, requestId);
       }
@@ -648,6 +758,7 @@
       track.path = "web-audio";
       audioTrace("BGM_PATH", { asset: track.asset, path: "web-audio" });
       applyBgmTrackGain(track);
+      noteAudioLiveStart(original, track.asset, "BGM");
       safePlay(original);
       watchBgmPlayback(original, requestId);
     }
@@ -741,6 +852,7 @@
         }
         if (existingTrack.path === "pending") connectBgmTrack(existingTrack, replayRequestId);
         else if (existingTrack.path !== "fallback" || applyBgmFallbackGain(existingTrack)) {
+          noteAudioLiveStart(bgm, existingTrack.asset, "BGM");
           safePlay(bgm);
           watchBgmPlayback(bgm, replayRequestId);
         }
@@ -814,6 +926,7 @@
     function createTrackedAudio() {
       var candidate = new Audio(path);
       candidate.__eigoStopped = false;
+      ensureAudioInstanceTrace(candidate, keyOrPath, policy.category);
       candidate.__eigoOneShotMix = { baseGain: baseGain, category: policy.category, busName: busName };
       candidate.volume = 1;
       candidate.preload = "auto";
@@ -839,7 +952,10 @@
       }
       audio.__eigoAudioPath = "fallback";
       audioTrace("GAINNODE_FALLBACK", { category: policy.category, asset: keyOrPath, reason: String(error) });
-      if (applyOneShotFallbackGain(audio)) safePlay(audio);
+      if (applyOneShotFallbackGain(audio)) {
+        noteAudioLiveStart(audio, keyOrPath, policy.category);
+        safePlay(audio);
+      }
     }
     function connectAndPlay() {
       if (audio.__eigoStopped) return;
@@ -847,6 +963,7 @@
       audio.__eigoGainNode = graph.gainNode;
       audio.__eigoAudioPath = "web-audio";
       audio.__eigoDisconnect = function () { disconnectNodes(graph.nodes); audio.__eigoDisconnect = null; };
+      noteAudioLiveStart(audio, keyOrPath, policy.category);
       safePlay(audio);
     }
     if (!audioContextType()) {
@@ -1356,11 +1473,11 @@
     latest: function () { return voiceRuntimeTraceState.latest; },
     latched: function () { return voiceRuntimeTraceState.latched; },
     history: function () { return voiceRuntimeTraceState.history.slice(); },
+    live: liveAudioSnapshot,
     render: renderVoiceRuntimeTracePanel
   };
   if (voiceRuntimeTraceState.panelEnabled && window.document) {
-    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", renderVoiceRuntimeTracePanel, { once: true });
-    else renderVoiceRuntimeTracePanel();
+    startAudioLiveTracePanel();
   }
   installUnlockGesture();
 })();

@@ -8,7 +8,7 @@ const root = path.resolve(__dirname, "..");
 const read = file => fs.readFileSync(path.join(root, file), "utf8");
 const manager = read("engine/managers/audio-manager.js");
 
-assert(manager.includes('TRACE_VERSION = "gainnode-iphone-runtime-trace-latched-v1"'));
+assert(manager.includes('TRACE_VERSION = "iphone-bgm-motif-runtime-trace-v1"'));
 for (const field of [
   "voiceAssetId", "characterId", "voicePath", "audioPath", "audioContext", "htmlAudio",
   "mediaElementSourceCreated", "sourceConnected", "destinationConnected",
@@ -28,14 +28,13 @@ assert(manager.includes("top:max(4px,env(safe-area-inset-top))"));
 assert(manager.includes("pointer-events:none"));
 assert(manager.includes("z-index:2147483647"));
 assert(!manager.includes("pointer-events:auto"));
-for (const lineLabel of [
-  "Runtime: ", "Context: ", "Voice Path: ", "Gain C/P/V/M: ",
-  "Latched Graph: ", "Max Peak: "
-]) assert(manager.includes(`\"${lineLabel}\"`), `missing latched line: ${lineLabel}`);
+for (const lineLabel of ["Runtime: ", "BGM: ", "state: playing=", "gain: base=", "MOTIF: ", "COUNT: all=", "LAST START: "])
+  assert(manager.includes(`\"${lineLabel}`), `missing live audio line: ${lineLabel}`);
 for (const metricLabel of [
-  "Trace: ", "Event: ", "Character: ", "Asset: ", "Latched Fallback: ",
-  "Playing Seen: ", "Latched Source: ", "Max RMS: ", "Last Playing Time: "
-]) assert(manager.includes(metricLabel), `missing latched metric: ${metricLabel}`);
+  "instanceId", "src", "paused", "fallback", "baseGain", "trackGain", "busGain", "masterGain",
+  "effectiveGain", "sameSourceMax", "bgmPlaying", "motifs"
+]) assert(manager.includes(metricLabel), `missing live metric: ${metricLabel}`);
+assert(manager.includes("setInterval(renderVoiceRuntimeTracePanel, 250)"));
 for (const latchedField of [
   "playingSeen", "contextState", "graphConnected", "sourceCreated", "fallback",
   "characterGain", "processingGain", "voiceBusGain", "masterGain",

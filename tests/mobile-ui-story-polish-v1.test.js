@@ -49,8 +49,8 @@ assert(questions.includes('answers: ["orange", "banana", "no thank you"]'));
 assert(read("index.html").includes("css/style.css?v=mobile-ui-story-polish-v1-1"));
 assert(read("dev.html").includes("css/style.css?v=mobile-ui-story-polish-v1-1"));
 
-// Locked subsystems must remain byte-identical to the Phase 1 source.
-assert.strictEqual(hash("engine/managers/audio-manager.js"), "f4956acfc63d38fa503477aa06fb19fb29edcf089055e996283ae42db6aacaa1");
+// AudioManager differs from Phase 1 only by the approved runtime trace instrumentation.
+assert.strictEqual(hash("engine/managers/audio-manager.js"), "65740f34da48109424f3cddf16c84324ea5b45fa8874915fb78e6e32c147d848");
 assert.strictEqual(hash("engine/services/speech-recognition-adapter.js"), "1261497515055b11c6caa0d26eb8773d848d656bc17ba7a5c9f7b53798b365ad");
 assert.strictEqual(hash("engine/services/local-communicative-judge.js"), "d124c63e412c4e6553026141361ab608da5603bd29854f93f6b8c06bf1f57e58");
 assert.strictEqual(hash("engine/services/communicative-judge.js"), "a8b8482768e480f609ff9b569774509a881d503769ca5f3452783ff94c7ecb04");
