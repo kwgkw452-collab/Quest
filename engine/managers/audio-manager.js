@@ -167,19 +167,19 @@
     var outputNode = document.getElementById("gainnode-runtime-trace-output");
     if (!outputNode) return;
     outputNode.textContent = [
-      "Runtime: " + RUNTIME_VERSION + " | Event: " + (latest.event || "waiting"),
+      "Runtime: " + RUNTIME_VERSION + " | Trace: " + TRACE_VERSION + " | Event: " + (latest.event || "waiting"),
       "Context: " + stringifyTraceValue(latched.contextState || context.state) + "/" +
         stringifyTraceValue(latched.contextId || context.contextId) +
         " | Character: " + stringifyTraceValue(detail.characterId) + " (" + stringifyTraceValue(detail.characterCode) + ")" +
         " | Asset: " + stringifyTraceValue(detail.voiceAssetId),
-      "Path: " + stringifyTraceValue(latched.audioPath || detail.audioPath) +
-        " | Fallback: " + stringifyTraceValue(latched.fallback) +
+      "Voice Path: " + stringifyTraceValue(latched.audioPath || detail.audioPath) +
+        " | Latched Fallback: " + stringifyTraceValue(latched.fallback) +
         " | Playing Seen: " + stringifyTraceValue(latched.playingSeen),
       "Gain C/P/V/M: " + stringifyTraceValue(latched.characterGain) + "/" +
         stringifyTraceValue(latched.processingGain) + "/" + stringifyTraceValue(latched.voiceBusGain) + "/" +
         stringifyTraceValue(latched.masterGain),
       "Latched Graph: " + stringifyTraceValue(latched.graphConnected) +
-        " | Source: " + stringifyTraceValue(latched.sourceCreated),
+        " | Latched Source: " + stringifyTraceValue(latched.sourceCreated),
       "Max Peak: " + stringifyTraceValue(latched.maxPeak) +
         " | Max RMS: " + stringifyTraceValue(latched.maxRms) +
         " | Last Playing Time: " + stringifyTraceValue(latched.lastPlayingCurrentTime)

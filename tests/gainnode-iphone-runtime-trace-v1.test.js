@@ -29,12 +29,12 @@ assert(manager.includes("pointer-events:none"));
 assert(manager.includes("z-index:2147483647"));
 assert(!manager.includes("pointer-events:auto"));
 for (const lineLabel of [
-  "Runtime: ", "Context: ", "Path: ", "Gain C/P/V/M: ",
+  "Runtime: ", "Context: ", "Voice Path: ", "Gain C/P/V/M: ",
   "Latched Graph: ", "Max Peak: "
 ]) assert(manager.includes(`\"${lineLabel}\"`), `missing latched line: ${lineLabel}`);
 for (const metricLabel of [
-  "Event: ", "Character: ", "Asset: ", "Fallback: ", "Playing Seen: ",
-  "Source: ", "Max RMS: ", "Last Playing Time: "
+  "Trace: ", "Event: ", "Character: ", "Asset: ", "Latched Fallback: ",
+  "Playing Seen: ", "Latched Source: ", "Max RMS: ", "Last Playing Time: "
 ]) assert(manager.includes(metricLabel), `missing latched metric: ${metricLabel}`);
 for (const latchedField of [
   "playingSeen", "contextState", "graphConnected", "sourceCreated", "fallback",
