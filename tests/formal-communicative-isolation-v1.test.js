@@ -13,7 +13,7 @@ const protectedHashes = {
   "data/monsters.js": "af1afabcf11f4536eacb69b8370c465273b1b9adce8e98b94b69bac4e38b8073",
   "data/mornings.js": "89007415f111ab883dd2a10b47e9a7026608bfd377dd8ee1ec7ad0f5d9027470",
   "data/word-dictionaries.js": "8c8c49386c8bd935cbb40d1f067441f3f032f423a579c8193d3b95d167d68d89",
-  "dev.html": "552a680d562ffc47ae12986df561cb1dbde9c77b1723412b83a9a845483ab678",
+  "dev.html": "684c08cda8dd34155c6eb8b6fc2fac57c94333898a34a150fa642ab4c9a404ee",
   "dev/communicative-question-manager-playtest.js": "1cce50bfddfa360319fdd335333ccd785f30dac5d0f255dc626860f2ade0f87e",
   "engine/commands/story-commands.js": "d51dff6ca978d9f7df844448048302949f0b5d5c412badce98d67686f173b3e0",
   "engine/managers/monster-battle-manager.js": "0451a45a75e35c9c4418f40126e55d8659cbbf407deca78089f9c12058026ee3",

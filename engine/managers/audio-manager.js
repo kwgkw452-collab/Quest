@@ -371,13 +371,63 @@
     return 1 - ((1 - motifTarget) * progress);
   }
 
+  function setSafeFallbackGain(audio, effectiveGain, category) {
+    if (!audio || audio.__eigoGainControlFailed) return false;
+    var requested = Math.max(0, Math.min(1, clampGain(effectiveGain)));
+    try { audio.volume = requested; } catch (_) {}
+    var observed = Number(audio.volume);
+    var controlled = Number.isFinite(observed) && Math.abs(observed - requested) <= 0.001;
+    if (!controlled) {
+      audio.__eigoGainControlFailed = true;
+      audio.__eigoPolicyMuted = true;
+      try { audio.muted = true; } catch (_) {}
+      try { audio.pause(); } catch (_) {}
+      audioTrace("FALLBACK_GAIN_UNAVAILABLE", {
+        category: category,
+        requestedGain: requested,
+        observedGain: Number.isFinite(observed) ? observed : null,
+        action: "safe-suppress"
+      });
+      return false;
+    }
+    if (audio.__eigoPolicyMuted) {
+      try { audio.muted = false; } catch (_) {}
+      audio.__eigoPolicyMuted = false;
+    }
+    audio.__eigoEffectiveFallbackGain = requested;
+    return true;
+  }
+
+  function bgmEffectiveGain(track) {
+    return clampGain(track.baseVolume * track.envelope * policyMultiplier() * groupGain("BGM"));
+  }
+
+  function oneShotEffectiveGain(mix) {
+    if (!mix) return 0;
+    if (mix.category === "MOTIF") {
+      return clampGain(mix.baseGain * motifDialogueMultiplier() * groupGain("MOTIF"));
+    }
+    if (mix.busName === "se") return clampGain(mix.baseGain * groupGain("SE"));
+    return clampGain(mix.baseGain * groupGain("VOICE"));
+  }
+
+  function applyBgmFallbackGain(track) {
+    return !!(track && setSafeFallbackGain(track.audio, bgmEffectiveGain(track), "BGM"));
+  }
+
+  function applyOneShotFallbackGain(audio) {
+    return !!(audio && audio.__eigoOneShotMix &&
+      setSafeFallbackGain(audio, oneShotEffectiveGain(audio.__eigoOneShotMix), audio.__eigoOneShotMix.category));
+  }
+
   function updateBusPolicy() {
     if (canonicalBuses) {
       setGainValue(canonicalBuses.bgm, policyMultiplier() * groupGain("BGM"));
       setGainValue(canonicalBuses.motif, motifDialogueMultiplier() * groupGain("MOTIF"));
     }
     bgmTracks.forEach(function (track) {
-      var effective = clampGain(track.baseVolume * track.envelope * policyMultiplier() * groupGain("BGM"));
+      var effective = bgmEffectiveGain(track);
+      if (track.path === "fallback") applyBgmFallbackGain(track);
       if (track.audio === bgm) {
         audioState.currentBgmAsset = track.asset;
         audioState.baseBgmVolume = track.baseVolume;
@@ -385,6 +435,11 @@
         audioState.fadeState = track.fadeState;
       }
       audioTrace("BGM_EFFECTIVE_GAIN", { asset: track.asset, gain: effective, path: track.path });
+    });
+    effects.concat(voices).forEach(function (audio) {
+      if (audio && audio.__eigoAudioPath === "fallback" && audio.__eigoOneShotMix) {
+        applyOneShotFallbackGain(audio);
+      }
     });
     audioTrace("MOTIF_EFFECTIVE_GAIN", { gain: motifDialogueMultiplier() * groupGain("MOTIF") });
   }
@@ -552,9 +607,12 @@
     var gainNode = context.createGain();
     setGainValue(gainNode, assetGain);
     gainNode.connect(buses[busName]);
-    var source = context.createMediaElementSource(audio);
-    try { source.connect(gainNode); } catch (error) {
-      disconnectNodes([source, gainNode]);
+    var source = null;
+    try {
+      source = context.createMediaElementSource(audio);
+      source.connect(gainNode);
+    } catch (error) {
+      disconnectNodes(source ? [source, gainNode] : [gainNode]);
       error.__eigoSourceAttempted = true;
       throw error;
     }
@@ -571,7 +629,6 @@
         var replacement = new Audio(original.getAttribute("src") || original.src);
         replacement.loop = original.loop;
         replacement.preload = "auto";
-        replacement.volume = 1;
         replacement.__eigoBgmTrack = track;
         track.audio = replacement;
         bgm = replacement;
@@ -579,8 +636,10 @@
       track.path = "fallback";
       audioTrace("BGM_PATH", { asset: track.asset, path: "fallback", reason: reason });
       audioTrace("GAINNODE_FALLBACK", { category: "BGM", asset: track.asset, reason: reason, error: error ? String(error) : null });
-      safePlay(track.audio);
-      watchBgmPlayback(track.audio, requestId);
+      if (applyBgmFallbackGain(track)) {
+        safePlay(track.audio);
+        watchBgmPlayback(track.audio, requestId);
+      }
     }
     function connectAndPlay() {
       var graph = buildSimpleGraph(original, "bgm", track.baseVolume * track.envelope);
@@ -666,15 +725,29 @@
   function playBgm(keyOrPath, options) {
     options = options || {};
     resetHeldSpeechPolicy();
-    clearPendingBgm();
     var path = resolve("bgm", keyOrPath);
     var targetVolume = (options.volume === undefined ? 1 : options.volume) * mixAssetGain(keyOrPath);
     if (bgm && bgm.src && bgm.getAttribute("src") === path) {
+      var replayRequired = bgm.paused === true || bgm.ended === true ||
+        !!(pendingBgm && pendingBgm.audio === bgm);
+      clearPendingBgm();
       var existingTrack = bgm.__eigoBgmTrack || createBgmTrack(bgm, keyOrPath, targetVolume, 1);
       if (options.fadeInMs) animateTrack(existingTrack, "baseVolume", targetVolume, options.fadeInMs, "base-volume");
       else { existingTrack.baseVolume = targetVolume; existingTrack.envelope = 1; applyBgmTrackGain(existingTrack); }
+      if (replayRequired) {
+        var replayRequestId = ++bgmRequestSerial;
+        if (bgm.ended === true) {
+          try { bgm.currentTime = 0; } catch (_) {}
+        }
+        if (existingTrack.path === "pending") connectBgmTrack(existingTrack, replayRequestId);
+        else if (existingTrack.path !== "fallback" || applyBgmFallbackGain(existingTrack)) {
+          safePlay(bgm);
+          watchBgmPlayback(bgm, replayRequestId);
+        }
+      }
       return bgm;
     }
+    clearPendingBgm();
     var requestId = ++bgmRequestSerial;
     var previous = bgm;
     var next = new Audio(path);
@@ -734,24 +807,39 @@
       var active = collection.find(function (item) { return item.getAttribute("src") === path && !item.paused; });
       if (active) return active;
     }
-    var audio = new Audio(path);
-    audio.__eigoStopped = false;
     var policy = oneShotPolicy(type, keyOrPath);
     var baseGain = clampGain((options.volume === undefined ? 1 : options.volume) * mixAssetGain(keyOrPath));
     var busName = policy.category === "MOTIF" ? "motif" : (type === "se" ? "se" : "effectVoice");
-    audio.volume = 1;
-    audio.preload = "auto";
-    collection.push(audio);
-    audio.addEventListener("ended", function () {
-      var index = collection.indexOf(audio);
-      if (index !== -1) collection.splice(index, 1);
-      if (typeof audio.__eigoDisconnect === "function") audio.__eigoDisconnect();
-    }, { once: true });
+    var audio = null;
+    function createTrackedAudio() {
+      var candidate = new Audio(path);
+      candidate.__eigoStopped = false;
+      candidate.__eigoOneShotMix = { baseGain: baseGain, category: policy.category, busName: busName };
+      candidate.volume = 1;
+      candidate.preload = "auto";
+      collection.push(candidate);
+      candidate.addEventListener("ended", function () {
+        var index = collection.indexOf(candidate);
+        if (index !== -1) collection.splice(index, 1);
+        if (typeof candidate.__eigoDisconnect === "function") candidate.__eigoDisconnect();
+      }, { once: true });
+      return candidate;
+    }
+    audio = createTrackedAudio();
     function fallback(error) {
       if (audio.__eigoStopped) return;
+      if (error && error.__eigoSourceAttempted === true) {
+        var unsafe = audio;
+        unsafe.__eigoStopped = true;
+        try { unsafe.pause(); } catch (_) {}
+        var unsafeIndex = collection.indexOf(unsafe);
+        if (unsafeIndex !== -1) collection.splice(unsafeIndex, 1);
+        if (typeof unsafe.__eigoDisconnect === "function") unsafe.__eigoDisconnect();
+        audio = createTrackedAudio();
+      }
       audio.__eigoAudioPath = "fallback";
       audioTrace("GAINNODE_FALLBACK", { category: policy.category, asset: keyOrPath, reason: String(error) });
-      safePlay(audio);
+      if (applyOneShotFallbackGain(audio)) safePlay(audio);
     }
     function connectAndPlay() {
       if (audio.__eigoStopped) return;

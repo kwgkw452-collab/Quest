@@ -195,7 +195,8 @@ const close = (actual, expected, label) => assert.ok(Math.abs(actual - expected)
   const replacement = fallback.audios.at(-1);
   assert.notStrictEqual(first, replacement, "BGM graph failure uses fresh safe fallback element");
   assert.equal(first.playCount, 0, "unsafe MediaElementSource element never plays");
-  assert.equal(replacement.playCount, 1, "fallback plays exactly once");
+  assert.equal(replacement.playCount, 0, "uncontrollable fallback is safely suppressed");
+  assert.equal(replacement.muted, true, "uncontrollable fallback is muted");
   assert.equal(fallback.context.AudioManager.getState().bgmPath, "fallback");
 
   const manager = read("engine/managers/audio-manager.js");
@@ -206,7 +207,7 @@ const close = (actual, expected, label) => assert.ok(Math.abs(actual - expected)
     for (const asset of ["data/audio-mix-profile.js", "data/voice-profiles.js", "engine/services/dialogue-voice-controller.js"]) {
       assert(html.includes(`${asset}?v=audio-gainnode-unification-v1`), `${page}: ${asset} cache version`);
     }
-    assert(html.includes("engine/managers/audio-manager.js?v=gainnode-iphone-runtime-trace-latched-v1"), `${page}: trace AudioManager cache version`);
+    assert(html.includes("engine/managers/audio-manager.js?v=gainnode-confirmed-regression-fix-v1"), `${page}: AudioManager cache version`);
   }
   console.log("Audio GainNode Unification V1: PASS");
 })().catch(error => { console.error(error); process.exitCode = 1; });

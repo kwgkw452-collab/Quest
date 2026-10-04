@@ -45,15 +45,17 @@ assert(manager.includes("return Math.max(current, value)"));
 assert(manager.includes('event === "playing"'));
 assert(manager.includes("latched: function () { return voiceRuntimeTraceState.latched; }"));
 
-// Trace build must preserve the known runtime values and known regressions unchanged.
+// Trace remains enabled while the two confirmed audio regressions are fixed.
 assert(manager.includes('profile.ratio === undefined ? 0.18 : Number(profile.ratio)'));
-assert(manager.includes('replacement.volume = 1'));
-assert(manager.includes('bgm.getAttribute("src") === path)'));
-assert(!manager.includes('bgm.getAttribute("src") === path && !bgm.paused'));
+assert(!manager.includes('replacement.volume = 1'));
+assert(manager.includes('bgm.paused === true || bgm.ended === true'));
+assert(manager.includes('pendingBgm && pendingBgm.audio === bgm'));
+assert(manager.includes('FALLBACK_GAIN_UNAVAILABLE'));
+assert(manager.includes('action: "safe-suppress"'));
 
 for (const page of ["index.html", "dev.html"]) {
   const html = read(page);
-  assert(html.includes("engine/managers/audio-manager.js?v=gainnode-iphone-runtime-trace-latched-v1"), `${page}: trace runtime cache version`);
+  assert(html.includes("engine/managers/audio-manager.js?v=gainnode-confirmed-regression-fix-v1"), `${page}: runtime cache version`);
 }
 
 console.log("GainNode iPhone Runtime Trace V1: PASS");

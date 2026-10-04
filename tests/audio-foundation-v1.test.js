@@ -45,7 +45,7 @@ context.console = { warn() {} };
 context.setTimeout = setTimeout;
 context.Date = Date;
 vm.runInContext(read("engine/managers/audio-manager.js"), context);
-assert.strictEqual(context.AudioManager.playBgm("zephyrFields", { volume: 0.37 }).volume, 1); // 9 HTMLAudio stays unity
+assert.strictEqual(context.AudioManager.playBgm("zephyrFields", { volume: 0.37 }).volume, 0.37); // 9 fallback preserves effective gain
 assert(read("engine/services/opening.js").includes('volume: 0.23')); // 10 opening
 assert(read("engine/stories/S001.js").includes('volume: 0.46')); // 11 S001 Zephyr
 assert(read("engine/stories/S001.js").includes('C.bgm("morningGardenAtmosphere", { loop: true, volume: 1.00')); // 12

@@ -21,6 +21,9 @@ function runtime(options = {}) {
       this.src = src || "";
       this.volume = 1;
       this.paused = true;
+      this.ended = false;
+      this.currentTime = 0;
+      this.muted = false;
       this.playCount = 0;
       this.listeners = {};
       audios.push(this);
@@ -100,6 +103,8 @@ function runtime(options = {}) {
   vm.runInContext(read("data/audio-mix-profile.js"), context);
   context.AudioMixProfile.ducking.dialogueVoice.duckMs = 0;
   context.AudioMixProfile.ducking.dialogueVoice.restoreMs = 0;
+  context.AudioMixProfile.ducking.speechRecognition.duckMs = 0;
+  context.AudioMixProfile.ducking.speechRecognition.restoreMs = 0;
   vm.runInContext(read("engine/managers/audio-manager.js"), context);
 
   return {
@@ -205,6 +210,74 @@ async function flush() {
   }
 
   {
+    const r = runtime();
+    const future = r.context.AudioManager.playBgm("futureCityPixel", { volume: 0.15 });
+    await flush();
+    assert.equal(future.__eigoBgmTrack.gainNode.gain.value, 0.15, "normal Future City graph preserves base gain");
+    assert.equal(future.playCount, 1);
+    assert.strictEqual(r.context.AudioManager.playBgm("futureCityPixel", { volume: 0.15 }), future);
+    assert.equal(future.playCount, 1, "same-src playing BGM is not replayed or regenerated");
+    future.pause();
+    r.context.AudioManager.playBgm("futureCityPixel", { volume: 0.15 });
+    await flush();
+    assert.equal(future.playCount, 2, "same-src paused BGM is replayed");
+    future.pause();
+    future.ended = true;
+    future.currentTime = 9;
+    r.context.AudioManager.playBgm("futureCityPixel", { volume: 0.15 });
+    await flush();
+    assert.equal(future.playCount, 3, "same-src ended BGM is replayed");
+    assert.equal(future.currentTime, 0, "ended same-src BGM restarts from zero");
+  }
+
+  {
+    const r = runtime({ sourceConnectFailures: 1 });
+    const unsafe = r.context.AudioManager.playBgm("zephyrFields", { volume: 0.20 });
+    const fallback = r.audios.at(-1);
+    await flush();
+    assert.notStrictEqual(fallback, unsafe, "BGM source connection failure uses a fresh fallback element");
+    assert.equal(unsafe.playCount, 0, "unsafe BGM element is never directly replayed");
+    assert.equal(fallback.volume, 0.20, "BGM fallback retains effective base gain");
+    assert.equal(fallback.playCount, 1, "safe BGM fallback plays exactly once");
+    await r.context.AudioManager.enterSpeechMode({ preserveBgm: true });
+    assert.equal(fallback.volume, 0.05, "BGM fallback retains the existing 0.25 speech policy");
+    await r.context.AudioManager.exitSpeechMode({ restore: true });
+    assert.equal(fallback.volume, 0.20, "BGM fallback restores effective gain after speech");
+  }
+
+  {
+    const r = runtime({ sourceConnectFailures: 1 });
+    r.context.AudioDatabase.assets.zephyrFriendship = { category: "MOTIF" };
+    const unsafe = r.audios.length;
+    const fallback = r.context.AudioManager.playSe("zephyrFriendship", { volume: 0.27 });
+    await flush();
+    assert.notStrictEqual(fallback, r.audios[unsafe], "Motif source connection failure uses a fresh fallback element");
+    assert.equal(r.audios[unsafe].playCount, 0, "unsafe Motif element is never directly replayed");
+    assert.equal(fallback.volume, 0.27, "Motif fallback retains base and group policy gain");
+    assert.equal(fallback.playCount, 1, "Motif fallback plays once without duplication");
+    const dialogue = r.context.DialogueVoiceAudioInternal.play("voice_c01_s001_001", { volume: 1 });
+    assert.ok(Math.abs(fallback.volume - (0.27 * 0.12)) < 1e-9,
+      "Motif fallback tracks the existing 0.12 dialogue policy");
+    dialogue.audio.emit("ended");
+    await dialogue.completion;
+    assert.equal(fallback.volume, 0.27, "Motif fallback restores policy gain after dialogue");
+  }
+
+  for (const oneShot of [
+    { label: "SE", play: manager => manager.playSe("battleHit", { volume: 0.40 }) },
+    { label: "Effect Voice", play: manager => manager.playVoice("effectVoiceCue", { volume: 0.40 }) }
+  ]) {
+    const r = runtime({ sourceConnectFailures: 1 });
+    const originalIndex = r.audios.length;
+    const fallback = oneShot.play(r.context.AudioManager);
+    await flush();
+    assert.notStrictEqual(fallback, r.audios[originalIndex], `${oneShot.label} uses a fresh fallback element`);
+    assert.equal(r.audios[originalIndex].playCount, 0, `${oneShot.label} unsafe element does not play`);
+    assert.equal(fallback.playCount, 1, `${oneShot.label} fallback plays once`);
+    assert.equal(fallback.volume, 0.40, `${oneShot.label} fallback retains effective gain`);
+  }
+
+  {
     const r = runtime({ playPolicy(audio) { return audio.src !== "bgm:oldScene"; } });
     const old = r.context.AudioManager.playBgm("oldScene");
     await flush();
@@ -230,7 +303,7 @@ async function flush() {
   for (const page of ["index.html", "dev.html"]) {
     const html = read(page);
     assert.match(html, /data\/audio-mix-profile\.js\?v=audio-gainnode-unification-v1/);
-    assert.match(html, /engine\/managers\/audio-manager\.js\?v=gainnode-iphone-runtime-trace-latched-v1/);
+    assert.match(html, /engine\/managers\/audio-manager\.js\?v=gainnode-confirmed-regression-fix-v1/);
     assert.match(html, /engine\/services\/dialogue-voice-controller\.js\?v=audio-gainnode-unification-v1/);
   }
 

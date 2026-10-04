@@ -42,13 +42,14 @@ vm.runInContext(fs.readFileSync(path.join(root, "engine/managers/audio-manager.j
   context.SpeechAudioDuckingInternal.arm({ duckMs: 0, restoreMs: 0 });
   await context.SpeechAudioDuckingInternal.begin();
   assert.strictEqual(bgm.paused, false, "BGM must continue during speech");
-  assert.strictEqual(bgm.volume, 1, "BGM HTMLAudio remains unity");
+  assert.strictEqual(bgm.volume, 0.115, "BGM fallback applies the effective speech gain");
   assert(Math.abs(context.AudioManager.getState().effectiveBgmVolume - 0.115) < 0.000001,
     "BGM GainNode policy must duck to 25% of its normal volume");
   assert.strictEqual(se.paused, true, "SE must stop before microphone start");
   assert.strictEqual(voice.paused, true, "Voice must stop before microphone start");
   assert.strictEqual(playCalls, 3, "Ducking must not replay or duplicate BGM");
   await context.SpeechAudioDuckingInternal.finish(true);
+  assert.strictEqual(bgm.volume, 0.46, "BGM fallback restores its effective scene gain");
   assert(Math.abs(context.AudioManager.getState().effectiveBgmVolume - 0.46) < 0.000001,
     "Continuing scene must restore the same BGM instance");
   assert(Math.abs(0.52 * 0.25 - 0.13) < 0.000001, "Silent Tears speech volume must be 0.13");
