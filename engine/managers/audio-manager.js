@@ -2,7 +2,7 @@
   "use strict";
 
   var RUNTIME_VERSION = "audio-gainnode-unification-v1";
-  var TRACE_VERSION = "iphone-bgm-motif-runtime-trace-v1";
+  var TRACE_VERSION = "iphone-audio-lifecycle-trace-v1";
   window.AudioRuntimeVersion = RUNTIME_VERSION;
 
   var bgm = null;
@@ -52,6 +52,23 @@
     history: []
   };
 
+  var audioLifecycleTraceState = {
+    resumeCalls: 0,
+    resumeSuccess: 0,
+    resumeReject: 0,
+    lastResumeAt: null,
+    lastResumeResult: "none",
+    stateChangeCount: 0,
+    suspendSeen: false,
+    lastContextState: "uninitialized",
+    lastGestureType: "none",
+    lastGestureAt: null,
+    lastGestureContextState: "uninitialized",
+    lastGestureResumeCalled: false,
+    lastGestureResumeResult: "none",
+    events: []
+  };
+
   function finiteTraceNumber(value) {
     var number = Number(value);
     return Number.isFinite(number) ? Math.round(number * 10000) / 10000 : null;
@@ -85,6 +102,77 @@
       try { return JSON.stringify(value); } catch (_) { return String(value); }
     }
     return String(value);
+  }
+
+  function traceClock(at) {
+    var date = new Date(at || Date.now());
+    function pad(value, size) { return String(value).padStart(size, "0"); }
+    return pad(date.getHours(), 2) + ":" + pad(date.getMinutes(), 2) + ":" +
+      pad(date.getSeconds(), 2) + "." + pad(date.getMilliseconds(), 3);
+  }
+
+  function currentOrientation() {
+    try {
+      if (window.screen && screen.orientation && screen.orientation.type) return screen.orientation.type;
+    } catch (_) {}
+    var angle = Number(window.orientation);
+    if (Number.isFinite(angle)) return Math.abs(angle) === 90 ? "landscape" : "portrait";
+    return Number(window.innerWidth) > Number(window.innerHeight) ? "landscape" : "portrait";
+  }
+
+  function documentLifecycleSnapshot() {
+    var focus = null;
+    try { focus = typeof document.hasFocus === "function" ? !!document.hasFocus() : null; } catch (_) {}
+    return {
+      visibility: window.document ? (document.visibilityState || "unknown") : "unavailable",
+      hidden: window.document ? !!document.hidden : null,
+      focus: focus
+    };
+  }
+
+  function contextLifecycleSnapshot() {
+    var context = canonicalAudioContext;
+    return {
+      id: context && context.__eigoTraceContextId || null,
+      state: context ? (context.state || "unknown") : "uninitialized",
+      currentTime: context ? finiteTraceNumber(context.currentTime) : null
+    };
+  }
+
+  function recordAudioLifecycleEvent(type, detail) {
+    if (!voiceRuntimeTraceState.panelEnabled) return;
+    var live = liveAudioSnapshot();
+    var context = contextLifecycleSnapshot();
+    var record = Object.assign({
+      type: type,
+      at: Date.now(),
+      contextState: context.state,
+      bgmPlaying: live.bgmPlaying.length,
+      motifPlaying: live.motifs.length,
+      voicePlaying: live.voicePlaying.length
+    }, detail || {});
+    audioLifecycleTraceState.events.push(record);
+    if (audioLifecycleTraceState.events.length > 20) audioLifecycleTraceState.events.shift();
+    renderVoiceRuntimeTracePanel();
+  }
+
+  function recordOrientationLifecycleEvent(type) {
+    if (!voiceRuntimeTraceState.panelEnabled) return;
+    var before = contextLifecycleSnapshot().state;
+    var resumeCallsBefore = audioLifecycleTraceState.resumeCalls;
+    var orientation = currentOrientation();
+    var width = Number(window.innerWidth) || 0;
+    var height = Number(window.innerHeight) || 0;
+    window.setTimeout(function () {
+      recordAudioLifecycleEvent(type, {
+        orientation: orientation,
+        width: width,
+        height: height,
+        contextBefore: before,
+        contextAfter: contextLifecycleSnapshot().state,
+        resumeCalled: audioLifecycleTraceState.resumeCalls > resumeCallsBefore
+      });
+    }, 0);
   }
 
   function shortAudioSource(audio) {
@@ -134,6 +222,7 @@
     var motifs = playing.filter(function (audio) {
       return audio.__eigoOneShotMix && audio.__eigoOneShotMix.category === "MOTIF";
     });
+    var voicePlaying = playing.filter(function (audio) { return voices.indexOf(audio) !== -1; });
     var sourceCounts = {};
     playing.forEach(function (audio) {
       var name = shortAudioSource(audio);
@@ -155,6 +244,12 @@
       playing: playing,
       bgmPlaying: bgmPlaying,
       motifs: motifs,
+      voicePlaying: voicePlaying,
+      currentVoice: voicePlaying.length ? {
+        asset: voicePlaying[voicePlaying.length - 1].__eigoTraceAssetId || null,
+        character: voicePlaying[voicePlaying.length - 1].__eigoTraceCharacterId || null,
+        path: voicePlaying[voicePlaying.length - 1].__eigoAudioPath || "unknown"
+      } : null,
       sameSourceMax: sameSourceMax,
       sameSourceName: sameSourceName,
       bgm: bgm ? {
@@ -241,9 +336,9 @@
       panel = document.createElement("details");
       panel.id = "gainnode-runtime-trace-panel";
       panel.open = true;
-      panel.style.cssText = "position:fixed;left:4px;right:4px;top:max(4px,env(safe-area-inset-top));z-index:2147483647;max-height:none;overflow:visible;background:rgba(0,0,0,.86);color:#9ff;font:8px/1.1 monospace;padding:3px;border:1px solid #4cc;white-space:pre-wrap;pointer-events:none";
+      panel.style.cssText = "position:fixed;left:3px;right:3px;top:max(4px,env(safe-area-inset-top));z-index:2147483647;max-height:62vh;overflow:hidden;background:rgba(0,0,0,.86);color:#9ff;font:7px/1.05 monospace;padding:2px;border:1px solid #4cc;white-space:pre-wrap;pointer-events:none";
       var summary = document.createElement("summary");
-      summary.textContent = "iPhone BGM / Motif Runtime Trace";
+      summary.textContent = "iPhone Audio Lifecycle Trace";
       panel.appendChild(summary);
       var output = document.createElement("pre");
       output.id = "gainnode-runtime-trace-output";
@@ -252,6 +347,8 @@
       document.body.appendChild(panel);
     }
     var snapshot = liveAudioSnapshot();
+    var context = contextLifecycleSnapshot();
+    var page = documentLifecycleSnapshot();
     var currentBgm = snapshot.bgm;
     var motifLines = snapshot.motifs.map(function (audio) {
       var mix = audio.__eigoOneShotMix || {};
@@ -263,22 +360,42 @@
     });
     var outputNode = document.getElementById("gainnode-runtime-trace-output");
     if (!outputNode) return;
-    outputNode.textContent = [
+    var lifecycleLines = audioLifecycleTraceState.events.slice(-12).map(function (event) {
+      var extra = "";
+      if (event.orientation) extra += " " + event.orientation + " " + event.width + "x" + event.height;
+      if (event.contextBefore !== undefined) extra += " " + event.contextBefore + ">" + event.contextAfter;
+      if (event.previousState !== undefined) extra += " " + event.previousState + ">" + event.currentState;
+      if (event.visibility) extra += " visibility=" + event.visibility + " hidden=" + event.hidden + " focus=" + event.focus;
+      if (event.resumeCalled !== undefined) extra += " resume=" + event.resumeCalled;
+      if (event.result) extra += " " + event.result;
+      return traceClock(event.at) + " " + event.type + extra + " ctx=" + event.contextState +
+        " b/m/v=" + event.bgmPlaying + "/" + event.motifPlaying + "/" + event.voicePlaying;
+    });
+    var lines = [
       "Runtime: " + RUNTIME_VERSION + " | Trace: " + TRACE_VERSION,
-      currentBgm ? "BGM: " + stringifyTraceValue(currentBgm.asset) + " #" + currentBgm.instanceId +
-        " src=" + currentBgm.src : "BGM: none",
-      currentBgm ? "state: playing=" + currentBgm.playing + " paused=" + currentBgm.paused +
-        " graph=" + (currentBgm.path === "web-audio") + " fallback=" + currentBgm.fallback : "state: -",
-      currentBgm ? "gain: base=" + stringifyTraceValue(currentBgm.baseGain) +
-        " track=" + stringifyTraceValue(currentBgm.trackGain) + " bus=" + stringifyTraceValue(currentBgm.busGain) +
-        " master=" + stringifyTraceValue(currentBgm.masterGain) + " effective=" + stringifyTraceValue(currentBgm.effectiveGain) : "gain: -",
+      "CTX: " + context.state + " #" + stringifyTraceValue(context.id) + " t=" + stringifyTraceValue(context.currentTime) +
+        " statechanges=" + audioLifecycleTraceState.stateChangeCount + " suspendSeen=" + audioLifecycleTraceState.suspendSeen,
+      "PAGE: visibility=" + page.visibility + " hidden=" + stringifyTraceValue(page.hidden) + " focus=" + stringifyTraceValue(page.focus),
+      "ORIENT: " + currentOrientation() + " " + (Number(window.innerWidth) || 0) + "x" + (Number(window.innerHeight) || 0),
+      "GESTURE: " + audioLifecycleTraceState.lastGestureType + " @" +
+        (audioLifecycleTraceState.lastGestureAt ? traceClock(audioLifecycleTraceState.lastGestureAt) : "-") +
+        " ctx=" + audioLifecycleTraceState.lastGestureContextState + " resume=" +
+        audioLifecycleTraceState.lastGestureResumeCalled + "/" + audioLifecycleTraceState.lastGestureResumeResult,
+      "RESUME: calls=" + audioLifecycleTraceState.resumeCalls + " success=" + audioLifecycleTraceState.resumeSuccess +
+        " reject=" + audioLifecycleTraceState.resumeReject + " last=" + audioLifecycleTraceState.lastResumeResult + " @" +
+        (audioLifecycleTraceState.lastResumeAt ? traceClock(audioLifecycleTraceState.lastResumeAt) : "-"),
+      currentBgm ? "BGM: " + stringifyTraceValue(currentBgm.asset) + " playing=" + currentBgm.playing +
+        " graph=" + (currentBgm.path === "web-audio") + " fallback=" + currentBgm.fallback +
+        " effective=" + stringifyTraceValue(currentBgm.effectiveGain) : "BGM: none",
       "MOTIF: " + (motifLines.length ? motifLines.join("\nMOTIF: ") : "none"),
+      "VOICE: " + (snapshot.currentVoice ? "playing=true character=" + stringifyTraceValue(snapshot.currentVoice.character) +
+        " asset=" + stringifyTraceValue(snapshot.currentVoice.asset) + " path=" + snapshot.currentVoice.path : "none"),
       "COUNT: all=" + snapshot.playing.length + " bgm=" + snapshot.bgmPlaying.length +
-        " motif=" + snapshot.motifs.length + " same-src-max=" + snapshot.sameSourceMax +
-        " (" + snapshot.sameSourceName + ")",
-      "LAST START: " + (audioLiveTraceLastStart ? stringifyTraceValue(audioLiveTraceLastStart.asset) +
-        " / " + stringifyTraceValue(audioLiveTraceLastStart.category) + " / #" + audioLiveTraceLastStart.instanceId : "none")
-    ].join("\n");
+        " motif=" + snapshot.motifs.length + " voice=" + snapshot.voicePlaying.length +
+        " same-src-max=" + snapshot.sameSourceMax + " (" + snapshot.sameSourceName + ")",
+      "EVENT LOG (latest " + lifecycleLines.length + "):"
+    ];
+    outputNode.textContent = lines.concat(lifecycleLines).join("\n");
   }
 
   function startAudioLiveTracePanel() {
@@ -336,8 +453,21 @@
     try {
       canonicalAudioContext = new ContextType();
       canonicalAudioContext.__eigoTraceContextId = "canonical-context-" + (++audioContextTraceSerial);
+      audioLifecycleTraceState.lastContextState = canonicalAudioContext.state || "unknown";
+      if (canonicalAudioContext.state === "suspended") audioLifecycleTraceState.suspendSeen = true;
+      if (voiceRuntimeTraceState.panelEnabled && typeof canonicalAudioContext.addEventListener === "function") {
+        canonicalAudioContext.addEventListener("statechange", function () {
+          var previous = audioLifecycleTraceState.lastContextState;
+          var current = canonicalAudioContext.state || "unknown";
+          audioLifecycleTraceState.stateChangeCount += 1;
+          audioLifecycleTraceState.lastContextState = current;
+          if (current === "suspended") audioLifecycleTraceState.suspendSeen = true;
+          recordAudioLifecycleEvent("context-statechange", { previousState: previous, currentState: current });
+        });
+      }
       audioTrace("AUDIO_RUNTIME_VERSION", { version: RUNTIME_VERSION });
       audioTrace("AUDIO_CONTEXT_STATE", { state: canonicalAudioContext.state || "unknown" });
+      recordAudioLifecycleEvent("context-created", { currentState: canonicalAudioContext.state || "unknown" });
     } catch (error) {
       canonicalAudioContext = null;
       audioTrace("GAINNODE_FALLBACK", { category: "context", reason: String(error) });
@@ -388,7 +518,19 @@
     var context = getCanonicalAudioContext();
     if (!context) return false;
     if (context.state === "suspended" && typeof context.resume === "function") {
-      try { await context.resume(); } catch (error) {
+      audioLifecycleTraceState.resumeCalls += 1;
+      audioLifecycleTraceState.lastResumeAt = Date.now();
+      audioLifecycleTraceState.lastResumeResult = "pending";
+      recordAudioLifecycleEvent("resume-call", { result: "pending" });
+      try {
+        await context.resume();
+        audioLifecycleTraceState.resumeSuccess += 1;
+        audioLifecycleTraceState.lastResumeResult = "success";
+        recordAudioLifecycleEvent("resume-success", { result: "success" });
+      } catch (error) {
+        audioLifecycleTraceState.resumeReject += 1;
+        audioLifecycleTraceState.lastResumeResult = "reject";
+        recordAudioLifecycleEvent("resume-reject", { result: "reject", error: String(error) });
         audioTrace("AUDIO_CONTEXT_STATE", { state: context.state || "unknown", resume: "failed", error: String(error) });
         return false;
       }
@@ -438,9 +580,77 @@
       events.forEach(function (name) { document.removeEventListener(name, trustedGesture, true); });
       unlockGestureCleanup = null;
     }
-    function trustedGesture() { return unlock(); }
+    function trustedGesture(event) {
+      var before = audioLifecycleTraceState.resumeCalls;
+      audioLifecycleTraceState.lastGestureType = event && event.type || "unknown";
+      audioLifecycleTraceState.lastGestureAt = Date.now();
+      audioLifecycleTraceState.lastGestureContextState = contextLifecycleSnapshot().state;
+      audioLifecycleTraceState.lastGestureResumeCalled = false;
+      audioLifecycleTraceState.lastGestureResumeResult = "pending";
+      recordAudioLifecycleEvent("trusted-gesture-" + audioLifecycleTraceState.lastGestureType);
+      var result = unlock();
+      Promise.resolve(result).then(function (success) {
+        audioLifecycleTraceState.lastGestureResumeCalled = audioLifecycleTraceState.resumeCalls > before;
+        audioLifecycleTraceState.lastGestureResumeResult = audioLifecycleTraceState.lastGestureResumeCalled ?
+          audioLifecycleTraceState.lastResumeResult : (success ? "not-needed" : "not-called");
+        recordAudioLifecycleEvent("trusted-gesture-result", {
+          gesture: audioLifecycleTraceState.lastGestureType,
+          resumeCalled: audioLifecycleTraceState.lastGestureResumeCalled,
+          result: audioLifecycleTraceState.lastGestureResumeResult
+        });
+      });
+      return result;
+    }
     unlockGestureCleanup = cleanup;
     events.forEach(function (name) { document.addEventListener(name, trustedGesture, true); });
+  }
+
+  function installAudioLifecycleTraceListeners() {
+    if (!voiceRuntimeTraceState.panelEnabled || !window.document) return;
+    function pageEvent(event) {
+      var page = documentLifecycleSnapshot();
+      recordAudioLifecycleEvent(event.type, {
+        visibility: page.visibility,
+        hidden: page.hidden,
+        focus: page.focus
+      });
+    }
+    if (typeof document.addEventListener === "function") {
+      document.addEventListener("visibilitychange", pageEvent, true);
+      ["pointerdown", "touchstart", "click", "keydown"].forEach(function (name) {
+        document.addEventListener(name, function (event) {
+          audioLifecycleTraceState.lastGestureType = event.type;
+          audioLifecycleTraceState.lastGestureAt = Date.now();
+          audioLifecycleTraceState.lastGestureContextState = contextLifecycleSnapshot().state;
+          audioLifecycleTraceState.lastGestureResumeCalled = false;
+          audioLifecycleTraceState.lastGestureResumeResult = "observed";
+          recordAudioLifecycleEvent("gesture-" + event.type);
+        }, true);
+      });
+    }
+    if (typeof window.addEventListener === "function") {
+      ["pageshow", "pagehide", "focus", "blur"].forEach(function (name) {
+        window.addEventListener(name, pageEvent, true);
+      });
+      window.addEventListener("orientationchange", function () {
+        recordOrientationLifecycleEvent("orientationchange");
+      }, true);
+      window.addEventListener("resize", function () {
+        recordOrientationLifecycleEvent("resize");
+      }, true);
+    }
+    try {
+      if (window.screen && screen.orientation && typeof screen.orientation.addEventListener === "function") {
+        screen.orientation.addEventListener("change", function () {
+          recordOrientationLifecycleEvent("screen.orientation.change");
+        });
+      }
+    } catch (_) {}
+    recordAudioLifecycleEvent("trace-start", {
+      orientation: currentOrientation(),
+      width: Number(window.innerWidth) || 0,
+      height: Number(window.innerHeight) || 0
+    });
   }
 
   function dialogueDuckProfile() {
@@ -1122,6 +1332,8 @@
 
     function attachDialogueAudio(candidate) {
       runtimeElementGeneration += 1;
+      ensureAudioInstanceTrace(candidate, keyOrPath, "DIALOGUE_VOICE");
+      candidate.__eigoTraceCharacterId = characterCode || characterId;
       candidate.__eigoTraceElementId = "voice-element-" + runtimeVoiceTraceId + "-" + runtimeElementGeneration;
       candidate.volume = 1;
       candidate.preload = "auto";
@@ -1474,10 +1686,14 @@
     latched: function () { return voiceRuntimeTraceState.latched; },
     history: function () { return voiceRuntimeTraceState.history.slice(); },
     live: liveAudioSnapshot,
+    lifecycle: function () {
+      return Object.assign({}, audioLifecycleTraceState, { events: audioLifecycleTraceState.events.slice() });
+    },
     render: renderVoiceRuntimeTracePanel
   };
   if (voiceRuntimeTraceState.panelEnabled && window.document) {
     startAudioLiveTracePanel();
+    installAudioLifecycleTraceListeners();
   }
   installUnlockGesture();
 })();
