@@ -3,6 +3,7 @@
 
   var RUNTIME_VERSION = "audio-gainnode-unification-v1";
   var TRACE_VERSION = "iphone-audio-lifecycle-trace-v1";
+  var RECOVERY_VERSION = "audio-context-interrupted-recovery-fix-v1";
   window.AudioRuntimeVersion = RUNTIME_VERSION;
 
   var bgm = null;
@@ -16,6 +17,7 @@
   var unlockPromise = null;
   var unlockComplete = false;
   var unlockGestureCleanup = null;
+  var audioOutputRecoveryRequired = false;
   var pendingBgmGestureCleanup = null;
   var pendingBgm = null;
   var bgmRequestSerial = 0;
@@ -60,6 +62,7 @@
     lastResumeResult: "none",
     stateChangeCount: 0,
     suspendSeen: false,
+    recoveryRequired: false,
     lastContextState: "uninitialized",
     lastGestureType: "none",
     lastGestureAt: null,
@@ -372,9 +375,10 @@
         " b/m/v=" + event.bgmPlaying + "/" + event.motifPlaying + "/" + event.voicePlaying;
     });
     var lines = [
-      "Runtime: " + RUNTIME_VERSION + " | Trace: " + TRACE_VERSION,
+      "Runtime: " + RUNTIME_VERSION + " | Trace: " + TRACE_VERSION + " | Recovery: " + RECOVERY_VERSION,
       "CTX: " + context.state + " #" + stringifyTraceValue(context.id) + " t=" + stringifyTraceValue(context.currentTime) +
-        " statechanges=" + audioLifecycleTraceState.stateChangeCount + " suspendSeen=" + audioLifecycleTraceState.suspendSeen,
+        " statechanges=" + audioLifecycleTraceState.stateChangeCount + " suspendSeen=" + audioLifecycleTraceState.suspendSeen +
+        " recovery=" + audioLifecycleTraceState.recoveryRequired,
       "PAGE: visibility=" + page.visibility + " hidden=" + stringifyTraceValue(page.hidden) + " focus=" + stringifyTraceValue(page.focus),
       "ORIENT: " + currentOrientation() + " " + (Number(window.innerWidth) || 0) + "x" + (Number(window.innerHeight) || 0),
       "GESTURE: " + audioLifecycleTraceState.lastGestureType + " @" +
@@ -446,6 +450,10 @@
     return window.AudioContext || window.webkitAudioContext || null;
   }
 
+  function isRecoverableAudioContextState(state) {
+    return state === "suspended" || state === "interrupted";
+  }
+
   function getCanonicalAudioContext() {
     if (canonicalAudioContext) return canonicalAudioContext;
     var ContextType = audioContextType();
@@ -462,6 +470,12 @@
           audioLifecycleTraceState.stateChangeCount += 1;
           audioLifecycleTraceState.lastContextState = current;
           if (current === "suspended") audioLifecycleTraceState.suspendSeen = true;
+          if (isRecoverableAudioContextState(current)) {
+            audioOutputRecoveryRequired = true;
+            audioLifecycleTraceState.recoveryRequired = true;
+            unlockComplete = false;
+            installUnlockGesture();
+          }
           recordAudioLifecycleEvent("context-statechange", { previousState: previous, currentState: current });
         });
       }
@@ -517,7 +531,7 @@
   async function ensureCanonicalAudioContextRunning() {
     var context = getCanonicalAudioContext();
     if (!context) return false;
-    if (context.state === "suspended" && typeof context.resume === "function") {
+    if (isRecoverableAudioContextState(context.state) && typeof context.resume === "function") {
       audioLifecycleTraceState.resumeCalls += 1;
       audioLifecycleTraceState.lastResumeAt = Date.now();
       audioLifecycleTraceState.lastResumeResult = "pending";
@@ -547,7 +561,9 @@
   }
 
   function unlock() {
-    if (unlockComplete) return Promise.resolve(true);
+    var currentContext = canonicalAudioContext;
+    if (unlockComplete && !audioOutputRecoveryRequired &&
+        !isRecoverableAudioContextState(currentContext && currentContext.state)) return Promise.resolve(true);
     if (unlockPromise) return unlockPromise;
     unlockPromise = (async function () {
       var contextRunning = await ensureCanonicalAudioContextRunning();
@@ -562,6 +578,7 @@
       } catch (_) {}
       var success = contextRunning || (!audioContextType() && mediaUnlocked);
       if (success) {
+        if (contextRunning && audioOutputRecoveryRequired) recoverCurrentBgmAfterContextResume();
         unlockComplete = true;
         if (unlockGestureCleanup) unlockGestureCleanup();
       }
@@ -575,6 +592,7 @@
 
   function installUnlockGesture() {
     if (!window.document || typeof document.addEventListener !== "function") return;
+    if (unlockGestureCleanup) return;
     var events = ["pointerdown", "touchend", "click", "keydown"];
     function cleanup() {
       events.forEach(function (name) { document.removeEventListener(name, trustedGesture, true); });
@@ -1038,8 +1056,49 @@
       clearPendingBgm();
       return false;
     }
+    var context = canonicalAudioContext;
+    if (isRecoverableAudioContextState(context && context.state)) {
+      audioOutputRecoveryRequired = true;
+      audioLifecycleTraceState.recoveryRequired = true;
+      unlockComplete = false;
+      installUnlockGesture();
+      return false;
+    }
     safePlay(pending.audio);
     watchBgmPlayback(pending.audio, pending.requestId);
+    return true;
+  }
+
+  function recoverCurrentBgmAfterContextResume() {
+    if (!audioOutputRecoveryRequired) return false;
+    audioOutputRecoveryRequired = false;
+    audioLifecycleTraceState.recoveryRequired = false;
+    var current = bgm;
+    var track = current && current.__eigoBgmTrack;
+    if (!current || !track || current.__eigoStopped === true || bgmTracks.indexOf(track) === -1) {
+      recordAudioLifecycleEvent("recovery-no-active-bgm");
+      return false;
+    }
+    var pending = !!(pendingBgm && pendingBgm.audio === current);
+    var replayRequired = current.paused === true || current.ended === true || pending;
+    if (!replayRequired) {
+      recordAudioLifecycleEvent("recovery-bgm-already-playing", { asset: track.asset });
+      return false;
+    }
+    if (pending) clearPendingBgm();
+    var requestId = ++bgmRequestSerial;
+    if (current.ended === true) {
+      try { current.currentTime = 0; } catch (_) {}
+    }
+    recordAudioLifecycleEvent("recovery-bgm-replay", { asset: track.asset, instanceId: current.__eigoTraceInstanceId });
+    if (track.path === "pending") {
+      connectBgmTrack(track, requestId);
+      return true;
+    }
+    if (track.path === "fallback" && !applyBgmFallbackGain(track)) return false;
+    noteAudioLiveStart(current, track.asset, "BGM");
+    safePlay(current);
+    watchBgmPlayback(current, requestId);
     return true;
   }
 
@@ -1681,6 +1740,7 @@
   };
   window.GainNodeVoiceRuntimeTrace = {
     version: TRACE_VERSION,
+    recoveryVersion: RECOVERY_VERSION,
     panelEnabled: function () { return voiceRuntimeTraceState.panelEnabled; },
     latest: function () { return voiceRuntimeTraceState.latest; },
     latched: function () { return voiceRuntimeTraceState.latched; },
