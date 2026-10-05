@@ -28,8 +28,10 @@ assert(manager.includes("top:max(4px,env(safe-area-inset-top))"));
 assert(manager.includes("pointer-events:none"));
 assert(manager.includes("z-index:2147483647"));
 assert(!manager.includes("pointer-events:auto"));
-for (const lineLabel of ["Runtime: ", "CTX: ", "PAGE: ", "ORIENT: ", "GESTURE: ", "RESUME: ", "BGM: ", "MOTIF: ", "VOICE: ", "COUNT: all=", "EVENT LOG"])
+for (const lineLabel of ["Runtime: ", "CTX: ", "PAGE: ", "BGM: ", "MOTIF: ", "VOICE: ", "COUNT: all=", "EVENT LOG"])
   assert(manager.includes(`\"${lineLabel}`), `missing live audio line: ${lineLabel}`);
+for (const combinedLabel of ["ORIENT: ", "GESTURE: ", "RESUME: "])
+  assert(manager.includes(combinedLabel), `missing combined live audio label: ${combinedLabel}`);
 for (const metricLabel of [
   "instanceId", "src", "paused", "fallback", "baseGain", "trackGain", "busGain", "masterGain",
   "effectiveGain", "sameSourceMax", "bgmPlaying", "motifs"

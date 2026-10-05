@@ -49,8 +49,8 @@ assert(questions.includes('answers: ["orange", "banana", "no thank you"]'));
 assert(read("index.html").includes("css/style.css?v=mobile-ui-story-polish-v1-1"));
 assert(read("dev.html").includes("css/style.css?v=mobile-ui-story-polish-v1-1"));
 
-// AudioManager differs from Phase 1 only by approved Trace and interrupted-state recovery.
-assert.strictEqual(hash("engine/managers/audio-manager.js"), "d2fb26d29d1fe8b41c39684775f23f5d37f8dfb23d21d25d0eb73473b43d22e1");
+// AudioManager differs from Phase 1 only by approved Trace instrumentation and interrupted-state recovery.
+assert.strictEqual(hash("engine/managers/audio-manager.js"), "749dd378d76d9f472c862d4c7a64ff2655239b1272a1870a946e73c14b7e6abc");
 assert.strictEqual(hash("engine/services/speech-recognition-adapter.js"), "1261497515055b11c6caa0d26eb8773d848d656bc17ba7a5c9f7b53798b365ad");
 assert.strictEqual(hash("engine/services/local-communicative-judge.js"), "d124c63e412c4e6553026141361ab608da5603bd29854f93f6b8c06bf1f57e58");
 assert.strictEqual(hash("engine/services/communicative-judge.js"), "a8b8482768e480f609ff9b569774509a881d503769ca5f3452783ff94c7ecb04");

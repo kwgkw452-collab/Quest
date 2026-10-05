@@ -4,6 +4,7 @@
   var RUNTIME_VERSION = "audio-gainnode-unification-v1";
   var TRACE_VERSION = "iphone-audio-lifecycle-trace-v1";
   var RECOVERY_VERSION = "audio-context-interrupted-recovery-fix-v1";
+  var SIGNAL_TRACE_VERSION = "running-but-silent-signal-trace-v1";
   window.AudioRuntimeVersion = RUNTIME_VERSION;
 
   var bgm = null;
@@ -14,6 +15,16 @@
   var radioTraceSerial = 0;
   var canonicalAudioContext = null;
   var canonicalBuses = null;
+  var canonicalSignalAnalysers = null;
+  var lastDialogueVoiceTraceAudio = null;
+  var lastDialogueVoiceTraceMeta = null;
+  var signalMeterState = {
+    master: { signalSeen: false, lastSignalTime: null },
+    bgmSource: { signalSeen: false, lastSignalTime: null },
+    bgmBus: { signalSeen: false, lastSignalTime: null },
+    voiceSource: { signalSeen: false, lastSignalTime: null },
+    voiceBus: { signalSeen: false, lastSignalTime: null }
+  };
   var unlockPromise = null;
   var unlockComplete = false;
   var unlockGestureCleanup = null;
@@ -226,6 +237,7 @@
       return audio.__eigoOneShotMix && audio.__eigoOneShotMix.category === "MOTIF";
     });
     var voicePlaying = playing.filter(function (audio) { return voices.indexOf(audio) !== -1; });
+    var dialogueVoicePlaying = playing.filter(function (audio) { return dialogueVoices.indexOf(audio) !== -1; });
     var sourceCounts = {};
     playing.forEach(function (audio) {
       var name = shortAudioSource(audio);
@@ -241,6 +253,7 @@
     });
     var bgmBus = canonicalBuses ? finiteTraceNumber(canonicalBuses.bgm.gain.value) : null;
     var motifBus = canonicalBuses ? finiteTraceNumber(canonicalBuses.motif.gain.value) : null;
+    var voiceBus = canonicalBuses ? finiteTraceNumber(canonicalBuses.voice.gain.value) : null;
     var master = canonicalBuses ? finiteTraceNumber(canonicalBuses.master.gain.value) : null;
     return {
       managed: managed,
@@ -248,6 +261,7 @@
       bgmPlaying: bgmPlaying,
       motifs: motifs,
       voicePlaying: voicePlaying,
+      dialogueVoicePlaying: dialogueVoicePlaying,
       currentVoice: voicePlaying.length ? {
         asset: voicePlaying[voicePlaying.length - 1].__eigoTraceAssetId || null,
         character: voicePlaying[voicePlaying.length - 1].__eigoTraceCharacterId || null,
@@ -271,7 +285,136 @@
         effectiveGain: currentTrack ? finiteTraceNumber(bgmEffectiveGain(currentTrack)) : null
       } : null,
       motifBus: motifBus,
+      voiceBusGain: voiceBus,
       master: master
+    };
+  }
+
+  function createSignalTraceAnalyser(context, sourceNode) {
+    if (!voiceRuntimeTraceState.panelEnabled || !context || !sourceNode ||
+        typeof context.createAnalyser !== "function" || typeof sourceNode.connect !== "function") return null;
+    try {
+      var analyser = context.createAnalyser();
+      analyser.fftSize = 256;
+      analyser.smoothingTimeConstant = 0;
+      sourceNode.connect(analyser);
+      return analyser;
+    } catch (_) { return null; }
+  }
+
+  function sampleSignalTrace(analyser, meterName) {
+    var meter = signalMeterState[meterName] || { signalSeen: false, lastSignalTime: null };
+    signalMeterState[meterName] = meter;
+    if (!analyser || typeof analyser.getFloatTimeDomainData !== "function") {
+      return { peak: null, rms: null, signal: false, signalSeen: meter.signalSeen, lastSignalTime: meter.lastSignalTime };
+    }
+    try {
+      var samples = new Float32Array(analyser.fftSize || 256);
+      analyser.getFloatTimeDomainData(samples);
+      var peak = 0;
+      var sumSquares = 0;
+      for (var index = 0; index < samples.length; index += 1) {
+        var absolute = Math.abs(samples[index]);
+        if (absolute > peak) peak = absolute;
+        sumSquares += samples[index] * samples[index];
+      }
+      var rms = samples.length ? Math.sqrt(sumSquares / samples.length) : 0;
+      var signal = peak > 0.001 || rms > 0.001;
+      if (signal) {
+        meter.signalSeen = true;
+        meter.lastSignalTime = Date.now();
+      }
+      return {
+        peak: finiteTraceNumber(peak),
+        rms: finiteTraceNumber(rms),
+        signal: signal,
+        signalSeen: meter.signalSeen,
+        lastSignalTime: meter.lastSignalTime
+      };
+    } catch (_) {
+      return { peak: null, rms: null, signal: false, signalSeen: meter.signalSeen, lastSignalTime: meter.lastSignalTime };
+    }
+  }
+
+  function mediaSignalSnapshot(audio) {
+    if (!audio) return null;
+    var currentTime = finiteTraceNumber(audio.currentTime);
+    var previousTime = audio.__eigoSignalTraceCurrentTime;
+    var moving = previousTime !== undefined && currentTime !== null && currentTime > previousTime + 0.001;
+    audio.__eigoSignalTraceCurrentTime = currentTime;
+    return {
+      currentTime: currentTime,
+      duration: finiteTraceNumber(audio.duration),
+      moving: moving,
+      paused: !!audio.paused,
+      ended: !!audio.ended,
+      readyState: finiteTraceNumber(audio.readyState),
+      networkState: finiteTraceNumber(audio.networkState),
+      path: audio.__eigoAudioPath || (audio.__eigoBgmTrack && audio.__eigoBgmTrack.path) || "unknown"
+    };
+  }
+
+  function signalTraceSnapshot() {
+    var live = liveAudioSnapshot();
+    var track = bgm && bgm.__eigoBgmTrack;
+    var activeVoice = live.dialogueVoicePlaying.length ?
+      live.dialogueVoicePlaying[live.dialogueVoicePlaying.length - 1] : null;
+    var voiceAudio = activeVoice || lastDialogueVoiceTraceAudio;
+    var masterSignal = sampleSignalTrace(canonicalSignalAnalysers && canonicalSignalAnalysers.master, "master");
+    var bgmSourceSignal = sampleSignalTrace(track && track.traceAnalyser, "bgmSource");
+    var bgmBusSignal = sampleSignalTrace(canonicalSignalAnalysers && canonicalSignalAnalysers.bgm, "bgmBus");
+    var voiceSourceSignal = sampleSignalTrace(activeVoice && activeVoice.__eigoVoiceTraceAnalyser, "voiceSource");
+    var voiceBusSignal = sampleSignalTrace(canonicalSignalAnalysers && canonicalSignalAnalysers.voice, "voiceBus");
+    var voicePlaying = !!activeVoice;
+    var voiceResidual = !voicePlaying && voiceBusSignal.signal;
+    var highOutput = (masterSignal.peak !== null && masterSignal.peak >= 0.98) ||
+      (masterSignal.rms !== null && masterSignal.rms >= 0.5);
+    var sourceSignal = voicePlaying ? voiceSourceSignal : bgmSourceSignal;
+    var busSignal = voicePlaying ? voiceBusSignal : bgmBusSignal;
+    var activeRequested = !!(live.bgm && live.bgm.playing) || voicePlaying;
+    var status = "UNKNOWN";
+    if (voiceResidual) status = lastDialogueVoiceTraceMeta && lastDialogueVoiceTraceMeta.character === "c02" ?
+      "KONG RESIDUAL SIGNAL" : "VOICE RESIDUAL";
+    else if (highOutput) status = "HIGH OUTPUT SIGNAL";
+    else if (!activeRequested && masterSignal.signal) status = "MASTER ACTIVE";
+    else if (!activeRequested) status = "IDLE";
+    else if (sourceSignal.peak === null) status = "UNKNOWN";
+    else if (!sourceSignal.signal) status = "SOURCE LOST";
+    else if (!busSignal.signal) status = "BUS LOST";
+    else if (!masterSignal.signal) status = "MASTER LOST";
+    else status = "MASTER ACTIVE";
+    return {
+      live: live,
+      master: masterSignal,
+      bgm: {
+        media: mediaSignalSnapshot(bgm),
+        source: bgmSourceSignal,
+        bus: bgmBusSignal
+      },
+      voice: {
+        audio: voiceAudio,
+        media: mediaSignalSnapshot(voiceAudio),
+        source: voicePlaying ? voiceSourceSignal : {
+          peak: voiceRuntimeTraceState.latched && voiceRuntimeTraceState.latched.maxPeak,
+          rms: voiceRuntimeTraceState.latched && voiceRuntimeTraceState.latched.maxRms,
+          signal: false,
+          signalSeen: !!(voiceRuntimeTraceState.latched && voiceRuntimeTraceState.latched.playingSeen),
+          lastSignalTime: null
+        },
+        bus: voiceBusSignal,
+        playing: voicePlaying,
+        meta: activeVoice ? {
+          asset: activeVoice.__eigoTraceAssetId,
+          character: activeVoice.__eigoTraceCharacterId,
+          characterGain: finiteTraceNumber(activeVoice.__eigoVoiceCharacterGain),
+          processingGain: finiteTraceNumber(activeVoice.__eigoVoiceProcessingGain)
+        } : lastDialogueVoiceTraceMeta
+      },
+      residualVoice: voiceResidual,
+      voiceSignalLost: voicePlaying && !voiceSourceSignal.signal,
+      highOutput: highOutput,
+      status: status,
+      runningActiveCheck: contextLifecycleSnapshot().state === "running" && activeRequested
     };
   }
 
@@ -339,9 +482,9 @@
       panel = document.createElement("details");
       panel.id = "gainnode-runtime-trace-panel";
       panel.open = true;
-      panel.style.cssText = "position:fixed;left:3px;right:3px;top:max(4px,env(safe-area-inset-top));z-index:2147483647;max-height:62vh;overflow:hidden;background:rgba(0,0,0,.86);color:#9ff;font:7px/1.05 monospace;padding:2px;border:1px solid #4cc;white-space:pre-wrap;pointer-events:none";
+      panel.style.cssText = "position:fixed;left:3px;right:3px;top:max(4px,env(safe-area-inset-top));z-index:2147483647;max-height:72vh;overflow:hidden;background:rgba(0,0,0,.86);color:#9ff;font:6.5px/1.05 monospace;padding:2px;border:1px solid #4cc;white-space:pre-wrap;pointer-events:none";
       var summary = document.createElement("summary");
-      summary.textContent = "iPhone Audio Lifecycle Trace";
+      summary.textContent = "iPhone Audio Output Signal Trace";
       panel.appendChild(summary);
       var output = document.createElement("pre");
       output.id = "gainnode-runtime-trace-output";
@@ -349,7 +492,8 @@
       panel.appendChild(output);
       document.body.appendChild(panel);
     }
-    var snapshot = liveAudioSnapshot();
+    var signalTrace = signalTraceSnapshot();
+    var snapshot = signalTrace.live;
     var context = contextLifecycleSnapshot();
     var page = documentLifecycleSnapshot();
     var currentBgm = snapshot.bgm;
@@ -363,7 +507,7 @@
     });
     var outputNode = document.getElementById("gainnode-runtime-trace-output");
     if (!outputNode) return;
-    var lifecycleLines = audioLifecycleTraceState.events.slice(-12).map(function (event) {
+    var lifecycleLines = audioLifecycleTraceState.events.slice(-10).map(function (event) {
       var extra = "";
       if (event.orientation) extra += " " + event.orientation + " " + event.width + "x" + event.height;
       if (event.contextBefore !== undefined) extra += " " + event.contextBefore + ">" + event.contextAfter;
@@ -375,25 +519,52 @@
         " b/m/v=" + event.bgmPlaying + "/" + event.motifPlaying + "/" + event.voicePlaying;
     });
     var lines = [
-      "Runtime: " + RUNTIME_VERSION + " | Trace: " + TRACE_VERSION + " | Recovery: " + RECOVERY_VERSION,
+      "Runtime: " + RUNTIME_VERSION + " | Signal: " + SIGNAL_TRACE_VERSION,
       "CTX: " + context.state + " #" + stringifyTraceValue(context.id) + " t=" + stringifyTraceValue(context.currentTime) +
         " statechanges=" + audioLifecycleTraceState.stateChangeCount + " suspendSeen=" + audioLifecycleTraceState.suspendSeen +
         " recovery=" + audioLifecycleTraceState.recoveryRequired,
-      "PAGE: visibility=" + page.visibility + " hidden=" + stringifyTraceValue(page.hidden) + " focus=" + stringifyTraceValue(page.focus),
-      "ORIENT: " + currentOrientation() + " " + (Number(window.innerWidth) || 0) + "x" + (Number(window.innerHeight) || 0),
+      "PAGE: " + page.visibility + "/hidden=" + stringifyTraceValue(page.hidden) + "/focus=" + stringifyTraceValue(page.focus) +
+        " | ORIENT: " + currentOrientation() + " " + (Number(window.innerWidth) || 0) + "x" + (Number(window.innerHeight) || 0),
       "GESTURE: " + audioLifecycleTraceState.lastGestureType + " @" +
         (audioLifecycleTraceState.lastGestureAt ? traceClock(audioLifecycleTraceState.lastGestureAt) : "-") +
-        " ctx=" + audioLifecycleTraceState.lastGestureContextState + " resume=" +
-        audioLifecycleTraceState.lastGestureResumeCalled + "/" + audioLifecycleTraceState.lastGestureResumeResult,
-      "RESUME: calls=" + audioLifecycleTraceState.resumeCalls + " success=" + audioLifecycleTraceState.resumeSuccess +
+        " ctx=" + audioLifecycleTraceState.lastGestureContextState + " | RESUME: calls=" + audioLifecycleTraceState.resumeCalls + " success=" + audioLifecycleTraceState.resumeSuccess +
         " reject=" + audioLifecycleTraceState.resumeReject + " last=" + audioLifecycleTraceState.lastResumeResult + " @" +
         (audioLifecycleTraceState.lastResumeAt ? traceClock(audioLifecycleTraceState.lastResumeAt) : "-"),
+      "MASTER: peak=" + stringifyTraceValue(signalTrace.master.peak) + " rms=" + stringifyTraceValue(signalTrace.master.rms) +
+        " signal=" + signalTrace.master.signal + " seen=" + signalTrace.master.signalSeen + " last=" +
+        (signalTrace.master.lastSignalTime ? traceClock(signalTrace.master.lastSignalTime) : "-"),
+      "SIGNAL STATUS: " + signalTrace.status + " | running-active-check=" + signalTrace.runningActiveCheck +
+        " | high-output=" + signalTrace.highOutput,
       currentBgm ? "BGM: " + stringifyTraceValue(currentBgm.asset) + " playing=" + currentBgm.playing +
         " graph=" + (currentBgm.path === "web-audio") + " fallback=" + currentBgm.fallback +
-        " effective=" + stringifyTraceValue(currentBgm.effectiveGain) : "BGM: none",
+        " time=" + stringifyTraceValue(signalTrace.bgm.media && signalTrace.bgm.media.currentTime) + "/" +
+        stringifyTraceValue(signalTrace.bgm.media && signalTrace.bgm.media.duration) + " moving=" +
+        stringifyTraceValue(signalTrace.bgm.media && signalTrace.bgm.media.moving) + " paused=" + currentBgm.paused +
+        " ended=" + stringifyTraceValue(signalTrace.bgm.media && signalTrace.bgm.media.ended) + " ready/net=" +
+        stringifyTraceValue(signalTrace.bgm.media && signalTrace.bgm.media.readyState) + "/" +
+        stringifyTraceValue(signalTrace.bgm.media && signalTrace.bgm.media.networkState) : "BGM: none",
+      currentBgm ? "BGM SIG: source=" + stringifyTraceValue(signalTrace.bgm.source.peak) + "/" +
+        stringifyTraceValue(signalTrace.bgm.source.rms) + " bus=" + stringifyTraceValue(signalTrace.bgm.bus.peak) + "/" +
+        stringifyTraceValue(signalTrace.bgm.bus.rms) + " gain track/bus/eff=" + stringifyTraceValue(currentBgm.trackGain) + "/" +
+        stringifyTraceValue(currentBgm.busGain) + "/" + stringifyTraceValue(currentBgm.effectiveGain) : "BGM SIG: -",
+      "VOICE: " + (signalTrace.voice.meta ? "playing=" + signalTrace.voice.playing + " character=" +
+        stringifyTraceValue(signalTrace.voice.meta.character) + " asset=" + stringifyTraceValue(signalTrace.voice.meta.asset) +
+        " path=" + stringifyTraceValue(signalTrace.voice.media && signalTrace.voice.media.path) + " graph=" +
+        stringifyTraceValue(signalTrace.voice.media && signalTrace.voice.media.path === "web-audio") + " fallback=" +
+        stringifyTraceValue(signalTrace.voice.media && signalTrace.voice.media.path === "fallback") + " time=" +
+        stringifyTraceValue(signalTrace.voice.media && signalTrace.voice.media.currentTime) + "/" +
+        stringifyTraceValue(signalTrace.voice.media && signalTrace.voice.media.duration) + " paused/ended=" +
+        stringifyTraceValue(signalTrace.voice.media && signalTrace.voice.media.paused) + "/" +
+        stringifyTraceValue(signalTrace.voice.media && signalTrace.voice.media.ended) : "none"),
+      "VOICE SIG: source=" + stringifyTraceValue(signalTrace.voice.source.peak) + "/" +
+        stringifyTraceValue(signalTrace.voice.source.rms) + " bus=" + stringifyTraceValue(signalTrace.voice.bus.peak) + "/" +
+        stringifyTraceValue(signalTrace.voice.bus.rms) + " gain C/P/V=" +
+        stringifyTraceValue(signalTrace.voice.meta && signalTrace.voice.meta.characterGain) + "/" +
+        stringifyTraceValue(signalTrace.voice.meta && signalTrace.voice.meta.processingGain) + "/" +
+        stringifyTraceValue(snapshot.voiceBusGain),
+      "RESIDUAL: voice=" + signalTrace.residualVoice + " signal-lost=" + signalTrace.voiceSignalLost +
+        (signalTrace.status === "KONG RESIDUAL SIGNAL" ? " KONG RESIDUAL SIGNAL" : ""),
       "MOTIF: " + (motifLines.length ? motifLines.join("\nMOTIF: ") : "none"),
-      "VOICE: " + (snapshot.currentVoice ? "playing=true character=" + stringifyTraceValue(snapshot.currentVoice.character) +
-        " asset=" + stringifyTraceValue(snapshot.currentVoice.asset) + " path=" + snapshot.currentVoice.path : "none"),
       "COUNT: all=" + snapshot.playing.length + " bgm=" + snapshot.bgmPlaying.length +
         " motif=" + snapshot.motifs.length + " voice=" + snapshot.voicePlaying.length +
         " same-src-max=" + snapshot.sameSourceMax + " (" + snapshot.sameSourceName + ")",
@@ -524,6 +695,13 @@
     buses.se.connect(master);
     buses.effectVoice.connect(master);
     master.connect(context.destination);
+    if (voiceRuntimeTraceState.panelEnabled) {
+      canonicalSignalAnalysers = {
+        master: createSignalTraceAnalyser(context, master),
+        bgm: createSignalTraceAnalyser(context, buses.bgm),
+        voice: createSignalTraceAnalyser(context, buses.voice)
+      };
+    }
     canonicalBuses = buses;
     return buses;
   }
@@ -926,6 +1104,7 @@
       fadeState: "idle",
       serial: 0,
       gainNode: null,
+      traceAnalyser: null,
       nodes: [],
       path: "pending"
     };
@@ -971,6 +1150,7 @@
         bgm = replacement;
       }
       track.path = "fallback";
+      track.traceAnalyser = null;
       audioTrace("BGM_PATH", { asset: track.asset, path: "fallback", reason: reason });
       audioTrace("GAINNODE_FALLBACK", { category: "BGM", asset: track.asset, reason: reason, error: error ? String(error) : null });
       if (applyBgmFallbackGain(track)) {
@@ -982,6 +1162,8 @@
     function connectAndPlay() {
       var graph = buildSimpleGraph(original, "bgm", track.baseVolume * track.envelope);
       track.gainNode = graph.gainNode;
+      track.traceAnalyser = createSignalTraceAnalyser(getCanonicalAudioContext(), graph.gainNode);
+      if (track.traceAnalyser) graph.nodes.push(track.traceAnalyser);
       track.nodes = graph.nodes;
       track.path = "web-audio";
       audioTrace("BGM_PATH", { asset: track.asset, path: "web-audio" });
@@ -1393,6 +1575,13 @@
       runtimeElementGeneration += 1;
       ensureAudioInstanceTrace(candidate, keyOrPath, "DIALOGUE_VOICE");
       candidate.__eigoTraceCharacterId = characterCode || characterId;
+      lastDialogueVoiceTraceAudio = candidate;
+      lastDialogueVoiceTraceMeta = {
+        asset: keyOrPath,
+        character: characterCode || characterId,
+        characterGain: finiteTraceNumber(characterGainValue),
+        processingGain: finiteTraceNumber(voiceGraphTrace.processingGain)
+      };
       candidate.__eigoTraceElementId = "voice-element-" + runtimeVoiceTraceId + "-" + runtimeElementGeneration;
       candidate.volume = 1;
       candidate.preload = "auto";
@@ -1561,6 +1750,15 @@
       processingNodes = [source].concat(nodes);
       audio.__eigoAudioPath = "web-audio";
       audio.__eigoCharacterGainNode = characterGain;
+      audio.__eigoVoiceTraceAnalyser = analyser;
+      audio.__eigoVoiceCharacterGain = voiceGraphTrace.characterGain;
+      audio.__eigoVoiceProcessingGain = voiceGraphTrace.processingGain;
+      lastDialogueVoiceTraceMeta = {
+        asset: keyOrPath,
+        character: characterCode || characterId,
+        characterGain: voiceGraphTrace.characterGain,
+        processingGain: voiceGraphTrace.processingGain
+      };
       audioTrace("VOICE_PATH", { voiceKey: keyOrPath, path: "web-audio", characterCode: characterCode, radio: radio });
       audioTrace("VOICE_CHARACTER_GAIN", { voiceKey: keyOrPath, gain: characterGainValue });
       audioTrace("VOICE_BUS_GAIN", { gain: canonicalBuses.voice.gain.value });
@@ -1741,11 +1939,13 @@
   window.GainNodeVoiceRuntimeTrace = {
     version: TRACE_VERSION,
     recoveryVersion: RECOVERY_VERSION,
+    signalTraceVersion: SIGNAL_TRACE_VERSION,
     panelEnabled: function () { return voiceRuntimeTraceState.panelEnabled; },
     latest: function () { return voiceRuntimeTraceState.latest; },
     latched: function () { return voiceRuntimeTraceState.latched; },
     history: function () { return voiceRuntimeTraceState.history.slice(); },
     live: liveAudioSnapshot,
+    signal: signalTraceSnapshot,
     lifecycle: function () {
       return Object.assign({}, audioLifecycleTraceState, { events: audioLifecycleTraceState.events.slice() });
     },
