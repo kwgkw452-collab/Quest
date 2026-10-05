@@ -130,7 +130,7 @@ vm.runInContext(read("engine/managers/audio-manager.js"), context);
   const tracked = context.DialogueVoiceAudioInternal.play("voice_c02_s001_001", {
     characterGain: 0.82, characterId: 2
   });
-  assert.equal(analysers.length, 5, "Dialogue Voice source analyser remains available");
+  assert.equal(analysers.length, 6, "Dialogue Voice output and recovery source analysers remain available");
   analysers[2].samples = [0.12, -0.12, 0.12, -0.12]; // Voice Bus
   analysers[4].samples = [0.12, -0.12, 0.12, -0.12]; // Voice source
   tracked.audio.currentTime = 1.5;
