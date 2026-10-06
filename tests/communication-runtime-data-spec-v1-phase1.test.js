@@ -211,8 +211,8 @@ function sha(file) { return crypto.createHash("sha256").update(fs.readFileSync(p
   const lockedHashes = {
     "data/word-dictionaries.js": "8c8c49386c8bd935cbb40d1f067441f3f032f423a579c8193d3b95d167d68d89",
     "engine/managers/question-manager.js": "98047b0cb21bd12f4fd5e2c432ea28836a6b82b7b0a3067639781ad538d87c6d",
-    "engine/services/speech-start-controller.js": "73ea61ec3cc4a2532b220f298d2e48d8e66d03fac9901cbf4662bc89c65a883b",
-    "engine/services/speech-engine.js": "3318e03a55a2506fccfeca2481d0b286e69074c63f5539d73b1b5b27e6371264",
+    "engine/services/speech-start-controller.js": "f6d1224d0ae71f8ee12067f0ede79650dae84a88d2c68b7ce474ce48c24b8161",
+    "engine/services/speech-engine.js": "a2a9242796cb2cba759ee99d270a1ee0e3e11a761314546a376135b645bc1e13",
     "engine/services/speech-recognition-adapter.js": "1261497515055b11c6caa0d26eb8773d848d656bc17ba7a5c9f7b53798b365ad",
     "engine/services/local-communicative-judge.js": "d124c63e412c4e6553026141361ab608da5603bd29854f93f6b8c06bf1f57e58",
     "engine/services/communicative-judge.js": "a8b8482768e480f609ff9b569774509a881d503769ca5f3452783ff94c7ecb04"

@@ -17,6 +17,11 @@
   var dialogueVoices = [];
   var effects = [];
   var speechDucking = null;
+  // Phase 1 isolation is opt-in through the no-options API. Existing Speech
+  // callers retain their option-based duck/stop policy until Phase 2 wiring.
+  var speechIsolation = { state: "idle", snapshot: null };
+  var speechIsolationQueue = Promise.resolve();
+  var centralRecoveryPromise = null;
   var radioTraceSerial = 0;
   var canonicalAudioContext = null;
   var canonicalBuses = null;
@@ -945,6 +950,7 @@
   }
 
   function bgmEffectiveGain(track) {
+    if (speechIsolation.state !== "idle") return 0;
     return clampGain(track.baseVolume * track.envelope * policyMultiplier() * groupGain("BGM"));
   }
 
@@ -958,22 +964,36 @@
   }
 
   function applyBgmFallbackGain(track) {
+    if (speechIsolation.state !== "idle") {
+      try { if (track) track.audio.pause(); } catch (_) {}
+      return false;
+    }
     return !!(track && setSafeFallbackGain(track.audio, bgmEffectiveGain(track), "BGM"));
   }
 
   function applyOneShotFallbackGain(audio) {
+    if (speechIsolation.state !== "idle") return false;
     return !!(audio && audio.__eigoOneShotMix &&
       setSafeFallbackGain(audio, oneShotEffectiveGain(audio.__eigoOneShotMix), audio.__eigoOneShotMix.category));
   }
 
   function updateBusPolicy() {
+    var isolated = speechIsolation.state !== "idle";
     if (canonicalBuses) {
-      setGainValue(canonicalBuses.bgm, policyMultiplier() * groupGain("BGM"));
-      setGainValue(canonicalBuses.motif, motifDialogueMultiplier() * groupGain("MOTIF"));
+      setGainValue(canonicalBuses.bgm, isolated ? 0 : policyMultiplier() * groupGain("BGM"));
+      setGainValue(canonicalBuses.motif, isolated ? 0 : motifDialogueMultiplier() * groupGain("MOTIF"));
+      setGainValue(canonicalBuses.voice, isolated ? 0 : groupGain("VOICE"));
+      setGainValue(canonicalBuses.se, isolated ? 0 : groupGain("SE"));
+      setGainValue(canonicalBuses.effectVoice, isolated ? 0 : groupGain("VOICE"));
     }
     bgmTracks.forEach(function (track) {
       var effective = bgmEffectiveGain(track);
-      if (track.path === "fallback") applyBgmFallbackGain(track);
+      if (track.path === "fallback") {
+        if (speechIsolation.state !== "idle") {
+          // Pause is platform-independent; isolation never relies on volume.
+          try { track.audio.pause(); } catch (_) {}
+        } else applyBgmFallbackGain(track);
+      }
       if (track.audio === bgm) {
         audioState.currentBgmAsset = track.asset;
         audioState.baseBgmVolume = track.baseVolume;
@@ -1047,6 +1067,13 @@
   }
 
   function safePlay(audio) {
+    if (speechIsolation.state !== "idle") {
+      if (audio.__eigoBgmTrack) {
+        try { audio.pause(); } catch (_) {}
+      } else stop(audio);
+      audio.__eigoPlaybackOutcome = Promise.resolve({ ok: true, suppressed: true, error: null });
+      return audio;
+    }
     var playback;
     try {
       if (audio.__eigoRadioTrace) voiceTrace("radio-audio-play-call", audio.__eigoRadioTrace);
@@ -1229,6 +1256,7 @@
   }
 
   function resetHeldSpeechPolicy() {
+    if (speechIsolation.state !== "idle") return;
     speechDucking = null;
     if (!audioState.speechMode.active) {
       audioState.speechMode.held = false;
@@ -1844,6 +1872,7 @@
   }
 
   function stopAll() {
+    speechIsolation.snapshot = null;
     stopBgm();
     voices.concat(effects).forEach(stop);
     voices = [];
@@ -2164,7 +2193,7 @@
     );
     resetCentralRecoveryCandidate();
     audioTrace("CENTRAL_AUDIO_RECOVERY", centralRecoveryPublicState());
-    rebuildCentralAudioEngine();
+    centralRecoveryPromise = rebuildCentralAudioEngine();
     return true;
   }
 
@@ -2179,7 +2208,7 @@
     speechDucking = { armed: true, active: false, restore: options.restore !== false };
   }
 
-  async function enterSpeechMode(options) {
+  async function enterLegacySpeechMode(options) {
     options = options || {};
     var preserveBgm = options.preserveBgm === true;
     stopOneShots();
@@ -2198,7 +2227,7 @@
     return !!(bgm && !bgm.paused);
   }
 
-  async function exitSpeechMode(options) {
+  async function exitLegacySpeechMode(options) {
     options = options || {};
     var restore = options.restore !== false;
     audioState.speechMode.active = false;
@@ -2209,18 +2238,119 @@
     audioState.speechMode.preserveBgm = false;
   }
 
+  function speechBgmIsStoryValid(audio) {
+    var track = audio && audio.__eigoBgmTrack;
+    return !!(audio && audio === bgm && track && audio.__eigoStopped !== true &&
+      bgmTracks.indexOf(track) !== -1 && track.fadeState !== "stopped" &&
+      track.fadeState !== "fade-out" && track.fadeState !== "crossfade-out");
+  }
+
+  function snapshotSpeechBgm() {
+    var snapshot = snapshotCentralRecoveryBgm();
+    if (!snapshot && centralRecoveryState.pendingBgmSnapshot &&
+        centralRecoveryState.expectedRequestSerial === bgmRequestSerial) {
+      snapshot = Object.assign({}, centralRecoveryState.pendingBgmSnapshot);
+    }
+    if (!snapshot) return null;
+    snapshot.baseGain = snapshot.baseVolume;
+    snapshot.storyValid = speechBgmIsStoryValid(bgm) || !!(centralRecoveryState.pendingBgmSnapshot &&
+      centralRecoveryState.expectedRequestSerial === bgmRequestSerial);
+    snapshot.requestSerial = bgmRequestSerial;
+    snapshot.duckState = {
+      dialogue: Object.assign({}, audioState.duckState.dialogue),
+      speech: Object.assign({}, audioState.duckState.speech)
+    };
+    return snapshot;
+  }
+
+  function queueSpeechIsolation(operation) {
+    var result = speechIsolationQueue.then(operation);
+    speechIsolationQueue = result.catch(function () { return false; });
+    return result;
+  }
+
+  function enterSpeechMode(options) {
+    // Explicit options always belong to the pre-existing legacy lifecycle.
+    // Its bookkeeping may continue, but updateBusPolicy keeps every canonical
+    // bus at zero while SpeechEngine.listen() owns isolation.
+    if (options !== undefined) return enterLegacySpeechMode(options);
+    return queueSpeechIsolation(async function () {
+      if (speechIsolation.state === "active") return true;
+      // Let the existing fatal-loss detector confirm any loss before pausing.
+      monitorCentralAudioRecovery();
+      speechIsolation.snapshot = snapshotSpeechBgm();
+      speechIsolation.state = "entering";
+      updateBusPolicy();
+      bgmTracks.slice().forEach(function (track) {
+        try { track.audio.pause(); } catch (_) {}
+      });
+      stopOneShots();
+      stopDialogueVoices();
+      // Keep all canonical Master/Bus nodes and every gain/duck calibration.
+      updateBusPolicy();
+      speechIsolation.state = "active";
+      return true;
+    });
+  }
+
+  function exitSpeechMode(options) {
+    if (options !== undefined) return exitLegacySpeechMode(options);
+    return queueSpeechIsolation(async function () {
+      if (speechIsolation.state === "idle") return true;
+      speechIsolation.state = "exiting";
+      // SOURCE LOST rebuilding remains owned by Central Audio Recovery.
+      if (centralRecoveryPromise) await centralRecoveryPromise;
+      var running = await ensureCanonicalAudioContextRunning();
+      if (!running || !canonicalAudioContext || canonicalAudioContext.state !== "running") {
+        // Keep isolation closed; a trusted gesture can run the existing recovery,
+        // then the caller may retry exit. Never restore through a fallback here.
+        speechIsolation.state = "active";
+        audioOutputRecoveryRequired = true;
+        audioLifecycleTraceState.recoveryRequired = true;
+        unlockComplete = false;
+        installUnlockGesture();
+        return false;
+      }
+      if (centralRecoveryState.state === "resume-pending" ||
+          (centralRecoveryState.state === "failed" && centralRecoveryState.pendingBgmSnapshot)) {
+        centralRecoveryState.state = "resume-pending";
+        restoreCentralRecoveryBgm();
+      }
+      if (audioOutputRecoveryRequired) recoverCurrentBgmAfterContextResume();
+      // Story play/stop requests made during Speech supersede the entry snapshot.
+      // Use the live managed BGM; never resurrect the historical entry asset.
+      var current = speechBgmIsStoryValid(bgm) ? bgm : null;
+      bgmTracks.slice().forEach(function (track) {
+        if (track.audio !== current) stop(track.audio);
+      });
+      speechIsolation.state = "idle";
+      speechIsolation.snapshot = null;
+      updateBusPolicy();
+      if (current && (current.paused === true || current.ended === true)) {
+        var track = current.__eigoBgmTrack;
+        if (track.path === "pending") connectBgmTrack(track, bgmRequestSerial);
+        else if (track.path !== "fallback" || applyBgmFallbackGain(track)) {
+          noteAudioLiveStart(current, track.asset, "BGM");
+          safePlay(current);
+          watchBgmPlayback(current, bgmRequestSerial);
+        }
+      }
+      return true;
+    });
+  }
+
   async function beginSpeechDucking() {
     if (!speechDucking || !speechDucking.armed) return false;
     if (speechDucking.active) return true;
     speechDucking.active = true;
-    return enterSpeechMode({ preserveBgm: true });
+    return enterLegacySpeechMode({ preserveBgm: true });
   }
 
   async function finishSpeechDucking(restore) {
     var current = speechDucking;
     speechDucking = null;
     if (!current || !current.active) return;
-    await exitSpeechMode({ restore: restore !== false });
+    await exitLegacySpeechMode({ restore: restore !== false });
   }
 
   function getAudioState() {
@@ -2236,7 +2366,16 @@
         dialogueOwners: audioState.duckState.dialogue.owners,
         speechMultiplier: audioState.duckState.speech.multiplier
       },
-      speechMode: Object.assign({}, audioState.speechMode),
+      speechMode: Object.assign({}, audioState.speechMode, {
+        state: speechIsolation.state,
+        active: speechIsolation.state !== "idle" || audioState.speechMode.active,
+        snapshot: speechIsolation.snapshot ? Object.assign({}, speechIsolation.snapshot, {
+          duckState: {
+            dialogue: Object.assign({}, speechIsolation.snapshot.duckState.dialogue),
+            speech: Object.assign({}, speechIsolation.snapshot.duckState.speech)
+          }
+        }) : null
+      }),
       voicePlaying: audioState.voicePlaying,
       audioContextState: canonicalAudioContext ? canonicalAudioContext.state : "uninitialized",
       unlockComplete: unlockComplete,

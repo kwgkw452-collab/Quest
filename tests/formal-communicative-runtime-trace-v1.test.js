@@ -13,8 +13,8 @@ const hash = file => crypto.createHash("sha256").update(fs.readFileSync(path.joi
 const protectedHashes = {
   "index.html": "55ced928708de0c777738be50358c392b257a60a9c5fe7456a0ac46ca01bc1e8",
   "engine/services/speech-recognition-adapter.js": "1261497515055b11c6caa0d26eb8773d848d656bc17ba7a5c9f7b53798b365ad",
-  "engine/services/speech-engine.js": "3318e03a55a2506fccfeca2481d0b286e69074c63f5539d73b1b5b27e6371264",
-  "engine/services/speech-start-controller.js": "73ea61ec3cc4a2532b220f298d2e48d8e66d03fac9901cbf4662bc89c65a883b",
+  "engine/services/speech-engine.js": "a2a9242796cb2cba759ee99d270a1ee0e3e11a761314546a376135b645bc1e13",
+  "engine/services/speech-start-controller.js": "f6d1224d0ae71f8ee12067f0ede79650dae84a88d2c68b7ce474ce48c24b8161",
   "engine/managers/monster-battle-manager.js": "0451a45a75e35c9c4418f40126e55d8659cbbf407deca78089f9c12058026ee3",
   "engine/managers/morning-manager.js": "f123747d417d3aa632d84ca828ffa0ff85c8b14f62753ad8a77655e56e819856"
 };
