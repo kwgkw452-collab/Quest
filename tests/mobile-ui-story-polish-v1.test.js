@@ -50,8 +50,8 @@ assert(read("index.html").includes("css/style.css?v=mobile-ui-story-polish-v1-1"
 assert(read("dev.html").includes("css/style.css?v=mobile-ui-story-polish-v1-1"));
 
 // AudioManager differs from Phase 1 only by approved Trace instrumentation and central recovery.
-assert.strictEqual(hash("engine/managers/audio-manager.js"), "fffd31e1d80de7e15cc324e7e6f3cd7257205cb609a6ea61d6b71f5941b3636b");
-assert.strictEqual(hash("engine/services/speech-recognition-adapter.js"), "1261497515055b11c6caa0d26eb8773d848d656bc17ba7a5c9f7b53798b365ad");
+assert.strictEqual(hash("engine/managers/audio-manager.js"), "9a52e0d24f9cc12bb30c32cbb4db3ae1cdb9544d3b75fa9cb4fdcb95e2b46f2b");
+assert.strictEqual(hash("engine/services/speech-recognition-adapter.js"), "9150d5bfd19f57d90ece2da3df3a074172f6c57fb17a4ec8fd13ae7268ee6c1c");
 assert.strictEqual(hash("engine/services/local-communicative-judge.js"), "d124c63e412c4e6553026141361ab608da5603bd29854f93f6b8c06bf1f57e58");
 assert.strictEqual(hash("engine/services/communicative-judge.js"), "a8b8482768e480f609ff9b569774509a881d503769ca5f3452783ff94c7ecb04");
 assert.strictEqual(hash("data/monsters.js"), "af1afabcf11f4536eacb69b8370c465273b1b9adce8e98b94b69bac4e38b8073");

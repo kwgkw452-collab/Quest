@@ -4,6 +4,14 @@
   var RecognitionClass = window.SpeechRecognition || window.webkitSpeechRecognition;
   var activeRecognition = null;
 
+  function teardownTrace(type, detail) {
+    try {
+      if (window.GainNodeVoiceRuntimeTrace && typeof GainNodeVoiceRuntimeTrace.record === "function") {
+        GainNodeVoiceRuntimeTrace.record(type, detail || {});
+      }
+    } catch (_) {}
+  }
+
   function s005Trace(options, eventName, detail) {
     var questionId = options && options.s005TraceQuestionId;
     if (typeof questionId !== "string" || questionId.indexOf("s005.communication.") !== 0) return;
@@ -12,6 +20,7 @@
 
   function stop() {
     if (!activeRecognition) return;
+    teardownTrace("recognition-stop-call", { reason: "adapter-stop" });
     try { activeRecognition.stop(); } catch (error) { /* already stopped */ }
   }
 
@@ -46,9 +55,13 @@
         if (timeoutId) window.clearTimeout(timeoutId);
         if (activeRecognition === recognition) activeRecognition = null;
         if (kind === "resolve") {
+          teardownTrace("adapter-resolve");
           legacyTrace("adapter-resolve", { transcript: String(value || "") });
           resolve(value);
         } else {
+          teardownTrace("adapter-reject", {
+            error: value && value.message ? value.message : String(value || "speech-error")
+          });
           legacyTrace("adapter-reject", Object.assign({
             error: value && value.message ? value.message : String(value || "speech-error")
           }, legacyTraceContext && legacyTraceContext.questionId === "phrase.come_with_us" ? {
@@ -65,6 +78,7 @@
       recognition.maxAlternatives = options.maxAlternatives || 1;
 
       recognition.onstart = function () {
+        teardownTrace("recognition-onstart");
         legacyTrace("recognition-onstart");
         if (typeof options.onStart === "function") options.onStart();
       };
@@ -89,6 +103,7 @@
             primaryConfidence: resultAlternatives.length ? resultAlternatives[0].confidence : null,
             alternatives: resultAlternatives
           });
+          teardownTrace("recognition-result", { final: Boolean(event.results[i].isFinal) });
           s005Trace(options, "recognition-result", {
             transcript: String(transcript || "").trim(),
             isFinal: Boolean(event.results[i].isFinal),
@@ -119,6 +134,7 @@
 
       recognition.onerror = function (event) {
         lastError = event.error || "speech-error";
+        teardownTrace("recognition-onerror", { error: lastError });
         s005Trace(options, "recognition-error", { error: lastError });
         legacyTrace("recognition-error", {
           error: lastError,
@@ -133,6 +149,7 @@
 
       recognition.onend = function () {
         var result = finalText.trim();
+        teardownTrace("recognition-onend", { resultAvailable: Boolean(result) });
         s005Trace(options, "recognition-end", {
           finalText: result,
           latestInterim: latestInterim,
@@ -153,12 +170,14 @@
 
       if (options.timeoutMs > 0) {
         timeoutId = window.setTimeout(function () {
+          teardownTrace("recognition-stop-call", { reason: "timeout" });
           try { recognition.stop(); } catch (error) { /* ignore */ }
           finish("reject", new Error("speech-timeout"));
         }, options.timeoutMs);
       }
 
       try {
+        teardownTrace("recognition-start-call");
         legacyTrace("recognition-start-call");
         recognition.start();
       } catch (error) {

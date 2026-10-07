@@ -9,6 +9,14 @@
   var speechAudioRelease = Promise.resolve();
   var speechAudioRecoveryCleanup = null;
 
+  function teardownTrace(type, detail) {
+    try {
+      if (window.GainNodeVoiceRuntimeTrace && typeof GainNodeVoiceRuntimeTrace.record === "function") {
+        GainNodeVoiceRuntimeTrace.record(type, detail || {});
+      }
+    } catch (_) {}
+  }
+
   function retrySpeechAudioExitAfterRecovery() {
     if (speechAudioRecoveryCleanup || !window.document || typeof document.addEventListener !== "function") return;
     var events = ["pointerdown", "touchend", "click", "keydown"];
@@ -37,6 +45,7 @@
 
   function releaseSpeechAudio(attempt) {
     if (!attempt || attempt.released) return speechAudioRelease;
+    teardownTrace("release-speech-audio-start");
     attempt.released = true;
     if (speechAudioAttempt === attempt) speechAudioAttempt = null;
     speechAudioRelease = Promise.all([speechAudioRelease,
@@ -110,6 +119,7 @@
 
   async function listen(options) {
     options = options || {};
+    teardownTrace("speech-listen-enter");
     setStatus("listening");
     var audioAttempt = window.AudioManager && typeof AudioManager.enterSpeechMode === "function" &&
       typeof AudioManager.exitSpeechMode === "function" ? { cancelled: false, released: false, enterPromise: null } : null;
@@ -155,6 +165,7 @@
       emit("error", error);
       throw error;
     } finally {
+      teardownTrace("speech-listen-finally");
       if (keepAudioForImmediateRetry) finishSpeechAudio(audioAttempt);
       else await releaseSpeechAudio(audioAttempt);
       window.setTimeout(function () {
@@ -218,6 +229,7 @@
                 consecutiveExactCount += 1;
                 if (consecutiveExactCount < 2) return;
                 earlyCommitSelected = "hello";
+                teardownTrace("hello-early-commit");
                 if (attemptTraceContext && window.LegacySpeechTrace && typeof LegacySpeechTrace.record === "function") {
                   LegacySpeechTrace.record(attemptTraceContext, "legacy-early-commit-selected", {
                     candidate: primary,

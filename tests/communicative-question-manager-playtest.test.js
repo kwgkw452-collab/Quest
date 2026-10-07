@@ -380,10 +380,10 @@ function field(label) {
   ok(read("dev/communicative-judge-pilot.js").includes("window.CommunicativeJudgePilot"), "Existing Pilot remains present");
 
   ok(!/fetch\s*\(|XMLHttpRequest|API_KEY|Gemini|OpenAI/.test(source), "No Provider, fetch, or API key is added");
-  equal(hash("index.html"), "55ced928708de0c777738be50358c392b257a60a9c5fe7456a0ac46ca01bc1e8");
+  equal(hash("index.html"), "c2a52b5fcd272a2d35fa051134f5525e9edd7de5b81ab503ae2b089af7fa64cf");
   equal(hash("data/questions.js"), "7f94f150fff8ef7af49e4bd7f86614900eafb0fb1d3d772861142feb68d75904");
   equal(hash("engine/managers/question-manager.js"), "98047b0cb21bd12f4fd5e2c432ea28836a6b82b7b0a3067639781ad538d87c6d");
-  equal(hash("engine/services/speech-engine.js"), "a2a9242796cb2cba759ee99d270a1ee0e3e11a761314546a376135b645bc1e13");
+  equal(hash("engine/services/speech-engine.js"), "6b8241bbc9ad6a345ddeb104454a56477f71d235bce27bf49c5af74814d882aa");
   equal(hash("engine/services/speech-start-controller.js"), "f6d1224d0ae71f8ee12067f0ede79650dae84a88d2c68b7ce474ce48c24b8161");
   equal(hash("engine/services/communicative-question-adapter.js"), "1fe6fbb7090c6d61c666771edcab963b23596ba399e59fa3650503d4c3473e3f");
   equal(hash("engine/services/communicative-judge.js"), "a8b8482768e480f609ff9b569774509a881d503769ca5f3452783ff94c7ecb04");

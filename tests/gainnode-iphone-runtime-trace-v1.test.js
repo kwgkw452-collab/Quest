@@ -56,7 +56,8 @@ assert(manager.includes('action: "safe-suppress"'));
 
 for (const page of ["index.html", "dev.html"]) {
   const html = read(page);
-  assert(html.includes("engine/managers/audio-manager.js?v=gainnode-confirmed-regression-fix-v1"), `${page}: runtime cache version`);
+  const audioManagerVersion = page === "index.html" ? "iphone-speech-teardown-order-trace-v2" : "gainnode-confirmed-regression-fix-v1";
+  assert(html.includes(`engine/managers/audio-manager.js?v=${audioManagerVersion}`), `${page}: runtime cache version`);
 }
 
 console.log("GainNode iPhone Runtime Trace V1: PASS");

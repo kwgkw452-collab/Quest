@@ -22,7 +22,12 @@ const fixedVersions = {
   "engine/services/communicative-judge.js": "s005-rule-real-browser-trace-v1",
   "engine/managers/question-manager.js": "s005-rule-real-browser-trace-v1"
 };
-const versioned = asset => `${asset}?v=${fixedVersions[asset] || (phaseA2Assets.has(asset) ? "s005-phase-a2-v1" : VERSION)}`;
+const versioned = (asset, page) => {
+  if (page === "index" && (asset === "engine/services/speech-recognition-adapter.js" || asset === "engine/services/speech-engine.js")) {
+    return `${asset}?v=iphone-speech-teardown-order-trace-v2`;
+  }
+  return `${asset}?v=${fixedVersions[asset] || (phaseA2Assets.has(asset) ? "s005-phase-a2-v1" : VERSION)}`;
+};
 const sharedAssets = [
   "data/questions.js",
   "data/communicative-judge-rules.js",
@@ -51,23 +56,25 @@ assert.strictEqual(indexScripts.filter(value => value === "engine/core/story-eng
 assert.strictEqual(devScripts.filter(value => value === `engine/core/story-engine.js?v=${VERSION}`).length, 1);
 
 for (const asset of sharedAssets) {
-  const expected = versioned(asset);
-  assert.strictEqual(indexScripts.filter(value => value === expected).length, 1, `index loads ${expected} once`);
-  assert.strictEqual(devScripts.filter(value => value === expected).length, 1, `dev loads ${expected} once`);
-  assert.strictEqual(indexScripts.find(value => value.split("?")[0] === asset), expected, `index URL for ${asset}`);
-  assert.strictEqual(devScripts.find(value => value.split("?")[0] === asset), expected, `dev URL for ${asset}`);
+  const indexExpected = versioned(asset, "index");
+  const devExpected = versioned(asset, "dev");
+  assert.strictEqual(indexScripts.filter(value => value === indexExpected).length, 1, `index loads ${indexExpected} once`);
+  assert.strictEqual(devScripts.filter(value => value === devExpected).length, 1, `dev loads ${devExpected} once`);
+  assert.strictEqual(indexScripts.find(value => value.split("?")[0] === asset), indexExpected, `index URL for ${asset}`);
+  assert.strictEqual(devScripts.find(value => value.split("?")[0] === asset), devExpected, `dev URL for ${asset}`);
 }
 
-for (const list of [indexScripts, devScripts]) {
+for (const [page, list] of [["index", indexScripts], ["dev", devScripts]]) {
   let previous = -1;
   for (const asset of sharedAssets) {
-    const current = list.indexOf(versioned(asset));
+    const current = list.indexOf(versioned(asset, page));
     assert(current > previous, `Formal dependency order: ${asset}`);
     previous = current;
   }
 }
 
-assert.strictEqual((indexHtml.match(/\?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1/g) || []).length, 5);
+assert.strictEqual((indexHtml.match(/\?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1/g) || []).length, 3);
+assert.strictEqual((indexHtml.match(/\?v=iphone-speech-teardown-order-trace-v2/g) || []).length, 3);
 assert.strictEqual((devHtml.match(/\?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1/g) || []).length, 6);
 assert(!indexHtml.includes("dev/formal-speech-trace.js"), "index must not load Formal trace");
 assert(devHtml.includes("dev/formal-speech-trace.js?v=communicative-formal-trace-v1"), "dev keeps Formal trace");
@@ -76,8 +83,8 @@ const protectedHashes = {
   "data/questions.js": "7f94f150fff8ef7af49e4bd7f86614900eafb0fb1d3d772861142feb68d75904",
   "data/communicative-judge-rules.js": "acae74a247318a54ef09ac75c04c444c14dedc798c67abf3b793fc0529dd9279",
   "engine/services/speech-normalizer.js": "c891131b3fc76dafa87f4500e2f5913eb0d2d4d1ee94ae7350a5b2e6a6f61e6f",
-  "engine/services/speech-recognition-adapter.js": "1261497515055b11c6caa0d26eb8773d848d656bc17ba7a5c9f7b53798b365ad",
-  "engine/services/speech-engine.js": "a2a9242796cb2cba759ee99d270a1ee0e3e11a761314546a376135b645bc1e13",
+  "engine/services/speech-recognition-adapter.js": "9150d5bfd19f57d90ece2da3df3a074172f6c57fb17a4ec8fd13ae7268ee6c1c",
+  "engine/services/speech-engine.js": "6b8241bbc9ad6a345ddeb104454a56477f71d235bce27bf49c5af74814d882aa",
   "engine/services/speech-start-controller.js": "f6d1224d0ae71f8ee12067f0ede79650dae84a88d2c68b7ce474ce48c24b8161",
   "engine/services/local-communicative-judge.js": "d124c63e412c4e6553026141361ab608da5603bd29854f93f6b8c06bf1f57e58",
   "engine/services/communicative-judge.js": "a8b8482768e480f609ff9b569774509a881d503769ca5f3452783ff94c7ecb04",

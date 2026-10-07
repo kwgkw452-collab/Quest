@@ -120,7 +120,7 @@ function legacyRun(errorCode, choices) {
   assert(!JSON.stringify({ controlResult: "adventure_return" }).includes("UNKNOWN"));
 
   assert.strictEqual(sha("engine/services/speech-engine.js"),
-    "a2a9242796cb2cba759ee99d270a1ee0e3e11a761314546a376135b645bc1e13");
+    "6b8241bbc9ad6a345ddeb104454a56477f71d235bce27bf49c5af74814d882aa");
   assert.strictEqual(sha("engine/managers/question-manager.js"),
     "98047b0cb21bd12f4fd5e2c432ea28836a6b82b7b0a3067639781ad538d87c6d");
   assert.strictEqual(sha("data/questions.js"),

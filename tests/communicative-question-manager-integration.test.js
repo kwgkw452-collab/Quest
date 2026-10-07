@@ -283,9 +283,9 @@ function queueDeferredSpeech(pending, transcript, alternatives) {
   equal(hash("engine/managers/monster-battle-manager.js"), "0451a45a75e35c9c4418f40126e55d8659cbbf407deca78089f9c12058026ee3");
   equal(hash("data/mornings.js"), "89007415f111ab883dd2a10b47e9a7026608bfd377dd8ee1ec7ad0f5d9027470");
   equal(hash("engine/managers/morning-manager.js"), "f123747d417d3aa632d84ca828ffa0ff85c8b14f62753ad8a77655e56e819856");
-  equal(hash("index.html"), "55ced928708de0c777738be50358c392b257a60a9c5fe7456a0ac46ca01bc1e8");
+  equal(hash("index.html"), "c2a52b5fcd272a2d35fa051134f5525e9edd7de5b81ab503ae2b089af7fa64cf");
   equal(hash("dev.html"), "684c08cda8dd34155c6eb8b6fc2fac57c94333898a34a150fa642ab4c9a404ee");
-  equal(hash("engine/services/speech-engine.js"), "a2a9242796cb2cba759ee99d270a1ee0e3e11a761314546a376135b645bc1e13");
+  equal(hash("engine/services/speech-engine.js"), "6b8241bbc9ad6a345ddeb104454a56477f71d235bce27bf49c5af74814d882aa");
   equal(hash("engine/services/speech-start-controller.js"), "f6d1224d0ae71f8ee12067f0ede79650dae84a88d2c68b7ce474ce48c24b8161");
   equal(hash("engine/services/communicative-question-adapter.js"), "1fe6fbb7090c6d61c666771edcab963b23596ba399e59fa3650503d4c3473e3f");
   equal(hash("engine/services/communicative-judge.js"), "a8b8482768e480f609ff9b569774509a881d503769ca5f3452783ff94c7ecb04");

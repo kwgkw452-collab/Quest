@@ -3,6 +3,7 @@
 
   var RUNTIME_VERSION = "audio-gainnode-unification-v1";
   var TRACE_VERSION = "iphone-audio-lifecycle-trace-v1";
+  var SPEECH_TRACE_VERSION = "iphone-speech-teardown-order-trace-v2";
   var RECOVERY_VERSION = "audio-context-interrupted-recovery-fix-v1";
   var SIGNAL_TRACE_VERSION = "running-but-silent-signal-trace-v1";
   var CENTRAL_RECOVERY_VERSION = "central-audio-recovery-v1";
@@ -110,6 +111,69 @@
     events: []
   };
 
+  var SPEECH_ORDER_STORAGE_LIMIT = 48;
+  var SPEECH_ORDER_DISPLAY_LIMIT = 30;
+  var SPEECH_ORDER_EVENT_TYPES = {
+    "speech-listen-enter": true,
+    "speech-mode-enter-start": true,
+    "speech-mode-active": true,
+    "recognition-start-call": true,
+    "recognition-onstart": true,
+    "recognition-result": true,
+    "hello-early-commit": true,
+    "release-speech-audio-start": true,
+    "recognition-stop-call": true,
+    "recognition-onerror": true,
+    "recognition-onend": true,
+    "adapter-resolve": true,
+    "adapter-reject": true,
+    "speech-listen-finally": true,
+    "exit-speech-mode-start": true,
+    "audio-context-before-resume": true,
+    "audio-context-resume-call": true,
+    "audio-context-resume-resolved": true,
+    "audio-context-resume-rejected": true,
+    "context-statechange": true,
+    "speech-mode-idle": true,
+    "bgm-restore-start": true,
+    "bgm-play-call": true,
+    "bgm-play-resolved": true,
+    "bgm-play-rejected": true,
+    "bgm-playing-event": true
+  };
+  var SPEECH_ORDER_EVENT_LABELS = {
+    "speech-listen-enter": "listen-enter",
+    "speech-mode-enter-start": "mode-enter",
+    "speech-mode-active": "mode-active",
+    "recognition-start-call": "rec-start",
+    "recognition-onstart": "rec-onstart",
+    "recognition-result": "rec-result",
+    "hello-early-commit": "early-commit",
+    "release-speech-audio-start": "release-start",
+    "recognition-stop-call": "rec-stop",
+    "recognition-onerror": "rec-error",
+    "recognition-onend": "rec-onend",
+    "adapter-resolve": "adapter-ok",
+    "adapter-reject": "adapter-error",
+    "speech-listen-finally": "listen-finally",
+    "exit-speech-mode-start": "exit-start",
+    "audio-context-before-resume": "ctx-before-resume",
+    "audio-context-resume-call": "ctx-resume",
+    "audio-context-resume-resolved": "ctx-resumed",
+    "audio-context-resume-rejected": "ctx-resume-error",
+    "context-statechange": "ctx-statechange",
+    "speech-mode-idle": "mode-idle",
+    "bgm-restore-start": "bgm-restore",
+    "bgm-play-call": "bgm-play",
+    "bgm-play-resolved": "bgm-play-ok",
+    "bgm-play-rejected": "bgm-play-error",
+    "bgm-playing-event": "bgm-playing"
+  };
+  var speechOrderTraceState = {
+    events: [],
+    resultSeen: { interim: false, final: false }
+  };
+
   function finiteTraceNumber(value) {
     var number = Number(value);
     return Number.isFinite(number) ? Math.round(number * 10000) / 10000 : null;
@@ -180,20 +244,51 @@
     };
   }
 
+  function audioSessionTraceSnapshot() {
+    try {
+      var session = window.navigator && navigator.audioSession;
+      if (!session) return { supported: false, label: "unsupported" };
+      var type = typeof session.type === "string" ? session.type : "unavailable";
+      var state = typeof session.state === "string" ? session.state : "unavailable";
+      return { supported: true, type: type, state: state, label: type + "/" + state };
+    } catch (_) {
+      return { supported: false, label: "unavailable" };
+    }
+  }
+
+  function recordSpeechOrderEvent(record) {
+    if (!record || !SPEECH_ORDER_EVENT_TYPES[record.type]) return;
+    if (record.type === "speech-listen-enter") {
+      speechOrderTraceState.resultSeen = { interim: false, final: false };
+    }
+    if (record.type === "recognition-result") {
+      var resultType = record.final === true ? "final" : "interim";
+      if (speechOrderTraceState.resultSeen[resultType]) return;
+      speechOrderTraceState.resultSeen[resultType] = true;
+    }
+    speechOrderTraceState.events.push(record);
+    if (speechOrderTraceState.events.length > SPEECH_ORDER_STORAGE_LIMIT) {
+      speechOrderTraceState.events.shift();
+    }
+  }
+
   function recordAudioLifecycleEvent(type, detail) {
     if (!voiceRuntimeTraceState.panelEnabled) return;
     var live = liveAudioSnapshot();
     var context = contextLifecycleSnapshot();
+    var audioSession = audioSessionTraceSnapshot();
     var record = Object.assign({
       type: type,
       at: Date.now(),
       contextState: context.state,
+      audioSession: audioSession.label,
       bgmPlaying: live.bgmPlaying.length,
       motifPlaying: live.motifs.length,
       voicePlaying: live.voicePlaying.length
     }, detail || {});
     audioLifecycleTraceState.events.push(record);
     if (audioLifecycleTraceState.events.length > 20) audioLifecycleTraceState.events.shift();
+    recordSpeechOrderEvent(record);
     renderVoiceRuntimeTracePanel();
   }
 
@@ -543,10 +638,22 @@
       if (event.resumeCalled !== undefined) extra += " resume=" + event.resumeCalled;
       if (event.result) extra += " " + event.result;
       return traceClock(event.at) + " " + event.type + extra + " ctx=" + event.contextState +
+        " session=" + stringifyTraceValue(event.audioSession) +
         " b/m/v=" + event.bgmPlaying + "/" + event.motifPlaying + "/" + event.voicePlaying;
+    });
+    var speechOrderLines = speechOrderTraceState.events.slice(-SPEECH_ORDER_DISPLAY_LIMIT).map(function (event) {
+      var date = new Date(event.at || Date.now());
+      var seconds = String(date.getSeconds()).padStart(2, "0") + "." +
+        String(date.getMilliseconds()).padStart(3, "0");
+      var label = SPEECH_ORDER_EVENT_LABELS[event.type] || event.type;
+      if (event.type === "recognition-result") label += event.final === true ? "-final" : "-interim";
+      return seconds + " " + label + " session=" + stringifyTraceValue(event.audioSession);
     });
     var lines = [
       "Runtime: " + RUNTIME_VERSION + " | Signal: " + SIGNAL_TRACE_VERSION,
+      "Speech Trace: " + SPEECH_TRACE_VERSION,
+      "SPEECH ORDER (latest " + speechOrderLines.length + "/" + SPEECH_ORDER_STORAGE_LIMIT + "):"
+    ].concat(speechOrderLines).concat([
       "CTX: " + context.state + " #" + stringifyTraceValue(context.id) + " t=" + stringifyTraceValue(context.currentTime) +
         " statechanges=" + audioLifecycleTraceState.stateChangeCount + " suspendSeen=" + audioLifecycleTraceState.suspendSeen +
         " recovery=" + audioLifecycleTraceState.recoveryRequired,
@@ -600,7 +707,7 @@
         " motif=" + snapshot.motifs.length + " voice=" + snapshot.voicePlaying.length +
         " same-src-max=" + snapshot.sameSourceMax + " (" + snapshot.sameSourceName + ")",
       "EVENT LOG (latest " + lifecycleLines.length + "):"
-    ];
+    ]);
     outputNode.textContent = lines.concat(lifecycleLines).join("\n");
   }
 
@@ -742,20 +849,27 @@
   async function ensureCanonicalAudioContextRunning() {
     var context = getCanonicalAudioContext();
     if (!context) return false;
+    recordAudioLifecycleEvent("audio-context-before-resume", { currentState: context.state || "unknown" });
     if (isRecoverableAudioContextState(context.state) && typeof context.resume === "function") {
       audioLifecycleTraceState.resumeCalls += 1;
       audioLifecycleTraceState.lastResumeAt = Date.now();
       audioLifecycleTraceState.lastResumeResult = "pending";
       recordAudioLifecycleEvent("resume-call", { result: "pending" });
+      recordAudioLifecycleEvent("audio-context-resume-call", { currentState: context.state || "unknown" });
       try {
         await context.resume();
         audioLifecycleTraceState.resumeSuccess += 1;
         audioLifecycleTraceState.lastResumeResult = "success";
         recordAudioLifecycleEvent("resume-success", { result: "success" });
+        recordAudioLifecycleEvent("audio-context-resume-resolved", { currentState: context.state || "unknown" });
       } catch (error) {
         audioLifecycleTraceState.resumeReject += 1;
         audioLifecycleTraceState.lastResumeResult = "reject";
         recordAudioLifecycleEvent("resume-reject", { result: "reject", error: String(error) });
+        recordAudioLifecycleEvent("audio-context-resume-rejected", {
+          currentState: context.state || "unknown",
+          error: String(error)
+        });
         audioTrace("AUDIO_CONTEXT_STATE", { state: context.state || "unknown", resume: "failed", error: String(error) });
         return false;
       }
@@ -1077,16 +1191,42 @@
     var playback;
     try {
       if (audio.__eigoRadioTrace) voiceTrace("radio-audio-play-call", audio.__eigoRadioTrace);
+      if (audio.__eigoBgmTrack) {
+        recordAudioLifecycleEvent("bgm-play-call", {
+          asset: audio.__eigoBgmTrack.asset,
+          instanceId: audio.__eigoTraceInstanceId || null
+        });
+      }
       var result = audio.play();
       playback = result && typeof result.then === "function" ? Promise.resolve(result).then(function () {
         if (audio.__eigoRadioTrace) voiceTrace("radio-audio-play-resolved", audio.__eigoRadioTrace);
+        if (audio.__eigoBgmTrack) {
+          recordAudioLifecycleEvent("bgm-play-resolved", {
+            asset: audio.__eigoBgmTrack.asset,
+            instanceId: audio.__eigoTraceInstanceId || null
+          });
+        }
         return { ok: true, error: null };
       }, function (error) {
         if (audio.__eigoRadioTrace) voiceTrace("radio-audio-play-rejected", audio.__eigoRadioTrace, { error: String(error) });
+        if (audio.__eigoBgmTrack) {
+          recordAudioLifecycleEvent("bgm-play-rejected", {
+            asset: audio.__eigoBgmTrack.asset,
+            instanceId: audio.__eigoTraceInstanceId || null,
+            error: String(error)
+          });
+        }
         console.warn("Audio playback was blocked or failed:", error);
         return { ok: false, error: error };
       }) : Promise.resolve({ ok: true, error: null });
     } catch (error) {
+      if (audio.__eigoBgmTrack) {
+        recordAudioLifecycleEvent("bgm-play-rejected", {
+          asset: audio.__eigoBgmTrack.asset,
+          instanceId: audio.__eigoTraceInstanceId || null,
+          error: String(error)
+        });
+      }
       console.warn("Audio playback was blocked or failed:", error);
       playback = Promise.resolve({ ok: false, error: error });
     }
@@ -1170,6 +1310,14 @@
     };
     audio.__eigoBgmTrack = track;
     ensureAudioInstanceTrace(audio, asset, "BGM");
+    if (typeof audio.addEventListener === "function") {
+      audio.addEventListener("playing", function () {
+        recordAudioLifecycleEvent("bgm-playing-event", {
+          asset: track.asset,
+          instanceId: audio.__eigoTraceInstanceId || null
+        });
+      });
+    }
     audio.volume = 1;
     bgmTracks.push(track);
     return track;
@@ -2276,6 +2424,7 @@
     if (options !== undefined) return enterLegacySpeechMode(options);
     return queueSpeechIsolation(async function () {
       if (speechIsolation.state === "active") return true;
+      recordAudioLifecycleEvent("speech-mode-enter-start");
       // Let the existing fatal-loss detector confirm any loss before pausing.
       monitorCentralAudioRecovery();
       speechIsolation.snapshot = snapshotSpeechBgm();
@@ -2289,6 +2438,7 @@
       // Keep all canonical Master/Bus nodes and every gain/duck calibration.
       updateBusPolicy();
       speechIsolation.state = "active";
+      recordAudioLifecycleEvent("speech-mode-active");
       return true;
     });
   }
@@ -2297,6 +2447,7 @@
     if (options !== undefined) return exitLegacySpeechMode(options);
     return queueSpeechIsolation(async function () {
       if (speechIsolation.state === "idle") return true;
+      recordAudioLifecycleEvent("exit-speech-mode-start");
       speechIsolation.state = "exiting";
       // SOURCE LOST rebuilding remains owned by Central Audio Recovery.
       if (centralRecoveryPromise) await centralRecoveryPromise;
@@ -2323,9 +2474,14 @@
       bgmTracks.slice().forEach(function (track) {
         if (track.audio !== current) stop(track.audio);
       });
+      recordAudioLifecycleEvent("bgm-restore-start", {
+        asset: current && current.__eigoBgmTrack ? current.__eigoBgmTrack.asset : null,
+        instanceId: current && current.__eigoTraceInstanceId || null
+      });
       speechIsolation.state = "idle";
       speechIsolation.snapshot = null;
       updateBusPolicy();
+      recordAudioLifecycleEvent("speech-mode-idle");
       if (current && (current.paused === true || current.ended === true)) {
         var track = current.__eigoBgmTrack;
         if (track.path === "pending") connectBgmTrack(track, bgmRequestSerial);
@@ -2420,6 +2576,7 @@
   };
   window.GainNodeVoiceRuntimeTrace = {
     version: TRACE_VERSION,
+    speechTraceVersion: SPEECH_TRACE_VERSION,
     recoveryVersion: RECOVERY_VERSION,
     signalTraceVersion: SIGNAL_TRACE_VERSION,
     panelEnabled: function () { return voiceRuntimeTraceState.panelEnabled; },
@@ -2431,6 +2588,9 @@
     lifecycle: function () {
       return Object.assign({}, audioLifecycleTraceState, { events: audioLifecycleTraceState.events.slice() });
     },
+    speechOrder: function () { return speechOrderTraceState.events.slice(); },
+    audioSession: audioSessionTraceSnapshot,
+    record: recordAudioLifecycleEvent,
     render: renderVoiceRuntimeTracePanel
   };
   window.CentralAudioRecoveryTrace = {

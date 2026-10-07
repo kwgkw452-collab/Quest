@@ -11,9 +11,9 @@ const read = file => fs.readFileSync(path.join(root, file), "utf8");
 const hash = file => crypto.createHash("sha256").update(fs.readFileSync(path.join(root, file))).digest("hex");
 
 const protectedHashes = {
-  "index.html": "55ced928708de0c777738be50358c392b257a60a9c5fe7456a0ac46ca01bc1e8",
-  "engine/services/speech-recognition-adapter.js": "1261497515055b11c6caa0d26eb8773d848d656bc17ba7a5c9f7b53798b365ad",
-  "engine/services/speech-engine.js": "a2a9242796cb2cba759ee99d270a1ee0e3e11a761314546a376135b645bc1e13",
+  "index.html": "c2a52b5fcd272a2d35fa051134f5525e9edd7de5b81ab503ae2b089af7fa64cf",
+  "engine/services/speech-recognition-adapter.js": "9150d5bfd19f57d90ece2da3df3a074172f6c57fb17a4ec8fd13ae7268ee6c1c",
+  "engine/services/speech-engine.js": "6b8241bbc9ad6a345ddeb104454a56477f71d235bce27bf49c5af74814d882aa",
   "engine/services/speech-start-controller.js": "f6d1224d0ae71f8ee12067f0ede79650dae84a88d2c68b7ce474ce48c24b8161",
   "engine/managers/monster-battle-manager.js": "0451a45a75e35c9c4418f40126e55d8659cbbf407deca78089f9c12058026ee3",
   "engine/managers/morning-manager.js": "f123747d417d3aa632d84ca828ffa0ff85c8b14f62753ad8a77655e56e819856"

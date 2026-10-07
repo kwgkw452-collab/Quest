@@ -207,7 +207,8 @@ const close = (actual, expected, label) => assert.ok(Math.abs(actual - expected)
     for (const asset of ["data/audio-mix-profile.js", "data/voice-profiles.js", "engine/services/dialogue-voice-controller.js"]) {
       assert(html.includes(`${asset}?v=audio-gainnode-unification-v1`), `${page}: ${asset} cache version`);
     }
-    assert(html.includes("engine/managers/audio-manager.js?v=gainnode-confirmed-regression-fix-v1"), `${page}: AudioManager cache version`);
+    const audioManagerVersion = page === "index.html" ? "iphone-speech-teardown-order-trace-v2" : "gainnode-confirmed-regression-fix-v1";
+    assert(html.includes(`engine/managers/audio-manager.js?v=${audioManagerVersion}`), `${page}: AudioManager cache version`);
   }
   console.log("Audio GainNode Unification V1: PASS");
 })().catch(error => { console.error(error); process.exitCode = 1; });

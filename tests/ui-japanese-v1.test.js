@@ -68,7 +68,7 @@ const protectedHashes = {
   "data/questions.js": "7f94f150fff8ef7af49e4bd7f86614900eafb0fb1d3d772861142feb68d75904",
   "engine/services/communicative-judge.js": "a8b8482768e480f609ff9b569774509a881d503769ca5f3452783ff94c7ecb04",
   "engine/services/local-communicative-judge.js": "d124c63e412c4e6553026141361ab608da5603bd29854f93f6b8c06bf1f57e58",
-  "engine/services/speech-engine.js": "a2a9242796cb2cba759ee99d270a1ee0e3e11a761314546a376135b645bc1e13",
+  "engine/services/speech-engine.js": "6b8241bbc9ad6a345ddeb104454a56477f71d235bce27bf49c5af74814d882aa",
   "engine/managers/question-manager.js": "98047b0cb21bd12f4fd5e2c432ea28836a6b82b7b0a3067639781ad538d87c6d"
 };
 for (const [file, expected] of Object.entries(protectedHashes)) assert.strictEqual(hash(file), expected, file);
