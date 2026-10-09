@@ -11,7 +11,7 @@ const read = file => fs.readFileSync(path.join(root, file), "utf8");
 const hash = file => crypto.createHash("sha256").update(fs.readFileSync(path.join(root, file))).digest("hex");
 
 const protectedHashes = {
-  "engine/services/speech-recognition-adapter.js": "bf931fada76d33ed0067d9ab202e066557631e297eca5b3c72daf69b1da93353",
+  "engine/services/speech-recognition-adapter.js": "d44acdd663e52a668d15f2af74ff67d63d7df796da46cb881b991543c68f92db",
   "engine/services/speech-engine.js": "572453a24e542091eaf54e90fffa9c5d4f7e2c045b3706c2494d57748e526e39",
   "engine/services/speech-start-controller.js": "f6d1224d0ae71f8ee12067f0ede79650dae84a88d2c68b7ce474ce48c24b8161",
   "engine/managers/monster-battle-manager.js": "0451a45a75e35c9c4418f40126e55d8659cbbf407deca78089f9c12058026ee3",

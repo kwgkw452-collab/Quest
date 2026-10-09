@@ -380,7 +380,7 @@ function field(label) {
   ok(read("dev/communicative-judge-pilot.js").includes("window.CommunicativeJudgePilot"), "Existing Pilot remains present");
 
   ok(!/fetch\s*\(|XMLHttpRequest|API_KEY|Gemini|OpenAI/.test(source), "No Provider, fetch, or API key is added");
-  equal(hash("index.html"), "d4c1792306fb610beab1b4ace975b4d2e6bef5825c1430eeff3065704e329274");
+  equal(hash("index.html"), "dfa9b18d732e21bf95d62a51f36656e44ebfcf6a1321d22745cd802b79c323b0");
   equal(hash("data/questions.js"), "7f94f150fff8ef7af49e4bd7f86614900eafb0fb1d3d772861142feb68d75904");
   equal(hash("engine/managers/question-manager.js"), "98047b0cb21bd12f4fd5e2c432ea28836a6b82b7b0a3067639781ad538d87c6d");
   equal(hash("engine/services/speech-engine.js"), "572453a24e542091eaf54e90fffa9c5d4f7e2c045b3706c2494d57748e526e39");

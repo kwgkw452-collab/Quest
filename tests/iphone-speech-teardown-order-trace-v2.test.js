@@ -35,13 +35,11 @@ check(manager.includes("recordSpeechOrderEvent(record);\n    renderVoiceRuntimeT
 check(manager.includes('session=" + stringifyTraceValue(event.audioSession)'), "audio session is displayed for speech events");
 check(!/audioSession\s*\.\s*(type|state)\s*=/.test(manager + adapter + engine), "navigator.audioSession is read only");
 
-for (const runtimeFile of ["speech-recognition-adapter.js", "speech-engine.js"]) {
-  check(index.includes(`${runtimeFile}?v=iphone-speech-recognition-teardown-serialization-fix-v1`),
-    `serialization fix cache key: ${runtimeFile}`);
-}
-check(index.includes("audio-manager.js?v=iphone-speech-teardown-order-trace-v2"), "V2 cache key: audio-manager.js");
+check(index.includes("speech-recognition-adapter.js?v=iphone-speech-native-mic-release-boundary-trace-v1"), "mic release trace cache key: speech-recognition-adapter.js");
+check(index.includes("speech-engine.js?v=iphone-speech-recognition-teardown-serialization-fix-v1"), "serialization fix cache key: speech-engine.js");
+check(index.includes("audio-manager.js?v=iphone-speech-native-mic-release-boundary-trace-v1"), "mic release trace cache key: audio-manager.js");
 
-check(hash(adapter) === "bf931fada76d33ed0067d9ab202e066557631e297eca5b3c72daf69b1da93353", "Recognition adapter matches teardown serialization fix");
+check(hash(adapter) === "d44acdd663e52a668d15f2af74ff67d63d7df796da46cb881b991543c68f92db", "Recognition adapter matches mic release boundary trace");
 check(hash(engine) === "572453a24e542091eaf54e90fffa9c5d4f7e2c045b3706c2494d57748e526e39", "Speech engine matches teardown serialization fix");
 check(hash(startController) === "f6d1224d0ae71f8ee12067f0ede79650dae84a88d2c68b7ce474ce48c24b8161", "SpeechStartController is unchanged from V1");
 

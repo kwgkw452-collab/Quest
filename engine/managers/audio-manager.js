@@ -649,11 +649,26 @@
       if (event.type === "recognition-result") label += event.final === true ? "-final" : "-interim";
       return seconds + " " + label + " session=" + stringifyTraceValue(event.audioSession);
     });
+    var micReleaseVersion = window.MicReleaseTrace && MicReleaseTrace.version ||
+      "iphone-speech-native-mic-release-boundary-trace-v1";
+    var micReleaseEvents = window.MicReleaseTrace && typeof MicReleaseTrace.events === "function" ?
+      MicReleaseTrace.events() : [];
+    var micReleaseLines = micReleaseEvents.slice(-32).map(function (event) {
+      var stopReason = event.stopReason ? " reason=" + event.stopReason : "";
+      var error = event.error ? " error=" + event.error : "";
+      return traceClock(event.at) + " " + stringifyTraceValue(event.instanceId) + " " + event.type +
+        " active=" + stringifyTraceValue(event.activeRecognitionId) + "/null=" + event.activeRecognitionNull +
+        " ctx=" + event.audioContextState + " speech=" + event.speechModeState + " session=" +
+        event.audioSessionType + "/" + event.audioSessionState + stopReason + error;
+    });
     var lines = [
       "Runtime: " + RUNTIME_VERSION + " | Signal: " + SIGNAL_TRACE_VERSION,
+      "Mic Release Trace: " + micReleaseVersion,
+      "MIC RELEASE ORDER (latest " + micReleaseLines.length + "/64):"
+    ].concat(micReleaseLines).concat([
       "Speech Trace: " + SPEECH_TRACE_VERSION,
       "SPEECH ORDER (latest " + speechOrderLines.length + "/" + SPEECH_ORDER_STORAGE_LIMIT + "):"
-    ].concat(speechOrderLines).concat([
+    ]).concat(speechOrderLines).concat([
       "CTX: " + context.state + " #" + stringifyTraceValue(context.id) + " t=" + stringifyTraceValue(context.currentTime) +
         " statechanges=" + audioLifecycleTraceState.stateChangeCount + " suspendSeen=" + audioLifecycleTraceState.suspendSeen +
         " recovery=" + audioLifecycleTraceState.recoveryRequired,
