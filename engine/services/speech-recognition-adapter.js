@@ -47,6 +47,7 @@
       var latestInterim = "";
       var latestAlternatives = [];
       var lastError = null;
+      var pendingTerminalError = null;
       activeRecognition = recognition;
 
       function finish(kind, value) {
@@ -144,7 +145,10 @@
           latestInterim: latestInterim,
           alternatives: latestAlternatives.slice()
         });
-        finish("reject", new Error(event.error || "speech-error"));
+        // A started Web Speech recognition owns its teardown through onend.
+        // Preserve the error verdict, but do not let the caller restore Audio
+        // buses while the browser's recognition session is still ending.
+        if (!pendingTerminalError) pendingTerminalError = new Error(lastError);
       };
 
       recognition.onend = function () {
@@ -164,7 +168,8 @@
           candidateCount: latestAlternatives.length,
           lastError: lastError
         });
-        if (result) finish("resolve", result);
+        if (pendingTerminalError) finish("reject", pendingTerminalError);
+        else if (result) finish("resolve", result);
         else finish("reject", new Error("no-speech"));
       };
 
@@ -172,7 +177,10 @@
         timeoutId = window.setTimeout(function () {
           teardownTrace("recognition-stop-call", { reason: "timeout" });
           try { recognition.stop(); } catch (error) { /* ignore */ }
-          finish("reject", new Error("speech-timeout"));
+          // Preserve the existing synchronous-stop outcome (onend may have
+          // already selected no-speech). For the browser's normal async end,
+          // retain speech-timeout until onend completes teardown.
+          if (!settled && !pendingTerminalError) pendingTerminalError = new Error("speech-timeout");
         }, options.timeoutMs);
       }
 

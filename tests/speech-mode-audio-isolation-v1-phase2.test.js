@@ -251,8 +251,12 @@ async function restored(r) { await wait(5); await flush(); check(r.context.Audio
   {
     const r = createSpeechRuntime(), c = r.context;
     const run = c.SpeechEngine.listen({ timeoutMs: 20 }); const outcome = run.then(() => null, e => e.message);
-    (await started(r)).stop = () => { r.events.push("stop-without-end"); };
-    check(await outcome === "speech-timeout", "timeout without browser end preserves speech-timeout");
+    const recognition = await started(r);
+    recognition.stop = () => { r.events.push("stop-without-end"); };
+    await wait(30); await flush();
+    check(!r.events.includes("exit-call"), "timeout cannot restore Audio before browser onend");
+    recognition.onend();
+    check(await outcome === "speech-timeout", "timeout verdict is delivered after browser onend");
     await restored(r); check(r.events.filter(e => e === "exit-call").length === 1, "timeout without end exits once");
   }
   {

@@ -212,8 +212,8 @@ function sha(file) { return crypto.createHash("sha256").update(fs.readFileSync(p
     "data/word-dictionaries.js": "8c8c49386c8bd935cbb40d1f067441f3f032f423a579c8193d3b95d167d68d89",
     "engine/managers/question-manager.js": "98047b0cb21bd12f4fd5e2c432ea28836a6b82b7b0a3067639781ad538d87c6d",
     "engine/services/speech-start-controller.js": "f6d1224d0ae71f8ee12067f0ede79650dae84a88d2c68b7ce474ce48c24b8161",
-    "engine/services/speech-engine.js": "6b8241bbc9ad6a345ddeb104454a56477f71d235bce27bf49c5af74814d882aa",
-    "engine/services/speech-recognition-adapter.js": "9150d5bfd19f57d90ece2da3df3a074172f6c57fb17a4ec8fd13ae7268ee6c1c",
+    "engine/services/speech-engine.js": "572453a24e542091eaf54e90fffa9c5d4f7e2c045b3706c2494d57748e526e39",
+    "engine/services/speech-recognition-adapter.js": "bf931fada76d33ed0067d9ab202e066557631e297eca5b3c72daf69b1da93353",
     "engine/services/local-communicative-judge.js": "d124c63e412c4e6553026141361ab608da5603bd29854f93f6b8c06bf1f57e58",
     "engine/services/communicative-judge.js": "a8b8482768e480f609ff9b569774509a881d503769ca5f3452783ff94c7ecb04"
   };

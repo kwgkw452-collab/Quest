@@ -11,8 +11,8 @@ const read = file => fs.readFileSync(path.join(root, file), "utf8");
 const hash = file => crypto.createHash("sha256").update(fs.readFileSync(path.join(root, file))).digest("hex");
 
 const protectedHashes = {
-  "engine/services/speech-recognition-adapter.js": "9150d5bfd19f57d90ece2da3df3a074172f6c57fb17a4ec8fd13ae7268ee6c1c",
-  "engine/services/speech-engine.js": "6b8241bbc9ad6a345ddeb104454a56477f71d235bce27bf49c5af74814d882aa",
+  "engine/services/speech-recognition-adapter.js": "bf931fada76d33ed0067d9ab202e066557631e297eca5b3c72daf69b1da93353",
+  "engine/services/speech-engine.js": "572453a24e542091eaf54e90fffa9c5d4f7e2c045b3706c2494d57748e526e39",
   "engine/services/speech-start-controller.js": "f6d1224d0ae71f8ee12067f0ede79650dae84a88d2c68b7ce474ce48c24b8161",
   "engine/core/story-engine.js": "ecca2bac442d5002fec99d8f9e826756bee6afd2efd24a093c187d041f5afbeb",
   "engine/stories/S004.js": "ca801b7658fe1bddf98cf8c21ee1794adf602b68afa5a7f94599758fb3437070",
@@ -279,7 +279,8 @@ async function pendingFormal(plan) {
     assert(devHtml.includes(`${file}?v=${version}`));
   }
   assert.strictEqual((indexHtml.match(/\?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1/g) || []).length, 3);
-  assert.strictEqual((indexHtml.match(/\?v=iphone-speech-teardown-order-trace-v2/g) || []).length, 3);
+  assert.strictEqual((indexHtml.match(/\?v=iphone-speech-teardown-order-trace-v2/g) || []).length, 1);
+  assert.strictEqual((indexHtml.match(/\?v=iphone-speech-recognition-teardown-serialization-fix-v1/g) || []).length, 2);
   assert(!indexHtml.includes("formal-speech-trace"));
 
   assert(!read("engine/managers/monster-battle-manager.js").includes("CommunicativeQuestionPresenter.speech"));

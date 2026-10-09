@@ -54,6 +54,7 @@ function result(transcript, isFinal, confidence) {
   });
   const failedRecognition = Recognition.instances[1];
   failedRecognition.onerror({ error: "no-speech" });
+  failedRecognition.onend();
   await assert.rejects(failed, /no-speech/);
   const recognitionError = logs.find(entry => entry[0] === "[S005 TRACE] recognition-error");
   assert.equal(recognitionError[1].error, "no-speech");

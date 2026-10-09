@@ -96,13 +96,13 @@ vm.runInContext(adapterSource, context);
   const failed = context.SpeechRecognitionAdapter.listen({});
   const third = recognitions[2];
   third.error("network");
-  await failed.catch(error => check(error.message === "network", "adapter error remains unchanged"));
   third.end();
+  await failed.catch(error => check(error.message === "network", "adapter error remains unchanged"));
   const errorOrder = traces.map(item => item.type);
-  check(errorOrder.indexOf("recognition-onerror") < errorOrder.indexOf("adapter-reject"),
-    "error boundary order is observable");
-  check(errorOrder.indexOf("adapter-reject") < errorOrder.indexOf("recognition-onend"),
-    "existing pre-onend error settlement remains visible and unchanged");
+  check(errorOrder.indexOf("recognition-onerror") < errorOrder.indexOf("recognition-onend"),
+    "error precedes browser teardown completion");
+  check(errorOrder.indexOf("recognition-onend") < errorOrder.indexOf("adapter-reject"),
+    "error settlement is serialized after onend");
 
   console.log(`iPhone Speech Teardown Order Trace V1: ${checks}/${checks} PASS`);
 })().catch(error => { console.error(error); process.exitCode = 1; });

@@ -351,7 +351,7 @@ async function flush() {
   // V. RecognitionAdapter content is unchanged from Early Commit V1.
   assert.strictEqual(
     hash("engine/services/speech-recognition-adapter.js"),
-    "9150d5bfd19f57d90ece2da3df3a074172f6c57fb17a4ec8fd13ae7268ee6c1c"
+    "bf931fada76d33ed0067d9ab202e066557631e297eca5b3c72daf69b1da93353"
   );
 
   // W. Recognition settings and timeout values remain unchanged.

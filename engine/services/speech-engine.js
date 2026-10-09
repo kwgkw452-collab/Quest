@@ -122,12 +122,18 @@
     teardownTrace("speech-listen-enter");
     setStatus("listening");
     var audioAttempt = window.AudioManager && typeof AudioManager.enterSpeechMode === "function" &&
-      typeof AudioManager.exitSpeechMode === "function" ? { cancelled: false, released: false, enterPromise: null } : null;
+      typeof AudioManager.exitSpeechMode === "function" ? {
+        cancelled: false,
+        released: false,
+        enterPromise: null,
+        recognitionPending: false
+      } : null;
     var keepAudioForImmediateRetry = false;
 
     try {
       if (audioAttempt) await enterSpeechAudio(audioAttempt);
       var alternatives = [];
+      if (audioAttempt) audioAttempt.recognitionPending = true;
       var text = await SpeechRecognitionAdapter.listen({
         lang: options.lang || GameConfig.defaultLanguage,
         timeoutMs: options.timeoutMs || 0,
@@ -407,7 +413,11 @@
       speechAudioAttempt.cancelled = true;
       if (speechAudioExitTimer !== null) window.clearTimeout(speechAudioExitTimer);
       speechAudioExitTimer = null;
-      releaseSpeechAudio(speechAudioAttempt);
+      // Once Recognition owns the attempt, its promise settles only from
+      // onend. listen()'s finally then serializes Audio restoration. During
+      // pre-recognition isolation entry there is no onend to wait for, so that
+      // narrow cancellation path still releases immediately.
+      if (!speechAudioAttempt.recognitionPending) releaseSpeechAudio(speechAudioAttempt);
     }
     SpeechRecognitionAdapter.stop();
     setStatus("idle");

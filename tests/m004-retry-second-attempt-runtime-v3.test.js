@@ -95,8 +95,10 @@ for (const file of ["engine/services/legacy-speech-trace.js", "engine/services/s
 
   const trace = Array.from(context.LegacySpeechTrace.getEntries());
   assert.equal(trace.filter(item => item.event === "m004-retry-listen-call").length, 3);
-  assert.equal(trace.filter(item => item.event === "m004-retry-wait-for-recognition-end").length, 2);
-  assert.equal(trace.filter(item => item.event === "m004-retry-recognition-end-confirmed").length, 2);
+  assert.equal(trace.filter(item => item.event === "m004-retry-wait-for-recognition-end").length, 0,
+    "canonical Adapter already waits for onend before m004 catch");
+  assert.equal(trace.filter(item => item.event === "m004-retry-recognition-end-confirmed").length, 0,
+    "m004 no longer needs its secondary wait when Adapter serialization is active");
   assert.equal(trace.filter(item => item.event === "m004-retry-recognition-end-timeout").length, 0);
 
   const monster = { monsterId: "m004" };

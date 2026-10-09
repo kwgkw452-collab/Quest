@@ -25,9 +25,9 @@ const protectedHashes = {
 protectedHashes["engine/services/communicative-question-adapter.js"] = "1fe6fbb7090c6d61c666771edcab963b23596ba399e59fa3650503d4c3473e3f";
 Object.assign(protectedHashes, {
   "engine/services/local-communicative-judge.js": "d124c63e412c4e6553026141361ab608da5603bd29854f93f6b8c06bf1f57e58",
-  "engine/services/speech-engine.js": "6b8241bbc9ad6a345ddeb104454a56477f71d235bce27bf49c5af74814d882aa",
+  "engine/services/speech-engine.js": "572453a24e542091eaf54e90fffa9c5d4f7e2c045b3706c2494d57748e526e39",
   "engine/services/speech-normalizer.js": "c891131b3fc76dafa87f4500e2f5913eb0d2d4d1ee94ae7350a5b2e6a6f61e6f",
-  "engine/services/speech-recognition-adapter.js": "9150d5bfd19f57d90ece2da3df3a074172f6c57fb17a4ec8fd13ae7268ee6c1c",
+  "engine/services/speech-recognition-adapter.js": "bf931fada76d33ed0067d9ab202e066557631e297eca5b3c72daf69b1da93353",
   "engine/services/speech-start-controller.js": "f6d1224d0ae71f8ee12067f0ede79650dae84a88d2c68b7ce474ce48c24b8161",
   "engine/stories/S001.js": "e7aae0d4f4bf81915bcdcec44254b1414135e4fbb1a80907fe306971e38a52e1",
   "engine/stories/S002.js": "bd05226b3e51d12a27e1504579f69cd97200231a68edecd8a8d6e6b2e7aaf525",
@@ -46,8 +46,8 @@ const ordered = [
   "data/questions.js?v=mobile-ui-story-polish-v1-1",
   "data/communicative-judge-rules.js?v=s005-registry-instance-fix-v1",
   "engine/services/speech-normalizer.js?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1",
-  "engine/services/speech-recognition-adapter.js?v=iphone-speech-teardown-order-trace-v2",
-  "engine/services/speech-engine.js?v=iphone-speech-teardown-order-trace-v2",
+  "engine/services/speech-recognition-adapter.js?v=iphone-speech-recognition-teardown-serialization-fix-v1",
+  "engine/services/speech-engine.js?v=iphone-speech-recognition-teardown-serialization-fix-v1",
   "engine/services/speech-start-controller.js?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1",
   "engine/services/local-communicative-judge.js?v=s005-rule-real-browser-trace-v1",
   "engine/services/communicative-judge.js?v=s005-rule-real-browser-trace-v1",
@@ -69,7 +69,8 @@ for (const source of ordered) {
 assert(!index.includes("dev/communicative-question-manager-playtest.js"));
 assert(!index.includes("dev/communicative-judge-pilot.js"));
 assert.strictEqual((index.match(/\?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1/g) || []).length, 3);
-assert.strictEqual((index.match(/\?v=iphone-speech-teardown-order-trace-v2/g) || []).length, 3);
+assert.strictEqual((index.match(/\?v=iphone-speech-teardown-order-trace-v2/g) || []).length, 1);
+assert.strictEqual((index.match(/\?v=iphone-speech-recognition-teardown-serialization-fix-v1/g) || []).length, 2);
 assert.strictEqual((index.match(/\?v=communicative-formal-late-result-v1/g) || []).length, 0);
 assert.strictEqual((index.match(/\?v=communicative-formal-speech-fallback-v1/g) || []).length, 0);
 assert(!index.includes("engine/managers/question-manager.js?v=communicative-formal-v1"));

@@ -35,12 +35,14 @@ check(manager.includes("recordSpeechOrderEvent(record);\n    renderVoiceRuntimeT
 check(manager.includes('session=" + stringifyTraceValue(event.audioSession)'), "audio session is displayed for speech events");
 check(!/audioSession\s*\.\s*(type|state)\s*=/.test(manager + adapter + engine), "navigator.audioSession is read only");
 
-for (const runtimeFile of ["speech-recognition-adapter.js", "speech-engine.js", "audio-manager.js"]) {
-  check(index.includes(`${runtimeFile}?v=iphone-speech-teardown-order-trace-v2`), `V2 cache key: ${runtimeFile}`);
+for (const runtimeFile of ["speech-recognition-adapter.js", "speech-engine.js"]) {
+  check(index.includes(`${runtimeFile}?v=iphone-speech-recognition-teardown-serialization-fix-v1`),
+    `serialization fix cache key: ${runtimeFile}`);
 }
+check(index.includes("audio-manager.js?v=iphone-speech-teardown-order-trace-v2"), "V2 cache key: audio-manager.js");
 
-check(hash(adapter) === "9150d5bfd19f57d90ece2da3df3a074172f6c57fb17a4ec8fd13ae7268ee6c1c", "Recognition adapter logic is unchanged from V1");
-check(hash(engine) === "6b8241bbc9ad6a345ddeb104454a56477f71d235bce27bf49c5af74814d882aa", "Speech engine lifecycle is unchanged from V1");
+check(hash(adapter) === "bf931fada76d33ed0067d9ab202e066557631e297eca5b3c72daf69b1da93353", "Recognition adapter matches teardown serialization fix");
+check(hash(engine) === "572453a24e542091eaf54e90fffa9c5d4f7e2c045b3706c2494d57748e526e39", "Speech engine matches teardown serialization fix");
 check(hash(startController) === "f6d1224d0ae71f8ee12067f0ede79650dae84a88d2c68b7ce474ce48c24b8161", "SpeechStartController is unchanged from V1");
 
 const runtime = {
