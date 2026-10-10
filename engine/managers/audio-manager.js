@@ -8,6 +8,7 @@
   var SIGNAL_TRACE_VERSION = "running-but-silent-signal-trace-v1";
   var CENTRAL_RECOVERY_VERSION = "central-audio-recovery-v1";
   var INITIAL_AUDIO_UNLOCK_TRACE_VERSION = "iphone-safari-initial-audio-unlock-trace-v1";
+  var RELOAD_AUDIO_IDENTITY_TRACE_VERSION = "iphone-reload-audio-identity-trace-v1";
   var SOURCE_LOST_FATAL_MS = 1500;
   var SOURCE_LOST_MIN_MEDIA_ADVANCE = 0.5;
   var RECOVERY_COOLDOWN_BASE_MS = 5000;
@@ -203,6 +204,14 @@
     picoSe: null,
     zephyr: null
   };
+  var RELOAD_AUDIO_IDENTITY_TRACE_LIMIT = 96;
+  var reloadAudioIdentityTraceState = {
+    events: [],
+    maps: null,
+    counters: { context: 0, element: 0, source: 0, gain: 0 },
+    graphs: [],
+    pageLoadId: null
+  };
 
   function speechRestoreDiagnosticMode() {
     try {
@@ -344,6 +353,129 @@
         });
       });
     }
+  }
+
+  function reloadIdentityMaps() {
+    if (!reloadAudioIdentityTraceState.maps) {
+      reloadAudioIdentityTraceState.maps = {
+        context: new WeakMap(),
+        element: new WeakMap(),
+        source: new WeakMap(),
+        gain: new WeakMap()
+      };
+    }
+    if (!reloadAudioIdentityTraceState.pageLoadId) {
+      reloadAudioIdentityTraceState.pageLoadId = "load-" + Date.now().toString(36);
+    }
+    return reloadAudioIdentityTraceState.maps;
+  }
+
+  function reloadObjectIdentity(object, kind) {
+    if (!voiceRuntimeTraceState.panelEnabled || !object) return null;
+    var maps = reloadIdentityMaps();
+    var map = maps[kind];
+    if (!map) return null;
+    var existing = map.get(object);
+    if (existing) return existing;
+    reloadAudioIdentityTraceState.counters[kind] += 1;
+    var identity = reloadAudioIdentityTraceState.pageLoadId + "-" + kind + "-" +
+      reloadAudioIdentityTraceState.counters[kind];
+    map.set(object, identity);
+    return identity;
+  }
+
+  function observeExistingAudioGraph(audio, context, source, gainNode, nodes, busName) {
+    if (!voiceRuntimeTraceState.panelEnabled) return;
+    reloadAudioIdentityTraceState.graphs.push({
+      audio: audio,
+      context: context,
+      source: source,
+      gainNode: gainNode,
+      nodes: nodes,
+      busName: busName
+    });
+    reloadObjectIdentity(context, "context");
+    reloadObjectIdentity(audio, "element");
+    reloadObjectIdentity(source, "source");
+    reloadObjectIdentity(gainNode, "gain");
+  }
+
+  function reloadNavigationType() {
+    try {
+      if (window.performance && typeof performance.getEntriesByType === "function") {
+        var entries = performance.getEntriesByType("navigation");
+        if (entries && entries[0] && entries[0].type) return entries[0].type;
+      }
+      if (window.performance && performance.navigation) {
+        return performance.navigation.type === 1 ? "reload" : "navigate";
+      }
+    } catch (_) {}
+    return "unknown";
+  }
+
+  function reloadAudioIdentitySnapshot(focusAudio) {
+    var context = canonicalAudioContext;
+    var currentAudio = bgm;
+    var managed = uniqueManagedAudio();
+    var activeGraphs = reloadAudioIdentityTraceState.graphs.filter(function (graph) {
+      return graph.audio && managed.indexOf(graph.audio) !== -1;
+    });
+    var bgmGraph = null;
+    var focusGraph = null;
+    for (var index = activeGraphs.length - 1; index >= 0; index -= 1) {
+      if (activeGraphs[index].audio === currentAudio) { bgmGraph = activeGraphs[index]; break; }
+    }
+    for (var focusIndex = activeGraphs.length - 1; focusIndex >= 0; focusIndex -= 1) {
+      if (activeGraphs[focusIndex].audio === focusAudio) { focusGraph = activeGraphs[focusIndex]; break; }
+    }
+    return {
+      pageLoadId: voiceRuntimeTraceState.panelEnabled ? (reloadIdentityMaps(), reloadAudioIdentityTraceState.pageLoadId) : null,
+      navigationType: reloadNavigationType(),
+      contextIdentity: reloadObjectIdentity(context, "context"),
+      contextState: context ? (context.state || "unknown") : "uninitialized",
+      contextCurrentTime: context ? finiteTraceNumber(context.currentTime) : null,
+      bgmAsset: currentAudio && currentAudio.__eigoBgmTrack ? currentAudio.__eigoBgmTrack.asset : null,
+      elementIdentity: reloadObjectIdentity(currentAudio, "element"),
+      elementCurrentTime: currentAudio ? finiteTraceNumber(currentAudio.currentTime) : null,
+      elementPaused: currentAudio ? !!currentAudio.paused : null,
+      elementVolume: currentAudio ? finiteTraceNumber(currentAudio.volume) : null,
+      elementMuted: currentAudio ? !!currentAudio.muted : null,
+      sourceIdentity: reloadObjectIdentity(bgmGraph && bgmGraph.source, "source"),
+      gainIdentity: reloadObjectIdentity(bgmGraph && bgmGraph.gainNode, "gain"),
+      gainValue: bgmGraph && bgmGraph.gainNode && bgmGraph.gainNode.gain ?
+        finiteTraceNumber(bgmGraph.gainNode.gain.value) : null,
+      graphContextIdentity: reloadObjectIdentity(bgmGraph && bgmGraph.context, "context"),
+      canonicalContextMatch: bgmGraph ? bgmGraph.context === canonicalAudioContext : null,
+      bgmSourceCount: bgmGraph && bgmGraph.source ? 1 : 0,
+      bgmNodeCount: bgmGraph && bgmGraph.nodes ? bgmGraph.nodes.length : 0,
+      activeSourceCount: activeGraphs.filter(function (graph) { return !!graph.source; }).length,
+      activeNodeCount: activeGraphs.reduce(function (sum, graph) {
+        return sum + (graph.nodes ? graph.nodes.length : 0);
+      }, 0),
+      focusElementIdentity: reloadObjectIdentity(focusAudio, "element"),
+      focusSourceIdentity: reloadObjectIdentity(focusGraph && focusGraph.source, "source"),
+      focusGainIdentity: reloadObjectIdentity(focusGraph && focusGraph.gainNode, "gain"),
+      focusGainValue: focusGraph && focusGraph.gainNode && focusGraph.gainNode.gain ?
+        finiteTraceNumber(focusGraph.gainNode.gain.value) : null,
+      focusCanonicalContextMatch: focusGraph ? focusGraph.context === canonicalAudioContext : null
+    };
+  }
+
+  function recordReloadAudioIdentityCheckpoint(checkpoint, detail, focusAudio) {
+    if (!voiceRuntimeTraceState.panelEnabled) return;
+    var record = Object.assign({
+      checkpoint: checkpoint,
+      at: Date.now()
+    }, reloadAudioIdentitySnapshot(focusAudio), detail || {});
+    reloadAudioIdentityTraceState.events.push(record);
+    if (reloadAudioIdentityTraceState.events.length > RELOAD_AUDIO_IDENTITY_TRACE_LIMIT) {
+      reloadAudioIdentityTraceState.events.shift();
+    }
+    try { console.log("[RELOAD AUDIO IDENTITY TRACE] " + checkpoint, record); } catch (_) {}
+  }
+
+  function markReloadAudioIdentityTarget(audio, target) {
+    if (voiceRuntimeTraceState.panelEnabled && audio) audio.__eigoReloadIdentityTarget = target;
   }
 
   function audioContextSnapshot(context) {
@@ -842,7 +974,38 @@
         "/rs" + stringifyTraceValue(event.zephyr && event.zephyr.readyState);
     });
     var initialUnlockLive = initialAudioUnlockSnapshot();
+    var reloadIdentityLines = reloadAudioIdentityTraceState.events.slice(-18).map(function (event) {
+      return traceClock(event.at) + " " + event.checkpoint + " nav=" + event.navigationType +
+        " ctx=" + stringifyTraceValue(event.contextIdentity) + "/" + event.contextState + "@" +
+        stringifyTraceValue(event.contextCurrentTime) + " el=" + stringifyTraceValue(event.elementIdentity) +
+        " asset=" + stringifyTraceValue(event.bgmAsset) + " t=" + stringifyTraceValue(event.elementCurrentTime) +
+        " paused/vol/mute=" + stringifyTraceValue(event.elementPaused) + "/" +
+        stringifyTraceValue(event.elementVolume) + "/" + stringifyTraceValue(event.elementMuted) +
+        " src=" + stringifyTraceValue(event.sourceIdentity) + " gain=" +
+        stringifyTraceValue(event.gainIdentity) + "/" + stringifyTraceValue(event.gainValue) +
+        " graphCtx=" + stringifyTraceValue(event.graphContextIdentity) + " canonical=" +
+        stringifyTraceValue(event.canonicalContextMatch) + " sources=" + event.bgmSourceCount + "/" +
+        event.activeSourceCount + " nodes=" + event.bgmNodeCount + "/" + event.activeNodeCount +
+        " focus=" + stringifyTraceValue(event.focusElementIdentity) + "/" +
+        stringifyTraceValue(event.focusSourceIdentity) + "/" + stringifyTraceValue(event.focusGainIdentity) +
+        "/" + stringifyTraceValue(event.focusGainValue) + "/canonical=" +
+        stringifyTraceValue(event.focusCanonicalContextMatch);
+    });
+    var reloadIdentityLive = reloadAudioIdentitySnapshot();
     var lines = [
+      "Reload Audio Identity Trace: " + RELOAD_AUDIO_IDENTITY_TRACE_VERSION + " | " +
+        reloadIdentityLive.pageLoadId + " | nav=" + reloadIdentityLive.navigationType,
+      "IDENTITY LIVE: ctx=" + stringifyTraceValue(reloadIdentityLive.contextIdentity) + "/" +
+        reloadIdentityLive.contextState + "@" + stringifyTraceValue(reloadIdentityLive.contextCurrentTime) +
+        " el=" + stringifyTraceValue(reloadIdentityLive.elementIdentity) + " src=" +
+        stringifyTraceValue(reloadIdentityLive.sourceIdentity) + " gain=" +
+        stringifyTraceValue(reloadIdentityLive.gainIdentity) + "/" + stringifyTraceValue(reloadIdentityLive.gainValue) +
+        " canonical=" + stringifyTraceValue(reloadIdentityLive.canonicalContextMatch) +
+        " sources=" + reloadIdentityLive.bgmSourceCount + "/" + reloadIdentityLive.activeSourceCount +
+        " nodes=" + reloadIdentityLive.bgmNodeCount + "/" + reloadIdentityLive.activeNodeCount,
+      "RELOAD IDENTITY CHECKPOINTS (latest " + reloadIdentityLines.length + "/" +
+        RELOAD_AUDIO_IDENTITY_TRACE_LIMIT + "):"
+    ].concat(reloadIdentityLines).concat([
       "Initial Audio Unlock Trace: " + INITIAL_AUDIO_UNLOCK_TRACE_VERSION,
       "INITIAL LIVE: ctx=" + initialUnlockLive.contextState + "@" +
         stringifyTraceValue(initialUnlockLive.contextCurrentTime) + " pico=" +
@@ -856,7 +1019,7 @@
         stringifyTraceValue(initialUnlockLive.zephyr.readyState),
       "INITIAL UNLOCK ORDER (latest " + initialUnlockLines.length + "/" +
         INITIAL_AUDIO_UNLOCK_TRACE_LIMIT + "):"
-    ].concat(initialUnlockLines).concat([
+    ]).concat(initialUnlockLines).concat([
       "Runtime: " + RUNTIME_VERSION + " | Signal: " + SIGNAL_TRACE_VERSION,
       "Audio Restore Timing A/B: " + AUDIO_RESTORE_TIMING_TRACE_VERSION + " | mode=" +
         speechRestoreDiagnosticMode() + " | delay=" + speechRestoreDiagnosticDelayMs() + "ms",
@@ -1170,6 +1333,11 @@
           isTrusted: event.isTrusted,
           eventTimestamp: finiteTraceNumber(event.timeStamp)
         });
+        recordReloadAudioIdentityCheckpoint("trusted-pointerdown-before", {
+          eventType: event.type,
+          isTrusted: event.isTrusted,
+          eventTimestamp: finiteTraceNumber(event.timeStamp)
+        });
       }
       audioLifecycleTraceState.lastGestureType = event && event.type || "unknown";
       audioLifecycleTraceState.lastGestureAt = Date.now();
@@ -1189,6 +1357,10 @@
         });
         if (firstTrustedPointerdown) {
           recordInitialAudioUnlockTrace("after-resume-settlement", {
+            result: audioLifecycleTraceState.lastGestureResumeResult,
+            success: success === true
+          });
+          recordReloadAudioIdentityCheckpoint("trusted-pointerdown-after", {
             result: audioLifecycleTraceState.lastGestureResumeResult,
             success: success === true
           });
@@ -1461,6 +1633,9 @@
             instanceId: audio.__eigoTraceInstanceId || null
           });
         }
+        if (audio.__eigoReloadIdentityTarget) {
+          recordReloadAudioIdentityCheckpoint(audio.__eigoReloadIdentityTarget + "-after-play-resolved", null, audio);
+        }
         return { ok: true, error: null };
       }, function (error) {
         if (audio.__eigoInitialAudioUnlockTarget) {
@@ -1474,6 +1649,11 @@
             instanceId: audio.__eigoTraceInstanceId || null,
             error: String(error)
           });
+        }
+        if (audio.__eigoReloadIdentityTarget) {
+          recordReloadAudioIdentityCheckpoint(audio.__eigoReloadIdentityTarget + "-play-rejected", {
+            error: String(error)
+          }, audio);
         }
         console.warn("Audio playback was blocked or failed:", error);
         return { ok: false, error: error };
@@ -1489,6 +1669,11 @@
           instanceId: audio.__eigoTraceInstanceId || null,
           error: String(error)
         });
+      }
+      if (audio.__eigoReloadIdentityTarget) {
+        recordReloadAudioIdentityCheckpoint(audio.__eigoReloadIdentityTarget + "-play-rejected", {
+          error: String(error)
+        }, audio);
       }
       console.warn("Audio playback was blocked or failed:", error);
       playback = Promise.resolve({ ok: false, error: error });
@@ -1602,7 +1787,9 @@
       error.__eigoSourceAttempted = true;
       throw error;
     }
-    return { source: source, gainNode: gainNode, nodes: [source, gainNode] };
+    var nodes = [source, gainNode];
+    observeExistingAudioGraph(audio, context, source, gainNode, nodes, busName);
+    return { source: source, gainNode: gainNode, nodes: nodes };
   }
 
   function connectBgmTrack(track, requestId) {
@@ -1759,11 +1946,15 @@
 
   function playBgm(keyOrPath, options) {
     options = options || {};
+    if (keyOrPath === "morningGardenAtmosphere") {
+      recordReloadAudioIdentityCheckpoint("morning-bgm-before");
+    }
     resetHeldSpeechPolicy();
     var path = resolve("bgm", keyOrPath);
     if (keyOrPath === "zephyrFields") recordInitialAudioUnlockTrace("zephyr-request");
     var targetVolume = (options.volume === undefined ? 1 : options.volume) * mixAssetGain(keyOrPath);
     if (bgm && bgm.src && bgm.getAttribute("src") === path) {
+      if (keyOrPath === "morningGardenAtmosphere") markReloadAudioIdentityTarget(bgm, "morning-bgm");
       if (keyOrPath === "zephyrFields") trackInitialAudioUnlockTarget(bgm, "ZEPHYR");
       var replayRequired = bgm.paused === true || bgm.ended === true ||
         !!(pendingBgm && pendingBgm.audio === bgm);
@@ -1783,18 +1974,25 @@
           watchBgmPlayback(bgm, replayRequestId);
         }
       }
+      if (keyOrPath === "morningGardenAtmosphere") {
+        recordReloadAudioIdentityCheckpoint("morning-bgm-after-request", null, bgm);
+      }
       return bgm;
     }
     clearPendingBgm();
     var requestId = ++bgmRequestSerial;
     var previous = bgm;
     var next = new Audio(path);
+    if (keyOrPath === "morningGardenAtmosphere") markReloadAudioIdentityTarget(next, "morning-bgm");
     if (keyOrPath === "zephyrFields") trackInitialAudioUnlockTarget(next, "ZEPHYR");
     next.loop = options.loop !== false;
     next.preload = "auto";
     var nextTrack = createBgmTrack(next, keyOrPath, targetVolume, options.fadeInMs || options.crossfadeMs ? 0 : 1);
     bgm = next;
     connectBgmTrack(nextTrack, requestId);
+    if (keyOrPath === "morningGardenAtmosphere") {
+      recordReloadAudioIdentityCheckpoint("morning-bgm-after-request", null, next);
+    }
     if (previous) {
       var previousTrack = previous.__eigoBgmTrack;
       if (options.crossfadeMs && previousTrack) {
@@ -1841,6 +2039,9 @@
 
   function playOneShot(type, keyOrPath, options, collection) {
     options = options || {};
+    if (type === "se" && keyOrPath === "picoEntrance") {
+      recordReloadAudioIdentityCheckpoint("pico-before");
+    }
     var path = resolve(type, keyOrPath);
     if (isZephyrMotif(type, keyOrPath, path)) {
       var active = collection.find(function (item) { return item.getAttribute("src") === path && !item.paused; });
@@ -1867,8 +2068,10 @@
     }
     audio = createTrackedAudio();
     if (type === "se" && keyOrPath === "picoEntrance") {
+      markReloadAudioIdentityTarget(audio, "pico");
       trackInitialAudioUnlockTarget(audio, "PICO SE");
       recordInitialAudioUnlockTrace("pico-appear");
+      recordReloadAudioIdentityCheckpoint("pico-after-request", null, audio);
     }
     function fallback(error) {
       if (audio.__eigoStopped) return;
@@ -1880,7 +2083,10 @@
         if (unsafeIndex !== -1) collection.splice(unsafeIndex, 1);
         if (typeof unsafe.__eigoDisconnect === "function") unsafe.__eigoDisconnect();
         audio = createTrackedAudio();
-        if (type === "se" && keyOrPath === "picoEntrance") trackInitialAudioUnlockTarget(audio, "PICO SE");
+        if (type === "se" && keyOrPath === "picoEntrance") {
+          markReloadAudioIdentityTarget(audio, "pico");
+          trackInitialAudioUnlockTarget(audio, "PICO SE");
+        }
       }
       audio.__eigoAudioPath = "fallback";
       audioTrace("GAINNODE_FALLBACK", { category: policy.category, asset: keyOrPath, reason: String(error) });
@@ -2711,6 +2917,7 @@
       updateBusPolicy();
       speechIsolation.state = "active";
       recordAudioLifecycleEvent("speech-mode-active");
+      recordReloadAudioIdentityCheckpoint("speech-start-before-recognition");
       return true;
     });
   }
@@ -2771,6 +2978,7 @@
           watchBgmPlayback(current, bgmRequestSerial);
         }
       }
+      recordReloadAudioIdentityCheckpoint("speech-end-bgm-restore-after");
       return true;
     });
   }
@@ -2888,6 +3096,13 @@
     events: function () { return initialAudioUnlockTraceState.events.slice(); },
     snapshot: initialAudioUnlockSnapshot
   };
+  window.ReloadAudioIdentityTrace = {
+    version: RELOAD_AUDIO_IDENTITY_TRACE_VERSION,
+    limit: RELOAD_AUDIO_IDENTITY_TRACE_LIMIT,
+    events: function () { return reloadAudioIdentityTraceState.events.slice(); },
+    snapshot: reloadAudioIdentitySnapshot,
+    checkpoint: recordReloadAudioIdentityCheckpoint
+  };
   window.CentralAudioRecoveryTrace = {
     version: CENTRAL_RECOVERY_VERSION,
     state: centralRecoveryPublicState,
@@ -2898,6 +3113,7 @@
     startAudioLiveTracePanel();
     installAudioLifecycleTraceListeners();
   }
+  recordReloadAudioIdentityCheckpoint("startup");
   installUnlockGesture();
   startCentralAudioRecoveryMonitor();
 })();
