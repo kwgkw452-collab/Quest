@@ -283,7 +283,7 @@ function queueDeferredSpeech(pending, transcript, alternatives) {
   equal(hash("engine/managers/monster-battle-manager.js"), "0451a45a75e35c9c4418f40126e55d8659cbbf407deca78089f9c12058026ee3");
   equal(hash("data/mornings.js"), "89007415f111ab883dd2a10b47e9a7026608bfd377dd8ee1ec7ad0f5d9027470");
   equal(hash("engine/managers/morning-manager.js"), "f123747d417d3aa632d84ca828ffa0ff85c8b14f62753ad8a77655e56e819856");
-  equal(hash("index.html"), "f85fa80db702f77598732da7d30c8cc3b382062ac26a69a443f0ccf483f59ae5");
+  equal(hash("index.html"), "f23e926a942fbb740763528fd139838ef5059fd7df4065f4a89b7d6beed2cda2");
   equal(hash("dev.html"), "684c08cda8dd34155c6eb8b6fc2fac57c94333898a34a150fa642ab4c9a404ee");
   equal(hash("engine/services/speech-engine.js"), "2d85fa0af3bd8f109ca9d95995361f44e3240e97ce5fba54bed1d14e66260824");
   equal(hash("engine/services/speech-start-controller.js"), "f6d1224d0ae71f8ee12067f0ede79650dae84a88d2c68b7ce474ce48c24b8161");

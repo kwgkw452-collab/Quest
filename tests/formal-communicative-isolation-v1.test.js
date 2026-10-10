@@ -69,8 +69,7 @@ for (const source of ordered) {
 assert(!index.includes("dev/communicative-question-manager-playtest.js"));
 assert(!index.includes("dev/communicative-judge-pilot.js"));
 assert.strictEqual((index.match(/\?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1/g) || []).length, 3);
-assert.strictEqual((index.match(/\?v=iphone-speech-audio-restore-timing-ab-v1/g) || []).length, 2);
-assert.strictEqual((index.match(/\?v=iphone-safari-bgm-loud-restore-trace-v1/g) || []).length, 1);
+assert.strictEqual((index.match(/\?v=iphone-speech-audio-restore-timing-ab-v1/g) || []).length, 3);
 assert.strictEqual((index.match(/\?v=communicative-formal-late-result-v1/g) || []).length, 0);
 assert.strictEqual((index.match(/\?v=communicative-formal-speech-fallback-v1/g) || []).length, 0);
 assert(!index.includes("engine/managers/question-manager.js?v=communicative-formal-v1"));

@@ -279,8 +279,7 @@ async function pendingFormal(plan) {
     assert(devHtml.includes(`${file}?v=${version}`));
   }
   assert.strictEqual((indexHtml.match(/\?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1/g) || []).length, 3);
-  assert.strictEqual((indexHtml.match(/\?v=iphone-speech-audio-restore-timing-ab-v1/g) || []).length, 2);
-  assert.strictEqual((indexHtml.match(/\?v=iphone-safari-bgm-loud-restore-trace-v1/g) || []).length, 1);
+  assert.strictEqual((indexHtml.match(/\?v=iphone-speech-audio-restore-timing-ab-v1/g) || []).length, 3);
   assert(!indexHtml.includes("formal-speech-trace"));
 
   assert(!read("engine/managers/monster-battle-manager.js").includes("CommunicativeQuestionPresenter.speech"));

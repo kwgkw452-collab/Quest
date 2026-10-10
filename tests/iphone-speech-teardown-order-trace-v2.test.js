@@ -37,7 +37,7 @@ check(!/audioSession\s*\.\s*(type|state)\s*=/.test(manager + adapter + engine), 
 
 check(index.includes("speech-recognition-adapter.js?v=iphone-speech-audio-restore-timing-ab-v1"), "A/B diagnostic cache key: speech-recognition-adapter.js");
 check(index.includes("speech-engine.js?v=iphone-speech-audio-restore-timing-ab-v1"), "A/B diagnostic cache key: speech-engine.js");
-check(index.includes("audio-manager.js?v=iphone-safari-bgm-loud-restore-trace-v1"), "BGM loudness trace cache key: audio-manager.js");
+check(index.includes("audio-manager.js?v=iphone-speech-audio-restore-timing-ab-v1"), "A/B diagnostic cache key: audio-manager.js");
 
 check(hash(adapter) === "d064c492f13bfa46014962becabaaa15a25aaf5c208563e06ee1616af3480d9a", "Recognition adapter includes A/B trace marker only");
 check(hash(engine) === "2d85fa0af3bd8f109ca9d95995361f44e3240e97ce5fba54bed1d14e66260824", "Speech engine includes A/B trace marker only");

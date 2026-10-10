@@ -141,7 +141,7 @@ const close = (actual, expected, message) =>
     const html = read(page);
     assert.match(html, /data\/audio-mix-profile\.js\?v=audio-gainnode-unification-v1/);
     assert.match(html, /data\/voice-profiles\.js\?v=audio-gainnode-unification-v1/);
-    const audioManagerVersion = page === "index.html" ? "iphone-safari-bgm-loud-restore-trace-v1" : "gainnode-confirmed-regression-fix-v1";
+    const audioManagerVersion = page === "index.html" ? "iphone-speech-audio-restore-timing-ab-v1" : "gainnode-confirmed-regression-fix-v1";
     assert(html.includes(`engine/managers/audio-manager.js?v=${audioManagerVersion}`));
   }
 
