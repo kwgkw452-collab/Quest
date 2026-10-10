@@ -48,7 +48,7 @@ assert(monsters.includes("postRecoveryBgmVolume: 0.20"));
 for (const page of ["index.html", "dev.html"]) {
   const html = read(page);
   assert(html.includes("data/audio-mix-profile.js?v=audio-gainnode-unification-v1"));
-  const audioManagerVersion = page === "index.html" ? "iphone-speech-native-mic-release-boundary-trace-v1" : "gainnode-confirmed-regression-fix-v1";
+  const audioManagerVersion = page === "index.html" ? "iphone-speech-audio-restore-timing-ab-v1" : "gainnode-confirmed-regression-fix-v1";
   assert(html.includes(`engine/managers/audio-manager.js?v=${audioManagerVersion}`));
   assert(html.includes('engine/services/dialogue-voice-controller.js?v=audio-gainnode-unification-v1"'));
 }

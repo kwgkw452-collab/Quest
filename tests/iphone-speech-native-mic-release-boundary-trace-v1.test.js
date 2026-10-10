@@ -65,8 +65,8 @@ function createRuntime(search) {
   check(adapterSource.includes("MIC_RELEASE_TRACE_LIMIT = 64"), "dedicated storage is bounded at 64");
   check(audioSource.includes('"Mic Release Trace: " + micReleaseVersion'), "panel marker is visible");
   check(audioSource.includes('"MIC RELEASE ORDER (latest "'), "MIC RELEASE ORDER is visible");
-  check(indexSource.includes("speech-recognition-adapter.js?v=iphone-speech-native-mic-release-boundary-trace-v1"), "adapter cache query updated");
-  check(indexSource.includes("audio-manager.js?v=iphone-speech-native-mic-release-boundary-trace-v1"), "panel cache query updated");
+  check(indexSource.includes("speech-recognition-adapter.js?v=iphone-speech-audio-restore-timing-ab-v1"), "adapter cache query updated");
+  check(indexSource.includes("audio-manager.js?v=iphone-speech-audio-restore-timing-ab-v1"), "panel cache query updated");
 
   const state = createRuntime("?audioTrace=1");
   const run = state.context.SpeechRecognitionAdapter.listen({});
@@ -146,7 +146,7 @@ function createRuntime(search) {
   check(!adapterSource.includes("getUserMedia"), "getUserMedia is not added");
   check(!adapterSource.includes("MediaStream"), "MediaStream is not added");
   check(!/audioSession\s*\.\s*(type|state)\s*=/.test(adapterSource + audioSource), "navigator.audioSession is read only");
-  check(hash(read("engine/services/speech-engine.js")) === "572453a24e542091eaf54e90fffa9c5d4f7e2c045b3706c2494d57748e526e39", "SpeechEngine is unchanged");
+  check(hash(read("engine/services/speech-engine.js")) === "2d85fa0af3bd8f109ca9d95995361f44e3240e97ce5fba54bed1d14e66260824", "SpeechEngine contains trace-only A/B markers");
   check(hash(read("engine/services/speech-start-controller.js")) === "f6d1224d0ae71f8ee12067f0ede79650dae84a88d2c68b7ce474ce48c24b8161", "SpeechStartController is unchanged");
   check(hash(read("engine/managers/monster-battle-manager.js")) === "0451a45a75e35c9c4418f40126e55d8659cbbf407deca78089f9c12058026ee3", "Monster Battle is unchanged");
 

@@ -23,11 +23,9 @@ const fixedVersions = {
   "engine/managers/question-manager.js": "s005-rule-real-browser-trace-v1"
 };
 const versioned = (asset, page) => {
-  if (page === "index" && asset === "engine/services/speech-recognition-adapter.js") {
-    return `${asset}?v=iphone-speech-native-mic-release-boundary-trace-v1`;
-  }
-  if (page === "index" && asset === "engine/services/speech-engine.js") {
-    return `${asset}?v=iphone-speech-recognition-teardown-serialization-fix-v1`;
+  if (page === "index" && (asset === "engine/services/speech-recognition-adapter.js" ||
+      asset === "engine/services/speech-engine.js")) {
+    return `${asset}?v=iphone-speech-audio-restore-timing-ab-v1`;
   }
   return `${asset}?v=${fixedVersions[asset] || (phaseA2Assets.has(asset) ? "s005-phase-a2-v1" : VERSION)}`;
 };
@@ -77,8 +75,7 @@ for (const [page, list] of [["index", indexScripts], ["dev", devScripts]]) {
 }
 
 assert.strictEqual((indexHtml.match(/\?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1/g) || []).length, 3);
-assert.strictEqual((indexHtml.match(/\?v=iphone-speech-native-mic-release-boundary-trace-v1/g) || []).length, 2);
-assert.strictEqual((indexHtml.match(/\?v=iphone-speech-recognition-teardown-serialization-fix-v1/g) || []).length, 1);
+assert.strictEqual((indexHtml.match(/\?v=iphone-speech-audio-restore-timing-ab-v1/g) || []).length, 3);
 assert.strictEqual((devHtml.match(/\?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1/g) || []).length, 6);
 assert(!indexHtml.includes("dev/formal-speech-trace.js"), "index must not load Formal trace");
 assert(devHtml.includes("dev/formal-speech-trace.js?v=communicative-formal-trace-v1"), "dev keeps Formal trace");
@@ -87,8 +84,8 @@ const protectedHashes = {
   "data/questions.js": "7f94f150fff8ef7af49e4bd7f86614900eafb0fb1d3d772861142feb68d75904",
   "data/communicative-judge-rules.js": "acae74a247318a54ef09ac75c04c444c14dedc798c67abf3b793fc0529dd9279",
   "engine/services/speech-normalizer.js": "c891131b3fc76dafa87f4500e2f5913eb0d2d4d1ee94ae7350a5b2e6a6f61e6f",
-  "engine/services/speech-recognition-adapter.js": "d44acdd663e52a668d15f2af74ff67d63d7df796da46cb881b991543c68f92db",
-  "engine/services/speech-engine.js": "572453a24e542091eaf54e90fffa9c5d4f7e2c045b3706c2494d57748e526e39",
+  "engine/services/speech-recognition-adapter.js": "d064c492f13bfa46014962becabaaa15a25aaf5c208563e06ee1616af3480d9a",
+  "engine/services/speech-engine.js": "2d85fa0af3bd8f109ca9d95995361f44e3240e97ce5fba54bed1d14e66260824",
   "engine/services/speech-start-controller.js": "f6d1224d0ae71f8ee12067f0ede79650dae84a88d2c68b7ce474ce48c24b8161",
   "engine/services/local-communicative-judge.js": "d124c63e412c4e6553026141361ab608da5603bd29854f93f6b8c06bf1f57e58",
   "engine/services/communicative-judge.js": "a8b8482768e480f609ff9b569774509a881d503769ca5f3452783ff94c7ecb04",

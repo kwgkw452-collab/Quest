@@ -17,6 +17,15 @@
     } catch (_) {}
   }
 
+  function restoreTimingTrace(type, detail) {
+    try {
+      if (window.AudioRestoreTimingDiagnostic &&
+          typeof AudioRestoreTimingDiagnostic.record === "function") {
+        AudioRestoreTimingDiagnostic.record(type, detail || {});
+      }
+    } catch (_) {}
+  }
+
   function retrySpeechAudioExitAfterRecovery() {
     if (speechAudioRecoveryCleanup || !window.document || typeof document.addEventListener !== "function") return;
     var events = ["pointerdown", "touchend", "click", "keydown"];
@@ -45,6 +54,7 @@
 
   function releaseSpeechAudio(attempt) {
     if (!attempt || attempt.released) return speechAudioRelease;
+    restoreTimingTrace("audio-release-request");
     teardownTrace("release-speech-audio-start");
     attempt.released = true;
     if (speechAudioAttempt === attempt) speechAudioAttempt = null;
@@ -171,6 +181,7 @@
       emit("error", error);
       throw error;
     } finally {
+      restoreTimingTrace("speech-finally");
       teardownTrace("speech-listen-finally");
       if (keepAudioForImmediateRetry) finishSpeechAudio(audioAttempt);
       else await releaseSpeechAudio(audioAttempt);

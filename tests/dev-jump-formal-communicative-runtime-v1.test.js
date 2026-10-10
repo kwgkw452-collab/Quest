@@ -13,7 +13,7 @@ const devHtml = read("dev.html");
 const scripts = Array.from(devHtml.matchAll(/<script\s+src="([^"]+)"/g), match => match[1]);
 
 const productionHashes = {
-  "index.html": "dfa9b18d732e21bf95d62a51f36656e44ebfcf6a1321d22745cd802b79c323b0",
+  "index.html": "740342f9769ceb4cf875f2313ea80d465dc2df02844bf6c26965f90bd4741660",
   "data/questions.js": "7f94f150fff8ef7af49e4bd7f86614900eafb0fb1d3d772861142feb68d75904",
   "data/communicative-judge-rules.js": "acae74a247318a54ef09ac75c04c444c14dedc798c67abf3b793fc0529dd9279",
   "engine/services/local-communicative-judge.js": "d124c63e412c4e6553026141361ab608da5603bd29854f93f6b8c06bf1f57e58",

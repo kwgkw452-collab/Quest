@@ -94,6 +94,15 @@
     } catch (_) {}
   }
 
+  function restoreTimingTrace(type, detail) {
+    try {
+      if (window.AudioRestoreTimingDiagnostic &&
+          typeof AudioRestoreTimingDiagnostic.record === "function") {
+        AudioRestoreTimingDiagnostic.record(type, detail || {});
+      }
+    } catch (_) {}
+  }
+
   function s005Trace(options, eventName, detail) {
     var questionId = options && options.s005TraceQuestionId;
     if (typeof questionId !== "string" || questionId.indexOf("s005.communication.") !== 0) return;
@@ -156,6 +165,10 @@
           instanceId: recognition.__eigoMicReleaseTraceId,
           activeRecognitionId: activeRecognitionId(),
           activeRecognitionNull: activeRecognition === null
+        });
+        restoreTimingTrace("adapter-settled", {
+          instanceId: recognition.__eigoMicReleaseTraceId,
+          settlement: kind
         });
         if (kind === "resolve") {
           recordMicReleaseTrace("adapter-resolve", { instanceId: recognition.__eigoMicReleaseTraceId });
@@ -265,6 +278,10 @@
 
       recognition.onend = function () {
         var result = finalText.trim();
+        restoreTimingTrace("recognition-onend", {
+          instanceId: recognition.__eigoMicReleaseTraceId,
+          resultAvailable: Boolean(result)
+        });
         recordMicReleaseTrace("onend", {
           instanceId: recognition.__eigoMicReleaseTraceId,
           resultAvailable: Boolean(result)

@@ -203,8 +203,8 @@ async function verifyRestoreOrder(state, promise, expected) {
     "no arbitrary 500ms teardown wait added");
   check(!/audioSession\s*\.\s*(?:type|state)\s*=/.test(adapter + engine + audio),
     "navigator.audioSession remains read-only");
-  check(index.includes("iphone-speech-recognition-teardown-serialization-fix-v1"),
-    "production cache marker identifies serialization fix");
+  check(index.includes("iphone-speech-audio-restore-timing-ab-v1"),
+    "production cache marker identifies A/B diagnostic built on serialization fix");
 
   console.log(`iPhone Speech Recognition Teardown Serialization Fix V1: ${checks}/${checks} PASS`);
 })().catch(error => { console.error(error); process.exitCode = 1; });
