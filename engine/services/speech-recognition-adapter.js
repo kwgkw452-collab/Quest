@@ -103,6 +103,15 @@
     } catch (_) {}
   }
 
+  function speechResultAudioRouteTrace(checkpoint, detail) {
+    try {
+      if (window.SpeechResultAudioRouteTrace &&
+          typeof SpeechResultAudioRouteTrace.record === "function") {
+        SpeechResultAudioRouteTrace.record(checkpoint, detail || {});
+      }
+    } catch (_) {}
+  }
+
   function s005Trace(options, eventName, detail) {
     var questionId = options && options.s005TraceQuestionId;
     if (typeof questionId !== "string" || questionId.indexOf("s005.communication.") !== 0) return;
@@ -144,6 +153,7 @@
       var latestAlternatives = [];
       var lastError = null;
       var pendingTerminalError = null;
+      var firstResultSeen = false;
       activeRecognition = recognition;
       recordMicReleaseTrace("instance-created", { instanceId: recognition.__eigoMicReleaseTraceId });
 
@@ -202,10 +212,30 @@
         recordMicReleaseTrace("onstart", { instanceId: recognition.__eigoMicReleaseTraceId });
         teardownTrace("recognition-onstart");
         legacyTrace("recognition-onstart");
+        speechResultAudioRouteTrace("speech-recognition-onstart", {
+          recognitionInstanceIdentity: recognition.__eigoMicReleaseTraceId,
+          recognitionEvent: "onstart"
+        });
         if (typeof options.onStart === "function") options.onStart();
       };
 
       recognition.onresult = function (event) {
+        var firstResultTrace = null;
+        if (!firstResultSeen) {
+          firstResultSeen = true;
+          var firstIndex = Number(event.resultIndex) || 0;
+          var firstResult = event.results && event.results[firstIndex];
+          var firstAlternative = firstResult && firstResult[0];
+          firstResultTrace = {
+            recognitionInstanceIdentity: recognition.__eigoMicReleaseTraceId,
+            recognitionEvent: "result",
+            resultIndex: firstIndex,
+            resultsLength: event.results ? event.results.length : 0,
+            isFinal: firstResult ? Boolean(firstResult.isFinal) : null,
+            transcript: firstAlternative ? String(firstAlternative.transcript || "").trim() : ""
+          };
+          speechResultAudioRouteTrace("speech-recognition-first-result-before-processing", firstResultTrace);
+        }
         var interimText = "";
         var alternatives = [];
         for (var i = event.resultIndex; i < event.results.length; i += 1) {
@@ -252,6 +282,9 @@
         }
         if (typeof options.onInterim === "function") options.onInterim(currentText);
         if (typeof options.onAlternatives === "function") options.onAlternatives(alternatives);
+        if (firstResultTrace) {
+          speechResultAudioRouteTrace("speech-recognition-first-result-after-processing", firstResultTrace);
+        }
       };
 
       recognition.onerror = function (event) {
@@ -278,6 +311,11 @@
 
       recognition.onend = function () {
         var result = finalText.trim();
+        speechResultAudioRouteTrace("speech-recognition-onend", {
+          recognitionInstanceIdentity: recognition.__eigoMicReleaseTraceId,
+          recognitionEvent: "onend",
+          transcript: result
+        });
         restoreTimingTrace("recognition-onend", {
           instanceId: recognition.__eigoMicReleaseTraceId,
           resultAvailable: Boolean(result)
@@ -322,6 +360,10 @@
       }
 
       try {
+        speechResultAudioRouteTrace("speech-recognition-before-start-call", {
+          recognitionInstanceIdentity: recognition.__eigoMicReleaseTraceId,
+          recognitionEvent: "before-start-call"
+        });
         recordMicReleaseTrace("start-call", { instanceId: recognition.__eigoMicReleaseTraceId });
         teardownTrace("recognition-start-call");
         legacyTrace("recognition-start-call");

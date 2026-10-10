@@ -39,7 +39,7 @@ check(index.includes("speech-recognition-adapter.js?v=iphone-speech-audio-restor
 check(index.includes("speech-engine.js?v=iphone-speech-audio-restore-timing-ab-v1"), "A/B diagnostic cache key: speech-engine.js");
 check(index.includes("audio-manager.js?v=iphone-speech-audio-restore-timing-ab-v1"), "A/B diagnostic cache key: audio-manager.js");
 
-check(hash(adapter) === "d064c492f13bfa46014962becabaaa15a25aaf5c208563e06ee1616af3480d9a", "Recognition adapter includes A/B trace marker only");
+check(hash(adapter) === "4e852fb0c0b39cbf4c9a3dc62e61cec397f0e7836c648b961a9bf2adeb5d4973", "Recognition adapter includes A/B trace marker and result route trace only");
 check(hash(engine) === "2d85fa0af3bd8f109ca9d95995361f44e3240e97ce5fba54bed1d14e66260824", "Speech engine includes A/B trace marker only");
 check(hash(startController) === "f6d1224d0ae71f8ee12067f0ede79650dae84a88d2c68b7ce474ce48c24b8161", "SpeechStartController is unchanged from V1");
 

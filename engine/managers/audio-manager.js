@@ -9,6 +9,8 @@
   var CENTRAL_RECOVERY_VERSION = "central-audio-recovery-v1";
   var INITIAL_AUDIO_UNLOCK_TRACE_VERSION = "iphone-safari-initial-audio-unlock-trace-v1";
   var RELOAD_AUDIO_IDENTITY_TRACE_VERSION = "iphone-reload-audio-identity-trace-v1";
+  var LOUD_AUDIO_GRAPH_IDENTITY_TRACE_VERSION = "iphone-safari-loud-audio-graph-identity-trace-v2";
+  var SPEECH_RESULT_AUDIO_ROUTE_TRACE_VERSION = "iphone-safari-speech-result-audio-route-trace-v1";
   var SOURCE_LOST_FATAL_MS = 1500;
   var SOURCE_LOST_MIN_MEDIA_ADVANCE = 0.5;
   var RECOVERY_COOLDOWN_BASE_MS = 5000;
@@ -208,9 +210,15 @@
   var reloadAudioIdentityTraceState = {
     events: [],
     maps: null,
-    counters: { context: 0, element: 0, source: 0, gain: 0 },
+    counters: { context: 0, element: 0, source: 0, gain: 0, node: 0, graph: 0 },
     graphs: [],
     pageLoadId: null
+  };
+  var SPEECH_RESULT_AUDIO_ROUTE_TRACE_LIMIT = 128;
+  var speechResultAudioRouteTraceState = {
+    events: [],
+    audioSessionListenerInstalled: false,
+    lastAudioSessionState: null
   };
 
   function speechRestoreDiagnosticMode() {
@@ -361,7 +369,9 @@
         context: new WeakMap(),
         element: new WeakMap(),
         source: new WeakMap(),
-        gain: new WeakMap()
+        gain: new WeakMap(),
+        node: new WeakMap(),
+        graph: new WeakMap()
       };
     }
     if (!reloadAudioIdentityTraceState.pageLoadId) {
@@ -386,18 +396,210 @@
 
   function observeExistingAudioGraph(audio, context, source, gainNode, nodes, busName) {
     if (!voiceRuntimeTraceState.panelEnabled) return;
-    reloadAudioIdentityTraceState.graphs.push({
+    var graph = {
       audio: audio,
       context: context,
       source: source,
       gainNode: gainNode,
       nodes: nodes,
-      busName: busName
-    });
+      busName: busName,
+      createdAt: Date.now(),
+      createdBy: "buildSimpleGraph",
+      creationReason: busName + "-canonical-bus-graph",
+      generationSequence: reloadAudioIdentityTraceState.graphs.length + 1,
+      asset: audio && (audio.__eigoTraceAssetId ||
+        (audio.__eigoBgmTrack && audio.__eigoBgmTrack.asset)) || null,
+      destinationConnected: true,
+      disconnected: false,
+      disconnectedAt: null
+    };
+    reloadAudioIdentityTraceState.graphs.push(graph);
     reloadObjectIdentity(context, "context");
     reloadObjectIdentity(audio, "element");
     reloadObjectIdentity(source, "source");
     reloadObjectIdentity(gainNode, "gain");
+    reloadObjectIdentity(graph, "graph");
+    (nodes || []).forEach(function (node) { reloadObjectIdentity(node, "node"); });
+  }
+
+  function markObservedGraphsDisconnected(nodes) {
+    if (!voiceRuntimeTraceState.panelEnabled || !nodes || !nodes.length) return;
+    reloadAudioIdentityTraceState.graphs.forEach(function (graph) {
+      if (graph.disconnected || !graph.nodes) return;
+      var belongsToGraph = nodes.some(function (node) { return graph.nodes.indexOf(node) !== -1; });
+      if (!belongsToGraph) return;
+      graph.disconnected = true;
+      graph.destinationConnected = false;
+      graph.disconnectedAt = Date.now();
+    });
+  }
+
+  function graphAsset(graph) {
+    var audio = graph && graph.audio;
+    return graph && graph.asset || audio && (audio.__eigoTraceAssetId ||
+      (audio.__eigoBgmTrack && audio.__eigoBgmTrack.asset)) || null;
+  }
+
+  function latestObservedGraphForAudio(audio) {
+    for (var index = reloadAudioIdentityTraceState.graphs.length - 1; index >= 0; index -= 1) {
+      if (reloadAudioIdentityTraceState.graphs[index].audio === audio) {
+        return reloadAudioIdentityTraceState.graphs[index];
+      }
+    }
+    return null;
+  }
+
+  function loudAudioGraphDetailSnapshot() {
+    var managed = uniqueManagedAudio();
+    var canonicalElement = bgm;
+    var canonicalGraph = latestObservedGraphForAudio(canonicalElement);
+    var canonicalSource = canonicalGraph && canonicalGraph.source;
+    var canonicalGain = canonicalGraph && canonicalGraph.gainNode;
+    var sourceIndex = 0;
+    var nodeIndex = 0;
+    var details = reloadAudioIdentityTraceState.graphs.map(function (graph) {
+      var audio = graph.audio;
+      var managedNow = !!(audio && managed.indexOf(audio) !== -1);
+      var latestForElement = latestObservedGraphForAudio(audio);
+      var sourceDisplayIndex = graph.source ? ++sourceIndex : null;
+      var nodes = (graph.nodes || []).map(function (node) {
+        nodeIndex += 1;
+        return {
+          index: nodeIndex,
+          identity: node === graph.source ? reloadObjectIdentity(node, "source") :
+            (node === graph.gainNode ? reloadObjectIdentity(node, "gain") : reloadObjectIdentity(node, "node")),
+          kind: node === graph.source ? "MediaElementSource" :
+            (node === graph.gainNode ? "GainNode" : "AudioNode"),
+          connected: graph.destinationConnected === true && graph.disconnected !== true
+        };
+      });
+      return {
+        graphIdentity: reloadObjectIdentity(graph, "graph"),
+        generationSequence: graph.generationSequence,
+        createdAt: graph.createdAt,
+        createdBy: graph.createdBy,
+        creationReason: graph.creationReason,
+        asset: graphAsset(graph),
+        busName: graph.busName,
+        contextIdentity: reloadObjectIdentity(graph.context, "context"),
+        contextState: graph.context ? (graph.context.state || "unknown") : "unavailable",
+        canonicalContextMatch: graph.context === canonicalAudioContext,
+        elementIdentity: reloadObjectIdentity(audio, "element"),
+        elementSource: shortAudioSource(audio),
+        elementCurrentTime: audio ? finiteTraceNumber(audio.currentTime) : null,
+        elementPaused: audio ? !!audio.paused : null,
+        elementEnded: audio ? !!audio.ended : null,
+        elementMuted: audio ? !!audio.muted : null,
+        elementVolume: audio ? finiteTraceNumber(audio.volume) : null,
+        canonicalElementMatch: audio === canonicalElement,
+        sourceIndex: sourceDisplayIndex,
+        sourceIdentity: reloadObjectIdentity(graph.source, "source"),
+        canonicalSourceMatch: !!graph.source && graph.source === canonicalSource,
+        gainIdentity: reloadObjectIdentity(graph.gainNode, "gain"),
+        gainValue: graph.gainNode && graph.gainNode.gain ? finiteTraceNumber(graph.gainNode.gain.value) : null,
+        canonicalGainMatch: !!graph.gainNode && graph.gainNode === canonicalGain,
+        managed: managedNow,
+        playing: isAudioPlaying(audio),
+        active: managedNow && graph.disconnected !== true,
+        retired: !managedNow || graph.disconnected === true,
+        stale: managedNow && latestForElement !== graph,
+        destinationConnected: graph.destinationConnected === true && graph.disconnected !== true,
+        disconnected: graph.disconnected === true,
+        disconnectedAt: graph.disconnectedAt,
+        nodes: nodes
+      };
+    });
+    return {
+      version: LOUD_AUDIO_GRAPH_IDENTITY_TRACE_VERSION,
+      contextIdentity: reloadObjectIdentity(canonicalAudioContext, "context"),
+      contextState: canonicalAudioContext ? (canonicalAudioContext.state || "unknown") : "uninitialized",
+      graphRegisteredCount: details.length,
+      sourceRegisteredCount: details.filter(function (detail) { return !!detail.sourceIdentity; }).length,
+      nodeRegisteredCount: details.reduce(function (sum, detail) { return sum + detail.nodes.length; }, 0),
+      graphs: details
+    };
+  }
+
+  function speechResultAudioRouteSnapshot() {
+    var identity = reloadAudioIdentitySnapshot();
+    var context = canonicalAudioContext;
+    var currentAudio = bgm;
+    var currentGraph = latestObservedGraphForAudio(currentAudio);
+    var session = audioSessionTraceSnapshot();
+    var currentSrc = null;
+    try { currentSrc = currentAudio && (currentAudio.currentSrc || currentAudio.src || null); } catch (_) {}
+    return {
+      contextIdentity: reloadObjectIdentity(context, "context"),
+      contextState: context ? (context.state || "unknown") : "uninitialized",
+      contextCurrentTime: context ? finiteTraceNumber(context.currentTime) : null,
+      contextSampleRate: context ? finiteTraceNumber(context.sampleRate) : null,
+      contextBaseLatency: context ? finiteTraceNumber(context.baseLatency) : null,
+      audioSessionSupported: session.supported === true,
+      audioSessionType: session.supported === true ? session.type : session.label,
+      audioSessionState: session.supported === true ? session.state : session.label,
+      bgmAsset: currentAudio && currentAudio.__eigoBgmTrack ? currentAudio.__eigoBgmTrack.asset : null,
+      bgmElementIdentity: reloadObjectIdentity(currentAudio, "element"),
+      bgmSrc: shortAudioSource(currentAudio),
+      bgmCurrentSrc: currentSrc,
+      bgmCurrentTime: currentAudio ? finiteTraceNumber(currentAudio.currentTime) : null,
+      bgmPaused: currentAudio ? !!currentAudio.paused : null,
+      bgmEnded: currentAudio ? !!currentAudio.ended : null,
+      bgmMuted: currentAudio ? !!currentAudio.muted : null,
+      bgmVolume: currentAudio ? finiteTraceNumber(currentAudio.volume) : null,
+      bgmReadyState: currentAudio ? finiteTraceNumber(currentAudio.readyState) : null,
+      bgmNetworkState: currentAudio ? finiteTraceNumber(currentAudio.networkState) : null,
+      sourceIdentity: reloadObjectIdentity(currentGraph && currentGraph.source, "source"),
+      gainIdentity: reloadObjectIdentity(currentGraph && currentGraph.gainNode, "gain"),
+      gainValue: currentGraph && currentGraph.gainNode && currentGraph.gainNode.gain ?
+        finiteTraceNumber(currentGraph.gainNode.gain.value) : null,
+      graphContextIdentity: reloadObjectIdentity(currentGraph && currentGraph.context, "context"),
+      canonicalContextMatch: currentGraph ? currentGraph.context === canonicalAudioContext : null,
+      bgmSourceCount: identity.bgmSourceCount,
+      managedSourceCount: identity.activeSourceCount,
+      bgmNodeCount: identity.bgmNodeCount,
+      managedNodeCount: identity.activeNodeCount
+    };
+  }
+
+  function recordSpeechResultAudioRouteCheckpoint(checkpoint, detail) {
+    if (!voiceRuntimeTraceState.panelEnabled) return;
+    var record = Object.assign({
+      checkpoint: checkpoint,
+      at: Date.now(),
+      recognitionInstanceIdentity: null,
+      recognitionEvent: null,
+      resultIndex: null,
+      resultsLength: null,
+      isFinal: null,
+      transcript: null
+    }, speechResultAudioRouteSnapshot(), detail || {});
+    speechResultAudioRouteTraceState.events.push(record);
+    if (speechResultAudioRouteTraceState.events.length > SPEECH_RESULT_AUDIO_ROUTE_TRACE_LIMIT) {
+      speechResultAudioRouteTraceState.events.shift();
+    }
+    try { console.log("[SPEECH RESULT AUDIO ROUTE TRACE] " + checkpoint, record); } catch (_) {}
+    renderVoiceRuntimeTracePanel();
+  }
+
+  function installSpeechResultAudioSessionTrace() {
+    if (!voiceRuntimeTraceState.panelEnabled || speechResultAudioRouteTraceState.audioSessionListenerInstalled) return;
+    try {
+      var session = window.navigator && navigator.audioSession;
+      if (!session || typeof session.addEventListener !== "function") return;
+      speechResultAudioRouteTraceState.audioSessionListenerInstalled = true;
+      speechResultAudioRouteTraceState.lastAudioSessionState =
+        typeof session.state === "string" ? session.state : "unavailable";
+      session.addEventListener("statechange", function () {
+        var previousState = speechResultAudioRouteTraceState.lastAudioSessionState;
+        var currentState = typeof session.state === "string" ? session.state : "unavailable";
+        speechResultAudioRouteTraceState.lastAudioSessionState = currentState;
+        recordSpeechResultAudioRouteCheckpoint("audio-session-statechange", {
+          recognitionEvent: "audio-session-statechange",
+          previousAudioSessionState: previousState,
+          currentAudioSessionState: currentState
+        });
+      });
+    } catch (_) {}
   }
 
   function reloadNavigationType() {
@@ -466,7 +668,9 @@
     var record = Object.assign({
       checkpoint: checkpoint,
       at: Date.now()
-    }, reloadAudioIdentitySnapshot(focusAudio), detail || {});
+    }, reloadAudioIdentitySnapshot(focusAudio), detail || {}, {
+      loudGraphDetail: loudAudioGraphDetailSnapshot()
+    });
     reloadAudioIdentityTraceState.events.push(record);
     if (reloadAudioIdentityTraceState.events.length > RELOAD_AUDIO_IDENTITY_TRACE_LIMIT) {
       reloadAudioIdentityTraceState.events.shift();
@@ -887,6 +1091,76 @@
     }
   }
 
+  function loudAudioGraphDetailLines(snapshot) {
+    if (!snapshot) return ["LOUD GRAPH DETAIL unavailable"];
+    var lines = [
+      "LOUD GRAPH DETAIL: " + snapshot.version,
+      "CONTEXT " + stringifyTraceValue(snapshot.contextIdentity) + " state=" + snapshot.contextState +
+        " registered graphs/sources/nodes=" + snapshot.graphRegisteredCount + "/" +
+        snapshot.sourceRegisteredCount + "/" + snapshot.nodeRegisteredCount
+    ];
+    snapshot.graphs.forEach(function (graph, graphIndex) {
+      lines.push("GRAPH[" + (graphIndex + 1) + "] " + stringifyTraceValue(graph.graphIdentity) +
+        " seq=" + graph.generationSequence + " asset=" + stringifyTraceValue(graph.asset) +
+        " bus=" + stringifyTraceValue(graph.busName) + " active=" + graph.active +
+        " retired=" + graph.retired + " stale=" + graph.stale);
+      lines.push("  created=" + traceClock(graph.createdAt) + " by=" + graph.createdBy +
+        " reason=" + graph.creationReason + " ctx=" + stringifyTraceValue(graph.contextIdentity) +
+        "/" + graph.contextState + " canonical=" + graph.canonicalContextMatch);
+      lines.push("  ELEMENT " + stringifyTraceValue(graph.elementIdentity) + " src=" + graph.elementSource +
+        " t=" + stringifyTraceValue(graph.elementCurrentTime) + " play/pause/end=" + graph.playing +
+        "/" + stringifyTraceValue(graph.elementPaused) + "/" + stringifyTraceValue(graph.elementEnded) +
+        " mute/vol=" + stringifyTraceValue(graph.elementMuted) + "/" +
+        stringifyTraceValue(graph.elementVolume) + " canonical=" + graph.canonicalElementMatch);
+      lines.push("  SOURCE[" + stringifyTraceValue(graph.sourceIndex) + "] " +
+        stringifyTraceValue(graph.sourceIdentity) + " canonical=" + graph.canonicalSourceMatch +
+        " connected=" + graph.destinationConnected + " disconnected=" + graph.disconnected);
+      lines.push("  GAIN " + stringifyTraceValue(graph.gainIdentity) + " value=" +
+        stringifyTraceValue(graph.gainValue) + " canonical=" + graph.canonicalGainMatch);
+      lines.push("  NODES " + graph.nodes.map(function (node) {
+        return "NODE[" + node.index + "]=" + stringifyTraceValue(node.identity) +
+          "/" + node.kind + "/connected=" + node.connected;
+      }).join(" | "));
+    });
+    return lines;
+  }
+
+  function speechResultAudioRouteLines() {
+    var events = speechResultAudioRouteTraceState.events.slice(-16);
+    var lines = [
+      "Speech Result Audio Route Trace: " + SPEECH_RESULT_AUDIO_ROUTE_TRACE_VERSION,
+      "SPEECH AUDIO ROUTE ORDER (latest " + events.length + "/" +
+        SPEECH_RESULT_AUDIO_ROUTE_TRACE_LIMIT + "):"
+    ];
+    events.forEach(function (event) {
+      lines.push(traceClock(event.at) + " " + event.checkpoint + " rec=" +
+        stringifyTraceValue(event.recognitionInstanceIdentity) + " event=" +
+        stringifyTraceValue(event.recognitionEvent) + " result=" +
+        stringifyTraceValue(event.resultIndex) + "/" + stringifyTraceValue(event.resultsLength) +
+        "/final=" + stringifyTraceValue(event.isFinal) + "/text=" +
+        stringifyTraceValue(event.transcript) + " ctx=" + stringifyTraceValue(event.contextIdentity) +
+        "/" + event.contextState + "@" + stringifyTraceValue(event.contextCurrentTime) +
+        " sr/lat=" + stringifyTraceValue(event.contextSampleRate) + "/" +
+        stringifyTraceValue(event.contextBaseLatency) + " session=" +
+        stringifyTraceValue(event.audioSessionType) + "/" + stringifyTraceValue(event.audioSessionState));
+      lines.push("  BGM el=" + stringifyTraceValue(event.bgmElementIdentity) + " asset/src=" +
+        stringifyTraceValue(event.bgmAsset) + "/" + stringifyTraceValue(event.bgmSrc) +
+        " currentSrc=" + stringifyTraceValue(event.bgmCurrentSrc) + " t=" +
+        stringifyTraceValue(event.bgmCurrentTime) + " pause/end/mute/vol=" +
+        stringifyTraceValue(event.bgmPaused) + "/" + stringifyTraceValue(event.bgmEnded) +
+        "/" + stringifyTraceValue(event.bgmMuted) + "/" + stringifyTraceValue(event.bgmVolume) +
+        " ready/net=" + stringifyTraceValue(event.bgmReadyState) + "/" +
+        stringifyTraceValue(event.bgmNetworkState) + " graph=" +
+        stringifyTraceValue(event.sourceIdentity) + ">" + stringifyTraceValue(event.gainIdentity) +
+        "@" + stringifyTraceValue(event.gainValue) + " ctx=" +
+        stringifyTraceValue(event.graphContextIdentity) + "/canonical=" +
+        stringifyTraceValue(event.canonicalContextMatch) + " sources=" + event.bgmSourceCount +
+        "/" + event.managedSourceCount + " nodes=" + event.bgmNodeCount + "/" +
+        event.managedNodeCount);
+    });
+    return lines;
+  }
+
   function renderVoiceRuntimeTracePanel() {
     if (!voiceRuntimeTraceState.panelEnabled || !window.document || !document.body) return;
     var panel = document.getElementById("gainnode-runtime-trace-panel");
@@ -974,6 +1248,9 @@
         "/rs" + stringifyTraceValue(event.zephyr && event.zephyr.readyState);
     });
     var initialUnlockLive = initialAudioUnlockSnapshot();
+    var speechResultRouteLines = speechResultAudioRouteLines();
+    var loudGraphLive = loudAudioGraphDetailSnapshot();
+    var loudGraphLines = loudAudioGraphDetailLines(loudGraphLive);
     var reloadIdentityLines = reloadAudioIdentityTraceState.events.slice(-18).map(function (event) {
       return traceClock(event.at) + " " + event.checkpoint + " nav=" + event.navigationType +
         " ctx=" + stringifyTraceValue(event.contextIdentity) + "/" + event.contextState + "@" +
@@ -992,7 +1269,7 @@
         stringifyTraceValue(event.focusCanonicalContextMatch);
     });
     var reloadIdentityLive = reloadAudioIdentitySnapshot();
-    var lines = [
+    var lines = speechResultRouteLines.concat(loudGraphLines).concat([
       "Reload Audio Identity Trace: " + RELOAD_AUDIO_IDENTITY_TRACE_VERSION + " | " +
         reloadIdentityLive.pageLoadId + " | nav=" + reloadIdentityLive.navigationType,
       "IDENTITY LIVE: ctx=" + stringifyTraceValue(reloadIdentityLive.contextIdentity) + "/" +
@@ -1005,7 +1282,7 @@
         " nodes=" + reloadIdentityLive.bgmNodeCount + "/" + reloadIdentityLive.activeNodeCount,
       "RELOAD IDENTITY CHECKPOINTS (latest " + reloadIdentityLines.length + "/" +
         RELOAD_AUDIO_IDENTITY_TRACE_LIMIT + "):"
-    ].concat(reloadIdentityLines).concat([
+    ]).concat(reloadIdentityLines).concat([
       "Initial Audio Unlock Trace: " + INITIAL_AUDIO_UNLOCK_TRACE_VERSION,
       "INITIAL LIVE: ctx=" + initialUnlockLive.contextState + "@" +
         stringifyTraceValue(initialUnlockLive.contextCurrentTime) + " pico=" +
@@ -1166,6 +1443,10 @@
             installUnlockGesture();
           }
           recordAudioLifecycleEvent("context-statechange", { previousState: previous, currentState: current });
+          recordReloadAudioIdentityCheckpoint("audio-context-statechange", {
+            previousState: previous,
+            currentState: current
+          });
         });
       }
       audioTrace("AUDIO_RUNTIME_VERSION", { version: RUNTIME_VERSION });
@@ -1334,6 +1615,11 @@
           eventTimestamp: finiteTraceNumber(event.timeStamp)
         });
         recordReloadAudioIdentityCheckpoint("trusted-pointerdown-before", {
+          eventType: event.type,
+          isTrusted: event.isTrusted,
+          eventTimestamp: finiteTraceNumber(event.timeStamp)
+        });
+        recordReloadAudioIdentityCheckpoint("trusted-pointerdown", {
           eventType: event.type,
           isTrusted: event.isTrusted,
           eventTimestamp: finiteTraceNumber(event.timeStamp)
@@ -1632,9 +1918,16 @@
             asset: audio.__eigoBgmTrack.asset,
             instanceId: audio.__eigoTraceInstanceId || null
           });
+          recordReloadAudioIdentityCheckpoint("bgm-play-resolved-after", {
+            asset: audio.__eigoBgmTrack.asset,
+            instanceId: audio.__eigoTraceInstanceId || null
+          }, audio);
         }
         if (audio.__eigoReloadIdentityTarget) {
           recordReloadAudioIdentityCheckpoint(audio.__eigoReloadIdentityTarget + "-after-play-resolved", null, audio);
+        }
+        if (audio.__eigoReloadIdentityTarget === "pico") {
+          recordReloadAudioIdentityCheckpoint("pico-se-resolved-after", null, audio);
         }
         return { ok: true, error: null };
       }, function (error) {
@@ -1654,6 +1947,9 @@
           recordReloadAudioIdentityCheckpoint(audio.__eigoReloadIdentityTarget + "-play-rejected", {
             error: String(error)
           }, audio);
+        }
+        if (audio.__eigoReloadIdentityTarget === "pico") {
+          recordReloadAudioIdentityCheckpoint("pico-se-rejected-after", { error: String(error) }, audio);
         }
         console.warn("Audio playback was blocked or failed:", error);
         return { ok: false, error: error };
@@ -1675,6 +1971,9 @@
           error: String(error)
         }, audio);
       }
+      if (audio.__eigoReloadIdentityTarget === "pico") {
+        recordReloadAudioIdentityCheckpoint("pico-se-rejected-after", { error: String(error) }, audio);
+      }
       console.warn("Audio playback was blocked or failed:", error);
       playback = Promise.resolve({ ok: false, error: error });
     }
@@ -1683,6 +1982,7 @@
   }
 
   function disconnectNodes(nodes) {
+    markObservedGraphsDisconnected(nodes || []);
     (nodes || []).forEach(function (node) { try { node.disconnect(); } catch (_) {} });
   }
 
@@ -1946,6 +2246,7 @@
 
   function playBgm(keyOrPath, options) {
     options = options || {};
+    recordReloadAudioIdentityCheckpoint("bgm-play-request-before", { asset: keyOrPath });
     if (keyOrPath === "morningGardenAtmosphere") {
       recordReloadAudioIdentityCheckpoint("morning-bgm-before");
     }
@@ -2041,6 +2342,7 @@
     options = options || {};
     if (type === "se" && keyOrPath === "picoEntrance") {
       recordReloadAudioIdentityCheckpoint("pico-before");
+      recordReloadAudioIdentityCheckpoint("pico-se-request-before", { asset: keyOrPath });
     }
     var path = resolve(type, keyOrPath);
     if (isZephyrMotif(type, keyOrPath, path)) {
@@ -2902,6 +3204,7 @@
     if (options !== undefined) return enterLegacySpeechMode(options);
     return queueSpeechIsolation(async function () {
       if (speechIsolation.state === "active") return true;
+      recordReloadAudioIdentityCheckpoint("speech-mode-enter-before");
       recordAudioLifecycleEvent("speech-mode-enter-start");
       // Let the existing fatal-loss detector confirm any loss before pausing.
       monitorCentralAudioRecovery();
@@ -2918,6 +3221,9 @@
       speechIsolation.state = "active";
       recordAudioLifecycleEvent("speech-mode-active");
       recordReloadAudioIdentityCheckpoint("speech-start-before-recognition");
+      recordSpeechResultAudioRouteCheckpoint("speech-start-before-recognition", {
+        recognitionEvent: "speech-start-before-recognition"
+      });
       return true;
     });
   }
@@ -2926,6 +3232,10 @@
     if (options !== undefined) return exitLegacySpeechMode(options);
     return queueSpeechIsolation(async function () {
       if (speechIsolation.state === "idle") return true;
+      recordReloadAudioIdentityCheckpoint("speech-end-after");
+      recordSpeechResultAudioRouteCheckpoint("speech-exit-mode-before", {
+        recognitionEvent: "speech-exit-mode-before"
+      });
       var diagnosticDelayMs = speechRestoreDiagnosticDelayMs();
       recordAudioRestoreTimingEvent("restore-delay-start", { delayMs: diagnosticDelayMs });
       if (diagnosticDelayMs > 0) {
@@ -2935,6 +3245,9 @@
       recordAudioRestoreTimingEvent("exitSpeechMode-start");
       recordAudioLifecycleEvent("exit-speech-mode-start");
       speechIsolation.state = "exiting";
+      recordSpeechResultAudioRouteCheckpoint("speech-exit-mode-after", {
+        recognitionEvent: "speech-exit-mode-after"
+      });
       // SOURCE LOST rebuilding remains owned by Central Audio Recovery.
       if (centralRecoveryPromise) await centralRecoveryPromise;
       recordAudioRestoreTimingEvent("ctx-before-restore");
@@ -2961,6 +3274,10 @@
       bgmTracks.slice().forEach(function (track) {
         if (track.audio !== current) stop(track.audio);
       });
+      recordReloadAudioIdentityCheckpoint("bgm-restore-before", null, current);
+      recordSpeechResultAudioRouteCheckpoint("speech-bgm-restore-before", {
+        recognitionEvent: "speech-bgm-restore-before"
+      });
       recordAudioLifecycleEvent("bgm-restore-start", {
         asset: current && current.__eigoBgmTrack ? current.__eigoBgmTrack.asset : null,
         instanceId: current && current.__eigoTraceInstanceId || null
@@ -2979,6 +3296,10 @@
         }
       }
       recordReloadAudioIdentityCheckpoint("speech-end-bgm-restore-after");
+      recordReloadAudioIdentityCheckpoint("bgm-restore-after", null, current);
+      recordSpeechResultAudioRouteCheckpoint("speech-bgm-restore-after", {
+        recognitionEvent: "speech-bgm-restore-after"
+      });
       return true;
     });
   }
@@ -3103,6 +3424,19 @@
     snapshot: reloadAudioIdentitySnapshot,
     checkpoint: recordReloadAudioIdentityCheckpoint
   };
+  window.LoudAudioGraphIdentityTrace = {
+    version: LOUD_AUDIO_GRAPH_IDENTITY_TRACE_VERSION,
+    snapshot: loudAudioGraphDetailSnapshot,
+    lines: function () { return loudAudioGraphDetailLines(loudAudioGraphDetailSnapshot()); },
+    checkpoint: recordReloadAudioIdentityCheckpoint
+  };
+  window.SpeechResultAudioRouteTrace = {
+    version: SPEECH_RESULT_AUDIO_ROUTE_TRACE_VERSION,
+    limit: SPEECH_RESULT_AUDIO_ROUTE_TRACE_LIMIT,
+    events: function () { return speechResultAudioRouteTraceState.events.slice(); },
+    snapshot: speechResultAudioRouteSnapshot,
+    record: recordSpeechResultAudioRouteCheckpoint
+  };
   window.CentralAudioRecoveryTrace = {
     version: CENTRAL_RECOVERY_VERSION,
     state: centralRecoveryPublicState,
@@ -3112,6 +3446,7 @@
   if (voiceRuntimeTraceState.panelEnabled && window.document) {
     startAudioLiveTracePanel();
     installAudioLifecycleTraceListeners();
+    installSpeechResultAudioSessionTrace();
   }
   recordReloadAudioIdentityCheckpoint("startup");
   installUnlockGesture();
