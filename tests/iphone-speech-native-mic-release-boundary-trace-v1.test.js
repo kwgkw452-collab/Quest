@@ -66,7 +66,7 @@ function createRuntime(search) {
   check(audioSource.includes('"Mic Release Trace: " + micReleaseVersion'), "panel marker is visible");
   check(audioSource.includes('"MIC RELEASE ORDER (latest "'), "MIC RELEASE ORDER is visible");
   check(indexSource.includes("speech-recognition-adapter.js?v=iphone-speech-audio-restore-timing-ab-v1"), "adapter cache query updated");
-  check(indexSource.includes("audio-manager.js?v=iphone-speech-audio-restore-timing-ab-v1"), "panel cache query updated");
+  check(indexSource.includes("audio-manager.js?v=iphone-safari-bgm-loud-restore-trace-v1"), "panel cache query updated");
 
   const state = createRuntime("?audioTrace=1");
   const run = state.context.SpeechRecognitionAdapter.listen({});

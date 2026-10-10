@@ -151,7 +151,7 @@ function createRuntime(search) {
     off.context.AudioRestoreTimingDiagnostic.events().length === 0, "Trace OFF performs no recording");
   check(indexSource.includes("speech-recognition-adapter.js?v=iphone-speech-audio-restore-timing-ab-v1") &&
     indexSource.includes("speech-engine.js?v=iphone-speech-audio-restore-timing-ab-v1") &&
-    indexSource.includes("audio-manager.js?v=iphone-speech-audio-restore-timing-ab-v1"), "production cache keys select the A/B build");
+    indexSource.includes("audio-manager.js?v=iphone-safari-bgm-loud-restore-trace-v1"), "production cache keys preserve A/B and select the loudness trace build");
   check(!/audioSession\s*\.\s*(type|state)\s*=/.test(managerSource + adapterSource + engineSource), "navigator.audioSession remains read-only");
 
   console.log(`iPhone Speech Audio Restore Timing A/B Diagnostic V1: ${checks}/${checks} PASS`);

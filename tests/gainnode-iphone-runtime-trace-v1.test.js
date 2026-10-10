@@ -56,7 +56,7 @@ assert(manager.includes('action: "safe-suppress"'));
 
 for (const page of ["index.html", "dev.html"]) {
   const html = read(page);
-  const audioManagerVersion = page === "index.html" ? "iphone-speech-audio-restore-timing-ab-v1" : "gainnode-confirmed-regression-fix-v1";
+  const audioManagerVersion = page === "index.html" ? "iphone-safari-bgm-loud-restore-trace-v1" : "gainnode-confirmed-regression-fix-v1";
   assert(html.includes(`engine/managers/audio-manager.js?v=${audioManagerVersion}`), `${page}: runtime cache version`);
 }
 

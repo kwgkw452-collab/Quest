@@ -75,7 +75,8 @@ for (const [page, list] of [["index", indexScripts], ["dev", devScripts]]) {
 }
 
 assert.strictEqual((indexHtml.match(/\?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1/g) || []).length, 3);
-assert.strictEqual((indexHtml.match(/\?v=iphone-speech-audio-restore-timing-ab-v1/g) || []).length, 3);
+assert.strictEqual((indexHtml.match(/\?v=iphone-speech-audio-restore-timing-ab-v1/g) || []).length, 2);
+assert.strictEqual((indexHtml.match(/\?v=iphone-safari-bgm-loud-restore-trace-v1/g) || []).length, 1);
 assert.strictEqual((devHtml.match(/\?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1/g) || []).length, 6);
 assert(!indexHtml.includes("dev/formal-speech-trace.js"), "index must not load Formal trace");
 assert(devHtml.includes("dev/formal-speech-trace.js?v=communicative-formal-trace-v1"), "dev keeps Formal trace");

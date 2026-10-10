@@ -194,6 +194,14 @@
     events: [],
     recognitionOnendAt: null
   };
+  var BGM_LOUD_RESTORE_TRACE_VERSION = "iphone-safari-bgm-loud-restore-trace-v1";
+  var BGM_LOUD_RESTORE_TRACE_LIMIT = 96;
+  var bgmLoudRestoreTraceState = {
+    events: [],
+    restoreCycleSerial: 0,
+    activeRestoreCycle: 0,
+    scheduledCycle: 0
+  };
 
   function speechRestoreDiagnosticMode() {
     try {
@@ -263,6 +271,89 @@
     if (audioRestoreTimingTraceState.events.length > AUDIO_RESTORE_TIMING_TRACE_LIMIT) {
       audioRestoreTimingTraceState.events.shift();
     }
+    if (type === "recognition-onend") {
+      recordBgmLoudnessSnapshot("loudness-snapshot-rec-end");
+    } else if (type === "audio-release-request") {
+      bgmLoudRestoreTraceState.activeRestoreCycle = ++bgmLoudRestoreTraceState.restoreCycleSerial;
+      recordBgmLoudnessSnapshot("loudness-snapshot-restore-start", {
+        restoreCycle: bgmLoudRestoreTraceState.activeRestoreCycle
+      });
+    }
+  }
+
+  function bgmLoudnessTraceEnabled() {
+    return voiceRuntimeTraceState.panelEnabled || speechRestoreDiagnosticMode() === "B";
+  }
+
+  function bgmSourceCount(currentAudio) {
+    if (!currentAudio) return 0;
+    return bgmTracks.filter(function (track) {
+      return track && track.audio === currentAudio && track.fadeState !== "stopped" &&
+        (track.path === "fallback" || (track.nodes && track.nodes.length > 0));
+    }).length;
+  }
+
+  function recordBgmLoudnessSnapshot(eventName, detail) {
+    if (!bgmLoudnessTraceEnabled()) return null;
+    try {
+      var audio = bgm;
+      var track = audio && audio.__eigoBgmTrack || null;
+      var context = canonicalAudioContext;
+      var hasMedia = !!audio;
+      var trackGain = track && track.gainNode && track.gainNode.gain ?
+        finiteTraceNumber(track.gainNode.gain.value) : "not-applicable";
+      var busGain = canonicalBuses && canonicalBuses.bgm && canonicalBuses.bgm.gain ?
+        finiteTraceNumber(canonicalBuses.bgm.gain.value) : "unknown";
+      var masterGain = canonicalBuses && canonicalBuses.master && canonicalBuses.master.gain ?
+        finiteTraceNumber(canonicalBuses.master.gain.value) : "unknown";
+      var record = Object.assign({
+        event: eventName,
+        timestamp: Date.now(),
+        abCondition: speechRestoreDiagnosticMode(),
+        configuredRestoreDelayMs: speechRestoreDiagnosticDelayMs(),
+        contextState: context ? (context.state || "unknown") : "unknown",
+        mediaVolume: hasMedia ? finiteTraceNumber(audio.volume) : "not-applicable",
+        mediaMuted: hasMedia ? !!audio.muted : "not-applicable",
+        mediaPaused: hasMedia ? !!audio.paused : "not-applicable",
+        mediaCurrentTime: hasMedia ? finiteTraceNumber(audio.currentTime) : "not-applicable",
+        mediaPlaybackRate: hasMedia ? finiteTraceNumber(audio.playbackRate) : "not-applicable",
+        trackGain: trackGain,
+        bgmBusGain: busGain,
+        masterGain: masterGain,
+        effectiveGain: track ? finiteTraceNumber(bgmEffectiveGain(track)) : "unknown",
+        bgmId: track ? track.asset : "unknown",
+        bgmPlaying: hasMedia ? isAudioPlaying(audio) : false,
+        sourceCount: bgmSourceCount(audio),
+        path: track ? track.path : "unknown",
+        graphNodeCount: track && track.nodes ? track.nodes.length : 0,
+        trackRegistered: !!(track && bgmTracks.indexOf(track) !== -1),
+        restoreCycle: bgmLoudRestoreTraceState.activeRestoreCycle || 0
+      }, detail || {});
+      bgmLoudRestoreTraceState.events.push(record);
+      if (bgmLoudRestoreTraceState.events.length > BGM_LOUD_RESTORE_TRACE_LIMIT) {
+        bgmLoudRestoreTraceState.events.shift();
+      }
+      return record;
+    } catch (_) { return null; }
+  }
+
+  function scheduleBgmLoudnessSnapshots() {
+    var cycle = bgmLoudRestoreTraceState.activeRestoreCycle;
+    if (!bgmLoudnessTraceEnabled() || !cycle || bgmLoudRestoreTraceState.scheduledCycle === cycle) return;
+    bgmLoudRestoreTraceState.scheduledCycle = cycle;
+    [[100, "loudness-snapshot-100ms"], [500, "loudness-snapshot-500ms"],
+      [1000, "loudness-snapshot-1000ms"]].forEach(function (entry) {
+      try {
+        window.setTimeout(function () {
+          try {
+            recordBgmLoudnessSnapshot(entry[1], { restoreCycle: cycle });
+            if (entry[0] === 1000 && bgmLoudRestoreTraceState.activeRestoreCycle === cycle) {
+              bgmLoudRestoreTraceState.activeRestoreCycle = 0;
+            }
+          } catch (_) {}
+        }, entry[0]);
+      } catch (_) {}
+    });
   }
 
   function finiteTraceNumber(value) {
@@ -764,13 +855,28 @@
         "/" + stringifyTraceValue(event.bgmBusGain) + "/" + stringifyTraceValue(event.bgmEffectiveGain) +
         "/" + stringifyTraceValue(event.masterGain) + " graph=" + event.graph + " fallback=" + event.fallback;
     });
+    var loudnessLines = bgmLoudRestoreTraceState.events.slice(-24).map(function (event) {
+      return traceClock(event.timestamp) + " " + event.event + " AB=" + event.abCondition +
+        "/" + event.configuredRestoreDelayMs + "ms ctx=" + event.contextState + " media=" +
+        stringifyTraceValue(event.mediaVolume) + "/" + stringifyTraceValue(event.mediaMuted) + "/" +
+        stringifyTraceValue(event.mediaPaused) + "/t=" + stringifyTraceValue(event.mediaCurrentTime) +
+        "/rate=" + stringifyTraceValue(event.mediaPlaybackRate) + " gain=" +
+        stringifyTraceValue(event.trackGain) + "/" + stringifyTraceValue(event.bgmBusGain) + "/" +
+        stringifyTraceValue(event.masterGain) + "/eff=" + stringifyTraceValue(event.effectiveGain) +
+        " bgm=" + stringifyTraceValue(event.bgmId) + " playing=" + event.bgmPlaying +
+        " sources=" + event.sourceCount + " path=" + event.path + " nodes=" + event.graphNodeCount;
+    });
     var lines = [
       "Runtime: " + RUNTIME_VERSION + " | Signal: " + SIGNAL_TRACE_VERSION,
+      "BGM Loud Restore Trace: " + BGM_LOUD_RESTORE_TRACE_VERSION,
+      "BGM LOUDNESS SNAPSHOTS (latest " + loudnessLines.length + "/" +
+        BGM_LOUD_RESTORE_TRACE_LIMIT + "):"
+    ].concat(loudnessLines).concat([
       "Audio Restore Timing A/B: " + AUDIO_RESTORE_TIMING_TRACE_VERSION + " | mode=" +
         speechRestoreDiagnosticMode() + " | delay=" + speechRestoreDiagnosticDelayMs() + "ms",
       "AUDIO RESTORE TIMING A/B (latest " + restoreTimingLines.length + "/" +
         AUDIO_RESTORE_TIMING_TRACE_LIMIT + "):"
-    ].concat(restoreTimingLines).concat([
+    ]).concat(restoreTimingLines).concat([
       "Mic Release Trace: " + micReleaseVersion,
       "MIC RELEASE ORDER (latest " + micReleaseLines.length + "/64):"
     ]).concat(micReleaseLines).concat([
@@ -974,6 +1080,7 @@
     if (!context) return false;
     recordAudioLifecycleEvent("audio-context-before-resume", { currentState: context.state || "unknown" });
     if (isRecoverableAudioContextState(context.state) && typeof context.resume === "function") {
+      recordBgmLoudnessSnapshot("loudness-snapshot-pre-resume");
       audioLifecycleTraceState.resumeCalls += 1;
       audioLifecycleTraceState.lastResumeAt = Date.now();
       audioLifecycleTraceState.lastResumeResult = "pending";
@@ -981,6 +1088,7 @@
       recordAudioLifecycleEvent("audio-context-resume-call", { currentState: context.state || "unknown" });
       try {
         await context.resume();
+        recordBgmLoudnessSnapshot("loudness-snapshot-post-resume");
         audioLifecycleTraceState.resumeSuccess += 1;
         audioLifecycleTraceState.lastResumeResult = "success";
         recordAudioLifecycleEvent("resume-success", { result: "success" });
@@ -1315,6 +1423,9 @@
     try {
       if (audio.__eigoRadioTrace) voiceTrace("radio-audio-play-call", audio.__eigoRadioTrace);
       if (audio.__eigoBgmTrack) {
+        if (bgmLoudRestoreTraceState.activeRestoreCycle) {
+          recordBgmLoudnessSnapshot("loudness-snapshot-pre-play");
+        }
         recordAudioLifecycleEvent("bgm-play-call", {
           asset: audio.__eigoBgmTrack.asset,
           instanceId: audio.__eigoTraceInstanceId || null
@@ -1324,6 +1435,9 @@
       playback = result && typeof result.then === "function" ? Promise.resolve(result).then(function () {
         if (audio.__eigoRadioTrace) voiceTrace("radio-audio-play-resolved", audio.__eigoRadioTrace);
         if (audio.__eigoBgmTrack) {
+          if (bgmLoudRestoreTraceState.activeRestoreCycle) {
+            recordBgmLoudnessSnapshot("loudness-snapshot-post-play");
+          }
           recordAudioLifecycleEvent("bgm-play-resolved", {
             asset: audio.__eigoBgmTrack.asset,
             instanceId: audio.__eigoTraceInstanceId || null
@@ -1439,6 +1553,7 @@
           asset: track.asset,
           instanceId: audio.__eigoTraceInstanceId || null
         });
+        scheduleBgmLoudnessSnapshots();
       });
     }
     audio.volume = 1;
@@ -2547,6 +2662,7 @@
     if (options !== undefined) return enterLegacySpeechMode(options);
     return queueSpeechIsolation(async function () {
       if (speechIsolation.state === "active") return true;
+      recordBgmLoudnessSnapshot("loudness-snapshot-pre-speech");
       recordAudioLifecycleEvent("speech-mode-enter-start");
       // Let the existing fatal-loss detector confirm any loss before pausing.
       monitorCentralAudioRecovery();
@@ -2571,11 +2687,13 @@
     return queueSpeechIsolation(async function () {
       if (speechIsolation.state === "idle") return true;
       var diagnosticDelayMs = speechRestoreDiagnosticDelayMs();
+      recordBgmLoudnessSnapshot("loudness-snapshot-pre-ab-delay");
       recordAudioRestoreTimingEvent("restore-delay-start", { delayMs: diagnosticDelayMs });
       if (diagnosticDelayMs > 0) {
         await new Promise(function (resolve) { window.setTimeout(resolve, diagnosticDelayMs); });
       }
       recordAudioRestoreTimingEvent("restore-delay-end", { delayMs: diagnosticDelayMs });
+      recordBgmLoudnessSnapshot("loudness-snapshot-post-ab-delay");
       recordAudioRestoreTimingEvent("exitSpeechMode-start");
       recordAudioLifecycleEvent("exit-speech-mode-start");
       speechIsolation.state = "exiting";
@@ -2732,6 +2850,12 @@
     enabled: audioRestoreTimingTraceEnabled,
     events: function () { return audioRestoreTimingTraceState.events.slice(); },
     record: recordAudioRestoreTimingEvent
+  };
+  window.BgmLoudRestoreTrace = {
+    version: BGM_LOUD_RESTORE_TRACE_VERSION,
+    limit: BGM_LOUD_RESTORE_TRACE_LIMIT,
+    events: function () { return bgmLoudRestoreTraceState.events.slice(); },
+    snapshot: recordBgmLoudnessSnapshot
   };
   window.CentralAudioRecoveryTrace = {
     version: CENTRAL_RECOVERY_VERSION,
