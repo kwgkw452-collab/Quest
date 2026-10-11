@@ -11,6 +11,7 @@
   var RELOAD_AUDIO_IDENTITY_TRACE_VERSION = "iphone-reload-audio-identity-trace-v1";
   var LOUD_AUDIO_GRAPH_IDENTITY_TRACE_VERSION = "iphone-safari-loud-audio-graph-identity-trace-v2";
   var SPEECH_RESULT_AUDIO_ROUTE_TRACE_VERSION = "iphone-safari-speech-result-audio-route-trace-v1";
+  var AUDIO_FINAL_ISOLATION_DIAGNOSTIC_VERSION = "iphone-safari-audio-final-isolation-diagnostic-v1";
   var SOURCE_LOST_FATAL_MS = 1500;
   var SOURCE_LOST_MIN_MEDIA_ADVANCE = 0.5;
   var RECOVERY_COOLDOWN_BASE_MS = 5000;
@@ -220,6 +221,26 @@
     audioSessionListenerInstalled: false,
     lastAudioSessionState: null
   };
+  var AUDIO_FINAL_DIAGNOSTIC_EVENT_LIMIT = 256;
+  var audioFinalDiagnosticState = {
+    runId: "RUN#" + Date.now().toString(36),
+    mediaElementSourceCreates: 0,
+    gainCreates: 0,
+    connectCalls: 0,
+    disconnectCalls: 0,
+    interruptedCount: 0,
+    resumePendingMaxMs: 0,
+    resumeSerial: 0,
+    pendingResumes: Object.create(null),
+    duplicateConnectPairs: Object.create(null),
+    sourceCreatesByElementRole: Object.create(null),
+    appDuplicateCreationSeen: false,
+    maxSourceCount: 0,
+    maxNodeCount: 0,
+    activeSeRequests: 0,
+    lastMonsterSe: null,
+    events: []
+  };
 
   function speechRestoreDiagnosticMode() {
     try {
@@ -392,6 +413,239 @@
       reloadAudioIdentityTraceState.counters[kind];
     map.set(object, identity);
     return identity;
+  }
+
+  function finalDiagnosticCaller() {
+    if (!voiceRuntimeTraceState.panelEnabled) return null;
+    try {
+      var lines = String(new Error().stack || "").split("\n");
+      return (lines[3] || lines[2] || "").trim() || null;
+    } catch (_) { return null; }
+  }
+
+  function finalDiagnosticNodeType(node) {
+    try { return node && node.constructor && node.constructor.name || "AudioNode"; }
+    catch (_) { return "AudioNode"; }
+  }
+
+  function recordFinalDiagnosticEvent(type, detail) {
+    if (!voiceRuntimeTraceState.panelEnabled) return;
+    var context = detail && detail.context || canonicalAudioContext;
+    var record = Object.assign({
+      type: type,
+      at: Date.now(),
+      runId: audioFinalDiagnosticState.runId,
+      contextIdentity: reloadObjectIdentity(context, "context"),
+      contextState: context ? (context.state || "unknown") : "uninitialized"
+    }, detail || {});
+    delete record.context;
+    audioFinalDiagnosticState.events.push(record);
+    if (audioFinalDiagnosticState.events.length > AUDIO_FINAL_DIAGNOSTIC_EVENT_LIMIT) {
+      audioFinalDiagnosticState.events.shift();
+    }
+    try { console.log("[AUDIO FINAL DIAGNOSTIC] " + type, record); } catch (_) {}
+  }
+
+  function finalDiagnosticCreateMediaElementSource(context, element, meta) {
+    var source;
+    try {
+      source = context.createMediaElementSource(element);
+    } catch (error) {
+      recordFinalDiagnosticEvent("createMediaElementSource-error", Object.assign({
+        context: context,
+        elementIdentity: reloadObjectIdentity(element, "element"),
+        mediaSrc: shortAudioSource(element),
+        error: String(error),
+        caller: finalDiagnosticCaller()
+      }, meta || {}));
+      throw error;
+    }
+    if (voiceRuntimeTraceState.panelEnabled) {
+      audioFinalDiagnosticState.mediaElementSourceCreates += 1;
+      var role = meta && meta.role || "unknown";
+      var elementIdentity = reloadObjectIdentity(element, "element");
+      var duplicateKey = role + "|" + elementIdentity;
+      audioFinalDiagnosticState.sourceCreatesByElementRole[duplicateKey] =
+        (audioFinalDiagnosticState.sourceCreatesByElementRole[duplicateKey] || 0) + 1;
+      if (audioFinalDiagnosticState.sourceCreatesByElementRole[duplicateKey] > 1) {
+        audioFinalDiagnosticState.appDuplicateCreationSeen = true;
+      }
+      recordFinalDiagnosticEvent("createMediaElementSource", Object.assign({
+        context: context,
+        count: audioFinalDiagnosticState.mediaElementSourceCreates,
+        elementIdentity: elementIdentity,
+        mediaSrc: shortAudioSource(element),
+        sourceIdentity: reloadObjectIdentity(source, "source"),
+        existing: audioFinalDiagnosticState.sourceCreatesByElementRole[duplicateKey] > 1,
+        caller: finalDiagnosticCaller()
+      }, meta || {}));
+    }
+    return source;
+  }
+
+  function finalDiagnosticCreateGain(context, meta) {
+    var gainNode = context.createGain();
+    if (voiceRuntimeTraceState.panelEnabled) {
+      audioFinalDiagnosticState.gainCreates += 1;
+      recordFinalDiagnosticEvent("createGain", Object.assign({
+        context: context,
+        count: audioFinalDiagnosticState.gainCreates,
+        gainIdentity: reloadObjectIdentity(gainNode, "gain"),
+        initialGainValue: gainNode && gainNode.gain ? finiteTraceNumber(gainNode.gain.value) : null,
+        caller: finalDiagnosticCaller()
+      }, meta || {}));
+    }
+    return gainNode;
+  }
+
+  function finalDiagnosticConnect(sourceNode, destinationNode, meta) {
+    var result;
+    try {
+      result = sourceNode.connect(destinationNode);
+    } catch (error) {
+      recordFinalDiagnosticEvent("connect-error", Object.assign({
+        context: sourceNode && sourceNode.context,
+        sourceNodeIdentity: reloadObjectIdentity(sourceNode, "node"),
+        destinationNodeIdentity: reloadObjectIdentity(destinationNode, "node"),
+        error: String(error),
+        caller: finalDiagnosticCaller()
+      }, meta || {}));
+      throw error;
+    }
+    if (voiceRuntimeTraceState.panelEnabled) {
+      audioFinalDiagnosticState.connectCalls += 1;
+      var sourceIdentity = reloadObjectIdentity(sourceNode, "node");
+      var destinationIdentity = reloadObjectIdentity(destinationNode, "node");
+      var pair = sourceIdentity + ">" + destinationIdentity;
+      var duplicatePair = !!audioFinalDiagnosticState.duplicateConnectPairs[pair];
+      audioFinalDiagnosticState.duplicateConnectPairs[pair] =
+        (audioFinalDiagnosticState.duplicateConnectPairs[pair] || 0) + 1;
+      recordFinalDiagnosticEvent("connect", Object.assign({
+        context: sourceNode && sourceNode.context,
+        count: audioFinalDiagnosticState.connectCalls,
+        sourceNodeIdentity: sourceIdentity,
+        destinationNodeIdentity: destinationIdentity,
+        sourceNodeType: finalDiagnosticNodeType(sourceNode),
+        destinationNodeType: finalDiagnosticNodeType(destinationNode),
+        duplicatePair: duplicatePair,
+        caller: finalDiagnosticCaller()
+      }, meta || {}));
+    }
+    return result;
+  }
+
+  function finalDiagnosticDisconnect(node, meta) {
+    var result;
+    try {
+      result = node.disconnect();
+    } catch (error) {
+      recordFinalDiagnosticEvent("disconnect-error", Object.assign({
+        context: node && node.context,
+        nodeIdentity: reloadObjectIdentity(node, "node"),
+        error: String(error),
+        caller: finalDiagnosticCaller()
+      }, meta || {}));
+      throw error;
+    }
+    if (voiceRuntimeTraceState.panelEnabled) {
+      audioFinalDiagnosticState.disconnectCalls += 1;
+      recordFinalDiagnosticEvent("disconnect", Object.assign({
+        context: node && node.context,
+        count: audioFinalDiagnosticState.disconnectCalls,
+        nodeIdentity: reloadObjectIdentity(node, "node"),
+        nodeType: finalDiagnosticNodeType(node),
+        caller: finalDiagnosticCaller()
+      }, meta || {}));
+    }
+    return result;
+  }
+
+  function updateFinalDiagnosticGraphMax() {
+    if (!voiceRuntimeTraceState.panelEnabled) return;
+    var snapshot = reloadAudioIdentitySnapshot();
+    audioFinalDiagnosticState.maxSourceCount = Math.max(
+      audioFinalDiagnosticState.maxSourceCount, Number(snapshot.activeSourceCount) || 0);
+    audioFinalDiagnosticState.maxNodeCount = Math.max(
+      audioFinalDiagnosticState.maxNodeCount, Number(snapshot.activeNodeCount) || 0);
+  }
+
+  function finalDiagnosticActiveGraphCount(busName) {
+    return reloadAudioIdentityTraceState.graphs.filter(function (graph) {
+      return graph && graph.busName === busName && graph.disconnected !== true;
+    }).length;
+  }
+
+  function isMonsterSeAsset(asset) {
+    return /^(monster|battle)/i.test(String(asset || ""));
+  }
+
+  function finalDiagnosticMonsterSeSnapshot(audio, result, error) {
+    var graph = latestObservedGraphForAudio(audio);
+    return {
+      seName: audio && audio.__eigoTraceAssetId || null,
+      elementIdentity: reloadObjectIdentity(audio, "element"),
+      playResult: result,
+      audible: "unknown",
+      error: error ? String(error) : null,
+      contextIdentity: reloadObjectIdentity(canonicalAudioContext, "context"),
+      contextState: canonicalAudioContext ? (canonicalAudioContext.state || "unknown") : "uninitialized",
+      canonicalContextMatch: graph ? graph.context === canonicalAudioContext : null,
+      gainIdentity: reloadObjectIdentity(graph && graph.gainNode, "gain"),
+      gainValue: graph && graph.gainNode && graph.gainNode.gain ? finiteTraceNumber(graph.gainNode.gain.value) : null,
+      sourceIdentity: reloadObjectIdentity(graph && graph.source, "source"),
+      activeBgmGraphCount: finalDiagnosticActiveGraphCount("bgm"),
+      activeSeGraphCount: finalDiagnosticActiveGraphCount("se"),
+      routing: graph ? "se>canonical-se-bus" : (audio && audio.__eigoAudioPath || "pending")
+    };
+  }
+
+  function recordFinalDiagnosticMonsterSe(audio, result, error) {
+    if (!voiceRuntimeTraceState.panelEnabled || !audio || !audio.__eigoFinalDiagnosticMonsterSe) return;
+    var snapshot = finalDiagnosticMonsterSeSnapshot(audio, result, error);
+    audioFinalDiagnosticState.lastMonsterSe = snapshot;
+    recordFinalDiagnosticEvent("monster-se-" + result, Object.assign({ context: canonicalAudioContext }, snapshot));
+  }
+
+  function finalDiagnosticResumeCall(context) {
+    if (!voiceRuntimeTraceState.panelEnabled) return null;
+    var id = ++audioFinalDiagnosticState.resumeSerial;
+    var startedAt = Date.now();
+    audioFinalDiagnosticState.pendingResumes[id] = startedAt;
+    recordFinalDiagnosticEvent("resume-call", {
+      context: context,
+      resumeId: id,
+      stateBefore: context ? (context.state || "unknown") : "uninitialized"
+    });
+    [1000, 3000].forEach(function (threshold) {
+      window.setTimeout(function () {
+        if (!audioFinalDiagnosticState.pendingResumes[id]) return;
+        var elapsed = Date.now() - startedAt;
+        audioFinalDiagnosticState.resumePendingMaxMs = Math.max(audioFinalDiagnosticState.resumePendingMaxMs, elapsed);
+        recordFinalDiagnosticEvent("resume-pending", {
+          context: context,
+          resumeId: id,
+          thresholdMs: threshold,
+          elapsedMs: elapsed
+        });
+      }, threshold);
+    });
+    return id;
+  }
+
+  function finalDiagnosticResumeSettlement(context, id, result, error) {
+    if (!voiceRuntimeTraceState.panelEnabled || !id) return;
+    var startedAt = audioFinalDiagnosticState.pendingResumes[id];
+    var elapsed = startedAt ? Date.now() - startedAt : null;
+    if (elapsed !== null) {
+      audioFinalDiagnosticState.resumePendingMaxMs = Math.max(audioFinalDiagnosticState.resumePendingMaxMs, elapsed);
+    }
+    delete audioFinalDiagnosticState.pendingResumes[id];
+    recordFinalDiagnosticEvent("resume-" + result, {
+      context: context,
+      resumeId: id,
+      elapsedMs: elapsed,
+      error: error ? String(error) : null
+    });
   }
 
   function observeExistingAudioGraph(audio, context, source, gainNode, nodes, busName) {
@@ -913,7 +1167,7 @@
       var analyser = context.createAnalyser();
       analyser.fftSize = 256;
       analyser.smoothingTimeConstant = 0;
-      sourceNode.connect(analyser);
+      finalDiagnosticConnect(sourceNode, analyser, { role: "signal-analyser", reason: "signal-trace" });
       return analyser;
     } catch (_) { return null; }
   }
@@ -1125,6 +1379,78 @@
     return lines;
   }
 
+  function audioFinalDiagnosticSummary() {
+    updateFinalDiagnosticGraphMax();
+    var identity = reloadAudioIdentitySnapshot();
+    var context = canonicalAudioContext;
+    var pendingMax = audioFinalDiagnosticState.resumePendingMaxMs;
+    Object.keys(audioFinalDiagnosticState.pendingResumes).forEach(function (id) {
+      pendingMax = Math.max(pendingMax, Date.now() - audioFinalDiagnosticState.pendingResumes[id]);
+    });
+    var graphGrowth = identity.activeSourceCount > audioFinalDiagnosticState.mediaElementSourceCreates;
+    var duplicatePair = Object.keys(audioFinalDiagnosticState.duplicateConnectPairs).some(function (pair) {
+      return audioFinalDiagnosticState.duplicateConnectPairs[pair] > 1;
+    });
+    var appDuplicate = audioFinalDiagnosticState.mediaElementSourceCreates === 0 ? "UNDETERMINED" :
+      (audioFinalDiagnosticState.appDuplicateCreationSeen ? "YES" : "NOT OBSERVED");
+    var suspicion = ((graphGrowth && !audioFinalDiagnosticState.appDuplicateCreationSeen) ||
+      audioFinalDiagnosticState.interruptedCount > 0 || pendingMax >= 3000) ? "HIGH" : "UNDETERMINED";
+    return {
+      version: AUDIO_FINAL_ISOLATION_DIAGNOSTIC_VERSION,
+      runId: audioFinalDiagnosticState.runId,
+      mediaElementSourceCreates: audioFinalDiagnosticState.mediaElementSourceCreates,
+      gainCreates: audioFinalDiagnosticState.gainCreates,
+      connectCalls: audioFinalDiagnosticState.connectCalls,
+      disconnectCalls: audioFinalDiagnosticState.disconnectCalls,
+      duplicateConnectPairSeen: duplicatePair,
+      bgmSourceCount: identity.bgmSourceCount,
+      activeSourceCount: identity.activeSourceCount,
+      bgmNodeCount: identity.bgmNodeCount,
+      activeNodeCount: identity.activeNodeCount,
+      maxSourceCount: audioFinalDiagnosticState.maxSourceCount,
+      maxNodeCount: audioFinalDiagnosticState.maxNodeCount,
+      contextIdentity: reloadObjectIdentity(context, "context"),
+      contextState: context ? (context.state || "unknown") : "uninitialized",
+      canonicalContextMatch: context ? context === canonicalAudioContext : null,
+      interruptedCount: audioFinalDiagnosticState.interruptedCount,
+      resumePendingMaxMs: pendingMax,
+      monsterSe: audioFinalDiagnosticState.lastMonsterSe,
+      appDuplicateCreation: appDuplicate,
+      audioGraphGrowth: graphGrowth ? "DETECTED" : "NOT OBSERVED",
+      webkitAudioSessionSuspicion: suspicion
+    };
+  }
+
+  function audioFinalDiagnosticLines() {
+    var summary = audioFinalDiagnosticSummary();
+    var monster = summary.monsterSe;
+    return [
+      "================ AUDIO FINAL DIAGNOSTIC ================",
+      summary.version + " | " + summary.runId,
+      "FACTORY: MediaElementSource=" + summary.mediaElementSourceCreates +
+        " Gain=" + summary.gainCreates + " connect=" + summary.connectCalls +
+        " disconnect=" + summary.disconnectCalls + " duplicateConnectPair=" +
+        summary.duplicateConnectPairSeen,
+      "BGM GRAPH: sources=" + summary.bgmSourceCount + "/" + summary.activeSourceCount +
+        " nodes=" + summary.bgmNodeCount + "/" + summary.activeNodeCount +
+        " max=" + summary.maxSourceCount + "/" + summary.maxNodeCount,
+      "CONTEXT: " + stringifyTraceValue(summary.contextIdentity) + " state=" +
+        summary.contextState + " canonical=" + stringifyTraceValue(summary.canonicalContextMatch) +
+        " interrupted=" + summary.interruptedCount + " resumePendingMax=" +
+        summary.resumePendingMaxMs + "ms",
+      "MONSTER SE: " + (monster ? stringifyTraceValue(monster.seName) + " play=" +
+        monster.playResult + " audible=" + monster.audible + " ctx=" + monster.contextState +
+        " canonical=" + stringifyTraceValue(monster.canonicalContextMatch) + " source/gain=" +
+        stringifyTraceValue(monster.sourceIdentity) + "/" + stringifyTraceValue(monster.gainIdentity) +
+        "@" + stringifyTraceValue(monster.gainValue) + " bgm/seGraphs=" +
+        monster.activeBgmGraphCount + "/" + monster.activeSeGraphCount : "none"),
+      "APP DUPLICATE CREATION: " + summary.appDuplicateCreation,
+      "AUDIO GRAPH GROWTH: " + summary.audioGraphGrowth,
+      "WEBKIT / AUDIO SESSION SUSPICION: " + summary.webkitAudioSessionSuspicion,
+      "========================================================"
+    ];
+  }
+
   function speechResultAudioRouteLines() {
     var events = speechResultAudioRouteTraceState.events.slice(-16);
     var lines = [
@@ -1269,7 +1595,8 @@
         stringifyTraceValue(event.focusCanonicalContextMatch);
     });
     var reloadIdentityLive = reloadAudioIdentitySnapshot();
-    var lines = speechResultRouteLines.concat(loudGraphLines).concat([
+    var finalDiagnosticLines = audioFinalDiagnosticLines();
+    var lines = finalDiagnosticLines.concat(speechResultRouteLines).concat(loudGraphLines).concat([
       "Reload Audio Identity Trace: " + RELOAD_AUDIO_IDENTITY_TRACE_VERSION + " | " +
         reloadIdentityLive.pageLoadId + " | nav=" + reloadIdentityLive.navigationType,
       "IDENTITY LIVE: ctx=" + stringifyTraceValue(reloadIdentityLive.contextIdentity) + "/" +
@@ -1433,6 +1760,7 @@
           if (canonicalAudioContext !== observedContext) return;
           var previous = audioLifecycleTraceState.lastContextState;
           var current = observedContext.state || "unknown";
+          if (current === "interrupted") audioFinalDiagnosticState.interruptedCount += 1;
           audioLifecycleTraceState.stateChangeCount += 1;
           audioLifecycleTraceState.lastContextState = current;
           if (current === "suspended") audioLifecycleTraceState.suspendSeen = true;
@@ -1446,6 +1774,14 @@
           recordReloadAudioIdentityCheckpoint("audio-context-statechange", {
             previousState: previous,
             currentState: current
+          });
+          recordFinalDiagnosticEvent("audio-context-statechange", {
+            context: observedContext,
+            oldState: previous,
+            newState: current,
+            speechActive: speechIsolation.state !== "idle",
+            bgmPlaying: isAudioPlaying(bgm),
+            seRequestActive: audioFinalDiagnosticState.activeSeRequests > 0
           });
         });
       }
@@ -1473,14 +1809,14 @@
   function createCanonicalBuses(context) {
     if (canonicalBuses) return canonicalBuses;
     if (!context || typeof context.createGain !== "function") return null;
-    var master = context.createGain();
+    var master = finalDiagnosticCreateGain(context, { role: "master", reason: "canonical-bus" });
     var buses = {
       master: master,
-      bgm: context.createGain(),
-      motif: context.createGain(),
-      voice: context.createGain(),
-      se: context.createGain(),
-      effectVoice: context.createGain()
+      bgm: finalDiagnosticCreateGain(context, { role: "bgm-bus", reason: "canonical-bus" }),
+      motif: finalDiagnosticCreateGain(context, { role: "motif-bus", reason: "canonical-bus" }),
+      voice: finalDiagnosticCreateGain(context, { role: "voice-bus", reason: "canonical-bus" }),
+      se: finalDiagnosticCreateGain(context, { role: "se-bus", reason: "canonical-bus" }),
+      effectVoice: finalDiagnosticCreateGain(context, { role: "effect-voice-bus", reason: "canonical-bus" })
     };
     setGainValue(master, 1);
     setGainValue(buses.bgm, 1);
@@ -1488,12 +1824,12 @@
     setGainValue(buses.voice, groupGain("VOICE"));
     setGainValue(buses.se, groupGain("SE"));
     setGainValue(buses.effectVoice, groupGain("VOICE"));
-    buses.bgm.connect(master);
-    buses.motif.connect(master);
-    buses.voice.connect(master);
-    buses.se.connect(master);
-    buses.effectVoice.connect(master);
-    master.connect(context.destination);
+    finalDiagnosticConnect(buses.bgm, master, { role: "bgm-bus", reason: "canonical-bus-route" });
+    finalDiagnosticConnect(buses.motif, master, { role: "motif-bus", reason: "canonical-bus-route" });
+    finalDiagnosticConnect(buses.voice, master, { role: "voice-bus", reason: "canonical-bus-route" });
+    finalDiagnosticConnect(buses.se, master, { role: "se-bus", reason: "canonical-bus-route" });
+    finalDiagnosticConnect(buses.effectVoice, master, { role: "effect-voice-bus", reason: "canonical-bus-route" });
+    finalDiagnosticConnect(master, context.destination, { role: "master", reason: "canonical-destination-route" });
     if (voiceRuntimeTraceState.panelEnabled) {
       canonicalSignalAnalysers = {
         master: createSignalTraceAnalyser(context, master),
@@ -1519,8 +1855,10 @@
       }
       recordAudioLifecycleEvent("resume-call", { result: "pending" });
       recordAudioLifecycleEvent("audio-context-resume-call", { currentState: context.state || "unknown" });
+      var finalDiagnosticResumeId = finalDiagnosticResumeCall(context);
       try {
         await context.resume();
+        finalDiagnosticResumeSettlement(context, finalDiagnosticResumeId, "resolved");
         audioLifecycleTraceState.resumeSuccess += 1;
         audioLifecycleTraceState.lastResumeResult = "success";
         if (initialAudioUnlockTraceState.firstTrustedPointerdownActive) {
@@ -1529,6 +1867,7 @@
         recordAudioLifecycleEvent("resume-success", { result: "success" });
         recordAudioLifecycleEvent("audio-context-resume-resolved", { currentState: context.state || "unknown" });
       } catch (error) {
+        finalDiagnosticResumeSettlement(context, finalDiagnosticResumeId, "rejected", error);
         audioLifecycleTraceState.resumeReject += 1;
         audioLifecycleTraceState.lastResumeResult = "reject";
         if (initialAudioUnlockTraceState.firstTrustedPointerdownActive) {
@@ -1887,11 +2226,19 @@
   }
 
   function safePlay(audio) {
+    if (audio && audio.__eigoFinalDiagnosticMonsterSe) {
+      audioFinalDiagnosticState.activeSeRequests += 1;
+      recordFinalDiagnosticMonsterSe(audio, "call");
+    }
     if (speechIsolation.state !== "idle") {
       if (audio.__eigoBgmTrack) {
         try { audio.pause(); } catch (_) {}
       } else stop(audio);
       audio.__eigoPlaybackOutcome = Promise.resolve({ ok: true, suppressed: true, error: null });
+      if (audio.__eigoFinalDiagnosticMonsterSe) {
+        audioFinalDiagnosticState.activeSeRequests = Math.max(0, audioFinalDiagnosticState.activeSeRequests - 1);
+        recordFinalDiagnosticMonsterSe(audio, "suppressed");
+      }
       return audio;
     }
     var playback;
@@ -1907,7 +2254,13 @@
         });
       }
       var result = audio.play();
-      playback = result && typeof result.then === "function" ? Promise.resolve(result).then(function () {
+      if (audio.__eigoFinalDiagnosticMonsterSe) recordFinalDiagnosticMonsterSe(audio, "pending");
+      if (result && typeof result.then === "function") {
+        playback = Promise.resolve(result).then(function () {
+        if (audio.__eigoFinalDiagnosticMonsterSe) {
+          audioFinalDiagnosticState.activeSeRequests = Math.max(0, audioFinalDiagnosticState.activeSeRequests - 1);
+          recordFinalDiagnosticMonsterSe(audio, "resolved");
+        }
         if (audio.__eigoInitialAudioUnlockTarget) {
           recordInitialAudioUnlockTrace(audio.__eigoInitialAudioUnlockTarget.toLowerCase().replace(" ", "-") + "-play-resolved",
             { result: "resolved" });
@@ -1931,6 +2284,10 @@
         }
         return { ok: true, error: null };
       }, function (error) {
+        if (audio.__eigoFinalDiagnosticMonsterSe) {
+          audioFinalDiagnosticState.activeSeRequests = Math.max(0, audioFinalDiagnosticState.activeSeRequests - 1);
+          recordFinalDiagnosticMonsterSe(audio, "rejected", error);
+        }
         if (audio.__eigoInitialAudioUnlockTarget) {
           recordInitialAudioUnlockTrace(audio.__eigoInitialAudioUnlockTarget.toLowerCase().replace(" ", "-") + "-play-rejected",
             { result: "rejected", error: String(error) });
@@ -1952,9 +2309,20 @@
           recordReloadAudioIdentityCheckpoint("pico-se-rejected-after", { error: String(error) }, audio);
         }
         console.warn("Audio playback was blocked or failed:", error);
-        return { ok: false, error: error };
-      }) : Promise.resolve({ ok: true, error: null });
+          return { ok: false, error: error };
+        });
+      } else {
+        if (audio.__eigoFinalDiagnosticMonsterSe) {
+          audioFinalDiagnosticState.activeSeRequests = Math.max(0, audioFinalDiagnosticState.activeSeRequests - 1);
+          recordFinalDiagnosticMonsterSe(audio, "resolved");
+        }
+        playback = Promise.resolve({ ok: true, error: null });
+      }
     } catch (error) {
+      if (audio && audio.__eigoFinalDiagnosticMonsterSe) {
+        audioFinalDiagnosticState.activeSeRequests = Math.max(0, audioFinalDiagnosticState.activeSeRequests - 1);
+        recordFinalDiagnosticMonsterSe(audio, "rejected", error);
+      }
       if (audio.__eigoInitialAudioUnlockTarget) {
         recordInitialAudioUnlockTrace(audio.__eigoInitialAudioUnlockTarget.toLowerCase().replace(" ", "-") + "-play-rejected",
           { result: "rejected", error: String(error) });
@@ -1983,7 +2351,9 @@
 
   function disconnectNodes(nodes) {
     markObservedGraphsDisconnected(nodes || []);
-    (nodes || []).forEach(function (node) { try { node.disconnect(); } catch (_) {} });
+    (nodes || []).forEach(function (node) {
+      try { finalDiagnosticDisconnect(node, { role: "managed-graph", reason: "graph-cleanup" }); } catch (_) {}
+    });
   }
 
   function stop(audio) {
@@ -2075,13 +2445,26 @@
     var context = getCanonicalAudioContext();
     var buses = createCanonicalBuses(context);
     if (!context || !buses || !buses[busName]) throw new Error("canonical-bus-unavailable");
-    var gainNode = context.createGain();
+    var role = busName === "bgm" ? "BGM" : (busName === "se" ? "SE" : busName);
+    var gainNode = finalDiagnosticCreateGain(context, {
+      role: role + "-track-gain",
+      reason: "buildSimpleGraph"
+    });
     setGainValue(gainNode, assetGain);
-    gainNode.connect(buses[busName]);
+    finalDiagnosticConnect(gainNode, buses[busName], {
+      role: role,
+      reason: "track-gain-to-canonical-bus"
+    });
     var source = null;
     try {
-      source = context.createMediaElementSource(audio);
-      source.connect(gainNode);
+      source = finalDiagnosticCreateMediaElementSource(context, audio, {
+        role: role,
+        reason: "buildSimpleGraph"
+      });
+      finalDiagnosticConnect(source, gainNode, {
+        role: role,
+        reason: "media-source-to-track-gain"
+      });
     } catch (error) {
       disconnectNodes(source ? [source, gainNode] : [gainNode]);
       error.__eigoSourceAttempted = true;
@@ -2089,6 +2472,7 @@
     }
     var nodes = [source, gainNode];
     observeExistingAudioGraph(audio, context, source, gainNode, nodes, busName);
+    updateFinalDiagnosticGraphMax();
     return { source: source, gainNode: gainNode, nodes: nodes };
   }
 
@@ -2350,6 +2734,7 @@
       if (active) return active;
     }
     var policy = oneShotPolicy(type, keyOrPath);
+    var monsterSe = type === "se" && isMonsterSeAsset(keyOrPath);
     var baseGain = clampGain((options.volume === undefined ? 1 : options.volume) * mixAssetGain(keyOrPath));
     var busName = policy.category === "MOTIF" ? "motif" : (type === "se" ? "se" : "effectVoice");
     var audio = null;
@@ -2358,17 +2743,28 @@
       candidate.__eigoStopped = false;
       ensureAudioInstanceTrace(candidate, keyOrPath, policy.category);
       candidate.__eigoOneShotMix = { baseGain: baseGain, category: policy.category, busName: busName };
+      candidate.__eigoFinalDiagnosticMonsterSe = monsterSe;
       candidate.volume = 1;
       candidate.preload = "auto";
       collection.push(candidate);
       candidate.addEventListener("ended", function () {
+        if (candidate.__eigoFinalDiagnosticMonsterSe) recordFinalDiagnosticMonsterSe(candidate, "ended");
         var index = collection.indexOf(candidate);
         if (index !== -1) collection.splice(index, 1);
         if (typeof candidate.__eigoDisconnect === "function") candidate.__eigoDisconnect();
       }, { once: true });
+      if (candidate.__eigoFinalDiagnosticMonsterSe) {
+        candidate.addEventListener("playing", function () {
+          recordFinalDiagnosticMonsterSe(candidate, "playing");
+        });
+        candidate.addEventListener("error", function () {
+          recordFinalDiagnosticMonsterSe(candidate, "error", "audio-error");
+        }, { once: true });
+      }
       return candidate;
     }
     audio = createTrackedAudio();
+    if (monsterSe) recordFinalDiagnosticMonsterSe(audio, "request");
     if (type === "se" && keyOrPath === "picoEntrance") {
       markReloadAudioIdentityTarget(audio, "pico");
       trackInitialAudioUnlockTarget(audio, "PICO SE");
@@ -2650,7 +3046,10 @@
     function buildVoiceGraph(context) {
       var buses = createCanonicalBuses(context);
       if (!buses) throw new Error("voice-bus-unavailable");
-      var characterGain = context.createGain();
+      var characterGain = finalDiagnosticCreateGain(context, {
+        role: "dialogue-voice-character",
+        reason: "buildVoiceGraph"
+      });
       setGainValue(characterGain, characterGainValue);
       voiceGraphTrace.characterGain = finiteTraceNumber(characterGain.gain.value);
       var routeStart = characterGain;
@@ -2670,14 +3069,25 @@
           curve[sample] = 0.9 * Math.tanh(drive * input) / normalization;
         }
         saturation.curve = curve; saturation.oversample = "2x";
-        var radioOutput = context.createGain();
+        var radioOutput = finalDiagnosticCreateGain(context, {
+          role: "radio-processing",
+          reason: "buildVoiceGraph"
+        });
         setGainValue(radioOutput, radioProfile.outputGain === undefined ? 0.72 : Number(radioProfile.outputGain));
         voiceGraphTrace.processingGain = finiteTraceNumber(radioOutput.gain.value);
-        characterGain.connect(highPass); highPass.connect(lowPass); lowPass.connect(presence); presence.connect(compressor); compressor.connect(saturation); saturation.connect(radioOutput);
+        finalDiagnosticConnect(characterGain, highPass, { role: "radio", reason: "character-to-highpass" });
+        finalDiagnosticConnect(highPass, lowPass, { role: "radio", reason: "highpass-to-lowpass" });
+        finalDiagnosticConnect(lowPass, presence, { role: "radio", reason: "lowpass-to-presence" });
+        finalDiagnosticConnect(presence, compressor, { role: "radio", reason: "presence-to-compressor" });
+        finalDiagnosticConnect(compressor, saturation, { role: "radio", reason: "compressor-to-saturation" });
+        finalDiagnosticConnect(saturation, radioOutput, { role: "radio", reason: "saturation-to-output" });
         routeEnd = radioOutput;
         nodes = nodes.concat([highPass, lowPass, presence, compressor, saturation, radioOutput]);
       } else if (kong) {
-        var kongGain = context.createGain();
+        var kongGain = finalDiagnosticCreateGain(context, {
+          role: "kong-processing",
+          reason: "buildVoiceGraph"
+        });
         var processing = window.AudioMixProfile && AudioMixProfile.characterProcessing && AudioMixProfile.characterProcessing.c02 || {};
         setGainValue(kongGain, processing.webAudioGain === undefined ? 1 : Number(processing.webAudioGain));
         voiceGraphTrace.processingGain = finiteTraceNumber(kongGain.gain.value);
@@ -2692,13 +3102,15 @@
           release: finiteTraceNumber(limiter.release.value),
           reductionDb: finiteTraceNumber(limiter.reduction)
         };
-        characterGain.connect(kongGain); kongGain.connect(limiter);
+        finalDiagnosticConnect(characterGain, kongGain, { role: "dialogue-voice", reason: "character-to-kong-gain" });
+        finalDiagnosticConnect(kongGain, limiter, { role: "dialogue-voice", reason: "kong-gain-to-limiter" });
         routeEnd = limiter;
         nodes = nodes.concat([kongGain, limiter]);
       } else if (bernie) {
         var lowMid = context.createBiquadFilter(); lowMid.type = "peaking"; lowMid.frequency.value = 320; lowMid.Q.value = 0.9; lowMid.gain.value = -2.5;
         var berniePresence = context.createBiquadFilter(); berniePresence.type = "peaking"; berniePresence.frequency.value = 3200; berniePresence.Q.value = 1.0; berniePresence.gain.value = 2.0;
-        characterGain.connect(lowMid); lowMid.connect(berniePresence);
+        finalDiagnosticConnect(characterGain, lowMid, { role: "dialogue-voice", reason: "character-to-bernie-lowmid" });
+        finalDiagnosticConnect(lowMid, berniePresence, { role: "dialogue-voice", reason: "bernie-lowmid-to-presence" });
         routeEnd = berniePresence;
         nodes = nodes.concat([lowMid, berniePresence]);
       }
@@ -2707,17 +3119,20 @@
         analyser = context.createAnalyser();
         analyser.fftSize = 256;
         analyser.smoothingTimeConstant = 0;
-        routeEnd.connect(analyser);
-        analyser.connect(buses.voice);
+        finalDiagnosticConnect(routeEnd, analyser, { role: "dialogue-voice", reason: "route-to-analyser" });
+        finalDiagnosticConnect(analyser, buses.voice, { role: "dialogue-voice", reason: "analyser-to-voice-bus" });
         nodes.push(analyser);
         voiceGraphTrace.analyserNode = analyser;
-      } else routeEnd.connect(buses.voice);
+      } else finalDiagnosticConnect(routeEnd, buses.voice, { role: "dialogue-voice", reason: "route-to-voice-bus" });
       voiceGraphTrace.voiceBusGain = finiteTraceNumber(buses.voice.gain.value);
       voiceGraphTrace.masterGain = finiteTraceNumber(buses.master.gain.value);
       voiceGraphTrace.destinationConnected = true;
       var source;
       try {
-        source = context.createMediaElementSource(audio);
+        source = finalDiagnosticCreateMediaElementSource(context, audio, {
+          role: "DIALOGUE-VOICE",
+          reason: "buildVoiceGraph"
+        });
       } catch (sourceError) {
         emitVoiceRuntimeTrace("media-element-source-create-failed", audio, { error: String(sourceError) });
         throw sourceError;
@@ -2730,7 +3145,10 @@
       emitVoiceRuntimeTrace("media-element-source-created", audio);
       if (radio) voiceTrace("radio-source-created", traceDetail, { contextState: context.state });
       try {
-        source.connect(routeStart);
+        finalDiagnosticConnect(source, routeStart, {
+          role: "DIALOGUE-VOICE",
+          reason: "media-source-to-character-gain"
+        });
         voiceGraphTrace.sourceConnected = true;
       } catch (error) {
         emitVoiceRuntimeTrace("source-connect-failed", audio, { error: String(error) });
@@ -3436,6 +3854,12 @@
     events: function () { return speechResultAudioRouteTraceState.events.slice(); },
     snapshot: speechResultAudioRouteSnapshot,
     record: recordSpeechResultAudioRouteCheckpoint
+  };
+  window.AudioFinalIsolationDiagnostic = {
+    version: AUDIO_FINAL_ISOLATION_DIAGNOSTIC_VERSION,
+    eventLimit: AUDIO_FINAL_DIAGNOSTIC_EVENT_LIMIT,
+    summary: audioFinalDiagnosticSummary,
+    events: function () { return audioFinalDiagnosticState.events.slice(); }
   };
   window.CentralAudioRecoveryTrace = {
     version: CENTRAL_RECOVERY_VERSION,

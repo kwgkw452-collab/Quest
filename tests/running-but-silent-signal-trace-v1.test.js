@@ -159,7 +159,7 @@ vm.runInContext(read("engine/managers/audio-manager.js"), context);
     assert(panel.textContent.includes(label), `missing panel signal label: ${label}`);
 
   const source = read("engine/managers/audio-manager.js");
-  assert(source.includes("master.connect(context.destination)"));
+  assert(source.includes('finalDiagnosticConnect(master, context.destination, { role: "master"'));
   assert(source.includes('profile.ratio === undefined ? 0.18 : Number(profile.ratio)'));
   assert(source.includes("dialogueRatio"));
   console.log("Running-But-Silent Signal Trace V1: PASS");
