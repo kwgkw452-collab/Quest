@@ -4,6 +4,7 @@
   function normalize(text) {
     return String(text || "")
       .toLowerCase()
+      .replace(/[’]/g, "'")
       .replace(/[!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~。、「」！？・…（）［］【】〈〉《》]/g, "")
       .replace(/\s+/g, " ")
       .trim();
