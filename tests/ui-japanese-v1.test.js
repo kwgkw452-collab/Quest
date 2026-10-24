@@ -64,12 +64,12 @@ const protectedHashes = {
   "engine/stories/m001.js": "187c5139107ab8c6f8a35a758d4bc3976f164fe161dccb341926778456fa6e2a",
   "engine/stories/S002.js": "bd05226b3e51d12a27e1504579f69cd97200231a68edecd8a8d6e6b2e7aaf525",
   "engine/stories/S003.js": "e532ff803cf57398d0cd457ba118a9ec004d484af27a77e6fce81dc5da5c991c",
-  "engine/stories/S004.js": "ca801b7658fe1bddf98cf8c21ee1794adf602b68afa5a7f94599758fb3437070",
-  "data/questions.js": "7f94f150fff8ef7af49e4bd7f86614900eafb0fb1d3d772861142feb68d75904",
-  "engine/services/communicative-judge.js": "a8b8482768e480f609ff9b569774509a881d503769ca5f3452783ff94c7ecb04",
-  "engine/services/local-communicative-judge.js": "d124c63e412c4e6553026141361ab608da5603bd29854f93f6b8c06bf1f57e58",
-  "engine/services/speech-engine.js": "2d85fa0af3bd8f109ca9d95995361f44e3240e97ce5fba54bed1d14e66260824",
-  "engine/managers/question-manager.js": "98047b0cb21bd12f4fd5e2c432ea28836a6b82b7b0a3067639781ad538d87c6d"
+  "engine/stories/S004.js": "b004f23146691f28a420e8918dd61577ad0f45a9daee4af63e2c82c42b0cc905",
+  "data/questions.js": "4c3387cce771b78dfaf7e33933a9df43da0defda28b487de84e5ac0b2a611c18",
+  "engine/services/communicative-judge.js": "e37901643b7df9799ff9ad743508b0414e58b952777aa81ab97b74dadc218542",
+  "engine/services/local-communicative-judge.js": "034cbf4431bcb6d5a1ab3d9afdc8526665d8ea357959383f11faa13fc3baa4d6",
+  "engine/services/speech-engine.js": "3e1c4f063d048d79cb2b88e5e7786b5f8d66016191bbac619a114d7a2df5f496",
+  "engine/managers/question-manager.js": "5821246389f2ca4e622cc3c8b2e75302e244cea24e502737323b37f9f46de6c8"
 };
 for (const [file, expected] of Object.entries(protectedHashes)) assert.strictEqual(hash(file), expected, file);
 

@@ -2,7 +2,6 @@
   "use strict";
 
   var MAX_SPEECH_RETRIES = 1;
-  var MAX_TEXT_FALLBACKS = 1;
   var runId = 0;
   var result = null;
 
@@ -75,12 +74,21 @@
     var presenterToken = CommunicativeQuestionPresenter.begin();
     traceContext.presenterToken = presenterToken;
     var speechRetries = 0;
-    var textFallbacks = 0;
+    var supportLevel = 0;
+    var supportMessages = question.picoSupport || [];
+    function view() {
+      return { goal: supportMessages.length ? question.prompt : "", supportLevel: supportLevel,
+        supportText: supportLevel ? supportMessages[supportLevel - 1] : "",
+        onSupport: supportMessages.length ? advanceSupport : null };
+    }
+    function advanceSupport() {
+      supportLevel = Math.min(3, supportLevel + 1);
+      trace("support-selected", traceContext, { questionId: questionId, supportLevel: supportLevel });
+      return view();
+    }
     var attempts = 0;
-    var supportStage = 0;
-    var supportedAttempt = 0;
     var attemptTraceContext = traceContext;
-    trace("formal-flow-start", traceContext, { questionId: questionId });
+    trace("formal-flow-start", traceContext, { questionId: questionId, supportLevel: 0 });
 
     function finish(value) {
       trace("flow-end", traceContext, { status: value && value.status, resolution: value && value.resolution });
@@ -97,11 +105,10 @@
       questionOptions.__formalTraceContext = currentAttemptTraceContext;
       if (questionOptions.inputMode !== "text") {
         questionOptions.speechStart = function (startListening) {
-          return CommunicativeQuestionPresenter.speech(startListening, presenterToken, currentAttemptTraceContext,
-            question.picoSupport ? question.prompt : null);
+          return CommunicativeQuestionPresenter.speech(startListening, presenterToken, currentAttemptTraceContext, view());
         };
         questionOptions.onInterim = function (value) {
-          CommunicativeQuestionPresenter.listening(value, presenterToken);
+          CommunicativeQuestionPresenter.listening(value, presenterToken, view());
         };
       }
       var value = await QuestionManager.start(questionId, questionOptions);
@@ -110,7 +117,7 @@
         return cancelled(value);
       }
       value.attemptCount = attempts;
-      value.maxRetries = MAX_SPEECH_RETRIES;
+      value.maxRetries = supportMessages.length ? null : MAX_SPEECH_RETRIES;
       return value;
     }
 
@@ -118,20 +125,19 @@
     while (currentRun === runId) {
       if (result.status === "success" || result.status === "cancelled") return finish(snapshot(result));
 
-      if (question.picoSupport && supportedAttempt < attempts) {
-        supportStage = Math.min(3, supportStage + 1);
-        supportedAttempt = attempts;
-      }
-
       var action = await CommunicativeQuestionPresenter.recovery(result, {
-        retry: speechRetryAllowed(result, speechRetries, textFallbacks),
-        text: !question.picoSupport && textFallbacks < MAX_TEXT_FALLBACKS,
-        support: Boolean(question.picoSupport && supportStage < 3),
-        supportText: question.picoSupport ? question.picoSupport[supportStage - 1] : null
+        retry: supportMessages.length ? speechRetryAllowed(result, 0, 0) : speechRetryAllowed(result, speechRetries, 0),
+        support: supportMessages.length > 0,
+        view: view()
       }, presenterToken, attemptTraceContext);
       if (currentRun !== runId || action === "cancelled") {
         result = cancelled(result);
         return finish(snapshot(result));
+      }
+
+      if (action === "support") {
+        advanceSupport();
+        continue;
       }
 
       if (action === "retry") {
@@ -142,24 +148,8 @@
         continue;
       }
 
-      if (action === "support" && question.picoSupport && supportStage < 3) {
-        supportStage += 1;
-        continue;
-      }
-
-      if (action === "text") {
-        textFallbacks += 1;
-        var typedText = await CommunicativeQuestionPresenter.textInput(presenterToken);
-        if (currentRun !== runId || typedText === "cancelled") {
-          result = cancelled(result);
-          return snapshot(result);
-        }
-        result = await runQuestion({ inputMode: "text", transcript: typedText });
-        continue;
-      }
-
       result = continued(result);
-      var continueAction = await CommunicativeQuestionPresenter.continued(presenterToken);
+      var continueAction = await CommunicativeQuestionPresenter.continued(presenterToken, view());
       if (currentRun !== runId || continueAction === "cancelled") {
         result = cancelled(result);
       }

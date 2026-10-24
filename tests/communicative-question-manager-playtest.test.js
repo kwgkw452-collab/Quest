@@ -137,7 +137,7 @@ function field(label) {
   equal(productQuestions.length, 21, "Product Question Database starts with 21 Questions");
   equal(productQuestions.filter(question => question.communicative).length, 1, "Only phrase.are_you_ok is formally Communicative");
   equal(productQuestions.filter(question => !question.communicative).length, 20, "The other 20 product Questions remain Legacy");
-  equal(questionDefinitionHash, "03287599209d890b0764f7f2423c695f6ca3d49a30e6275b29daab100513ddbf",
+  equal(questionDefinitionHash, "872ca4d0426219eb18ff8982151f3756a607cd87fe77f905a00b8dfed6f9d2bd",
     "The 21 Question definition block matches Formal V1");
   ok(!questionSource.includes("dev.communicative.apple-order.playtest"), "Playtest Question is absent from product data");
 
@@ -173,36 +173,29 @@ function field(label) {
   ok(devHtml.includes('src="dev/communicative-question-manager-playtest.js?v=communicative-formal-trace-v1"'),
     "Playtest harness uses the DEV trace runtime version");
   const unchangedFormalScripts = [
+    "data/questions.js", "data/communicative-judge-rules.js",
+    "engine/services/local-communicative-judge.js", "engine/services/communicative-judge.js",
     "engine/services/communicative-question-adapter.js",
     "engine/core/story-engine.js"
   ];
   for (const script of unchangedFormalScripts) {
     ok(devHtml.includes(`src="${script}?v=${unifiedVersion}"`), `${script} uses the unified Formal runtime version`);
   }
-  for (const script of ["data/questions.js"]) {
-    ok(devHtml.includes(`src="${script}?v=mobile-ui-story-polish-v1-1"`), `${script} loads the current production version in dev`);
-  }
-  ok(devHtml.includes('src="data/communicative-judge-rules.js?v=s005-registry-instance-fix-v1"'));
-  ok(devHtml.includes('src="engine/services/local-communicative-judge.js?v=s005-rule-real-browser-trace-v1"'));
-  ok(devHtml.includes('src="engine/services/communicative-judge.js?v=s005-rule-real-browser-trace-v1"'));
   const speechStartScripts = [
     "engine/managers/question-manager.js",
     "engine/presenters/communicative-question-presenter.js",
     "engine/controllers/communicative-question-flow-controller.js"
   ];
   for (const script of speechStartScripts) {
-    const version = script === "engine/managers/question-manager.js" ?
-      "s005-rule-real-browser-trace-v1" : script === "engine/presenters/communicative-question-presenter.js" ?
-      "mobile-ui-story-polish-v1-1" : "s005-phase-a2-v1";
-    ok(devHtml.includes(`src="${script}?v=${version}"`), `${script} uses the current version in dev`);
-    ok(indexHtml.includes(`src="${script}?v=${version}"`), `${script} uses the current version in index`);
+    ok(devHtml.includes(`src="${script}?v=${unifiedVersion}"`), `${script} uses the unified version in dev`);
+    ok(indexHtml.includes(`src="${script}?v=${unifiedVersion}"`), `${script} uses the unified version in index`);
   }
   ok(!devHtml.includes("engine/managers/question-manager.js?v=communicative-formal-v1"),
     "dev cannot load the pre-fallback QuestionManager cache key");
   ok(!indexHtml.includes("engine/managers/question-manager.js?v=communicative-formal-v1"),
     "index cannot load the pre-fallback QuestionManager cache key");
-  equal((devHtml.match(/\?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1/g) || []).length, 6,
-    "Unchanged Formal assets retain the unified release version");
+  equal((devHtml.match(/\?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1/g) || []).length, 13,
+    "All shared Formal assets use the unified release version");
   equal((devHtml.match(/\?v=communicative-formal-late-result-v1/g) || []).length, 0,
     "DEV no longer loads the pre-trace Formal asset cache key");
   equal((devHtml.match(/\?v=communicative-formal-speech-fallback-v1/g) || []).length, 0,
@@ -380,17 +373,17 @@ function field(label) {
   ok(read("dev/communicative-judge-pilot.js").includes("window.CommunicativeJudgePilot"), "Existing Pilot remains present");
 
   ok(!/fetch\s*\(|XMLHttpRequest|API_KEY|Gemini|OpenAI/.test(source), "No Provider, fetch, or API key is added");
-  equal(hash("index.html"), "cdf96702162894db7e1c0e291c8a903c8b97d26062c6c296b2a572ec0f5edbaf");
-  equal(hash("data/questions.js"), "7f94f150fff8ef7af49e4bd7f86614900eafb0fb1d3d772861142feb68d75904");
-  equal(hash("engine/managers/question-manager.js"), "98047b0cb21bd12f4fd5e2c432ea28836a6b82b7b0a3067639781ad538d87c6d");
-  equal(hash("engine/services/speech-engine.js"), "2d85fa0af3bd8f109ca9d95995361f44e3240e97ce5fba54bed1d14e66260824");
-  equal(hash("engine/services/speech-start-controller.js"), "f6d1224d0ae71f8ee12067f0ede79650dae84a88d2c68b7ce474ce48c24b8161");
+  equal(hash("index.html"), "e6c5b6e1c6155506d4a80fe46c2a442dbaa40180065a7e9905d8b6bb18ce3855");
+  equal(hash("data/questions.js"), "4c3387cce771b78dfaf7e33933a9df43da0defda28b487de84e5ac0b2a611c18");
+  equal(hash("engine/managers/question-manager.js"), "5821246389f2ca4e622cc3c8b2e75302e244cea24e502737323b37f9f46de6c8");
+  equal(hash("engine/services/speech-engine.js"), "3e1c4f063d048d79cb2b88e5e7786b5f8d66016191bbac619a114d7a2df5f496");
+  equal(hash("engine/services/speech-start-controller.js"), "b241bc1f079eb9c4b645cb0084c62236994934b222f00589d1d1bb2934fee450");
   equal(hash("engine/services/communicative-question-adapter.js"), "1fe6fbb7090c6d61c666771edcab963b23596ba399e59fa3650503d4c3473e3f");
-  equal(hash("engine/services/communicative-judge.js"), "a8b8482768e480f609ff9b569774509a881d503769ca5f3452783ff94c7ecb04");
-  equal(hash("engine/services/local-communicative-judge.js"), "d124c63e412c4e6553026141361ab608da5603bd29854f93f6b8c06bf1f57e58");
-  equal(hash("data/communicative-judge-rules.js"), "acae74a247318a54ef09ac75c04c444c14dedc798c67abf3b793fc0529dd9279");
-  equal(hash("dev/communicative-judge-pilot.js"), "96b9dc24d72b9d7bc9857662e9a81dac170ea329da6f59930850d9eb8023bc7d");
-  equal(treeHash("engine/stories"), "93a0332efb2803acf52af0591972edf9bb26a5f76a980875d609973311b0a7b7");
+  equal(hash("engine/services/communicative-judge.js"), "e37901643b7df9799ff9ad743508b0414e58b952777aa81ab97b74dadc218542");
+  equal(hash("engine/services/local-communicative-judge.js"), "034cbf4431bcb6d5a1ab3d9afdc8526665d8ea357959383f11faa13fc3baa4d6");
+  equal(hash("data/communicative-judge-rules.js"), "86488ef0705d709fac04183cdd0ccd90edf1de4a236b3e1015d84589d159a828");
+  equal(hash("dev/communicative-judge-pilot.js"), "e1a0a13cea7dd0bfc429fadeb82065ba12be4aff1d5aa3bcc93add37f60ad2f0");
+  equal(treeHash("engine/stories"), "dbf1d0afcb303f024b4a327071729975da303de82a3ca5aaeee2343ad9cf22a5");
   equal(treeHash("stories"), "d8546e5e7990c8306acb9ad1d82962868cc6ef78520137bf2760a68c877a8fe2");
   equal(hash("data/monsters.js"), "af1afabcf11f4536eacb69b8370c465273b1b9adce8e98b94b69bac4e38b8073");
   equal(hash("engine/managers/monster-battle-manager.js"), "0451a45a75e35c9c4418f40126e55d8659cbbf407deca78089f9c12058026ee3");

@@ -19,7 +19,7 @@ for (const file of [
   "engine/core/story-engine.js",
   "engine/core/scene-manager.js"
 ]) {
-  const version = file === "engine/managers/dialog-manager.js" ? "mobile-ui-story-polish-v1-1" :
+  const version = file === "engine/managers/dialog-manager.js" ? "ui-japanese-v1" :
     file === "engine/core/story-engine.js" || file === "engine/core/scene-manager.js" ?
       "adventure-return-fix-v1" : "finite-rescue-runtime-wiring-v1";
   assert(index.includes(`${file}?v=${version}`), `${file} cache busting`);
@@ -31,11 +31,11 @@ const protectedHashes = {
   "engine/stories/m001.js": "187c5139107ab8c6f8a35a758d4bc3976f164fe161dccb341926778456fa6e2a",
   "engine/stories/S002.js": "bd05226b3e51d12a27e1504579f69cd97200231a68edecd8a8d6e6b2e7aaf525",
   "engine/stories/S003.js": "e532ff803cf57398d0cd457ba118a9ec004d484af27a77e6fce81dc5da5c991c",
-  "engine/stories/S004.js": "ca801b7658fe1bddf98cf8c21ee1794adf602b68afa5a7f94599758fb3437070",
-  "data/questions.js": "7f94f150fff8ef7af49e4bd7f86614900eafb0fb1d3d772861142feb68d75904",
-  "engine/services/communicative-judge.js": "a8b8482768e480f609ff9b569774509a881d503769ca5f3452783ff94c7ecb04",
-  "engine/services/local-communicative-judge.js": "d124c63e412c4e6553026141361ab608da5603bd29854f93f6b8c06bf1f57e58",
-  "engine/controllers/communicative-question-flow-controller.js": "8bf9a35dc37a6296b8afc0924e41824f3ae8a7a71f5eefbc5a624f05828f200e"
+  "engine/stories/S004.js": "b004f23146691f28a420e8918dd61577ad0f45a9daee4af63e2c82c42b0cc905",
+  "data/questions.js": "4c3387cce771b78dfaf7e33933a9df43da0defda28b487de84e5ac0b2a611c18",
+  "engine/services/communicative-judge.js": "e37901643b7df9799ff9ad743508b0414e58b952777aa81ab97b74dadc218542",
+  "engine/services/local-communicative-judge.js": "034cbf4431bcb6d5a1ab3d9afdc8526665d8ea357959383f11faa13fc3baa4d6",
+  "engine/controllers/communicative-question-flow-controller.js": "b674ea304e2097350149c7e59394c47bf7a2f5d387555c849d4ebb882936e1b3"
 };
 for (const [file, expected] of Object.entries(protectedHashes)) {
   assert.strictEqual(hash(file), expected, `${file} must remain unchanged`);

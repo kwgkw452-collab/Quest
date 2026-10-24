@@ -11,15 +11,15 @@ const read = file => fs.readFileSync(path.join(root, file), "utf8");
 const hash = file => crypto.createHash("sha256").update(fs.readFileSync(path.join(root, file))).digest("hex");
 
 const protectedHashes = {
-  "engine/services/speech-recognition-adapter.js": "4e852fb0c0b39cbf4c9a3dc62e61cec397f0e7836c648b961a9bf2adeb5d4973",
-  "engine/services/speech-engine.js": "2d85fa0af3bd8f109ca9d95995361f44e3240e97ce5fba54bed1d14e66260824",
-  "engine/services/speech-start-controller.js": "f6d1224d0ae71f8ee12067f0ede79650dae84a88d2c68b7ce474ce48c24b8161",
+  "engine/services/speech-recognition-adapter.js": "c3670904dcbaf6880d5f4486122bae82c707dfc362273334f804e0bba52285d3",
+  "engine/services/speech-engine.js": "3e1c4f063d048d79cb2b88e5e7786b5f8d66016191bbac619a114d7a2df5f496",
+  "engine/services/speech-start-controller.js": "b241bc1f079eb9c4b645cb0084c62236994934b222f00589d1d1bb2934fee450",
   "engine/core/story-engine.js": "ecca2bac442d5002fec99d8f9e826756bee6afd2efd24a093c187d041f5afbeb",
-  "engine/stories/S004.js": "ca801b7658fe1bddf98cf8c21ee1794adf602b68afa5a7f94599758fb3437070",
-  "data/questions.js": "7f94f150fff8ef7af49e4bd7f86614900eafb0fb1d3d772861142feb68d75904",
-  "data/communicative-judge-rules.js": "acae74a247318a54ef09ac75c04c444c14dedc798c67abf3b793fc0529dd9279",
-  "engine/services/local-communicative-judge.js": "d124c63e412c4e6553026141361ab608da5603bd29854f93f6b8c06bf1f57e58",
-  "engine/services/communicative-judge.js": "a8b8482768e480f609ff9b569774509a881d503769ca5f3452783ff94c7ecb04",
+  "engine/stories/S004.js": "b004f23146691f28a420e8918dd61577ad0f45a9daee4af63e2c82c42b0cc905",
+  "data/questions.js": "4c3387cce771b78dfaf7e33933a9df43da0defda28b487de84e5ac0b2a611c18",
+  "data/communicative-judge-rules.js": "86488ef0705d709fac04183cdd0ccd90edf1de4a236b3e1015d84589d159a828",
+  "engine/services/local-communicative-judge.js": "034cbf4431bcb6d5a1ab3d9afdc8526665d8ea357959383f11faa13fc3baa4d6",
+  "engine/services/communicative-judge.js": "e37901643b7df9799ff9ad743508b0414e58b952777aa81ab97b74dadc218542",
   "engine/services/communicative-question-adapter.js": "1fe6fbb7090c6d61c666771edcab963b23596ba399e59fa3650503d4c3473e3f",
   "engine/managers/monster-battle-manager.js": "0451a45a75e35c9c4418f40126e55d8659cbbf407deca78089f9c12058026ee3",
   "engine/managers/morning-manager.js": "f123747d417d3aa632d84ca828ffa0ff85c8b14f62753ad8a77655e56e819856"
@@ -272,14 +272,10 @@ async function pendingFormal(plan) {
   const indexHtml = read("index.html");
   const devHtml = read("dev.html");
   for (const file of formalAssets) {
-    const version = file === "engine/managers/question-manager.js" ?
-      "s005-rule-real-browser-trace-v1" : file === "engine/presenters/communicative-question-presenter.js" ?
-      "mobile-ui-story-polish-v1-1" : "s005-phase-a2-v1";
-    assert(indexHtml.includes(`${file}?v=${version}`));
-    assert(devHtml.includes(`${file}?v=${version}`));
+    assert(indexHtml.includes(`${file}?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1`));
+    assert(devHtml.includes(`${file}?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1`));
   }
-  assert.strictEqual((indexHtml.match(/\?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1/g) || []).length, 3);
-  assert.strictEqual((indexHtml.match(/\?v=iphone-speech-audio-restore-timing-ab-v1/g) || []).length, 3);
+  assert.strictEqual((indexHtml.match(/\?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1/g) || []).length, 12);
   assert(!indexHtml.includes("formal-speech-trace"));
 
   assert(!read("engine/managers/monster-battle-manager.js").includes("CommunicativeQuestionPresenter.speech"));

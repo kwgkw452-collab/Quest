@@ -3,103 +3,6 @@
 
   var listeners = {};
   var status = "idle";
-  // Audio lifecycle only. Recognition candidates and Judge remain untouched.
-  var speechAudioAttempt = null;
-  var speechAudioExitTimer = null;
-  var speechAudioRelease = Promise.resolve();
-  var speechAudioRecoveryCleanup = null;
-
-  function teardownTrace(type, detail) {
-    try {
-      if (window.GainNodeVoiceRuntimeTrace && typeof GainNodeVoiceRuntimeTrace.record === "function") {
-        GainNodeVoiceRuntimeTrace.record(type, detail || {});
-      }
-    } catch (_) {}
-  }
-
-  function restoreTimingTrace(type, detail) {
-    try {
-      if (window.AudioRestoreTimingDiagnostic &&
-          typeof AudioRestoreTimingDiagnostic.record === "function") {
-        AudioRestoreTimingDiagnostic.record(type, detail || {});
-      }
-    } catch (_) {}
-  }
-
-  function retrySpeechAudioExitAfterRecovery() {
-    if (speechAudioRecoveryCleanup || !window.document || typeof document.addEventListener !== "function") return;
-    var events = ["pointerdown", "touchend", "click", "keydown"];
-    var pending = false;
-    function cleanup() {
-      events.forEach(function (name) { document.removeEventListener(name, retry, true); });
-      speechAudioRecoveryCleanup = null;
-    }
-    async function retry() {
-      if (pending || speechAudioAttempt) return;
-      pending = true;
-      try {
-        // Phase 1 may return false while its existing Recovery needs a gesture.
-        // Retry an unfinished exit, never a successfully completed trial exit.
-        if (typeof AudioManager.unlock === "function") await AudioManager.unlock();
-        if (!speechAudioAttempt && speechAudioRecoveryCleanup === cleanup) {
-          speechAudioRelease = Promise.resolve(AudioManager.exitSpeechMode());
-          if (await speechAudioRelease !== false) cleanup();
-        }
-      } catch (error) { console.warn("Audio restore after recovery failed:", error); }
-      finally { pending = false; }
-    }
-    speechAudioRecoveryCleanup = cleanup;
-    events.forEach(function (name) { document.addEventListener(name, retry, true); });
-  }
-
-  function releaseSpeechAudio(attempt) {
-    if (!attempt || attempt.released) return speechAudioRelease;
-    restoreTimingTrace("audio-release-request");
-    teardownTrace("release-speech-audio-start");
-    attempt.released = true;
-    if (speechAudioAttempt === attempt) speechAudioAttempt = null;
-    speechAudioRelease = Promise.all([speechAudioRelease,
-      Promise.resolve(attempt.enterPromise).catch(function () {})]).then(function () {
-      return AudioManager.exitSpeechMode();
-    }).then(function (exited) {
-      if (exited === false) retrySpeechAudioExitAfterRecovery();
-      else if (speechAudioRecoveryCleanup) speechAudioRecoveryCleanup();
-      return exited;
-    }).catch(function (error) {
-      console.warn("Audio restore after speech recognition failed:", error);
-      retrySpeechAudioExitAfterRecovery();
-    });
-    return speechAudioRelease;
-  }
-
-  async function enterSpeechAudio(attempt) {
-    // Only the existing automatic mismatch loop inherits isolation.
-    // Button/Support waits release before returning the Recognition result.
-    if (speechAudioRecoveryCleanup) speechAudioRecoveryCleanup();
-    if (speechAudioExitTimer !== null) {
-      window.clearTimeout(speechAudioExitTimer);
-      speechAudioExitTimer = null;
-      if (speechAudioAttempt) speechAudioAttempt.released = true;
-    }
-    speechAudioAttempt = attempt;
-    await speechAudioRelease;
-    if (attempt.cancelled) throw new Error("aborted");
-    attempt.enterPromise = Promise.resolve(AudioManager.enterSpeechMode());
-    var entered = await attempt.enterPromise;
-    if (attempt.cancelled) throw new Error("aborted");
-    var audioState = typeof AudioManager.getState === "function" ? AudioManager.getState() : null;
-    if (entered === false || (audioState && (!audioState.speechMode || audioState.speechMode.state !== "active"))) {
-      throw new Error("audio-isolation-not-active");
-    }
-  }
-
-  function finishSpeechAudio(attempt) {
-    if (!attempt || attempt.released || speechAudioAttempt !== attempt) return;
-    speechAudioExitTimer = window.setTimeout(function () {
-      speechAudioExitTimer = null;
-      if (speechAudioAttempt === attempt) releaseSpeechAudio(attempt);
-    }, 0);
-  }
 
   function emit(name, detail) {
     (listeners[name] || []).slice().forEach(function (listener) {
@@ -129,21 +32,10 @@
 
   async function listen(options) {
     options = options || {};
-    teardownTrace("speech-listen-enter");
     setStatus("listening");
-    var audioAttempt = window.AudioManager && typeof AudioManager.enterSpeechMode === "function" &&
-      typeof AudioManager.exitSpeechMode === "function" ? {
-        cancelled: false,
-        released: false,
-        enterPromise: null,
-        recognitionPending: false
-      } : null;
-    var keepAudioForImmediateRetry = false;
 
     try {
-      if (audioAttempt) await enterSpeechAudio(audioAttempt);
       var alternatives = [];
-      if (audioAttempt) audioAttempt.recognitionPending = true;
       var text = await SpeechRecognitionAdapter.listen({
         lang: options.lang || GameConfig.defaultLanguage,
         timeoutMs: options.timeoutMs || 0,
@@ -174,17 +66,12 @@
       }
       setStatus("recognized", text);
       emit("result", text);
-      keepAudioForImmediateRetry = options.__speechAudioContinuousRetry === true;
       return text;
     } catch (error) {
       setStatus("error", error);
       emit("error", error);
       throw error;
     } finally {
-      restoreTimingTrace("speech-finally");
-      teardownTrace("speech-listen-finally");
-      if (keepAudioForImmediateRetry) finishSpeechAudio(audioAttempt);
-      else await releaseSpeechAudio(audioAttempt);
       window.setTimeout(function () {
         if (status !== "listening") setStatus("idle");
       }, 0);
@@ -218,15 +105,10 @@
 
           try {
             var listenOptions = {
-              // Audio-only hint for the existing automatic mismatch loop.
-              // Button or recovery UI waits always release before returning.
-              __speechAudioContinuousRetry: config.retryOnMismatch !== false &&
-                typeof ui.addStartButton !== "function" && typeof ui.onMismatch !== "function",
               lang: config.lang || GameConfig.defaultLanguage,
               timeoutMs: config.timeoutMs || 0,
               accepted: config.accepted,
               maxAlternatives: config.maxAlternatives || 5,
-              s005TraceQuestionId: config.s005TraceQuestionId,
               onAlternatives: config.onAlternatives,
               legacyTraceContext: attemptTraceContext,
               onInterim: function (value) {
@@ -246,7 +128,6 @@
                 consecutiveExactCount += 1;
                 if (consecutiveExactCount < 2) return;
                 earlyCommitSelected = "hello";
-                teardownTrace("hello-early-commit");
                 if (attemptTraceContext && window.LegacySpeechTrace && typeof LegacySpeechTrace.record === "function") {
                   LegacySpeechTrace.record(attemptTraceContext, "legacy-early-commit-selected", {
                     candidate: primary,
@@ -387,7 +268,6 @@
         });
       }
       if (judge(result, config.accepted)) {
-        await releaseSpeechAudio(speechAudioAttempt);
         if (currentLegacyTraceContext && window.LegacySpeechTrace && typeof LegacySpeechTrace.record === "function") {
           var matchedAnswer = currentLegacyTraceContext.questionId === "phrase.come_with_us" && Array.isArray(config.accepted) ?
             config.accepted.find(function (answer) { return SpeechNormalizer.includesAny(result, [answer]); }) || null : null;
@@ -420,16 +300,6 @@
   }
 
   function stop() {
-    if (speechAudioAttempt) {
-      speechAudioAttempt.cancelled = true;
-      if (speechAudioExitTimer !== null) window.clearTimeout(speechAudioExitTimer);
-      speechAudioExitTimer = null;
-      // Once Recognition owns the attempt, its promise settles only from
-      // onend. listen()'s finally then serializes Audio restoration. During
-      // pre-recognition isolation entry there is no onend to wait for, so that
-      // narrow cancellation path still releases immediately.
-      if (!speechAudioAttempt.recognitionPending) releaseSpeechAudio(speechAudioAttempt);
-    }
     SpeechRecognitionAdapter.stop();
     setStatus("idle");
   }

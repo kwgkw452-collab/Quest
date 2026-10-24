@@ -311,9 +311,9 @@ const indexHtml = read("index.html");
 
   equal(hash("data/lottery-pools.js"), "c4af3112d18e7eaa29e9aa512b4cdafe6f35e8c22781737c0c21b9d02df0d490"); // 74
   equal(hash("engine/services/lottery-engine.js"), "70743782f3461c4b4c351ee98a1fb21787fc01a2fc11908d2a50c5cbc04f7758"); // 75
-  equal(hash("data/communicative-judge-rules.js"), "acae74a247318a54ef09ac75c04c444c14dedc798c67abf3b793fc0529dd9279"); // 76 Formal Rule added
-  equal(hash("engine/services/local-communicative-judge.js"), "d124c63e412c4e6553026141361ab608da5603bd29854f93f6b8c06bf1f57e58"); // 77
-  equal(hash("engine/services/communicative-judge.js"), "a8b8482768e480f609ff9b569774509a881d503769ca5f3452783ff94c7ecb04"); // 78
+  equal(hash("data/communicative-judge-rules.js"), "86488ef0705d709fac04183cdd0ccd90edf1de4a236b3e1015d84589d159a828"); // 76 Formal Rule added
+  equal(hash("engine/services/local-communicative-judge.js"), "034cbf4431bcb6d5a1ab3d9afdc8526665d8ea357959383f11faa13fc3baa4d6"); // 77
+  equal(hash("engine/services/communicative-judge.js"), "e37901643b7df9799ff9ad743508b0414e58b952777aa81ab97b74dadc218542"); // 78
 
   console.log(`Communicative Judge Pilot V1 tests (${checks} checks): PASS`);
 })().catch(error => {

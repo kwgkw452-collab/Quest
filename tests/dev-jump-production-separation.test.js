@@ -35,18 +35,18 @@ const storyHashes = {
   "engine/stories/S001.js": "e7aae0d4f4bf81915bcdcec44254b1414135e4fbb1a80907fe306971e38a52e1",
   "engine/stories/S002.js": "bd05226b3e51d12a27e1504579f69cd97200231a68edecd8a8d6e6b2e7aaf525",
   "engine/stories/S003.js": "e532ff803cf57398d0cd457ba118a9ec004d484af27a77e6fce81dc5da5c991c",
-  "engine/stories/S004.js": "ca801b7658fe1bddf98cf8c21ee1794adf602b68afa5a7f94599758fb3437070",
+  "engine/stories/S004.js": "b004f23146691f28a420e8918dd61577ad0f45a9daee4af63e2c82c42b0cc905",
   "engine/stories/m001.js": "187c5139107ab8c6f8a35a758d4bc3976f164fe161dccb341926778456fa6e2a",
-  "engine/stories/story-saki-departure.js": "a1378627be33f2c4b4b9c23fcc19423f4f69b91f304579cdad785dfb60d68d6d"
+  "engine/stories/story-saki-departure.js": "a44a0787a94544fa7bcc8987e01088dd8af77aab90a605d3206e1fd7daa34fe4"
 };
 Object.entries(storyHashes).forEach(([file, expected]) => assert.strictEqual(hash(file), expected, file));
 
 const audio = read("engine/managers/audio-manager.js");
 const s001 = read("engine/stories/S001.js");
 const opening = read("engine/services/opening.js");
-assert(audio.includes('animatePolicy("speech", profile.ratio === undefined ? 0.25'));
-assert(audio.includes("profile.duckMs === undefined ? 300 : profile.duckMs"));
-assert(audio.includes("profile.restoreMs === undefined ? 600 : profile.restoreMs"));
+assert(audio.includes("ratio: options.ratio === undefined ? 0.25"));
+assert(audio.includes("duckMs: options.duckMs === undefined ? 300"));
+assert(audio.includes("restoreMs: options.restoreMs === undefined ? 600"));
 assert(opening.includes('volume: 0.23'));
 assert.strictEqual((s001.match(/C\.bgm\("zephyrFields", \{ loop: true, volume: 0\.46/g) || []).length, 3);
 assert(s001.includes('C.bgm("kongEmotionalSilentTears", { loop: true, volume: 0.52'));

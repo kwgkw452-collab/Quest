@@ -34,18 +34,14 @@
     }
 
     try {
-      var components = typeof VoiceProfileDatabase.resolveGainComponents === "function"
-        ? VoiceProfileDatabase.resolveGainComponents(voiceKey, options.sceneGain)
-        : { effectiveGain: VoiceProfileDatabase.resolveGain(voiceKey, options.sceneGain) };
+      var gain = VoiceProfileDatabase.resolveGain(voiceKey, options.sceneGain);
       var tracked = DialogueVoiceAudioInternal.play(voiceKey, {
-        volume: Math.max(0, components.effectiveGain),
-        characterGain: Math.max(0, (components.characterGain === undefined ? components.effectiveGain :
-          components.characterGain * components.sceneGain)),
+        volume: Math.max(0, Math.min(1, gain)),
         voiceEffect: options.voiceEffect
       });
-      activeAudio = tracked;
+      activeAudio = tracked.audio;
       var completion = await tracked.completion;
-      if (activeAudio === tracked) activeAudio = null;
+      if (activeAudio === tracked.audio) activeAudio = null;
       return result(voiceKey, completion.status, completion.error);
     } catch (error) {
       activeAudio = null;

@@ -2,13 +2,6 @@
   box-sizing: border-box;
 }
 
-:root {
-  --dialog-control-font-size: 14px;
-  --dialog-control-min-height: 32px;
-  --dialog-speaker-font-size: 13px;
-  --speech-status-font-size: 12px;
-}
-
 html, body {
   width: 100%;
   height: 100%;
@@ -82,8 +75,8 @@ button, input {
   position: absolute;
   left: 50%;
   bottom: 23%;
-  max-width: min(46vw, 430px);
-  max-height: 48vh;
+  max-width: min(588.8px, 430px);
+  max-height: 345.6px;
   transform: translateX(-50%);
   object-fit: contain;
   filter: drop-shadow(0 10px 18px rgba(0, 0, 0, .55));
@@ -104,8 +97,8 @@ button, input {
 .character-image {
   position: absolute;
   bottom: 24%;
-  max-width: min(42vw, 430px);
-  max-height: 57vh;
+  max-width: min(537.6px, 430px);
+  max-height: 410.4px;
   object-fit: contain;
   filter: drop-shadow(0 12px 20px rgba(0, 0, 0, .6));
 }
@@ -127,8 +120,8 @@ button, input {
   position: absolute;
   left: 50%;
   top: 24%;
-  max-width: min(50vw, 460px);
-  max-height: 46vh;
+  max-width: min(640px, 460px);
+  max-height: 331.2px;
   transform: translateX(-50%);
   object-fit: contain;
   filter: drop-shadow(0 12px 20px rgba(0, 0, 0, .7));
@@ -138,7 +131,7 @@ button, input {
   position: absolute;
   left: 62%;
   top: 17%;
-  font-size: clamp(28px, 5vw, 56px);
+  font-size: clamp(28px, 64px, 56px);
   font-weight: 800;
   letter-spacing: .12em;
   animation: floatZ 2s ease-in-out infinite;
@@ -167,41 +160,26 @@ button, input {
 }
 
 .speaker {
-  min-height: 0;
-  margin-bottom: 2px;
+  min-height: 1.15em;
+  margin-bottom: 3px;
   color: #ffd34d;
-  font-weight: 700;
-  font-size: var(--dialog-speaker-font-size);
-  line-height: 1.15;
+  font-weight: 800;
+  font-size: clamp(16px, 23.04px, 23px);
 }
 
 .message {
   white-space: pre-wrap;
   line-height: 1.32;
-  font-size: clamp(15px, 1.75vw, 22px);
+  font-size: clamp(15px, 22.4px, 22px);
 }
 
 .recognized-text {
-  margin-top: 3px;
-  padding: 2px 8px;
-  border-left: 3px solid #6ee7ff;
+  margin-top: 6px;
+  padding: 6px 10px;
+  border-left: 4px solid #6ee7ff;
   color: #bff5ff;
   background: rgba(0, 100, 130, .18);
-  font-size: var(--speech-status-font-size);
-  line-height: 1.2;
-}
-
-.dialogue-box.speech-listening {
-  padding: 4px 10px;
-  border-width: 3px;
-}
-
-.dialogue-box.speech-listening .speaker {
-  margin-bottom: 1px;
-}
-
-.dialogue-box.speech-listening .message {
-  line-height: 1.2;
+  font-size: clamp(16px, 23.04px, 22px);
 }
 
 .controls {
@@ -212,18 +190,14 @@ button, input {
 }
 
 .control-button {
-  width: auto;
-  min-width: 0;
-  min-height: var(--dialog-control-min-height);
-  padding: 2px 10px;
+  min-width: 110px;
+  padding: 7px 15px;
   border: 2px solid #fff;
   border-radius: 10px;
   background: #151515;
   color: #fff;
   cursor: pointer;
   font-weight: 800;
-  font-size: var(--dialog-control-font-size);
-  line-height: 1.1;
 }
 
 .control-button:hover,
@@ -278,7 +252,7 @@ button, input {
   text-align: center;
   font-family: Georgia, "Times New Roman", serif;
   font-weight: 800;
-  font-size: clamp(30px, 6vw, 78px);
+  font-size: clamp(30px, 76.8px, 78px);
   line-height: 1.3;
   text-shadow: 0 0 14px rgba(245,207,69,.35);
   transform: rotate(-12deg) scale(.65);
@@ -317,7 +291,7 @@ button, input {
 .opening-panel h1 {
   margin: 0;
   color: #ffd34d;
-  font-size: clamp(28px, 5vw, 60px);
+  font-size: clamp(28px, 64px, 60px);
 }
 
 .opening-panel p {
@@ -325,13 +299,13 @@ button, input {
   margin: 0;
   white-space: pre-wrap;
   line-height: 1.8;
-  font-size: clamp(17px, 2vw, 24px);
+  font-size: clamp(17px, 25.6px, 24px);
 }
 
 .notice-title {
   color: #ffdd63;
   font-weight: 900;
-  font-size: clamp(24px, 3vw, 36px);
+  font-size: clamp(24px, 38.4px, 36px);
 }
 
 .notice-accent {
@@ -351,22 +325,21 @@ button, input {
   width: min(94%, 1120px);
   max-width: 1120px;
   line-height: 1.55;
-  font-size: clamp(17px, 1.85vw, 23px);
+  font-size: clamp(17px, 23.68px, 23px);
 }
 
 .opening-panel.notice-panel .notice-title {
   flex: 0 0 auto;
-  font-size: clamp(26px, 3vw, 38px);
+  font-size: clamp(26px, 38.4px, 38px);
 }
 
 .opening-panel.notice-panel .control-button {
   flex: 0 0 auto;
   margin-top: 4px;
-  min-height: var(--dialog-control-min-height);
-  padding: 2px 10px;
+  padding: 9px 20px;
 }
 
-@media (max-height: 720px) {
+@container eigo-game-stage (max-height: 720px) {
   .opening-panel.notice-panel {
     inset: 3%;
     gap: 10px;
@@ -375,11 +348,11 @@ button, input {
 
   .opening-panel.notice-panel p {
     line-height: 1.4;
-    font-size: clamp(14px, 1.55vw, 19px);
+    font-size: clamp(14px, 19.84px, 19px);
   }
 
   .opening-panel.notice-panel .notice-title {
-    font-size: clamp(22px, 2.5vw, 31px);
+    font-size: clamp(22px, 32px, 31px);
   }
 }
 
@@ -429,9 +402,9 @@ button, input {
 
 @keyframes numberMonsterHit {
   0%, 100% { transform: translateX(0); box-shadow: inset 0 0 0 0 rgba(255, 20, 20, 0); }
-  20% { transform: translateX(-10px); box-shadow: inset 0 0 0 100vmax rgba(255, 28, 28, .5); }
-  40% { transform: translateX(8px); box-shadow: inset 0 0 0 100vmax rgba(255, 28, 28, .28); }
-  60% { transform: translateX(-6px); box-shadow: inset 0 0 0 100vmax rgba(255, 28, 28, .18); }
+  20% { transform: translateX(-10px); box-shadow: inset 0 0 0 1280px rgba(255, 28, 28, .5); }
+  40% { transform: translateX(8px); box-shadow: inset 0 0 0 1280px rgba(255, 28, 28, .28); }
+  60% { transform: translateX(-6px); box-shadow: inset 0 0 0 1280px rgba(255, 28, 28, .18); }
   80% { transform: translateX(4px); }
 }
 
@@ -443,14 +416,7 @@ button, input {
   80% { transform: translateX(6px); }
 }
 
-@media (max-width: 700px) {
-  :root {
-    --dialog-control-font-size: 13px;
-    --dialog-control-min-height: 28px;
-    --dialog-speaker-font-size: 12px;
-    --speech-status-font-size: 12px;
-  }
-
+@container eigo-game-stage (max-width: 700px) {
   .dialogue-box {
     left: 2%;
     right: 2%;
@@ -462,18 +428,11 @@ button, input {
 
   .character-image {
     bottom: 31%;
-    max-height: 48vh;
+    max-height: 345.6px;
   }
 
   .item-image {
     bottom: 32%;
-  }
-}
-
-@media (min-width: 701px) {
-  :root {
-    --dialog-speaker-font-size: 13px;
-    --speech-status-font-size: 12px;
   }
 }
 
@@ -499,8 +458,8 @@ button, input {
 /* Camp Engine: 選出された同行Characterの共通自動配置。 */
 .story-character.camp-character {
   bottom: 14%;
-  max-width: min(30vw, 330px);
-  max-height: 43vh;
+  max-width: min(384px, 330px);
+  max-height: 309.6px;
 }
 
 /* Camp only: lower the shared dialogue slightly without affecting other scenes. */
@@ -514,9 +473,9 @@ button, input {
 .camp-zzz.camp-slot-center { left: 54%; top: 25%; }
 .camp-zzz.camp-slot-right { left: 82%; top: 28%; }
 
-@media (max-width: 700px) {
+@container eigo-game-stage (max-width: 700px) {
   #scene:has(#background[style*="bg_camp.png"]) > .dialogue-box { bottom: .5%; }
-  .story-character.camp-character { max-width: 31vw; max-height: 36vh; }
+  .story-character.camp-character { max-width: 396.8px; max-height: 259.2px; }
   .story-character.camp-slot-left { left: 2%; }
   .story-character.camp-slot-right { right: 2%; }
   .camp-zzz.camp-slot-left { left: 16%; top: 32%; }
@@ -582,21 +541,21 @@ button, input {
 .st004-saki-pico-low { left: 50%; bottom: 17%; transform: translateX(-50%); }
 .s004-left-upper { left: 25%; bottom: 35%; transform: translateX(-50%); }
 .s004-center-upper { left: 50%; bottom: 35%; transform: translateX(-50%); }
-.size-small { max-width: min(25vw, 250px); max-height: 38vh; }
-.size-medium { max-width: min(42vw, 430px); max-height: 57vh; }
-.size-large { max-width: min(42vw, 430px); max-height: 43vh; }
+.size-small { max-width: min(320px, 250px); max-height: 273.6px; }
+.size-medium { max-width: min(537.6px, 430px); max-height: 410.4px; }
+.size-large { max-width: min(537.6px, 430px); max-height: 309.6px; }
 .story-character.monster-giant-tree {
   left: 50%;
   bottom: 20%;
   width: auto;
-  height: 78vh;
+  height: 561.6px;
   max-width: none;
   max-height: none;
   transform: translateX(-50%);
 }
 .story-character.monster-layer-stack {
   left: 50%; bottom: 24%; transform: translateX(-50%);
-  width: min(42vw, 430px); height: min(57vh, 480px);
+  width: min(537.6px, 430px); height: min(410.4px, 480px);
 }
 .monster-layer-stack img {
   position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain;
@@ -630,7 +589,7 @@ button, input {
 .zzz-right { left: 69%; top: 25%; }
 .dialogue-box.dialogue-compact { min-height: 0; max-height: 24%; padding: 12px 20px; }
 
-@media (max-width: 700px) {
+@container eigo-game-stage (max-width: 700px) {
   .pos-center-low { bottom: 31%; }
   .pos-left-low { left: 5%; bottom: 28%; }
   .pos-right-low { right: 2%; bottom: 26%; }
@@ -638,10 +597,10 @@ button, input {
   .st004-saki-pico-low { left: 50%; bottom: 22%; transform: translateX(-50%); }
   .s004-left-upper { left: 25%; bottom: 40%; transform: translateX(-50%); }
   .s004-center-upper { left: 50%; bottom: 40%; transform: translateX(-50%); }
-  .size-small { max-width: 28vw; max-height: 32vh; }
-  .size-medium { max-height: 48vh; }
+  .size-small { max-width: 358.4px; max-height: 230.4px; }
+  .size-medium { max-height: 345.6px; }
 
-  .size-large { max-width: 48vw; max-height: 36vh; }
+  .size-large { max-width: 614.4px; max-height: 259.2px; }
   .zzz-right { left: 74%; top: 28%; }
   .dialogue-box.dialogue-compact { min-height: 0; max-height: 25%; padding: 10px 14px; }
 }
@@ -680,7 +639,7 @@ button, input {
   z-index: 40;
   display: grid;
   place-items: center;
-  padding: 5vw;
+  padding: 64px;
   background: rgba(4, 12, 30, .82);
   backdrop-filter: blur(5px);
   opacity: 0;
@@ -691,8 +650,8 @@ button, input {
 .pico-break-layer[hidden] { display: none; }
 
 .pico-break-card {
-  width: min(760px, 92vw);
-  padding: clamp(24px, 5vw, 54px);
+  width: min(760px, 1177.6px);
+  padding: clamp(24px, 64px, 54px);
   border: 4px solid #fff;
   border-radius: 28px;
   background: linear-gradient(145deg, rgba(31, 79, 150, .97), rgba(42, 20, 94, .97));
@@ -704,8 +663,8 @@ button, input {
 
 .pico-break-layer.show .pico-break-card { transform: translateY(0) scale(1); }
 .pico-break-badge { font-weight: 900; letter-spacing: .18em; color: #8ff4ff; }
-.pico-break-title { margin: .45em 0; color: #ffe36d; font-size: clamp(25px, 4vw, 46px); }
-.pico-break-text { min-height: 3em; white-space: pre-wrap; line-height: 1.7; font-size: clamp(18px, 2.5vw, 28px); }
+.pico-break-title { margin: .45em 0; color: #ffe36d; font-size: clamp(25px, 51.2px, 46px); }
+.pico-break-text { min-height: 3em; white-space: pre-wrap; line-height: 1.7; font-size: clamp(18px, 32px, 28px); }
 .pico-break-close { margin-top: 18px; }
 
 /* Experimental build only: Pico Breakを実際に呼び出す確認パネル */
@@ -714,7 +673,7 @@ button, input {
   top: 12px;
   right: 12px;
   z-index: 30;
-  width: min(430px, calc(100vw - 24px));
+  width: min(430px, calc(1280px - 24px));
   padding: 14px;
   border: 2px solid #8ff4ff;
   border-radius: 16px;
@@ -728,8 +687,8 @@ button, input {
 .pico-break-demo-controls { display: flex; flex-wrap: wrap; gap: 8px; }
 .pico-break-demo .control-button { min-width: 0; padding: 8px 12px; font-size: .95rem; }
 
-@media (max-width: 700px) {
-  .pico-break-demo { top: 6px; right: 6px; width: calc(100vw - 12px); }
+@container eigo-game-stage (max-width: 700px) {
+  .pico-break-demo { top: 6px; right: 6px; width: calc(1280px - 12px); }
 }
 
 /* st004 MAP / KEY: keep both choices visible while the shared speech UI is open. */
@@ -742,7 +701,7 @@ button, input {
   padding: 8px 16px;
 }
 
-@media (max-width: 700px) {
+@container eigo-game-stage (max-width: 700px) {
   #scene:has(#background[style*="s004_map_key_choice_final.png"]) > .dialogue-box {
     top: 24%;
     bottom: auto;

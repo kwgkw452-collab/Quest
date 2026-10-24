@@ -35,7 +35,6 @@ function harness(resumeResult, rejectPlay) {
     createBiquadFilter() { return this.node(); }
     createDynamicsCompressor() { return this.node(); }
     createWaveShaper() { return this.node(); }
-    createGain() { return this.node(); }
     createMediaElementSource() { return this.node(); }
     node() { return { frequency: {}, Q: {}, gain: {}, threshold: {}, ratio: {}, attack: {}, release: {}, connect() {}, disconnect() {} }; }
     close() { this.state = "closed"; return Promise.resolve(); }
@@ -54,20 +53,18 @@ function harness(resumeResult, rejectPlay) {
 }
 
 (async () => {
-  const plainRuntime = harness(context => { context.state = "running"; return Promise.resolve(); });
-  const normal = plainRuntime.context.DialogueVoiceAudioInternal.play("normal-key", { volume: 1 });
-  await flush();
-  assert.strictEqual(normal.audio.playCount, 1);
-  normal.audio.emit("playing");
-  assert(plainRuntime.events.some(([event]) => event === "normal-voice-play-call"));
-  assert(plainRuntime.events.some(([event]) => event === "normal-voice-playing"));
-  normal.audio.emit("ended");
-  assert.strictEqual((await normal.completion).status, "ended");
-
   let release;
   const pending = harness(context => new Promise(resolve => {
     release = () => { context.state = "running"; resolve(); };
   }));
+  const normal = pending.context.DialogueVoiceAudioInternal.play("normal-key", { volume: 1 });
+  assert.strictEqual(normal.audio.playCount, 1);
+  normal.audio.emit("playing");
+  assert(pending.events.some(([event]) => event === "normal-voice-play-call"));
+  assert(pending.events.some(([event]) => event === "normal-voice-playing"));
+  normal.audio.emit("ended");
+  assert.strictEqual((await normal.completion).status, "ended");
+
   const radio = pending.context.DialogueVoiceAudioInternal.play("radio-key", { voiceEffect: "radio", volume: 1 });
   assert.strictEqual(radio.audio.playCount, 0, "pending resume must retain existing play order");
   assert.deepStrictEqual(pending.events.filter(([event]) => event.startsWith("radio-")).map(([event]) => event), [
@@ -86,13 +83,14 @@ function harness(resumeResult, rejectPlay) {
   ];
   for (const event of expected) assert(pending.events.some(([actual]) => actual === event), event);
   assert.strictEqual(pending.events.find(([event]) => event === "radio-graph-connected")[1].route, "filtered");
-  assert.strictEqual(pending.contexts[0].state, "running", "canonical AudioContext remains reusable");
+  assert.strictEqual(pending.contexts[0].state, "closed");
 
   const rejected = harness(() => Promise.reject(new Error("resume-denied")));
   const fallback = rejected.context.DialogueVoiceAudioInternal.play("fallback-key", { voiceEffect: "radio" });
   await flush();
   assert.strictEqual(fallback.audio.playCount, 1, "fallback playback must remain unchanged");
-  assert(rejected.events.some(([event, detail]) => event === "radio-fallback-enter" && detail.reason === "context-not-running"));
+  assert(rejected.events.some(([event, detail]) => event === "radio-resume-rejected" && detail.error.includes("resume-denied")));
+  assert(rejected.events.some(([event, detail]) => event === "radio-fallback-enter" && detail.reason === "resume-rejected"));
   rejected.context.DialogueVoiceAudioInternal.stop();
   assert(rejected.events.some(([event]) => event === "radio-stop"));
   assert.strictEqual((await fallback.completion).status, "stopped");

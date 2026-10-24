@@ -6,11 +6,6 @@
   var activeMode = null;
   var COMMUNICATIVE_MAX_RETRIES = 1;
 
-  function s005Trace(questionId, eventName, detail) {
-    if (typeof questionId !== "string" || questionId.indexOf("s005.communication.") !== 0) return;
-    console.log("[S005 TRACE] " + eventName, Object.assign({ questionId: questionId }, detail || {}));
-  }
-
   function trace(eventName, context, detail) {
     if (!window.FormalSpeechTrace || typeof window.FormalSpeechTrace.record !== "function") return;
     window.FormalSpeechTrace.record(eventName, Object.assign({
@@ -189,17 +184,7 @@
       poolId: null,
       itemId: question.id
     };
-    if (settings.poolId) {
-      var draw = window.LotteryEngine && typeof LotteryEngine.draw === "function" ?
-        LotteryEngine.draw(settings.poolId, {
-          difficulty: settings.difficulty, promptType: settings.promptType
-        }) : null;
-      if (draw && draw.status === "selected" && draw.conceptId === settings.conceptId &&
-          draw.difficulty === settings.difficulty && draw.promptType === settings.promptType &&
-          draw.displayValue === question.prompt) {
-        target = draw;
-      }
-    }
+    if (settings.judge) target.judge = settings.judge;
     return target;
   }
 
@@ -276,7 +261,6 @@
       lang: "en-US",
       timeoutMs: 8000,
       maxAlternatives: 5,
-      s005TraceQuestionId: options.s005TraceQuestionId,
       onInterim: function (value) {
         if (!acceptsCandidates) return;
         var text = String(value || "").trim();
@@ -388,21 +372,12 @@
     }
 
     var target = communicativeTarget(question);
-    trace("task-selected", traceContext, {
-      questionId: question.id, taskSpecId: null,
-      poolId: target.poolId, itemId: target.itemId, conceptId: target.conceptId,
-      lotteryStatus: target.poolId ? "selected" : (question.communicative.poolId ? "unavailable" : "not-configured"),
-      displayValue: question.prompt, expectedUtterance: target.expectedUtterance
-    });
     var token = adapter.begin();
     currentResult.attemptCount = 1;
     if (traceContext) traceContext.attemptCount = currentResult.attemptCount;
     var speechResult;
     try {
-      var inputOptions = Object.assign({}, options, {
-        s005TraceQuestionId: question.id.indexOf("s005.communication.") === 0 ? question.id : null
-      });
-      speechResult = await communicativeInput(inputOptions);
+      speechResult = await communicativeInput(options);
     } catch (error) {
       if (currentRun !== runId) {
         trace("stale-result-discard", traceContext, { stage: "speech-error" });
@@ -423,28 +398,6 @@
       return snapshot(currentResult);
     }
     try {
-      if (question.id.indexOf("s005.communication.") === 0) {
-        var ruleRegistry = Array.isArray(window.CommunicativeJudgeRuleData) ?
-          window.CommunicativeJudgeRuleData : [];
-        var selectedRule = ruleRegistry.filter(function (candidate) {
-          return candidate && candidate.conceptId === target.conceptId;
-        })[0] || null;
-        console.log("[S005 RULE TRACE] registry-check", {
-          questionId: question.id,
-          conceptId: target.conceptId,
-          registryLength: ruleRegistry.length,
-          ruleExists: Boolean(selectedRule),
-          ruleConceptId: selectedRule && selectedRule.conceptId || null,
-          variants: selectedRule && Array.isArray(selectedRule.variants) ? selectedRule.variants.slice() : [],
-          hasAcceptFunction: Boolean(selectedRule && typeof selectedRule.accept === "function"),
-          sameRegistryAsAssetLoad: window.__S005RuleTraceRegistry === ruleRegistry
-        });
-      }
-      s005Trace(question.id, "judge-start", {
-        transcript: speechResult.transcript,
-        normalizedTranscript: window.SpeechNormalizer && typeof SpeechNormalizer.normalize === "function" ?
-          SpeechNormalizer.normalize(speechResult.transcript) : String(speechResult.transcript || "").toLowerCase().trim()
-      });
       trace("judge-start", traceContext, { transcript: speechResult.transcript, candidateCount: speechResult.alternatives.length });
       var adapterResult = await adapter.evaluate(target, speechResult, token);
       if (currentRun !== runId) {
@@ -452,21 +405,10 @@
         return snapshot(currentResult);
       }
       applyCommunicativeResult(currentResult, adapterResult);
-      s005Trace(question.id, "judge-result", {
-        verdict: currentResult.judge && currentResult.judge.verdict,
-        reason: currentResult.judge && currentResult.judge.reason,
-        source: currentResult.judge && currentResult.judge.source
-      });
       trace("judge-result", traceContext, {
         transcript: currentResult.answer,
         candidateCount: currentResult.alternatives.length,
         verdict: currentResult.judge && currentResult.judge.verdict,
-        conceptId: target.conceptId,
-        poolId: target.poolId,
-        itemId: target.itemId,
-        normalizedUtterance: currentResult.judge && currentResult.judge.normalizedUtterance,
-        judgeSource: currentResult.judge && currentResult.judge.source,
-        judgeReason: currentResult.judge && currentResult.judge.reason,
         status: currentResult.status
       });
       return snapshot(currentResult);

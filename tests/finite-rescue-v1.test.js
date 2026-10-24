@@ -120,13 +120,13 @@ function legacyRun(errorCode, choices) {
   assert(!JSON.stringify({ controlResult: "adventure_return" }).includes("UNKNOWN"));
 
   assert.strictEqual(sha("engine/services/speech-engine.js"),
-    "2d85fa0af3bd8f109ca9d95995361f44e3240e97ce5fba54bed1d14e66260824");
+    "3e1c4f063d048d79cb2b88e5e7786b5f8d66016191bbac619a114d7a2df5f496");
   assert.strictEqual(sha("engine/managers/question-manager.js"),
-    "98047b0cb21bd12f4fd5e2c432ea28836a6b82b7b0a3067639781ad538d87c6d");
+    "5821246389f2ca4e622cc3c8b2e75302e244cea24e502737323b37f9f46de6c8");
   assert.strictEqual(sha("data/questions.js"),
-    "7f94f150fff8ef7af49e4bd7f86614900eafb0fb1d3d772861142feb68d75904");
+    "4c3387cce771b78dfaf7e33933a9df43da0defda28b487de84e5ac0b2a611c18");
   assert.strictEqual(sha("engine/services/communicative-judge.js"),
-    "a8b8482768e480f609ff9b569774509a881d503769ca5f3452783ff94c7ecb04");
+    "e37901643b7df9799ff9ad743508b0414e58b952777aa81ab97b74dadc218542");
 
   console.log("Finite Rescue V1 tests: PASS");
 })().catch(error => { console.error(error); process.exitCode = 1; });

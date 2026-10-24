@@ -25,7 +25,7 @@
   function buildJudgeInput(lotteryResult, speechResult) {
     lotteryResult = lotteryResult || {};
     speechResult = speechResult || {};
-    return {
+    var input = {
       conceptId: lotteryResult.conceptId,
       utterance: speechResult.transcript,
       alternatives: copyAlternatives(speechResult.alternatives),
@@ -38,6 +38,8 @@
         itemId: lotteryResult.itemId
       }
     };
+    if (lotteryResult.judge) input.judge = lotteryResult.judge;
+    return input;
   }
 
   function baseResult(status, lotteryResult, speechResult) {

@@ -11,12 +11,6 @@
       if (window.DialogueVoiceController && typeof DialogueVoiceController.stop === "function") {
         DialogueVoiceController.stop();
       }
-      // Isolation belongs to the actual SpeechEngine.listen attempt, after the
-      // user trigger. Preparing a button must not stop or duck the Story BGM.
-      if (window.AudioManager && typeof AudioManager.enterSpeechMode === "function") {
-        return Promise.resolve();
-      }
-      // Retain the existing preparation contract in runtimes without the new API.
       if (window.SpeechAudioDuckingInternal && SpeechAudioDuckingInternal.isArmed()) {
         return Promise.resolve(SpeechAudioDuckingInternal.begin());
       }

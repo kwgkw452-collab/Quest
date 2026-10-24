@@ -210,12 +210,12 @@ function sha(file) { return crypto.createHash("sha256").update(fs.readFileSync(p
 
   const lockedHashes = {
     "data/word-dictionaries.js": "8c8c49386c8bd935cbb40d1f067441f3f032f423a579c8193d3b95d167d68d89",
-    "engine/managers/question-manager.js": "98047b0cb21bd12f4fd5e2c432ea28836a6b82b7b0a3067639781ad538d87c6d",
-    "engine/services/speech-start-controller.js": "f6d1224d0ae71f8ee12067f0ede79650dae84a88d2c68b7ce474ce48c24b8161",
-    "engine/services/speech-engine.js": "2d85fa0af3bd8f109ca9d95995361f44e3240e97ce5fba54bed1d14e66260824",
-    "engine/services/speech-recognition-adapter.js": "4e852fb0c0b39cbf4c9a3dc62e61cec397f0e7836c648b961a9bf2adeb5d4973",
-    "engine/services/local-communicative-judge.js": "d124c63e412c4e6553026141361ab608da5603bd29854f93f6b8c06bf1f57e58",
-    "engine/services/communicative-judge.js": "a8b8482768e480f609ff9b569774509a881d503769ca5f3452783ff94c7ecb04"
+    "engine/managers/question-manager.js": "5821246389f2ca4e622cc3c8b2e75302e244cea24e502737323b37f9f46de6c8",
+    "engine/services/speech-start-controller.js": "b241bc1f079eb9c4b645cb0084c62236994934b222f00589d1d1bb2934fee450",
+    "engine/services/speech-engine.js": "3e1c4f063d048d79cb2b88e5e7786b5f8d66016191bbac619a114d7a2df5f496",
+    "engine/services/speech-recognition-adapter.js": "c3670904dcbaf6880d5f4486122bae82c707dfc362273334f804e0bba52285d3",
+    "engine/services/local-communicative-judge.js": "034cbf4431bcb6d5a1ab3d9afdc8526665d8ea357959383f11faa13fc3baa4d6",
+    "engine/services/communicative-judge.js": "e37901643b7df9799ff9ad743508b0414e58b952777aa81ab97b74dadc218542"
   };
   Object.keys(lockedHashes).forEach(file => assert.strictEqual(sha(file), lockedHashes[file], file + " must remain locked"));
   assert(!fs.readFileSync(path.join(root, "index.html"), "utf8").includes("communication-recognition-dictionaries"), "Story runtime remains disconnected");

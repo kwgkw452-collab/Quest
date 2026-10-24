@@ -13,36 +13,36 @@ const devHtml = read("dev.html");
 const scripts = Array.from(devHtml.matchAll(/<script\s+src="([^"]+)"/g), match => match[1]);
 
 const productionHashes = {
-  "index.html": "cdf96702162894db7e1c0e291c8a903c8b97d26062c6c296b2a572ec0f5edbaf",
-  "data/questions.js": "7f94f150fff8ef7af49e4bd7f86614900eafb0fb1d3d772861142feb68d75904",
-  "data/communicative-judge-rules.js": "acae74a247318a54ef09ac75c04c444c14dedc798c67abf3b793fc0529dd9279",
-  "engine/services/local-communicative-judge.js": "d124c63e412c4e6553026141361ab608da5603bd29854f93f6b8c06bf1f57e58",
-  "engine/services/communicative-judge.js": "a8b8482768e480f609ff9b569774509a881d503769ca5f3452783ff94c7ecb04",
+  "index.html": "e6c5b6e1c6155506d4a80fe46c2a442dbaa40180065a7e9905d8b6bb18ce3855",
+  "data/questions.js": "4c3387cce771b78dfaf7e33933a9df43da0defda28b487de84e5ac0b2a611c18",
+  "data/communicative-judge-rules.js": "86488ef0705d709fac04183cdd0ccd90edf1de4a236b3e1015d84589d159a828",
+  "engine/services/local-communicative-judge.js": "034cbf4431bcb6d5a1ab3d9afdc8526665d8ea357959383f11faa13fc3baa4d6",
+  "engine/services/communicative-judge.js": "e37901643b7df9799ff9ad743508b0414e58b952777aa81ab97b74dadc218542",
   "engine/services/communicative-question-adapter.js": "1fe6fbb7090c6d61c666771edcab963b23596ba399e59fa3650503d4c3473e3f",
-  "engine/managers/question-manager.js": "98047b0cb21bd12f4fd5e2c432ea28836a6b82b7b0a3067639781ad538d87c6d",
-  "engine/presenters/communicative-question-presenter.js": "8272cb38358bd5f4e4190a826e75bd07143eee3f8fd1f24e731e9263413a2e67",
-  "engine/controllers/communicative-question-flow-controller.js": "8bf9a35dc37a6296b8afc0924e41824f3ae8a7a71f5eefbc5a624f05828f200e",
+  "engine/managers/question-manager.js": "5821246389f2ca4e622cc3c8b2e75302e244cea24e502737323b37f9f46de6c8",
+  "engine/presenters/communicative-question-presenter.js": "323a1947b8b09033387fd57899b7a74412aa58cf11e9b7cd5d29843b08263653",
+  "engine/controllers/communicative-question-flow-controller.js": "b674ea304e2097350149c7e59394c47bf7a2f5d387555c849d4ebb882936e1b3",
   "engine/core/story-engine.js": "ecca2bac442d5002fec99d8f9e826756bee6afd2efd24a093c187d041f5afbeb",
-  "engine/stories/S004.js": "ca801b7658fe1bddf98cf8c21ee1794adf602b68afa5a7f94599758fb3437070"
+  "engine/stories/S004.js": "b004f23146691f28a420e8918dd61577ad0f45a9daee4af63e2c82c42b0cc905"
 };
 for (const [file, expected] of Object.entries(productionHashes)) {
   assert.strictEqual(hash(file), expected, `${file} must remain unchanged`);
 }
 
 const ordered = [
-  "data/questions.js?v=mobile-ui-story-polish-v1-1",
-  "data/communicative-judge-rules.js?v=s005-registry-instance-fix-v1",
+  "data/questions.js?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1",
+  "data/communicative-judge-rules.js?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1",
   "engine/services/speech-normalizer.js?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1",
   "engine/services/speech-recognition-adapter.js?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1",
   "engine/services/speech-engine.js?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1",
   "engine/services/speech-start-controller.js?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1",
-  "engine/services/local-communicative-judge.js?v=s005-rule-real-browser-trace-v1",
-  "engine/services/communicative-judge.js?v=s005-rule-real-browser-trace-v1",
+  "engine/services/local-communicative-judge.js?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1",
+  "engine/services/communicative-judge.js?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1",
   "engine/services/communicative-question-adapter.js?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1",
-  "engine/managers/dialog-manager.js?v=mobile-ui-story-polish-v1-1",
-  "engine/managers/question-manager.js?v=s005-rule-real-browser-trace-v1",
-  "engine/presenters/communicative-question-presenter.js?v=mobile-ui-story-polish-v1-1",
-  "engine/controllers/communicative-question-flow-controller.js?v=s005-phase-a2-v1",
+  "engine/managers/dialog-manager.js",
+  "engine/managers/question-manager.js?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1",
+  "engine/presenters/communicative-question-presenter.js?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1",
+  "engine/controllers/communicative-question-flow-controller.js?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1",
   "engine/core/core.js",
   "engine/core/story-engine.js?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1"
 ];
@@ -53,7 +53,7 @@ for (const source of ordered) {
   assert.strictEqual(scripts.filter(value => value === source).length, 1, `load exactly once: ${source}`);
   previous = current;
 }
-assert.strictEqual((devHtml.match(/\?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1/g) || []).length, 6);
+assert.strictEqual((devHtml.match(/\?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1/g) || []).length, 13);
 assert.strictEqual((devHtml.match(/\?v=communicative-formal-trace-v1/g) || []).length, 3);
 assert.strictEqual((devHtml.match(/\?v=communicative-formal-speech-fallback-v1/g) || []).length, 0);
 assert(!devHtml.includes("engine/managers/question-manager.js?v=communicative-formal-v1"));
@@ -61,7 +61,7 @@ assert(devHtml.includes('<script src="dev/formal-speech-trace.js?v=communicative
 assert(devHtml.includes('<script src="dev/communicative-judge-pilot.js?v=communicative-formal-trace-v1"></script>'));
 assert(devHtml.includes('<script src="dev/communicative-question-manager-playtest.js?v=communicative-formal-trace-v1"></script>'));
 assert.strictEqual(hash("dev/formal-speech-trace.js"), "dea48c46f18f757dde5c119fa7226f7340030b9371f42647116823a6f8c49901");
-assert.strictEqual(hash("dev/communicative-judge-pilot.js"), "96b9dc24d72b9d7bc9857662e9a81dac170ea329da6f59930850d9eb8023bc7d");
+assert.strictEqual(hash("dev/communicative-judge-pilot.js"), "e1a0a13cea7dd0bfc429fadeb82065ba12be4aff1d5aa3bcc93add37f60ad2f0");
 assert.strictEqual(hash("dev/communicative-question-manager-playtest.js"), "1cce50bfddfa360319fdd335333ccd785f30dac5d0f255dc626860f2ade0f87e");
 assert.strictEqual(hash("dev/dev-checkpoints.js"), "3fd716b3363cb2412a33ad9b5ae4ea5a048a22bc27696857f29050c5b8a51ea1");
 assert.strictEqual(hash("dev/dev-jump-manager.js"), "2404155bf8862ae2a3e91d236a87841ecdcc9391ceeae042643a648407bcfa33");

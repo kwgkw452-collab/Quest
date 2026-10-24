@@ -119,7 +119,7 @@ function queueDeferredSpeech(pending, transcript, alternatives) {
   equal(originalQuestions.filter(question => !question.communicative).length, 20, "The other 20 product Questions remain Legacy");
   equal(context.QuestionDatabase.get("phrase.are_you_ok").communicative.conceptId, "social.wellbeing.ask");
   equal(crypto.createHash("sha256").update(questionSource.slice(questionSource.indexOf("  register({"))).digest("hex"),
-    "03287599209d890b0764f7f2423c695f6ca3d49a30e6275b29daab100513ddbf",
+    "872ca4d0426219eb18ff8982151f3756a607cd87fe77f905a00b8dfed6f9d2bd",
     "The 21 product Question definitions match Formal V1");
 
   const legacyBeforeSpeech = speechStarts;
@@ -277,20 +277,20 @@ function queueDeferredSpeech(pending, transcript, alternatives) {
     "No Provider, fetch, or API key is added");
   ok(!managerSource.includes("while (true)") && !managerSource.includes("do {"), "Communicative path has no automatic retry loop");
 
-  equal(treeHash("engine/stories"), "93a0332efb2803acf52af0591972edf9bb26a5f76a980875d609973311b0a7b7");
+  equal(treeHash("engine/stories"), "dbf1d0afcb303f024b4a327071729975da303de82a3ca5aaeee2343ad9cf22a5");
   equal(treeHash("stories"), "d8546e5e7990c8306acb9ad1d82962868cc6ef78520137bf2760a68c877a8fe2");
   equal(hash("data/monsters.js"), "af1afabcf11f4536eacb69b8370c465273b1b9adce8e98b94b69bac4e38b8073");
   equal(hash("engine/managers/monster-battle-manager.js"), "0451a45a75e35c9c4418f40126e55d8659cbbf407deca78089f9c12058026ee3");
   equal(hash("data/mornings.js"), "89007415f111ab883dd2a10b47e9a7026608bfd377dd8ee1ec7ad0f5d9027470");
   equal(hash("engine/managers/morning-manager.js"), "f123747d417d3aa632d84ca828ffa0ff85c8b14f62753ad8a77655e56e819856");
-  equal(hash("index.html"), "cdf96702162894db7e1c0e291c8a903c8b97d26062c6c296b2a572ec0f5edbaf");
-  equal(hash("dev.html"), "684c08cda8dd34155c6eb8b6fc2fac57c94333898a34a150fa642ab4c9a404ee");
-  equal(hash("engine/services/speech-engine.js"), "2d85fa0af3bd8f109ca9d95995361f44e3240e97ce5fba54bed1d14e66260824");
-  equal(hash("engine/services/speech-start-controller.js"), "f6d1224d0ae71f8ee12067f0ede79650dae84a88d2c68b7ce474ce48c24b8161");
+  equal(hash("index.html"), "e6c5b6e1c6155506d4a80fe46c2a442dbaa40180065a7e9905d8b6bb18ce3855");
+  equal(hash("dev.html"), "909b70478e5a2ba461d5a1b299ee69388611cbcdb2675b72de30952cbb8f21fb");
+  equal(hash("engine/services/speech-engine.js"), "3e1c4f063d048d79cb2b88e5e7786b5f8d66016191bbac619a114d7a2df5f496");
+  equal(hash("engine/services/speech-start-controller.js"), "b241bc1f079eb9c4b645cb0084c62236994934b222f00589d1d1bb2934fee450");
   equal(hash("engine/services/communicative-question-adapter.js"), "1fe6fbb7090c6d61c666771edcab963b23596ba399e59fa3650503d4c3473e3f");
-  equal(hash("engine/services/communicative-judge.js"), "a8b8482768e480f609ff9b569774509a881d503769ca5f3452783ff94c7ecb04");
-  equal(hash("engine/services/local-communicative-judge.js"), "d124c63e412c4e6553026141361ab608da5603bd29854f93f6b8c06bf1f57e58");
-  equal(hash("data/communicative-judge-rules.js"), "acae74a247318a54ef09ac75c04c444c14dedc798c67abf3b793fc0529dd9279");
+  equal(hash("engine/services/communicative-judge.js"), "e37901643b7df9799ff9ad743508b0414e58b952777aa81ab97b74dadc218542");
+  equal(hash("engine/services/local-communicative-judge.js"), "034cbf4431bcb6d5a1ab3d9afdc8526665d8ea357959383f11faa13fc3baa4d6");
+  equal(hash("data/communicative-judge-rules.js"), "86488ef0705d709fac04183cdd0ccd90edf1de4a236b3e1015d84589d159a828");
 
   ok(speechCancels > 0, "QuestionManager continues to cancel Speech through the shared controller");
   equal(speechQueue.length, 0, "All Speech plans were consumed");

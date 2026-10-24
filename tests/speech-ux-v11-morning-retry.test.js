@@ -124,7 +124,7 @@ function createMorning(listenResults, choices) {
   assert(permission.calls.some(call => call[0] === "choice" && call[1][1] === "言わずに冒険に戻る")); // 27
 
   assert(read("engine/services/speech-engine.js").includes("ui.addStartButton(startListening, config)")); // 28 normal Talk button remains
-  assert.strictEqual(hash("engine/managers/question-manager.js"), "98047b0cb21bd12f4fd5e2c432ea28836a6b82b7b0a3067639781ad538d87c6d"); // S005 trace added; shared Speech API remains preserved
+  assert.strictEqual(hash("engine/managers/question-manager.js"), "5821246389f2ca4e622cc3c8b2e75302e244cea24e502737323b37f9f46de6c8"); // word.hello opt-in added; shared Speech API remains preserved
   assert(/window\.SpeechStartController\s*=\s*\{\s*prepare: prepare,\s*startListening: startListening,\s*cancel: cancel,/.test(read("engine/services/speech-start-controller.js"))); // 30 public contract unchanged
 
   const profileContext = { window: {} };

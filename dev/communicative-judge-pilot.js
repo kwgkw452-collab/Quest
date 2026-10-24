@@ -32,7 +32,7 @@
   async function loadPilotDependencies() {
     var paths = [
       "data/lottery-pools.js",
-      "data/communicative-judge-rules.js?v=s005-registry-instance-fix-v1",
+      "data/communicative-judge-rules.js",
       "engine/services/lottery-engine.js",
       "engine/services/local-communicative-judge.js",
       "engine/services/communicative-judge.js",

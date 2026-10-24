@@ -68,9 +68,7 @@
 
     function addNext() {
       if (options.button === false) return;
-      DialogManager.addControl(options.button || GameConfig.dialogueNextLabel, finish, {
-        disabled: state.voicePlaying
-      });
+      DialogManager.addControl(options.button || GameConfig.dialogueNextLabel, finish);
     }
 
     function renderControls() {

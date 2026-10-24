@@ -30,11 +30,11 @@ const hash = file => crypto.createHash("sha256").update(fs.readFileSync(path.joi
   assert.strictEqual(parsed.storyOrEventId, "s001"); // 4
   assert.strictEqual(parsed.sequence, "003"); // 5
   assert.strictEqual(profileContext.VoiceProfileDatabase.get("c01").gain, 1.0); // 6
-  assert.strictEqual(profileContext.VoiceProfileDatabase.get("c02").gain, 0.82); // 7
+  assert.strictEqual(profileContext.VoiceProfileDatabase.get("c02").gain, 1.0); // 7
   assert.strictEqual(profileContext.VoiceProfileDatabase.get("c03").gain, 1.0); // 8
-  assert.strictEqual(profileContext.VoiceProfileDatabase.get("c04").gain, 0.82); // 9
+  assert.strictEqual(profileContext.VoiceProfileDatabase.get("c04").gain, 1.0); // 9
   assert.strictEqual(profileContext.AudioMixProfile.groups.VOICE, 1.0); // 10
-  assert.strictEqual(profileContext.VoiceProfileDatabase.resolveGain("voice_c02_s001_003"), 0.82); // 11 group x Character
+  assert.strictEqual(profileContext.VoiceProfileDatabase.resolveGain("voice_c02_s001_003"), 1.0); // 11 group x Character
 
   const pending = [];
   const playbackCalls = [];
@@ -162,7 +162,7 @@ const hash = file => crypto.createHash("sha256").update(fs.readFileSync(path.joi
     "engine/stories/S001.js": "e7aae0d4f4bf81915bcdcec44254b1414135e4fbb1a80907fe306971e38a52e1",
     "engine/stories/S002.js": "bd05226b3e51d12a27e1504579f69cd97200231a68edecd8a8d6e6b2e7aaf525",
     "engine/stories/S003.js": "e532ff803cf57398d0cd457ba118a9ec004d484af27a77e6fce81dc5da5c991c",
-    "engine/stories/S004.js": "ca801b7658fe1bddf98cf8c21ee1794adf602b68afa5a7f94599758fb3437070"
+    "engine/stories/S004.js": "b004f23146691f28a420e8918dd61577ad0f45a9daee4af63e2c82c42b0cc905"
   };
   Object.entries(storyHashes).forEach(([file, expected]) => assert.strictEqual(hash(file), expected)); // 40 Story bytes
   assert.strictEqual(hash("data/audio.js"), "e6c8de637d7946c9fe0107dea262a632e8fa2d703941db5169777a98bbdf4b56"); // 41 Audio assets bytes
@@ -174,7 +174,7 @@ const hash = file => crypto.createHash("sha256").update(fs.readFileSync(path.joi
   assert.strictEqual(profileContext.AudioMixProfile.ducking.speechRecognition.duckMs, 300); // 46
   assert.strictEqual(profileContext.AudioMixProfile.ducking.speechRecognition.restoreMs, 600); // 47
   assert(read("engine/managers/morning-manager.js").includes("うまく聞き取れなかったピコ。")); // 48 Morning V1.1
-  assert(/window\.AudioManager\s*=\s*\{[\s\S]*?playBgm: playBgm,[\s\S]*?stopAll: stopAll,[\s\S]*?unlock: unlock/.test(read("engine/managers/audio-manager.js"))); // 49 public API
+  assert(/window\.AudioManager\s*=\s*\{\s*playBgm: playBgm,\s*stopBgm: stopBgm,\s*playSe: playSe,\s*playVoice: playVoice,\s*stopAll: stopAll\s*\}/.test(read("engine/managers/audio-manager.js"))); // 49 public API
   assert(/window\.SpeechStartController\s*=\s*\{\s*prepare: prepare,\s*startListening: startListening,\s*cancel: cancel,/.test(read("engine/services/speech-start-controller.js"))); // 50
   assert(read("dev/dev-jump-manager.js").includes("AudioManager.stopAll()")); // 51 Dev cleanup
   assert(read("docs/VOICE_PRODUCTION_MANIFEST_SCHEMA.md").includes("ttsService")); // 52 separate manifest

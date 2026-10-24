@@ -34,11 +34,7 @@
   }
 
   function showListening() {
-    if (typeof DialogManager.showSpeechStatus === "function") {
-      DialogManager.showSpeechStatus("ピコ", "", "🎤 聞き取り中…");
-    } else {
-      DialogManager.show("ピコ", "聞き取り中…");
-    }
+    DialogManager.show("ピコ", "聞き取り中…");
   }
 
   function show(result) {

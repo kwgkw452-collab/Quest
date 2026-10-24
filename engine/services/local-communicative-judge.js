@@ -34,9 +34,7 @@
       if (!Array.isArray(rule.variants) || rule.variants.some(function (variant) {
         return typeof variant !== "string" || !variant.trim();
       })) errors.push(label + " variants must be an array of non-empty strings.");
-      if (rule.accept !== undefined && typeof rule.accept !== "function") {
-        errors.push(label + " accept must be a function.");
-      }
+      if (rule.accept !== undefined && typeof rule.accept !== "function") errors.push(label + " accept must be a function.");
       if (rule.difficulty !== undefined && !(typeof rule.difficulty === "string" ||
           (Array.isArray(rule.difficulty) && rule.difficulty.every(function (value) { return typeof value === "string" && value; })))) {
         errors.push(label + " difficulty must be a string or an array of strings.");
@@ -71,29 +69,20 @@
     return Array.isArray(rule.difficulty) ? rule.difficulty.indexOf(difficulty) !== -1 : rule.difficulty === difficulty;
   }
 
-  function evaluateCandidate(rule, text, traceState) {
+  function evaluateCandidate(rule, text) {
     var rejects = rule.rejects || [];
     for (var i = 0; i < rejects.length; i += 1) {
       var rejected = exactMatch(text, rejects[i].variants);
-      if (rejected) {
-        if (traceState) traceState.variantMatch = false;
-        return { verdict: "REJECT", source: "rule", reason: rejects[i].reason || "explicit-reject", matchedVariant: rejected };
-      }
+      if (rejected) return { verdict: "REJECT", source: "rule", reason: rejects[i].reason || "explicit-reject", matchedVariant: rejected };
     }
     var approved = exactMatch(text, rule.variants || []);
-    if (traceState) traceState.variantMatch = Boolean(approved);
     if (approved) return { verdict: "ACCEPT", source: "local", reason: "approved-variant", matchedVariant: approved };
     if (typeof rule.accept === "function") {
       try {
-        var accepted = Boolean(rule.accept(text));
-        if (traceState) traceState.customAcceptResult = accepted;
-        if (accepted) return { verdict: "ACCEPT", source: "local", reason: "goal-pattern", matchedVariant: String(text) };
+        if (rule.accept(text) === true) return { verdict: "ACCEPT", source: "local", reason: "challenge-condition" };
       } catch (_) {
-        if (traceState) traceState.customAcceptResult = "error";
-        /* A malformed optional pattern remains UNKNOWN. */
+        return { verdict: "UNKNOWN", source: "fallback", reason: "challenge-condition-error" };
       }
-    } else if (traceState) {
-      traceState.customAcceptResult = null;
     }
     if (rule.dictionary && window.WordDictionaryDatabase && typeof WordDictionaryDatabase.match === "function") {
       var canonical = WordDictionaryDatabase.match(rule.dictionary.dictionaryId, text);
@@ -107,33 +96,18 @@
 
   function evaluate(input, rules) {
     var rule = (rules || []).filter(function (item) { return item.conceptId === input.conceptId; })[0];
-    var isS005 = input && input.context && typeof input.context.poolId === "string" &&
-      input.context.poolId.indexOf("s005.communication.") === 0;
-    var traceState = { variantMatch: false, customAcceptResult: null };
-    function finish(value) {
-      if (isS005) console.log("[S005 RULE TRACE] local-evaluate", {
-        conceptId: input.conceptId,
-        normalizedTranscript: normalize(input.utterance),
-        ruleFound: Boolean(rule),
-        variantMatch: traceState.variantMatch,
-        customAcceptResult: traceState.customAcceptResult,
-        localVerdict: value.verdict,
-        localReason: value.reason
-      });
-      return value;
-    }
-    if (!rule) return finish({ verdict: "UNKNOWN", source: "fallback", reason: "rule-not-found", matchedVariant: null });
+    if (!rule) return { verdict: "UNKNOWN", source: "fallback", reason: "rule-not-found", matchedVariant: null };
     if (!difficultyMatches(rule, input.difficulty)) {
-      return finish({ verdict: "UNKNOWN", source: "fallback", reason: "difficulty-not-covered", matchedVariant: null });
+      return { verdict: "UNKNOWN", source: "fallback", reason: "difficulty-not-covered", matchedVariant: null };
     }
-    var primary = evaluateCandidate(rule, input.utterance, traceState);
-    if (primary) return finish(primary);
+    var primary = evaluateCandidate(rule, input.utterance);
+    if (primary) return primary;
     var alternatives = Array.isArray(input.alternatives) ? input.alternatives : [];
     for (var i = 0; i < alternatives.length; i += 1) {
       var alternative = evaluateCandidate(rule, alternatives[i]);
-      if (alternative && alternative.verdict === "ACCEPT") return finish(alternative);
+      if (alternative && alternative.verdict === "ACCEPT") return alternative;
     }
-    return finish({ verdict: "UNKNOWN", source: "fallback", reason: "local-miss", matchedVariant: null });
+    return { verdict: "UNKNOWN", source: "fallback", reason: "local-miss", matchedVariant: null };
   }
 
   window.LocalCommunicativeJudge = {

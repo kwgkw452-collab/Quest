@@ -7,12 +7,24 @@
     return !!value && typeof value === "object" && !Array.isArray(value);
   }
 
+  function copyJudge(definition) {
+    if (!definition) return undefined;
+    var value = Object.assign({}, definition);
+    if (Array.isArray(definition.variants)) value.variants = definition.variants.slice();
+    if (Array.isArray(definition.rejects)) value.rejects = definition.rejects.map(function (reject) {
+      return Object.assign({}, reject, { variants: reject.variants.slice() });
+    });
+    if (definition.dictionary) value.dictionary = Object.assign({}, definition.dictionary);
+    return value;
+  }
+
   function copyCommunicative(definition) {
     if (!definition) return undefined;
     var value = { conceptId: definition.conceptId };
-    ["difficulty", "promptType", "expectedUtterance", "poolId"].forEach(function (field) {
+    ["difficulty", "promptType", "expectedUtterance"].forEach(function (field) {
       if (definition[field] !== undefined) value[field] = definition[field];
     });
+    if (definition.judge) value.judge = copyJudge(definition.judge);
     return value;
   }
 
@@ -31,8 +43,8 @@
       failure: definition.failure,
       hint: definition.hint
     };
-    if (definition.picoSupport) value.picoSupport = definition.picoSupport.slice();
     if (definition.communicative) value.communicative = copyCommunicative(definition.communicative);
+    if (definition.picoSupport) value.picoSupport = definition.picoSupport.slice();
     if (definition.speechPolicy) value.speechPolicy = copySpeechPolicy(definition.speechPolicy);
     return value;
   }
@@ -45,9 +57,14 @@
       throw new Error("Question needs answers: " + definition.id);
     }
     if (definition.picoSupport !== undefined && (!Array.isArray(definition.picoSupport) ||
-        definition.picoSupport.length !== 3 || definition.picoSupport.some(function (text) {
-          return typeof text !== "string" || !text.trim();
+        definition.picoSupport.length !== 3 || [0, 1, 2].some(function (index) {
+          return typeof definition.picoSupport[index] !== "string" || !definition.picoSupport[index].trim();
         }))) throw new Error("Question picoSupport needs three non-empty strings: " + definition.id);
+    if (definition.communicative && definition.communicative.judge !== undefined &&
+        (!isPlainObject(definition.communicative.judge) ||
+         (definition.communicative.judge.accept !== undefined && typeof definition.communicative.judge.accept !== "function"))) {
+      throw new Error("Question communicative.judge needs data and an optional accept function: " + definition.id);
+    }
     if (definition.communicative !== undefined) {
       if (!isPlainObject(definition.communicative)) {
         throw new Error("Question communicative setting must be an object: " + definition.id);
@@ -55,7 +72,7 @@
       if (typeof definition.communicative.conceptId !== "string" || !definition.communicative.conceptId.trim()) {
         throw new Error("Communicative Question needs conceptId: " + definition.id);
       }
-      ["difficulty", "promptType", "expectedUtterance", "poolId"].forEach(function (field) {
+      ["difficulty", "promptType", "expectedUtterance"].forEach(function (field) {
         var value = definition.communicative[field];
         if (value !== undefined && (typeof value !== "string" || !value.trim())) {
           throw new Error("Communicative Question " + field + " must be a non-empty string: " + definition.id);
@@ -80,7 +97,7 @@
       success: definition.success === undefined ? "" : String(definition.success),
       failure: definition.failure === undefined ? "" : String(definition.failure),
       hint: definition.hint === undefined ? null : definition.hint,
-      picoSupport: definition.picoSupport ? definition.picoSupport.slice() : undefined,
+      picoSupport: definition.picoSupport,
       communicative: definition.communicative ? copyCommunicative(definition.communicative) : undefined,
       speechPolicy: definition.speechPolicy ? copySpeechPolicy(definition.speechPolicy) : undefined
     });
@@ -284,7 +301,7 @@
   register({
     id: "word.orange_or_banana",
     category: "word",
-    prompt: "バナナかオレンジ、好きなほうを英語で答えてください。",
+    prompt: "どっちが好き？ 英語で言ってみよう！",
     answers: ["orange", "banana", "no thank you"],
     success: "",
     failure: "",

@@ -27,12 +27,19 @@
     if (input.alternatives !== undefined && (!Array.isArray(input.alternatives) || input.alternatives.some(function (value) { return typeof value !== "string"; }))) return "invalid-alternatives";
     if (input.acceptedVariants !== undefined && (!Array.isArray(input.acceptedVariants) || input.acceptedVariants.some(function (value) { return typeof value !== "string" || !value.trim(); }))) return "invalid-accepted-variants";
     if (input.difficulty !== undefined && typeof input.difficulty !== "string") return "invalid-difficulty";
+    if (input.judge !== undefined && (!input.judge || typeof input.judge !== "object" || Array.isArray(input.judge))) return "invalid-challenge-judge";
     if (input.context !== undefined && (!input.context || typeof input.context !== "object" || Array.isArray(input.context))) return "invalid-context";
     return null;
   }
 
   function inputRules(input) {
     var rules = (window.CommunicativeJudgeRuleData || []).slice();
+    if (input.judge) {
+      var scoped = Object.assign({}, input.judge, { conceptId: input.conceptId });
+      scoped.variants = Array.isArray(scoped.variants) ? scoped.variants.slice() : [];
+      rules = rules.filter(function (rule) { return rule.conceptId !== input.conceptId; });
+      rules.push(scoped);
+    }
     if (!Array.isArray(input.acceptedVariants) || !input.acceptedVariants.length) return rules;
     var found = false;
     rules = rules.map(function (rule) {
@@ -61,21 +68,6 @@
     if (local.verdict !== "UNKNOWN") return result(input, local);
 
     var provider = options.provider;
-    var isS005 = input && input.context && typeof input.context.poolId === "string" &&
-      input.context.poolId.indexOf("s005.communication.") === 0;
-    if (isS005) {
-      var registry = Array.isArray(window.CommunicativeJudgeRuleData) ? window.CommunicativeJudgeRuleData : [];
-      var ruleFound = registry.some(function (candidate) {
-        return candidate && candidate.conceptId === input.conceptId;
-      });
-      console.log("[S005 RULE TRACE] fallback-enter", {
-        conceptId: input.conceptId,
-        localNotAcceptedBecause: local.reason,
-        ruleFound: ruleFound,
-        localVerdict: local.verdict,
-        localReason: local.reason
-      });
-    }
     if (!provider || typeof provider.judge !== "function") {
       return result(input, { verdict: "UNKNOWN", source: "fallback", reason: "no-provider", retryable: true });
     }

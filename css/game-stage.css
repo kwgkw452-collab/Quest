@@ -1,0 +1,23 @@
+/* Shared fixed canvas. Earlier scenes keep their shipped 1280 x 720 profile. */
+#game-stage-viewport {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: #000;
+}
+#game-stage {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--game-stage-width, 1280px);
+  height: var(--game-stage-height, 720px);
+  transform-origin: center center;
+  transform: translate(-50%, -50%) scale(var(--game-stage-scale, 1));
+  container: eigo-game-stage / size;
+  overflow: hidden;
+}
+
+/* Only the newer Story profile contacts the Stage bottom. Height and UI stay unchanged. */
+#game-stage[data-stage-profile="wide-story"] #dialogue-box {
+  bottom: 0;
+}

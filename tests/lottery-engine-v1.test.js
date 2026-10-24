@@ -134,11 +134,11 @@ assert.strictEqual(dictionaryContext.WordDictionaryDatabase.match("number.single
 assert.strictEqual(dictionaryContext.WordDictionaryDatabase.match("fruit.v1", "apples"), "apple");
 assert.strictEqual(dictionaryContext.WordDictionaryDatabase.match("season.v1", "fall"), "autumn");
 
-// Question Manager公開APIを維持。S005のみ既存Lotteryを接続。
+// 36 Question Manager公開APIの既存定義を維持、37 Runtime未接続。
 const questionManager = read("engine/managers/question-manager.js");
 assert(/window\.QuestionManager\s*=\s*\{\s*start:\s*start,\s*cancel:\s*cancel,\s*getResult:\s*getResult,\s*reset:\s*reset\s*\}/.test(questionManager));
-assert(read("index.html").includes("lottery-engine.js?v=s005-phase-a2-v1"));
-assert(read("dev.html").includes("lottery-engine.js?v=s005-phase-a2-v1"));
+assert(!read("index.html").includes("lottery-engine.js"));
+assert(!read("dev.html").includes("lottery-engine.js"));
 assert(!read("engine/commands/story-commands.js").includes("lottery"));
 assert(!read("engine/core/story-engine.js").includes("LotteryEngine"));
 

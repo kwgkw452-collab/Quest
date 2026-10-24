@@ -13,28 +13,28 @@ const protectedHashes = {
   "data/monsters.js": "af1afabcf11f4536eacb69b8370c465273b1b9adce8e98b94b69bac4e38b8073",
   "data/mornings.js": "89007415f111ab883dd2a10b47e9a7026608bfd377dd8ee1ec7ad0f5d9027470",
   "data/word-dictionaries.js": "8c8c49386c8bd935cbb40d1f067441f3f032f423a579c8193d3b95d167d68d89",
-  "dev.html": "684c08cda8dd34155c6eb8b6fc2fac57c94333898a34a150fa642ab4c9a404ee",
+  "dev.html": "909b70478e5a2ba461d5a1b299ee69388611cbcdb2675b72de30952cbb8f21fb",
   "dev/communicative-question-manager-playtest.js": "1cce50bfddfa360319fdd335333ccd785f30dac5d0f255dc626860f2ade0f87e",
   "engine/commands/story-commands.js": "d51dff6ca978d9f7df844448048302949f0b5d5c412badce98d67686f173b3e0",
   "engine/managers/monster-battle-manager.js": "0451a45a75e35c9c4418f40126e55d8659cbbf407deca78089f9c12058026ee3",
   "engine/managers/morning-manager.js": "f123747d417d3aa632d84ca828ffa0ff85c8b14f62753ad8a77655e56e819856",
-  "engine/services/communicative-judge.js": "a8b8482768e480f609ff9b569774509a881d503769ca5f3452783ff94c7ecb04"
+  "engine/services/communicative-judge.js": "e37901643b7df9799ff9ad743508b0414e58b952777aa81ab97b74dadc218542"
 };
 
 // The Adapter hash is checked separately to keep the full expected value readable.
 protectedHashes["engine/services/communicative-question-adapter.js"] = "1fe6fbb7090c6d61c666771edcab963b23596ba399e59fa3650503d4c3473e3f";
 Object.assign(protectedHashes, {
-  "engine/services/local-communicative-judge.js": "d124c63e412c4e6553026141361ab608da5603bd29854f93f6b8c06bf1f57e58",
-  "engine/services/speech-engine.js": "2d85fa0af3bd8f109ca9d95995361f44e3240e97ce5fba54bed1d14e66260824",
+  "engine/services/local-communicative-judge.js": "034cbf4431bcb6d5a1ab3d9afdc8526665d8ea357959383f11faa13fc3baa4d6",
+  "engine/services/speech-engine.js": "3e1c4f063d048d79cb2b88e5e7786b5f8d66016191bbac619a114d7a2df5f496",
   "engine/services/speech-normalizer.js": "c891131b3fc76dafa87f4500e2f5913eb0d2d4d1ee94ae7350a5b2e6a6f61e6f",
-  "engine/services/speech-recognition-adapter.js": "4e852fb0c0b39cbf4c9a3dc62e61cec397f0e7836c648b961a9bf2adeb5d4973",
-  "engine/services/speech-start-controller.js": "f6d1224d0ae71f8ee12067f0ede79650dae84a88d2c68b7ce474ce48c24b8161",
+  "engine/services/speech-recognition-adapter.js": "c3670904dcbaf6880d5f4486122bae82c707dfc362273334f804e0bba52285d3",
+  "engine/services/speech-start-controller.js": "b241bc1f079eb9c4b645cb0084c62236994934b222f00589d1d1bb2934fee450",
   "engine/stories/S001.js": "e7aae0d4f4bf81915bcdcec44254b1414135e4fbb1a80907fe306971e38a52e1",
   "engine/stories/S002.js": "bd05226b3e51d12a27e1504579f69cd97200231a68edecd8a8d6e6b2e7aaf525",
   "engine/stories/S003.js": "e532ff803cf57398d0cd457ba118a9ec004d484af27a77e6fce81dc5da5c991c",
-  "engine/stories/S004.js": "ca801b7658fe1bddf98cf8c21ee1794adf602b68afa5a7f94599758fb3437070",
+  "engine/stories/S004.js": "b004f23146691f28a420e8918dd61577ad0f45a9daee4af63e2c82c42b0cc905",
   "engine/stories/m001.js": "187c5139107ab8c6f8a35a758d4bc3976f164fe161dccb341926778456fa6e2a",
-  "engine/stories/story-saki-departure.js": "a1378627be33f2c4b4b9c23fcc19423f4f69b91f304579cdad785dfb60d68d6d"
+  "engine/stories/story-saki-departure.js": "a44a0787a94544fa7bcc8987e01088dd8af77aab90a605d3206e1fd7daa34fe4"
 });
 
 for (const [file, expected] of Object.entries(protectedHashes)) {
@@ -43,19 +43,19 @@ for (const [file, expected] of Object.entries(protectedHashes)) {
 
 const index = read("index.html");
 const ordered = [
-  "data/questions.js?v=mobile-ui-story-polish-v1-1",
-  "data/communicative-judge-rules.js?v=s005-registry-instance-fix-v1",
+  "data/questions.js?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1",
+  "data/communicative-judge-rules.js?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1",
   "engine/services/speech-normalizer.js?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1",
-  "engine/services/speech-recognition-adapter.js?v=iphone-speech-audio-restore-timing-ab-v1&speechResultAudioTrace=iphone-safari-speech-result-audio-route-trace-v1",
-  "engine/services/speech-engine.js?v=iphone-speech-audio-restore-timing-ab-v1",
+  "engine/services/speech-recognition-adapter.js?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1",
+  "engine/services/speech-engine.js?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1",
   "engine/services/speech-start-controller.js?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1",
-  "engine/services/local-communicative-judge.js?v=s005-rule-real-browser-trace-v1",
-  "engine/services/communicative-judge.js?v=s005-rule-real-browser-trace-v1",
+  "engine/services/local-communicative-judge.js?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1",
+  "engine/services/communicative-judge.js?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1",
   "engine/services/communicative-question-adapter.js?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1",
-  "engine/managers/dialog-manager.js?v=mobile-ui-story-polish-v1-1",
-  "engine/managers/question-manager.js?v=s005-rule-real-browser-trace-v1",
-  "engine/presenters/communicative-question-presenter.js?v=mobile-ui-story-polish-v1-1",
-  "engine/controllers/communicative-question-flow-controller.js?v=s005-phase-a2-v1",
+  "engine/managers/dialog-manager.js?v=ui-japanese-v1",
+  "engine/managers/question-manager.js?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1",
+  "engine/presenters/communicative-question-presenter.js?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1",
+  "engine/controllers/communicative-question-flow-controller.js?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1",
   "engine/core/core.js?v=finite-rescue-runtime-wiring-v1",
   "engine/commands/story-commands.js",
   "engine/core/story-engine.js?v=adventure-return-fix-v1"
@@ -68,8 +68,7 @@ for (const source of ordered) {
 }
 assert(!index.includes("dev/communicative-question-manager-playtest.js"));
 assert(!index.includes("dev/communicative-judge-pilot.js"));
-assert.strictEqual((index.match(/\?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1/g) || []).length, 3);
-assert.strictEqual((index.match(/\?v=iphone-speech-audio-restore-timing-ab-v1/g) || []).length, 3);
+assert.strictEqual((index.match(/\?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1/g) || []).length, 12);
 assert.strictEqual((index.match(/\?v=communicative-formal-late-result-v1/g) || []).length, 0);
 assert.strictEqual((index.match(/\?v=communicative-formal-speech-fallback-v1/g) || []).length, 0);
 assert(!index.includes("engine/managers/question-manager.js?v=communicative-formal-v1"));
