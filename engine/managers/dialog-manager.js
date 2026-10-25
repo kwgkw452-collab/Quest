@@ -3,6 +3,12 @@
 
   var els = null;
   var informationArea = null;
+  var primaryArea = null;
+  var primaryGoal = null;
+  var communicationLayout = false;
+  var goalContent = "";
+  var supportContent = "";
+  var speechTranscript = null;
 
   // Presentation only: the existing fixed Story profile owns activation.
   function wideStory() {
@@ -10,23 +16,45 @@
       els.dialogueBox.closest('#game-stage[data-stage-profile="wide-story"]');
   }
 
-  function informationLayout(active) {
+  function updateInformationVisibility() {
+    if (!informationArea) return;
+    informationArea.hidden = !(communicationLayout && els.message.textContent) && els.recognizedText.hidden;
+  }
+
+  function informationLayout(active, communication) {
     if (active && !informationArea) {
+      primaryArea = document.createElement("div");
+      primaryArea.className = "dialogue-primary";
+      primaryGoal = document.createElement("div");
+      primaryGoal.className = "dialogue-primary-goal";
       informationArea = document.createElement("div");
       informationArea.className = "dialogue-information";
       informationArea.tabIndex = 0;
       informationArea.setAttribute("role", "region");
-      informationArea.setAttribute("aria-label", "会話・ヒント・認識結果");
+      informationArea.setAttribute("aria-label", "サポート情報");
+      els.dialogueBox.insertBefore(primaryArea, els.controls);
       els.dialogueBox.insertBefore(informationArea, els.controls);
-      informationArea.appendChild(els.message);
-      informationArea.appendChild(els.recognizedText);
       els.dialogueBox.scrollTop = 0;
     } else if (!active && informationArea) {
-      els.dialogueBox.insertBefore(els.message, informationArea);
-      els.dialogueBox.insertBefore(els.recognizedText, informationArea);
+      els.dialogueBox.insertBefore(els.speaker, primaryArea);
+      els.dialogueBox.insertBefore(els.message, primaryArea);
+      els.dialogueBox.insertBefore(els.recognizedText, primaryArea);
+      primaryArea.remove();
       informationArea.remove();
       informationArea = null;
+      primaryArea = null;
+      primaryGoal = null;
+      els.speaker.hidden = false;
     }
+    communicationLayout = Boolean(active && communication);
+    if (!active) return;
+    els.dialogueBox.classList.add("dialogue-wide-ui");
+    primaryArea.appendChild(els.speaker);
+    primaryArea.appendChild(primaryGoal);
+    (communicationLayout ? informationArea : primaryArea).appendChild(els.message);
+    informationArea.appendChild(els.recognizedText);
+    primaryGoal.hidden = !communicationLayout;
+    els.speaker.hidden = communicationLayout;
   }
 
   function init(elements) {
@@ -86,43 +114,47 @@
     requireInit();
     els.dialogueBox.hidden = false;
     els.dialogueBox.className = "dialogue-box" + (modeClass ? " " + modeClass : "");
-    informationLayout(Boolean(wideStory() && /\bcommunication-dialogue\b/.test(modeClass || "")));
+    informationLayout(Boolean(wideStory()), /\bcommunication-dialogue\b/.test(modeClass || ""));
+    if (!communicationLayout) resetCommunicationInformation();
     els.speaker.textContent = speaker || "";
     els.message.textContent = uiMessage(message) || "";
     els.controls.innerHTML = "";
+    speechTranscript = null;
     hideRecognized();
     if (informationArea) informationArea.scrollTop = 0;
   }
 
   function showCommunication(speaker, message, goal) {
+    var keepSupport = goal && goal === goalContent && message === goal;
     show(speaker, message, wideStory() ? "communication-dialogue" : undefined);
-    setCommunicationInformation(message, goal);
+    if (!communicationLayout) return;
+    goalContent = goal || message || "";
+    var prefix = goal ? goal + "\n\n" : "";
+    if (!keepSupport) supportContent = prefix && message.indexOf(prefix) === 0 ?
+      message.slice(prefix.length) : (goal && message !== goal ? message : "");
+    primaryGoal.textContent = goalContent;
+    setCommunicationInformation(supportContent);
   }
 
-  function setCommunicationInformation(message, goal) {
-    if (!informationArea) return;
+  function resetCommunicationInformation() {
+    goalContent = "";
+    supportContent = "";
+  }
+
+  function setCommunicationInformation(message) {
+    if (!communicationLayout) return;
     els.message.textContent = message || "";
-    var prefix = goal ? goal + "\n\n" : "";
-    if (!informationArea || !prefix || message.indexOf(prefix) !== 0) return;
-    var goalText = document.createElement("div");
-    goalText.className = "dialogue-goal";
-    goalText.textContent = goal;
-    var detail = document.createElement("div");
-    detail.className = "dialogue-detail";
-    detail.textContent = message.slice(prefix.length);
-    els.message.textContent = "";
-    els.message.appendChild(goalText);
-    els.message.appendChild(document.createTextNode("\n\n"));
-    els.message.appendChild(detail);
+    updateInformationVisibility();
   }
 
   function addCommunicationLanguageControls(english, japanese, isCurrent) {
-    if (!informationArea || !english || !japanese) return;
+    if (!communicationLayout || !english || !japanese) return;
     var englishButton;
     var japaneseButton;
     function select(language) {
-      if (!informationArea || (isCurrent && !isCurrent())) return;
-      setCommunicationInformation(language === "english" ? japanese + "\n\n" + english : japanese, japanese);
+      if (!communicationLayout || speechTranscript || (isCurrent && !isCurrent())) return;
+      // The Japanese Goal already occupies the header; never duplicate it.
+      setCommunicationInformation(language === "english" ? english : (japanese === goalContent ? "" : japanese));
       informationArea.scrollTop = 0;
       englishButton.setAttribute("aria-pressed", String(language === "english"));
       japaneseButton.setAttribute("aria-pressed", String(language === "japanese"));
@@ -144,6 +176,7 @@
   function clearControls() {
     requireInit();
     els.controls.innerHTML = "";
+    speechTranscript = null;
   }
 
   function addControl(label, onClick, options) {
@@ -170,6 +203,10 @@
 
   function showRecognized(text, prefix) {
     requireInit();
+    if (communicationLayout && speechTranscript) {
+      speechTranscript.textContent = "聞き取った内容：" + (text === "…" ? "" : (text || ""));
+      return;
+    }
     // The shared speech gate sends an ellipsis before any transcript exists.
     // Keep that placeholder in the fixed status row, not the information area.
     if (informationArea && text === "…" && prefix === "聞き取り中：") return;
@@ -179,20 +216,32 @@
     if (informationArea && visiblePrefix === "聞き取り中：") visiblePrefix = "認識結果：";
     els.recognizedText.textContent = /^You said:\s*$/i.test(visiblePrefix) ?
       (text || "…") + " と聞こえたよ。" : visiblePrefix + (text || "…");
+    updateInformationVisibility();
   }
 
   function showSpeechStatus(speaker, goal, status) {
-    var communication = Boolean(informationArea);
-    show(speaker || "", goal || "", "speech-listening" + (communication ? " communication-dialogue" : ""));
-    setSpeechLayout(true);
-    if (informationArea) {
+    if (communicationLayout) {
+      clearControls();
+      hideRecognized();
+      primaryGoal.textContent = goal || goalContent;
+      setCommunicationInformation(supportContent);
+      setSpeechLayout(true);
       var indicator = document.createElement("div");
       indicator.className = "dialogue-listening-status";
       indicator.setAttribute("role", "status");
-      indicator.textContent = status || "🎤 聞き取り中…";
+      var label = document.createElement("span");
+      label.className = "dialogue-listening-label";
+      label.textContent = status || "🎤 聞き取り中…";
+      speechTranscript = document.createElement("span");
+      speechTranscript.className = "dialogue-listening-transcript";
+      speechTranscript.textContent = "聞き取った内容：";
+      indicator.appendChild(label);
+      indicator.appendChild(speechTranscript);
       els.controls.appendChild(indicator);
       return;
     }
+    show(speaker || "", goal || "", "speech-listening");
+    setSpeechLayout(true);
     els.recognizedText.hidden = false;
     els.recognizedText.textContent = status || "🎤 聞き取り中…";
   }
@@ -202,6 +251,7 @@
     setSpeechLayout(false);
     els.recognizedText.hidden = true;
     els.recognizedText.textContent = "";
+    updateInformationVisibility();
   }
 
   function revealAction(action) {
@@ -262,6 +312,7 @@
     show: show,
     showCommunication: showCommunication,
     addCommunicationLanguageControls: addCommunicationLanguageControls,
+    resetCommunicationInformation: resetCommunicationInformation,
     setContent: setContent,
     clearControls: clearControls,
     addControl: addControl,

@@ -53,6 +53,7 @@
 
   function begin() {
     cancel();
+    if (typeof DialogManager.resetCommunicationInformation === "function") DialogManager.resetCommunicationInformation();
     return runId;
   }
 
@@ -115,7 +116,6 @@
           reject(error);
         }
       }));
-      addLanguageControls(token);
     });
     return waitFor(pending, token);
   }
