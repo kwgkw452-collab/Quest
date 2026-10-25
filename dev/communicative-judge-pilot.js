@@ -1,6 +1,16 @@
 (function () {
   "use strict";
 
+  // Diagnostics only: never let a missing/failed trace sink affect delivery.
+  function deliveryTrace(type, detail) {
+    try {
+      if (window.MicReleaseTrace && typeof MicReleaseTrace.recordDelivery === "function") {
+        MicReleaseTrace.recordDelivery(type, detail);
+      }
+    } catch (_) {}
+  }
+
+
   var POOL_ID = "shopping.fruit.order.v1";
   var SUPPORTED_CONCEPT = "shopping.fruit.apple.order";
   var MAX_RETRIES = 1;
@@ -121,6 +131,7 @@
   async function judgeSpeech(transcript, alternatives, token) {
     if (token !== state.runId) return;
     trace("judge-start", { transcript: transcript, candidateCount: (alternatives || []).length });
+    deliveryTrace("judge-input", { component: "JudgePilot", boundary: "CommunicativeQuestionAdapter.evaluate", transcript: transcript, hasTranscript: Boolean(transcript), alternatives: alternatives });
     var result = await CommunicativeQuestionAdapter.evaluate(state.draw, {
       status: "recognized",
       transcript: transcript,
@@ -154,15 +165,20 @@
         timeoutMs: 8000,
         maxAlternatives: 5,
         onStart: function () { trace("listening-start"); },
-        onInterim: function (value) { trace("interim", { transcript: String(value || "") }); },
+        onInterim: function (value) {
+          deliveryTrace("consumer-received", { component: "JudgePilot", boundary: "onInterim", transcript: value, valueType: typeof value });
+          trace("interim", { transcript: String(value || "") });
+        },
         onAlternatives: function (values) {
           alternatives = Array.isArray(values) ? values.slice() : [];
           trace("alternatives", { candidateCount: alternatives.length });
         }
       }, {});
+      deliveryTrace("consumer-received", { component: "JudgePilot", boundary: "startListening.resolve", transcript: transcript, valueType: typeof transcript });
       trace("final", { transcript: transcript, candidateCount: alternatives.length });
       await judgeSpeech(transcript, alternatives, token);
     } catch (error) {
+      deliveryTrace("consumer-received", { component: "JudgePilot", boundary: "startListening.catch", error: error && error.message });
       if (token !== state.runId) return;
       var message = error && error.message ? error.message : String(error || "speech-error");
       var eventName = ["no-speech", "speech-timeout", "not-allowed", "speech-not-supported"].indexOf(message) !== -1 ?

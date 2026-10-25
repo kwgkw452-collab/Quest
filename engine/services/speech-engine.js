@@ -1,6 +1,16 @@
 (function () {
   "use strict";
 
+  // Diagnostics only: never let a missing/failed trace sink affect delivery.
+  function deliveryTrace(type, detail) {
+    try {
+      if (window.MicReleaseTrace && typeof MicReleaseTrace.recordDelivery === "function") {
+        MicReleaseTrace.recordDelivery(type, detail);
+      }
+    } catch (_) {}
+  }
+
+
   var listeners = {};
   var status = "idle";
   // Audio lifecycle only. Recognition candidates and Judge remain untouched.
@@ -153,19 +163,23 @@
         onStart: options.onStart,
         legacyTraceContext: options.legacyTraceContext,
         onInterim: function (value) {
+          deliveryTrace("consumer-received", { component: "SpeechEngine", boundary: "Adapter.onInterim", transcript: value, valueType: typeof value });
           emit("interim", value);
           if (typeof options.onInterim === "function") options.onInterim(value);
         },
         onAlternatives: function (values) {
+          deliveryTrace("consumer-received", { component: "SpeechEngine", boundary: "Adapter.onAlternatives", alternatives: values, valueType: typeof values });
           alternatives = Array.isArray(values) ? values.slice() : [];
           if (typeof options.onAlternatives === "function") {
             options.onAlternatives(alternatives.slice());
           }
         }
       });
+      deliveryTrace("consumer-received", { component: "SpeechEngine", boundary: "Adapter.resolve", transcript: text, valueType: typeof text });
       if (Array.isArray(options.accepted) && options.accepted.length > 0) {
         var candidates = [text].concat(alternatives);
         for (var i = 0; i < candidates.length; i += 1) {
+          deliveryTrace("judge-input", { component: "SpeechEngine", boundary: "judge", transcript: candidates[i], hasTranscript: Boolean(candidates[i]) });
           if (judge(candidates[i], options.accepted)) {
             text = candidates[i];
             break;
@@ -175,8 +189,10 @@
       setStatus("recognized", text);
       emit("result", text);
       keepAudioForImmediateRetry = options.__speechAudioContinuousRetry === true;
+      deliveryTrace("consumer-received", { component: "SpeechEngine", boundary: "return-before-finally", transcript: text, valueType: typeof text });
       return text;
     } catch (error) {
+      deliveryTrace("consumer-received", { component: "SpeechEngine", boundary: "listen.catch", error: error && error.message });
       setStatus("error", error);
       emit("error", error);
       throw error;

@@ -7,7 +7,10 @@
     onspeechstart: "speechstart", onresult: "result", onspeechend: "speechend",
     onsoundend: "soundend", onaudioend: "audioend", onerror: "error", onend: "end",
     "termination-call": "APP termination request", "timeout-armed": "timeout armed",
-    "timeout-fired": "timeout fired"
+    "timeout-fired": "timeout fired",
+    "native-result": "NATIVE RESULT:", "adapter-selected": "ADAPTER SELECTED:",
+    "adapter-output": "ADAPTER OUTPUT:", "consumer-received": "CONSUMER RECEIVED:",
+    "judge-input": "JUDGE INPUT:"
   };
   var entries = [];
   var views = [];
@@ -27,6 +30,27 @@
     row.textContent = clock(entry.at) + "  " + label +
       (entry.instanceId ? "  [" + entry.instanceId + "]" : "") +
       (entry.error ? "  " + entry.error : "");
+    if (["native-result", "adapter-selected", "adapter-output", "consumer-received", "judge-input"].indexOf(entry.type) !== -1) {
+      var delivery = document.createElement("div");
+      delivery.style.cssText = "white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px";
+      var lines = [];
+      if (entry.component) lines.push("component=" + entry.component);
+      if (entry.boundary) lines.push("boundary=" + entry.boundary);
+      if (entry.type === "native-result") {
+        lines.push("resultIndex=" + entry.resultIndex + " results.length=" + entry.resultsLength);
+        (entry.results || []).forEach(function (result) {
+          lines.push("result[" + result.index + "] isFinal=" + result.isFinal);
+          (result.alternatives || []).forEach(function (alternative, index) {
+            lines.push("alternative[" + index + "] transcript=" + JSON.stringify(alternative.transcript) + " confidence=" + alternative.confidence);
+          });
+        });
+      }
+      ["transcript", "valueType", "hasTranscript", "finalText", "latestInterim", "alternatives", "acceptsCandidates", "status"].forEach(function (key) {
+        if (Object.prototype.hasOwnProperty.call(entry, key)) lines.push(key + "=" + (entry[key] === undefined ? "undefined" : JSON.stringify(entry[key])));
+      });
+      delivery.textContent = lines.join("\n");
+      row.appendChild(delivery);
+    }
     if (entry.type === "termination-call" || entry.type === "timeout-armed" || entry.type === "timeout-fired") {
       var detail = document.createElement("div");
       detail.style.cssText = "white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px";

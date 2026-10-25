@@ -1,6 +1,16 @@
 (function () {
   "use strict";
 
+  // Diagnostics only: never let a missing/failed trace sink affect delivery.
+  function deliveryTrace(type, detail) {
+    try {
+      if (window.MicReleaseTrace && typeof MicReleaseTrace.recordDelivery === "function") {
+        MicReleaseTrace.recordDelivery(type, detail);
+      }
+    } catch (_) {}
+  }
+
+
   var runId = 0;
   var result = null;
   var activeMode = null;
@@ -278,6 +288,7 @@
       maxAlternatives: 5,
       s005TraceQuestionId: options.s005TraceQuestionId,
       onInterim: function (value) {
+        deliveryTrace("consumer-received", { component: "QuestionManager", boundary: "onInterim", transcript: value, valueType: typeof value, acceptsCandidates: acceptsCandidates });
         if (!acceptsCandidates) return;
         var text = String(value || "").trim();
         if (text) {
@@ -309,7 +320,9 @@
     try {
       answer = typeof options.speechStart === "function" ?
         await options.speechStart(startListening) : await startListening();
+      deliveryTrace("consumer-received", { component: "QuestionManager", boundary: "startListening.resolve", transcript: answer, valueType: typeof answer });
     } catch (error) {
+      deliveryTrace("consumer-received", { component: "QuestionManager", boundary: "startListening.catch", error: error && error.message, transcript: latestInterim });
       var message = error && error.message ? error.message : String(error || "speech-error");
       var errorEvent = ["no-speech", "speech-timeout", "not-allowed", "speech-not-supported"].indexOf(message) !== -1 ?
         message : "recognition-error";
@@ -403,6 +416,7 @@
         s005TraceQuestionId: question.id.indexOf("s005.communication.") === 0 ? question.id : null
       });
       speechResult = await communicativeInput(inputOptions);
+      deliveryTrace("consumer-received", { component: "QuestionManager", boundary: "communicativeInput.resolve", transcript: speechResult.transcript, status: speechResult.status });
     } catch (error) {
       if (currentRun !== runId) {
         trace("stale-result-discard", traceContext, { stage: "speech-error" });
@@ -446,6 +460,7 @@
           SpeechNormalizer.normalize(speechResult.transcript) : String(speechResult.transcript || "").toLowerCase().trim()
       });
       trace("judge-start", traceContext, { transcript: speechResult.transcript, candidateCount: speechResult.alternatives.length });
+      deliveryTrace("judge-input", { component: "QuestionManager", boundary: "CommunicativeQuestionAdapter.evaluate", transcript: speechResult.transcript, hasTranscript: Boolean(speechResult.transcript), alternatives: speechResult.alternatives });
       var adapterResult = await adapter.evaluate(target, speechResult, token);
       if (currentRun !== runId) {
         trace("stale-result-discard", traceContext, { stage: "judge-result" });

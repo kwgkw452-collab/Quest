@@ -23,6 +23,18 @@ first.emit({type:"instance-created",at:1001});assert.strictEqual(first.list.chil
 for(let i=0;i<150;i++)first.emit({type:"onresult",at:1002+i,instanceId:"rec1"});assert.strictEqual(first.list.children.length,160,"viewer retains every subscribed event beyond source ring capacity");
 first.list.scrollTop=0;first.emit({type:"onend",at:1200});assert.strictEqual(first.list.scrollTop,0,"new events do not pull the user away from older rows");
 assert(first.list.style.cssText.includes("overflow:auto"));assert(first.list.style.cssText.includes("touch-action:pan-y"));assert.strictEqual(setup().list.children.length,0,"fresh page starts empty");
+const delivery = setup();
+delivery.emit({type:"native-result",at:1300,instanceId:"rec2",resultIndex:1,resultsLength:2,results:[{index:0,isFinal:false,alternatives:[{transcript:"<script>raw</script>",confidence:0.42}]},{index:1,isFinal:true,alternatives:[{transcript:"Three",confidence:0.98}]}]});
+for (const [type,boundary] of [["adapter-selected","selected"],["adapter-output","resolve"],["consumer-received","Adapter.resolve"],["judge-input","evaluate"]]) delivery.emit({type,at:1301,component:"test",boundary,transcript:"Three",hasTranscript:true});
+assert.strictEqual(delivery.list.children.length,5);
+assert(delivery.list.children[0].textContent.includes("NATIVE RESULT:"));
+const nativeDetails=delivery.list.children[0].children[0].textContent;
+for (const value of ["resultIndex=1 results.length=2", "isFinal=false", "isFinal=true", "confidence=0.98", '<script>raw</script>']) assert(nativeDetails.includes(value));
+assert.strictEqual(delivery.list.children[0].children[0].children.length,0,"transcripts are text, never parsed HTML");
+assert(delivery.list.children[2].textContent.includes("ADAPTER OUTPUT:"));
+assert(delivery.list.children[3].textContent.includes("CONSUMER RECEIVED:"));
+assert(delivery.list.children[4].textContent.includes("JUDGE INPUT:"));
+assert(delivery.list.children[4].children[0].textContent.includes('transcript="Three"'));
 (async function () {
  let recognition;
  class Recognition {

@@ -88,6 +88,10 @@
     });
   }
 
+  function recordDelivery(type, detail) {
+    try { recordMicReleaseTrace(type, detail); } catch (_) { /* Diagnostics only. */ }
+  }
+
   function installMicReleasePageTrace() {
     if (!micReleaseTraceEnabled()) return;
     function recordPageEvent(event) {
@@ -243,6 +247,8 @@
           recordMicReleaseTrace("adapter-resolve", { instanceId: recognition.__eigoMicReleaseTraceId });
           teardownTrace("adapter-resolve");
           legacyTrace("adapter-resolve", { transcript: String(value || "") });
+          recordDelivery("adapter-output", { instanceId: recognition.__eigoMicReleaseTraceId,
+            boundary: "resolve", transcript: value, valueType: typeof value });
           resolve(value);
         } else {
           recordMicReleaseTrace("adapter-reject", {
@@ -258,6 +264,9 @@
             latestInterim: latestInterim,
             latestFinal: finalText.trim()
           } : {}));
+          recordDelivery("adapter-output", { instanceId: recognition.__eigoMicReleaseTraceId,
+            boundary: "reject", transcript: finalText.trim(), latestInterim: latestInterim,
+            error: value && value.message, valueType: typeof value });
           reject(value);
         }
       }
@@ -284,6 +293,24 @@
           instanceId: recognition.__eigoMicReleaseTraceId,
           resultIndex: event.resultIndex
         });
+        // Snapshot every native entry/alternative without changing result processing.
+        try {
+          if (micReleaseTraceEnabled()) {
+            var nativeResults = [];
+            for (var nativeIndex = 0; nativeIndex < event.results.length; nativeIndex += 1) {
+              var nativeResult = event.results[nativeIndex];
+              var nativeAlternatives = [];
+              for (var nativeAlt = 0; nativeAlt < nativeResult.length; nativeAlt += 1) {
+                nativeAlternatives.push({ transcript: nativeResult[nativeAlt].transcript,
+                  confidence: nativeResult[nativeAlt].confidence === undefined ? null : nativeResult[nativeAlt].confidence });
+              }
+              nativeResults.push({ index: nativeIndex, isFinal: nativeResult.isFinal,
+                alternatives: nativeAlternatives });
+            }
+            recordDelivery("native-result", { instanceId: recognition.__eigoMicReleaseTraceId,
+              resultIndex: event.resultIndex, resultsLength: event.results.length, results: nativeResults });
+          }
+        } catch (_) { /* Diagnostics must not interrupt native results. */ }
         var firstResultTrace = null;
         if (!firstResultSeen) {
           firstResultSeen = true;
@@ -347,11 +374,21 @@
           if (timeoutId !== null) window.clearTimeout(timeoutId);
           timeoutId = null;
         }
+        recordDelivery("adapter-selected", { instanceId: recognition.__eigoMicReleaseTraceId,
+          transcript: currentText, finalText: finalText, latestInterim: latestInterim, alternatives: alternatives.slice() });
         if (legacyTraceContext && window.LegacySpeechTrace && typeof LegacySpeechTrace.recordInvite === "function") {
           LegacySpeechTrace.recordInvite(legacyTraceContext, "recognition-interim", { transcript: currentText });
         }
-        if (typeof options.onInterim === "function") options.onInterim(currentText);
-        if (typeof options.onAlternatives === "function") options.onAlternatives(alternatives);
+        if (typeof options.onInterim === "function") {
+          recordDelivery("adapter-output", { instanceId: recognition.__eigoMicReleaseTraceId,
+            boundary: "onInterim", transcript: currentText, valueType: typeof currentText });
+          options.onInterim(currentText);
+        }
+        if (typeof options.onAlternatives === "function") {
+          recordDelivery("adapter-output", { instanceId: recognition.__eigoMicReleaseTraceId,
+            boundary: "onAlternatives", alternatives: alternatives.slice(), valueType: typeof alternatives });
+          options.onAlternatives(alternatives);
+        }
         if (firstResultTrace) {
           speechResultAudioRouteTrace("speech-recognition-first-result-after-processing", firstResultTrace);
         }
@@ -469,6 +506,7 @@
     supported: Boolean(RecognitionClass)
   };
   window.MicReleaseTrace = {
+    recordDelivery: recordDelivery,
     version: MIC_RELEASE_TRACE_VERSION,
     limit: MIC_RELEASE_TRACE_LIMIT,
     enabled: micReleaseTraceEnabled,
