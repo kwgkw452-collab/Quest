@@ -145,6 +145,22 @@
       }
 
       var recognition = new RecognitionClass();
+      // Native event diagnostics only; existing recognition handlers stay unchanged.
+      if (micReleaseTraceEnabled() && typeof recognition.addEventListener === "function") {
+        ["audiostart", "audioend", "soundstart", "soundend", "speechstart", "speechend"].forEach(function (eventName) {
+          recognition.addEventListener(eventName, function () {
+            try {
+              var detail = { instanceId: recognition.__eigoMicReleaseTraceId };
+              recordMicReleaseTrace("on" + eventName, detail);
+              console.log("[SPEECH TRACE]", {
+                time: new Date().toISOString(),
+                event: "on" + eventName,
+                instanceId: detail.instanceId
+              });
+            } catch (_) { /* Diagnostics must not interrupt recognition. */ }
+          });
+        });
+      }
       recognition.__eigoMicReleaseTraceId = "rec" + (++recognitionTraceSerial);
       var finalText = "";
       var settled = false;
