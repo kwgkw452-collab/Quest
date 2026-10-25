@@ -1,0 +1,92 @@
+/* Communication presentation within the existing wide Story profile only.
+   Keep the Stage, ordinary Story dialogue, and all legacy screens untouched. */
+#game-stage #game #scene > .dialogue-box.communication-dialogue {
+  display: grid;
+  grid-template-rows: 20px minmax(0, 1fr) 60px;
+  gap: 3px;
+  height: 172.8px;
+  min-height: 172.8px;
+  max-height: 172.8px;
+  padding: 5px 16px;
+  border-width: 4px;
+  overflow: hidden;
+}
+
+#game-stage #game #scene > .dialogue-box.communication-dialogue[hidden] { display: none; }
+
+#game-stage .communication-dialogue > .speaker {
+  min-width: 0;
+  margin: 0;
+  font-size: 20px;
+  line-height: 20px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#game-stage .communication-dialogue > .dialogue-information {
+  min-height: 0;
+  min-width: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+}
+
+#game-stage .communication-dialogue .message {
+  font-size: 26px;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+#game-stage .communication-dialogue .message:has(.dialogue-goal) {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.5fr);
+  column-gap: 24px;
+  align-items: start;
+}
+
+#game-stage .communication-dialogue .dialogue-goal {
+  color: #fff;
+  font-weight: 700;
+}
+
+#game-stage .communication-dialogue .dialogue-detail { color: #ffe9a3; }
+
+#game-stage .communication-dialogue .recognized-text {
+  margin: 3px 0 0;
+  font-size: 23px;
+  line-height: 1.2;
+}
+
+#game-stage .communication-dialogue > .controls {
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  gap: 12px;
+  flex-wrap: nowrap;
+  align-items: stretch;
+}
+
+#game-stage .communication-dialogue .control-button {
+  flex: 0 1 auto;
+  min-width: 180px;
+  height: 60px;
+  min-height: 60px;
+  padding: 6px 18px;
+  font-size: 24px;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+#game-stage .communication-dialogue .dialogue-listening-status {
+  display: flex;
+  align-items: center;
+  min-height: 60px;
+  padding: 6px 18px;
+  color: #bff5ff;
+  font-size: 26px;
+  line-height: 1.2;
+}

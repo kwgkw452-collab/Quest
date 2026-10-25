@@ -9,6 +9,14 @@
     return japaneseGoal ? japaneseGoal + "\n\n" + message : message;
   }
 
+  function showInformation(message) {
+    if (typeof DialogManager.showCommunication === "function") {
+      DialogManager.showCommunication("ピコ", message, japaneseGoal);
+    } else {
+      DialogManager.show("ピコ", message);
+    }
+  }
+
   function trace(eventName, context, detail) {
     if (!window.FormalSpeechTrace || typeof window.FormalSpeechTrace.record !== "function") return;
     window.FormalSpeechTrace.record(eventName, Object.assign({
@@ -66,7 +74,7 @@
     if (!active(token)) return Promise.resolve("cancelled");
     japaneseGoal = japanesePrompt || null;
     trace("speech-gate-create", traceContext);
-    DialogManager.show("ピコ", japanesePrompt || "準備できたよ。話してみよう。");
+    showInformation(japanesePrompt || "準備できたよ。話してみよう。");
     trace("speech-gate-shown", traceContext);
     var pending = new Promise(function (resolve, reject) {
       var controls = document.getElementById("controls");
@@ -98,7 +106,7 @@
       transcript: result && result.answer,
       candidateCount: result && Array.isArray(result.alternatives) ? result.alternatives.length : 0
     });
-    DialogManager.show("ピコ", withGoal(options && options.supportText || supportMessage(result && result.status)));
+    showInformation(withGoal(options && options.supportText || supportMessage(result && result.status)));
     if (result && result.answer) DialogManager.showRecognized(result.answer, "You said:\n");
     var choices = [];
     if (options && options.retry) choices.push({ label: "もう一度話す", value: "retry" });
@@ -115,7 +123,7 @@
 
   async function continued(token) {
     if (!active(token)) return "cancelled";
-    DialogManager.show("ピコ", withGoal("大丈夫。冒険を続けよう。"));
+    showInformation(withGoal("大丈夫。冒険を続けよう。"));
     return waitFor(DialogManager.next("次へ"), token);
   }
 

@@ -2,6 +2,32 @@
   "use strict";
 
   var els = null;
+  var informationArea = null;
+
+  // Presentation only: the existing fixed Story profile owns activation.
+  function wideStory() {
+    return els && typeof els.dialogueBox.closest === "function" &&
+      els.dialogueBox.closest('#game-stage[data-stage-profile="wide-story"]');
+  }
+
+  function informationLayout(active) {
+    if (active && !informationArea) {
+      informationArea = document.createElement("div");
+      informationArea.className = "dialogue-information";
+      informationArea.tabIndex = 0;
+      informationArea.setAttribute("role", "region");
+      informationArea.setAttribute("aria-label", "会話・ヒント・認識結果");
+      els.dialogueBox.insertBefore(informationArea, els.controls);
+      informationArea.appendChild(els.message);
+      informationArea.appendChild(els.recognizedText);
+      els.dialogueBox.scrollTop = 0;
+    } else if (!active && informationArea) {
+      els.dialogueBox.insertBefore(els.message, informationArea);
+      els.dialogueBox.insertBefore(els.recognizedText, informationArea);
+      informationArea.remove();
+      informationArea = null;
+    }
+  }
 
   function init(elements) {
     els = elements;
@@ -60,10 +86,28 @@
     requireInit();
     els.dialogueBox.hidden = false;
     els.dialogueBox.className = "dialogue-box" + (modeClass ? " " + modeClass : "");
+    informationLayout(Boolean(wideStory() && /\bcommunication-dialogue\b/.test(modeClass || "")));
     els.speaker.textContent = speaker || "";
     els.message.textContent = uiMessage(message) || "";
     els.controls.innerHTML = "";
     hideRecognized();
+    if (informationArea) informationArea.scrollTop = 0;
+  }
+
+  function showCommunication(speaker, message, goal) {
+    show(speaker, message, wideStory() ? "communication-dialogue" : undefined);
+    var prefix = goal ? goal + "\n\n" : "";
+    if (!informationArea || !prefix || message.indexOf(prefix) !== 0) return;
+    var goalText = document.createElement("div");
+    goalText.className = "dialogue-goal";
+    goalText.textContent = goal;
+    var detail = document.createElement("div");
+    detail.className = "dialogue-detail";
+    detail.textContent = message.slice(prefix.length);
+    els.message.textContent = "";
+    els.message.appendChild(goalText);
+    els.message.appendChild(document.createTextNode("\n\n"));
+    els.message.appendChild(detail);
   }
 
   function setContent(speaker, message) {
@@ -101,16 +145,29 @@
 
   function showRecognized(text, prefix) {
     requireInit();
+    // The shared speech gate sends an ellipsis before any transcript exists.
+    // Keep that placeholder in the fixed status row, not the information area.
+    if (informationArea && text === "…" && prefix === "聞き取り中：") return;
     setSpeechLayout(true);
     els.recognizedText.hidden = false;
     var visiblePrefix = prefix === undefined ? (GameConfig.recognizedPrefix || "") : prefix;
+    if (informationArea && visiblePrefix === "聞き取り中：") visiblePrefix = "認識結果：";
     els.recognizedText.textContent = /^You said:\s*$/i.test(visiblePrefix) ?
       (text || "…") + " と聞こえたよ。" : visiblePrefix + (text || "…");
   }
 
   function showSpeechStatus(speaker, goal, status) {
-    show(speaker || "", goal || "", "speech-listening");
+    var communication = Boolean(informationArea);
+    show(speaker || "", goal || "", "speech-listening" + (communication ? " communication-dialogue" : ""));
     setSpeechLayout(true);
+    if (informationArea) {
+      var indicator = document.createElement("div");
+      indicator.className = "dialogue-listening-status";
+      indicator.setAttribute("role", "status");
+      indicator.textContent = status || "🎤 聞き取り中…";
+      els.controls.appendChild(indicator);
+      return;
+    }
     els.recognizedText.hidden = false;
     els.recognizedText.textContent = status || "🎤 聞き取り中…";
   }
@@ -123,6 +180,7 @@
   }
 
   function revealAction(action) {
+    if (informationArea) return;
     var box = els.dialogueBox;
     if (!box || !action || typeof box.getBoundingClientRect !== "function" ||
         typeof action.getBoundingClientRect !== "function") return;
@@ -177,6 +235,7 @@
     init: init,
     button: button,
     show: show,
+    showCommunication: showCommunication,
     setContent: setContent,
     clearControls: clearControls,
     addControl: addControl,
