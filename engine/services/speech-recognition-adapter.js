@@ -205,6 +205,8 @@
       var finalText = "";
       var settled = false;
       var timeoutId = null;
+      var timeoutStarted = false;
+      var hasValidResult = false;
       var latestInterim = "";
       var latestAlternatives = [];
       var lastError = null;
@@ -220,7 +222,8 @@
           settlement: kind
         });
         settled = true;
-        if (timeoutId) window.clearTimeout(timeoutId);
+        if (timeoutId !== null) window.clearTimeout(timeoutId);
+        timeoutId = null;
         recordMicReleaseTrace("activeRecognition-before-clear", {
           instanceId: recognition.__eigoMicReleaseTraceId,
           activeRecognitionId: activeRecognitionId(),
@@ -266,6 +269,7 @@
 
       recognition.onstart = function () {
         recordMicReleaseTrace("onstart", { instanceId: recognition.__eigoMicReleaseTraceId });
+        armTimeout();
         teardownTrace("recognition-onstart");
         legacyTrace("recognition-onstart");
         speechResultAudioRouteTrace("speech-recognition-onstart", {
@@ -337,6 +341,12 @@
         if (interimText.trim()) latestInterim = interimText.trim();
         latestAlternatives = alternatives.slice();
         var currentText = (finalText + " " + interimText).trim();
+        // A usable native result ends the no-result timeout, not recognition.
+        if (currentText || alternatives.length) {
+          hasValidResult = true;
+          if (timeoutId !== null) window.clearTimeout(timeoutId);
+          timeoutId = null;
+        }
         if (legacyTraceContext && window.LegacySpeechTrace && typeof LegacySpeechTrace.recordInvite === "function") {
           LegacySpeechTrace.recordInvite(legacyTraceContext, "recognition-interim", { transcript: currentText });
         }
@@ -404,8 +414,12 @@
         else finish("reject", new Error("no-speech"));
       };
 
-      if (options.timeoutMs > 0) {
+      function armTimeout() {
+        if (settled || timeoutStarted || hasValidResult || !(options.timeoutMs > 0)) return;
+        timeoutStarted = true;
         timeoutId = window.setTimeout(function () {
+          // Also guard a callback already queued before clearTimeout.
+          if (settled || hasValidResult) return;
           recordMicReleaseTrace("timeout-fired", {
             instanceId: recognition.__eigoMicReleaseTraceId,
             caller: "SpeechRecognitionAdapter.listen.timeout", reason: "options.timeoutMs",
@@ -429,7 +443,7 @@
         }, options.timeoutMs);
         recordMicReleaseTrace("timeout-armed", {
           instanceId: recognition.__eigoMicReleaseTraceId,
-          caller: "SpeechRecognitionAdapter.listen", reason: "options.timeoutMs",
+          caller: "SpeechRecognitionAdapter.onstart", reason: "options.timeoutMs",
           configuredTimeoutMs: options.timeoutMs
         });
       }
