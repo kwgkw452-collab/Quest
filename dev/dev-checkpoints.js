@@ -112,6 +112,16 @@
       bestiary: { m001: defeated, m002: defeated, m003: defeated },
       continueWith: [],
       progressStoryId: "m004"
+    },
+    {
+      id: "S005",
+      label: "S005",
+      entry: { kind: "story", id: "S005" },
+      party: [1, 2, 4],
+      completedStories: ["S001", "m001", "S002", "S003", "S004", "st004", "m004"],
+      bestiary: { m001: defeated, m002: defeated, m003: defeated, m004: defeated },
+      continueWith: [],
+      progressStoryId: "S005"
     }
   ];
 

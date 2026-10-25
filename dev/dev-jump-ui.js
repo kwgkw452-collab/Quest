@@ -21,6 +21,13 @@
     GameCore.cache();
     SaveManager.init();
 
+    if (new URLSearchParams(window.location.search).get("jump") === "S005") {
+      DevJumpManager.start("S005").catch(function (error) {
+        DialogManager.show("DEV", error && error.message ? error.message : String(error));
+      });
+      return;
+    }
+
     var panel = document.createElement("section");
     panel.id = "dev-jump-panel";
     panel.style.cssText = "position:absolute;z-index:10000;top:16px;left:50%;transform:translateX(-50%);width:min(360px,calc(100% - 32px));max-height:calc(100% - 32px);overflow:auto;padding:16px;background:rgba(20,20,24,.96);color:#fff;border:1px solid #888;border-radius:8px;font-family:sans-serif";

@@ -11,8 +11,8 @@ vm.runInContext(fs.readFileSync(path.join(root, "dev/dev-checkpoints.js"), "utf8
 
 const list = JSON.parse(JSON.stringify(context.DevCheckpointDatabase.list()));
 assert.strictEqual(context.DevCheckpointDatabase.validate(), true);
-assert.strictEqual(list.length, 9);
-assert.strictEqual(new Set(list.map(item => item.id)).size, 9);
+assert.strictEqual(list.length, 10);
+assert.strictEqual(new Set(list.map(item => item.id)).size, 10);
 
 const expected = {
   S001: { kind: "story", target: "S001", party: [] },
@@ -23,7 +23,8 @@ const expected = {
   S004: { kind: "story", target: "S004", party: [1, 2, 3] },
   M003_BATTLE: { kind: "monster", target: "m003", party: [1, 2, 3, 4] },
   ST004: { kind: "story", target: "st004", party: [1, 2, 3, 4] },
-  M004: { kind: "story", target: "m004", party: [1, 2, 4] }
+  M004: { kind: "story", target: "m004", party: [1, 2, 4] },
+  S005: { kind: "story", target: "S005", party: [1, 2, 4] }
 };
 
 Object.keys(expected).forEach(id => {
@@ -59,5 +60,11 @@ const m004 = list.find(item => item.id === "M004");
 assert.strictEqual(m004.label, "m004");
 assert(m004.completedStories.includes("st004"));
 assert.strictEqual(m004.progressStoryId, "m004");
+
+const s005 = list.find(item => item.id === "S005");
+assert.strictEqual(s005.progressStoryId, "S005");
+assert(s005.completedStories.includes("m004"));
+assert.strictEqual(s005.bestiary.m004.defeated, true);
+assert.deepStrictEqual(s005.continueWith, []);
 
 console.log("dev-jump-checkpoints.test.js: PASS");
