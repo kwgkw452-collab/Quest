@@ -124,9 +124,10 @@
     if (informationArea) informationArea.scrollTop = 0;
   }
 
-  function showCommunication(speaker, message, goal) {
+  function showCommunication(speaker, message, goal, options) {
     var keepSupport = goal && goal === goalContent && message === goal;
-    show(speaker, message, wideStory() ? "communication-dialogue" : undefined);
+    show(speaker, message, wideStory() ? "communication-dialogue" +
+      (options && options.feedback ? " communication-feedback" : "") : undefined);
     if (!communicationLayout) return;
     goalContent = goal || message || "";
     var prefix = goal ? goal + "\n\n" : "";

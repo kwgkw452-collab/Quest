@@ -11,7 +11,7 @@ const c = { console, Promise, document: { getElementById: () => ({ appendChild(b
   QuestionDatabase: { get: () => q }, StoryEvents: { on: (_, listener) => { onStep = listener; } },
   DialogManager: {
     resetCommunicationInformation() { ui.resets++; },
-    showCommunication(_, text, goal) { ui.text = text; ui.goal = goal; ui.buttons = []; },
+    showCommunication(_, text, goal, options) { ui.text = text; ui.goal = goal; ui.feedback = options && options.feedback; ui.buttons = []; },
     showRecognized(text) { ui.recognized.push(text); }, hideRecognized() {},
     addCommunicationLanguageControls() { ui.languages++; },
     showSpeechStatus() { ui.status = true; ui.buttons = []; },
@@ -27,7 +27,11 @@ onStep({ step: { type: "question", questionId: "any" } });
  assert.strictEqual(ui.text, q.prompt);
  for (const status of ["reject", "unknown", "speech-failure"]) {
    await p.recovery({ status, answer: "High" }, { retry: true, support: true }, token);
-   assert(ui.text.includes("High と聞こえたよ。 ｜ "));
+   const expected = status === "reject" ? "High と聞こえたよ。 ｜ もう一度考えてみようピコ。" :
+     status === "unknown" ? "High と聞こえたよ。 ｜ うまく判断できなかったピコ。" : "うまく聞き取れなかったピコ。";
+   assert.strictEqual(ui.text, q.prompt + "\n\n" + expected);
+   assert.strictEqual(ui.feedback, true);
+   assert(!expected.includes("\n"));
    assert.strictEqual(ui.text.split(q.prompt).length - 1, 1);
    assert.strictEqual(ui.languages, 0);
    assert.deepStrictEqual(Array.from(ui.buttons), ["retry", "support", "continue"]);
@@ -35,6 +39,7 @@ onStep({ step: { type: "question", questionId: "any" } });
  assert.strictEqual(ui.recognized.length, 0, "Recovery never creates a standalone transcript row");
  await p.recovery({ status: "reject", answer: "High" }, { retry: true, support: true, supportText: "Support 1" }, token);
  assert.strictEqual(ui.text, q.prompt + "\n\nSupport 1");
+ assert.strictEqual(ui.feedback, false);
  assert.strictEqual(ui.languages, 1);
  p.speech(() => new Promise(() => {}), token, {}, q.prompt);
  assert.strictEqual(ui.text, q.prompt + "\n\nSupport 1");

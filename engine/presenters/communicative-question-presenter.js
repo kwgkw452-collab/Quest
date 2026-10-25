@@ -31,9 +31,9 @@
     return japaneseGoal ? japaneseGoal + "\n\n" + message : message;
   }
 
-  function showInformation(message) {
+  function showInformation(message, options) {
     if (typeof DialogManager.showCommunication === "function") {
-      DialogManager.showCommunication("ピコ", message, japaneseGoal);
+      DialogManager.showCommunication("ピコ", message, japaneseGoal, options);
     } else {
       DialogManager.show("ピコ", message);
     }
@@ -73,9 +73,9 @@
   }
 
   function supportMessage(status) {
-    if (status === "reject") return "もう一度、ゆっくり尋ねてみよう。";
-    if (status === "unknown") return "英語が間違いとは限らないよ。\nうまく判断できなかったピコ。";
-    if (status === "speech-failure") return "声をうまく聞き取れなかったピコ。";
+    if (status === "reject") return "もう一度考えてみようピコ。";
+    if (status === "unknown") return "うまく判断できなかったピコ。";
+    if (status === "speech-failure") return "うまく聞き取れなかったピコ。";
     return "うまく判断できなかったピコ。";
   }
 
@@ -138,10 +138,10 @@
     if (showingSupport) {
       currentSupport = options.supportText;
       information = currentSupport;
-    } else if (result && result.answer) {
+    } else if (result && result.status !== "speech-failure" && result.answer) {
       information = result.answer + " と聞こえたよ。 ｜ " + information;
     }
-    showInformation(withGoal(information));
+    showInformation(withGoal(information), { feedback: !showingSupport });
     var choices = [];
     if (options && options.retry) choices.push({ label: "もう一度話す", value: "retry" });
     if (options && options.support) choices.push({ label: "ピコのサポート", value: "support" });

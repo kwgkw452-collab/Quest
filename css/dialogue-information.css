@@ -130,3 +130,14 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+/* Immediate feedback is one line; Support keeps its existing wrapping/scrolling. */
+#game-stage .communication-feedback > .dialogue-information {
+  overflow: hidden;
+}
+
+#game-stage .communication-feedback .dialogue-information > .message {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
