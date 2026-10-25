@@ -5,6 +5,7 @@
   var cancelPending = null;
   var japaneseGoal = null;
   var informationQuestion = null;
+  var currentSupport = null;
 
   // Read existing Story data for display only; never alter a question or flow.
   if (typeof window.addEventListener === "function") {
@@ -96,7 +97,11 @@
     if (!active(token)) return Promise.resolve("cancelled");
     japaneseGoal = japanesePrompt || null;
     trace("speech-gate-create", traceContext);
-    showInformation(japanesePrompt || "準備できたよ。話してみよう。");
+    if (!currentSupport && typeof DialogManager.resetCommunicationInformation === "function") {
+      DialogManager.resetCommunicationInformation();
+    }
+    showInformation(currentSupport ? withGoal(currentSupport) :
+      (japanesePrompt || "準備できたよ。話してみよう。"));
     trace("speech-gate-shown", traceContext);
     var pending = new Promise(function (resolve, reject) {
       var controls = document.getElementById("controls");
@@ -128,15 +133,22 @@
       transcript: result && result.answer,
       candidateCount: result && Array.isArray(result.alternatives) ? result.alternatives.length : 0
     });
-    showInformation(withGoal(options && options.supportText || supportMessage(result && result.status)));
-    if (result && result.answer) DialogManager.showRecognized(result.answer, "You said:\n");
+    var showingSupport = Boolean(options && options.supportText);
+    var information = supportMessage(result && result.status);
+    if (showingSupport) {
+      currentSupport = options.supportText;
+      information = currentSupport;
+    } else if (result && result.answer) {
+      information = result.answer + " と聞こえたよ。 ｜ " + information;
+    }
+    showInformation(withGoal(information));
     var choices = [];
     if (options && options.retry) choices.push({ label: "もう一度話す", value: "retry" });
-    if (options && options.support) choices.push({ label: "ピコの次のヒント", value: "support" });
+    if (options && options.support) choices.push({ label: "ピコのサポート", value: "support" });
     if (options && options.text) choices.push({ label: "文字で答える", value: "text" });
     choices.push({ label: "冒険を続ける", value: "continue" });
     var pending = DialogManager.choice(choices);
-    addLanguageControls(token);
+    if (showingSupport) addLanguageControls(token);
     return waitFor(pending, token);
   }
 
@@ -149,13 +161,14 @@
     if (!active(token)) return "cancelled";
     showInformation(withGoal("大丈夫。冒険を続けよう。"));
     var pending = DialogManager.next("次へ");
-    addLanguageControls(token);
+    if (currentSupport) addLanguageControls(token);
     return waitFor(pending, token);
   }
 
   function cancel() {
     runId += 1;
     japaneseGoal = null;
+    currentSupport = null;
     if (cancelPending) cancelPending();
     cancelPending = null;
     try { DialogManager.hideRecognized(); } catch (_) { /* UI may not be initialized. */ }

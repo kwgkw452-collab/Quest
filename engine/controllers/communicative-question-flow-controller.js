@@ -78,7 +78,7 @@
     var textFallbacks = 0;
     var attempts = 0;
     var supportStage = 0;
-    var supportedAttempt = 0;
+    var supportRequested = false;
     var attemptTraceContext = traceContext;
     trace("formal-flow-start", traceContext, { questionId: questionId });
 
@@ -88,6 +88,7 @@
     }
 
     async function runQuestion(options) {
+      supportRequested = false;
       attempts += 1;
       traceContext.attemptCount = attempts;
       traceContext.speechRetries = speechRetries;
@@ -118,16 +119,11 @@
     while (currentRun === runId) {
       if (result.status === "success" || result.status === "cancelled") return finish(snapshot(result));
 
-      if (question.picoSupport && supportedAttempt < attempts) {
-        supportStage = Math.min(3, supportStage + 1);
-        supportedAttempt = attempts;
-      }
-
       var action = await CommunicativeQuestionPresenter.recovery(result, {
         retry: speechRetryAllowed(result, speechRetries, textFallbacks),
         text: !question.picoSupport && textFallbacks < MAX_TEXT_FALLBACKS,
-        support: Boolean(question.picoSupport && supportStage < 3),
-        supportText: question.picoSupport ? question.picoSupport[supportStage - 1] : null
+        support: Boolean(question.picoSupport),
+        supportText: supportRequested && question.picoSupport ? question.picoSupport[supportStage - 1] : null
       }, presenterToken, attemptTraceContext);
       if (currentRun !== runId || action === "cancelled") {
         result = cancelled(result);
@@ -142,8 +138,9 @@
         continue;
       }
 
-      if (action === "support" && question.picoSupport && supportStage < 3) {
-        supportStage += 1;
+      if (action === "support" && question.picoSupport) {
+        supportStage = Math.min(3, supportStage + 1);
+        supportRequested = true;
         continue;
       }
 
