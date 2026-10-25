@@ -96,6 +96,12 @@
 
   function showCommunication(speaker, message, goal) {
     show(speaker, message, wideStory() ? "communication-dialogue" : undefined);
+    setCommunicationInformation(message, goal);
+  }
+
+  function setCommunicationInformation(message, goal) {
+    if (!informationArea) return;
+    els.message.textContent = message || "";
     var prefix = goal ? goal + "\n\n" : "";
     if (!informationArea || !prefix || message.indexOf(prefix) !== 0) return;
     var goalText = document.createElement("div");
@@ -108,6 +114,25 @@
     els.message.appendChild(goalText);
     els.message.appendChild(document.createTextNode("\n\n"));
     els.message.appendChild(detail);
+  }
+
+  function addCommunicationLanguageControls(english, japanese, isCurrent) {
+    if (!informationArea || !english || !japanese) return;
+    var englishButton;
+    var japaneseButton;
+    function select(language) {
+      if (!informationArea || (isCurrent && !isCurrent())) return;
+      setCommunicationInformation(language === "english" ? japanese + "\n\n" + english : japanese, japanese);
+      informationArea.scrollTop = 0;
+      englishButton.setAttribute("aria-pressed", String(language === "english"));
+      japaneseButton.setAttribute("aria-pressed", String(language === "japanese"));
+    }
+    englishButton = button("英語を見る", function () { select("english"); });
+    japaneseButton = button("日本語を見る", function () { select("japanese"); });
+    englishButton.setAttribute("aria-pressed", "false");
+    japaneseButton.setAttribute("aria-pressed", "false");
+    els.controls.appendChild(englishButton);
+    els.controls.appendChild(japaneseButton);
   }
 
   function setContent(speaker, message) {
@@ -236,6 +261,7 @@
     button: button,
     show: show,
     showCommunication: showCommunication,
+    addCommunicationLanguageControls: addCommunicationLanguageControls,
     setContent: setContent,
     clearControls: clearControls,
     addControl: addControl,
