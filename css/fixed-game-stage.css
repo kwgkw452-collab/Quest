@@ -1,0 +1,191 @@
+/* Fixed Story profile. All old styles remain untouched outside #game-stage.
+   Logical dimensions are projected from this branch's stable stylesheet only. */
+#game-stage-viewport { position: fixed; inset: 0; overflow: hidden; background: #000; }
+#game-stage {
+  position: absolute; left: 50%; top: 50%; width: 1560px; height: 720px;
+  transform-origin: center; transform: translate(-50%, -50%) scale(var(--game-stage-scale, 1));
+  overflow: hidden;
+}
+
+#game-stage { --dialog-control-font-size: 14px; --dialog-control-min-height: 32px; --dialog-speaker-font-size: 13px; --speech-status-font-size: 12px; }
+
+#game-stage button,
+#game-stage input { font-size: inherit; line-height: inherit; }
+
+#game-stage #game,
+#game-stage .scene { width: 100%; height: 100%; }
+
+#game-stage .background { top: 0px; right: 0px; bottom: 0px; left: 0px; }
+
+#game-stage .blue-filter { top: 0px; right: 0px; bottom: 0px; left: 0px; }
+
+#game-stage .item-layer,
+#game-stage .character-layer { top: 0px; right: 0px; bottom: 0px; left: 0px; }
+
+#game-stage .item-image { left: 50%; bottom: 23%; max-width: min(717.6px, 430px); max-height: 345.6px; transform: translateX(-50%); }
+
+#game-stage .event-fullscreen { top: 0px; right: 0px; bottom: 0px; left: 0px; width: 100%; height: 100%; max-width: none; max-height: none; transform: none; }
+
+#game-stage .character-image { bottom: 24%; max-width: min(655.2px, 430px); max-height: 410.4px; }
+
+#game-stage .character-image.center { left: 50%; transform: translateX(-50%); }
+
+#game-stage .character-image.left { left: 7%; }
+
+#game-stage .character-image.right { right: 7%; }
+
+#game-stage .sleep-character { left: 50%; top: 24%; max-width: min(780px, 460px); max-height: 331.2px; transform: translateX(-50%); }
+
+#game-stage .zzz { left: 62%; top: 17%; font-size: clamp(28px, 78px, 56px); }
+
+#game-stage .dialogue-box { left: 3%; right: 3%; bottom: 3%; min-height: 0px; max-height: 24%; padding-top: 8px; padding-right: 16px; padding-bottom: 8px; padding-left: 16px; }
+
+#game-stage .speaker { min-height: 0px; font-size: var(--dialog-speaker-font-size); line-height: 1.15; }
+
+#game-stage .message { line-height: 1.32; font-size: clamp(15px, 27.3px, 22px); }
+
+#game-stage .recognized-text { padding-top: 2px; padding-right: 8px; padding-bottom: 2px; padding-left: 8px; font-size: var(--speech-status-font-size); line-height: 1.2; }
+
+#game-stage .dialogue-box.speech-listening { padding-top: 4px; padding-right: 10px; padding-bottom: 4px; padding-left: 10px; }
+
+#game-stage .dialogue-box.speech-listening .message { line-height: 1.2; }
+
+#game-stage .controls { row-gap: 8px; column-gap: 8px; }
+
+#game-stage .control-button { width: auto; min-height: var(--dialog-control-min-height); padding-top: 2px; padding-right: 10px; padding-bottom: 2px; padding-left: 10px; font-size: var(--dialog-control-font-size); line-height: 1.1; }
+
+#game-stage .text-input { padding-top: 11px; padding-right: 14px; padding-bottom: 11px; padding-left: 14px; }
+
+#game-stage .opening-layer { top: 0px; right: 0px; bottom: 0px; left: 0px; }
+
+#game-stage .crawl-text { right: -15%; top: 12%; width: 85%; font-size: clamp(30px, 93.6px, 78px); line-height: 1.3; transform: rotate(-12deg) scale(0.65); }
+
+#game-stage .opening-panel { top: 6%; right: 6%; bottom: 6%; left: 6%; row-gap: 18px; column-gap: 18px; padding-top: 28px; padding-right: 28px; padding-bottom: 28px; padding-left: 28px; }
+
+#game-stage .opening-panel h1 { font-size: clamp(28px, 78px, 60px); }
+
+#game-stage .opening-panel p { max-width: 980px; line-height: 1.8; font-size: clamp(17px, 31.2px, 24px); }
+
+#game-stage .notice-title { font-size: clamp(24px, 46.8px, 36px); }
+
+#game-stage .opening-panel.notice-panel { top: 4%; right: 4%; bottom: 4%; left: 4%; row-gap: 15px; column-gap: 15px; padding-top: 22px; padding-right: 30px; padding-bottom: 22px; padding-left: 30px; }
+
+#game-stage .opening-panel.notice-panel p { width: min(94%, 1120px); max-width: 1120px; line-height: 1.55; font-size: clamp(17px, 28.86px, 23px); }
+
+#game-stage .opening-panel.notice-panel .notice-title { font-size: clamp(26px, 46.8px, 38px); }
+
+#game-stage .opening-panel.notice-panel .control-button { min-height: var(--dialog-control-min-height); padding-top: 2px; padding-right: 10px; padding-bottom: 2px; padding-left: 10px; }
+
+#game-stage .opening-panel.notice-panel { top: 3%; right: 3%; bottom: 3%; left: 3%; row-gap: 10px; column-gap: 10px; padding-top: 14px; padding-right: 20px; padding-bottom: 14px; padding-left: 20px; }
+
+#game-stage .opening-panel.notice-panel p { line-height: 1.4; font-size: clamp(14px, 24.18px, 19px); }
+
+#game-stage .opening-panel.notice-panel .notice-title { font-size: clamp(22px, 39px, 31px); }
+
+#game-stage { --dialog-speaker-font-size: 13px; --speech-status-font-size: 12px; }
+
+#game-stage .opening-video { top: 0px; right: 0px; bottom: 0px; left: 0px; width: 100%; height: 100%; }
+
+#game-stage .opening-skip { right: 18px; bottom: 18px; }
+
+#game-stage .story-character.camp-character { bottom: 14%; max-width: min(468px, 330px); max-height: 309.6px; }
+
+#game-stage #scene:has(#background[style*="bg_camp.png"]) > .dialogue-box { bottom: 1.5%; }
+
+#game-stage .story-character.camp-slot-left { left: 7%; }
+
+#game-stage .story-character.camp-slot-center { left: 50%; transform: translateX(-50%); }
+
+#game-stage .story-character.camp-slot-right { right: 7%; }
+
+#game-stage .camp-zzz.camp-slot-left { left: 20%; top: 28%; }
+
+#game-stage .camp-zzz.camp-slot-center { left: 54%; top: 25%; }
+
+#game-stage .camp-zzz.camp-slot-right { left: 82%; top: 28%; }
+
+#game-stage .scene.battle-explosion::after,
+#game-stage .scene.battle-blackout::after { top: 0px; right: 0px; bottom: 0px; left: 0px; }
+
+#game-stage .pos-center-low { left: 50%; bottom: 24%; transform: translateX(-50%); }
+
+#game-stage .pos-left-low { left: 10%; bottom: 23%; }
+
+#game-stage .pos-right-low { right: 8%; bottom: 20%; }
+
+#game-stage .st004-farewell-pico { left: 68%; bottom: 18%; transform: translateX(-50%); }
+
+#game-stage .st004-saki-pico-low { left: 50%; bottom: 17%; transform: translateX(-50%); }
+
+#game-stage .s004-left-upper { left: 25%; bottom: 35%; transform: translateX(-50%); }
+
+#game-stage .s004-center-upper { left: 50%; bottom: 35%; transform: translateX(-50%); }
+
+#game-stage .size-small { max-width: min(390px, 250px); max-height: 273.6px; }
+
+#game-stage .size-medium { max-width: min(655.2px, 430px); max-height: 410.4px; }
+
+#game-stage .size-large { max-width: min(655.2px, 430px); max-height: 309.6px; }
+
+#game-stage .story-character.monster-giant-tree { left: 50%; bottom: 20%; width: auto; height: 561.6px; max-width: none; max-height: none; transform: translateX(-50%); }
+
+#game-stage .story-character.monster-layer-stack { left: 50%; bottom: 24%; transform: translateX(-50%); width: min(655.2px, 430px); height: min(410.4px, 480px); }
+
+#game-stage .monster-layer-stack img { top: 0px; right: 0px; bottom: 0px; left: 0px; width: 100%; height: 100%; }
+
+#game-stage .monster-face-parts img[data-face-layer="eyes"][data-face-side="left"] { transform: translate(3%, -15%); }
+
+#game-stage .monster-face-parts img[data-face-layer="eyes"][data-face-side="right"] { transform: translate(-3%, -15%); }
+
+#game-stage .monster-face-parts img[data-face-layer="ears"][data-face-side="left"] { transform: translateX(-4%) scale(0.93); }
+
+#game-stage .monster-face-parts img[data-face-layer="ears"][data-face-side="right"] { transform: translateX(4%) scale(0.93); }
+
+#game-stage .monster-face-parts img[data-face-layer="mouth"] { transform: translateY(14%) scale(0.62); }
+
+#game-stage .monster-face-parts img[data-face-layer="smile"] { transform: translate(-1%, 14%) scale(0.5); }
+
+#game-stage .zzz-right { left: 69%; top: 25%; }
+
+#game-stage .dialogue-box.dialogue-compact { min-height: 0px; max-height: 24%; padding-top: 12px; padding-right: 20px; padding-bottom: 12px; padding-left: 20px; }
+
+#game-stage .media-layer { top: 0px; right: 0px; bottom: 0px; left: 0px; }
+
+#game-stage .story-video { width: 100%; height: 100%; }
+
+#game-stage .video-skip { right: 1rem; top: 1rem; }
+
+#game-stage .pico-break-layer { top: 0px; right: 0px; bottom: 0px; left: 0px; padding-top: 78px; padding-right: 78px; padding-bottom: 78px; padding-left: 78px; }
+
+#game-stage .pico-break-card { width: min(760px, 1435.2px); padding-top: clamp(24px, 78px, 54px); padding-right: clamp(24px, 78px, 54px); padding-bottom: clamp(24px, 78px, 54px); padding-left: clamp(24px, 78px, 54px); transform: translateY(16px) scale(0.97); }
+
+#game-stage .pico-break-layer.show .pico-break-card { transform: translateY(0px) scale(1); }
+
+#game-stage .pico-break-title { font-size: clamp(25px, 62.4px, 46px); }
+
+#game-stage .pico-break-text { min-height: 3em; line-height: 1.7; font-size: clamp(18px, 39px, 28px); }
+
+#game-stage .pico-break-demo { top: 12px; right: 12px; width: min(430px, -24px + 1560px); padding-top: 14px; padding-right: 14px; padding-bottom: 14px; padding-left: 14px; }
+
+#game-stage .pico-break-demo strong { font-size: 1.15rem; }
+
+#game-stage .pico-break-demo p { line-height: 1.45; }
+
+#game-stage .pico-break-demo-controls { row-gap: 8px; column-gap: 8px; }
+
+#game-stage .pico-break-demo .control-button { padding-top: 8px; padding-right: 12px; padding-bottom: 8px; padding-left: 12px; font-size: 0.95rem; }
+
+#game-stage #scene:has(#background[style*="s004_map_key_choice_final.png"]) > .dialogue-box { top: 25%; bottom: auto; left: 24%; right: 24%; max-height: 18%; padding-top: 8px; padding-right: 16px; padding-bottom: 8px; padding-left: 16px; }
+
+@keyframes fixedStagenumberMonsterHit { 
+  0%, 100% { transform: translateX(0px); box-shadow: rgba(255, 20, 20, 0) 0px 0px 0px 0px inset; }
+  20% { transform: translateX(-10px); box-shadow: rgba(255, 28, 28, 0.5) 0px 0px 0px 1560px inset; }
+  40% { transform: translateX(8px); box-shadow: rgba(255, 28, 28, 0.28) 0px 0px 0px 1560px inset; }
+  60% { transform: translateX(-6px); box-shadow: rgba(255, 28, 28, 0.18) 0px 0px 0px 1560px inset; }
+  80% { transform: translateX(4px); }
+}
+
+#game-stage .number-monster-hit { animation-name: fixedStagenumberMonsterHit; }
+
+/* Stronger than background-specific selectors; only mounted newer Story profiles match. */
+#game-stage #game #scene > #dialogue-box { top: auto; bottom: 0; }
