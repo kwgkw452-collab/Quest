@@ -5,7 +5,9 @@
   var names = {
     onstart: "start", onaudiostart: "audiostart", onsoundstart: "soundstart",
     onspeechstart: "speechstart", onresult: "result", onspeechend: "speechend",
-    onsoundend: "soundend", onaudioend: "audioend", onerror: "error", onend: "end"
+    onsoundend: "soundend", onaudioend: "audioend", onerror: "error", onend: "end",
+    "termination-call": "APP termination request", "timeout-armed": "timeout armed",
+    "timeout-fired": "timeout fired"
   };
   var entries = [];
   var views = [];
@@ -21,9 +23,36 @@
     var follow = view.list.scrollHeight - view.list.clientHeight - view.list.scrollTop < 24;
     var row = document.createElement("li");
     row.style.cssText = "padding:3px 0;overflow-wrap:anywhere";
-    row.textContent = clock(entry.at) + "  " + names[entry.type] +
+    var label = entry.type === "termination-call" ? "APP " + entry.method + " REQUEST" : names[entry.type];
+    row.textContent = clock(entry.at) + "  " + label +
       (entry.instanceId ? "  [" + entry.instanceId + "]" : "") +
       (entry.error ? "  " + entry.error : "");
+    if (entry.type === "termination-call" || entry.type === "timeout-armed" || entry.type === "timeout-fired") {
+      var detail = document.createElement("div");
+      detail.style.cssText = "white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px";
+      detail.textContent = "caller: " + entry.caller + "\nreason: " + entry.reason +
+        "\nelapsed: " + (entry.elapsedSinceStartMs === null ? "native start前" : entry.elapsedSinceStartMs + "ms") +
+        (entry.configuredTimeoutMs === undefined ? "" : "\ntimeout: " + entry.configuredTimeoutMs + "ms") +
+        (entry.upstreamCaller ? "\nfrom: " + entry.upstreamCaller : "");
+      row.appendChild(detail);
+      if (entry.stack) {
+        var stack = document.createElement("details");
+        var summary = document.createElement("summary");
+        summary.textContent = "caller stack";
+        var text = document.createElement("pre");
+        text.style.cssText = "white-space:pre-wrap;overflow-wrap:anywhere;font-size:11px";
+        text.textContent = entry.stack;
+        stack.appendChild(summary); stack.appendChild(text); row.appendChild(stack);
+      }
+    }
+    if (entry.type === "onerror" || entry.type === "onend") {
+      var evidence = document.createElement("div");
+      evidence.style.cssText = "white-space:pre-wrap;font-size:12px";
+      evidence.textContent = "elapsed: " + (entry.elapsedSinceStartMs == null ? "未計測" : entry.elapsedSinceStartMs + "ms") +
+        "\n直前までのAPP stop/abort: " + (entry.appTerminationCallBeforeEvent ?
+          "記録あり（" + entry.appTerminationCallBeforeEvent.reason + "）" : "記録なし");
+      row.appendChild(evidence);
+    }
     view.list.appendChild(row);
     view.status.textContent = "記録 " + entries.length + "件（発生順・再読込でクリア）";
     if (follow) view.list.scrollTop = view.list.scrollHeight;

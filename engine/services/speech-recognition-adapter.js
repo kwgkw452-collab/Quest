@@ -8,6 +8,8 @@
   var MIC_RELEASE_TRACE_LIMIT = 64;
   var micReleaseTraceState = { events: [] };
   var micReleaseTraceSubscribers = [];
+  var recognitionStartTraceTimes = {};
+  var recognitionTerminationTraceCalls = {};
 
   function micReleaseTraceEnabled() {
     try {
@@ -66,6 +68,19 @@
       audioSessionState: session.state,
       stopReason: null
     }, detail || {});
+    // Diagnostic metadata only: native start time and prior explicit app requests.
+    if (type === "onstart" && record.instanceId) recognitionStartTraceTimes[record.instanceId] = record.at;
+    var nativeStart = recognitionStartTraceTimes[record.instanceId];
+    record.elapsedSinceStartMs = nativeStart === undefined ? null : record.at - nativeStart;
+    if (type === "termination-call" && record.instanceId) {
+      recognitionTerminationTraceCalls[record.instanceId] = {
+        at: record.at, method: record.method, caller: record.caller,
+        reason: record.reason, elapsedSinceStartMs: record.elapsedSinceStartMs
+      };
+    }
+    if (type === "onerror" || type === "onend") {
+      record.appTerminationCallBeforeEvent = recognitionTerminationTraceCalls[record.instanceId] || null;
+    }
     micReleaseTraceState.events.push(record);
     if (micReleaseTraceState.events.length > MIC_RELEASE_TRACE_LIMIT) micReleaseTraceState.events.shift();
     micReleaseTraceSubscribers.slice().forEach(function (listener) {
@@ -122,6 +137,24 @@
     console.log("[S005 TRACE] " + eventName, Object.assign({ questionId: questionId }, detail || {}));
   }
 
+  function traceRecognitionTermination(recognition, method, caller, reason, extra) {
+    try {
+      if (!micReleaseTraceEnabled()) return;
+      var stack = "";
+      try { stack = String(new Error("Recognition termination request").stack || ""); } catch (_) {}
+      var upstream = stack.split("\n").filter(function (line) {
+        return line && line.indexOf("speech-recognition-adapter.js") === -1 &&
+          line.indexOf("traceRecognitionTermination") === -1 &&
+          line.indexOf("Error") !== 0;
+      })[0] || "browser timer / direct caller";
+      recordMicReleaseTrace("termination-call", Object.assign({
+        instanceId: recognition && recognition.__eigoMicReleaseTraceId || null,
+        method: method, caller: caller, reason: reason,
+        upstreamCaller: upstream.trim(), stack: stack
+      }, extra || {}));
+    } catch (_) { /* Diagnostics must never prevent the original stop/abort call. */ }
+  }
+
   function stop() {
     if (!activeRecognition) return;
     recordMicReleaseTrace("stop-call", {
@@ -129,7 +162,10 @@
       stopReason: "adapter-stop"
     });
     teardownTrace("recognition-stop-call", { reason: "adapter-stop" });
-    try { activeRecognition.stop(); } catch (error) { /* already stopped */ }
+    try {
+      traceRecognitionTermination(activeRecognition, "stop", "SpeechRecognitionAdapter.stop", "adapter-stop");
+      activeRecognition.stop();
+    } catch (error) { /* already stopped */ }
   }
 
   function listen(options) {
@@ -370,17 +406,32 @@
 
       if (options.timeoutMs > 0) {
         timeoutId = window.setTimeout(function () {
+          recordMicReleaseTrace("timeout-fired", {
+            instanceId: recognition.__eigoMicReleaseTraceId,
+            caller: "SpeechRecognitionAdapter.listen.timeout", reason: "options.timeoutMs",
+            configuredTimeoutMs: options.timeoutMs
+          });
           recordMicReleaseTrace("stop-call", {
             instanceId: recognition.__eigoMicReleaseTraceId,
             stopReason: "timeout"
           });
           teardownTrace("recognition-stop-call", { reason: "timeout" });
-          try { recognition.stop(); } catch (error) { /* ignore */ }
+          try {
+            traceRecognitionTermination(recognition, "stop", "SpeechRecognitionAdapter.listen.timeout", "timeout", {
+              configuredTimeoutMs: options.timeoutMs
+            });
+            recognition.stop();
+          } catch (error) { /* ignore */ }
           // Preserve the existing synchronous-stop outcome (onend may have
           // already selected no-speech). For the browser's normal async end,
           // retain speech-timeout until onend completes teardown.
           if (!settled && !pendingTerminalError) pendingTerminalError = new Error("speech-timeout");
         }, options.timeoutMs);
+        recordMicReleaseTrace("timeout-armed", {
+          instanceId: recognition.__eigoMicReleaseTraceId,
+          caller: "SpeechRecognitionAdapter.listen", reason: "options.timeoutMs",
+          configuredTimeoutMs: options.timeoutMs
+        });
       }
 
       try {
