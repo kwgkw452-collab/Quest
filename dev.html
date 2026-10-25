@@ -58,7 +58,7 @@
   <script src="engine/services/asset-resolver.js"></script>
   <script src="engine/services/speech-normalizer.js?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1"></script>
   <script src="engine/services/legacy-speech-trace.js?v=legacy-speech-runtime-trace-v1"></script>
-  <script src="engine/services/speech-recognition-adapter.js?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1&nativeEventsTrace=speech-native-events-v1"></script>
+  <script src="engine/services/speech-recognition-adapter.js?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1&nativeEventsTrace=speech-native-events-v1&pilotEventTrace=pilot-event-view-v1"></script>
   <script src="engine/services/speech-engine.js?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1"></script>
   <script src="engine/services/speech-start-controller.js?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1"></script>
   <script src="engine/services/lottery-engine.js?v=s005-phase-a2-v1"></script>
@@ -112,6 +112,7 @@
   <script>
     // Optional playtests must not start over the direct Story entry.
     if (new URLSearchParams(window.location.search).get("jump") !== "S005") {
+      document.write('<script src="dev/speech-event-trace-view.js?v=pilot-event-view-v1"><\/script>');
       document.write('<script src="dev/communicative-judge-pilot.js?v=communicative-formal-trace-v1"><\/script>');
       document.write('<script src="dev/communicative-question-manager-playtest.js?v=communicative-formal-trace-v1"><\/script>');
     }

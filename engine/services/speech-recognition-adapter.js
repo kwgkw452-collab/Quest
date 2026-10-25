@@ -7,6 +7,7 @@
   var MIC_RELEASE_TRACE_VERSION = "iphone-speech-native-mic-release-boundary-trace-v1";
   var MIC_RELEASE_TRACE_LIMIT = 64;
   var micReleaseTraceState = { events: [] };
+  var micReleaseTraceSubscribers = [];
 
   function micReleaseTraceEnabled() {
     try {
@@ -67,6 +68,9 @@
     }, detail || {});
     micReleaseTraceState.events.push(record);
     if (micReleaseTraceState.events.length > MIC_RELEASE_TRACE_LIMIT) micReleaseTraceState.events.shift();
+    micReleaseTraceSubscribers.slice().forEach(function (listener) {
+      try { listener(Object.assign({}, record)); } catch (_) { /* Display diagnostics only. */ }
+    });
   }
 
   function installMicReleasePageTrace() {
@@ -236,6 +240,10 @@
       };
 
       recognition.onresult = function (event) {
+        recordMicReleaseTrace("onresult", {
+          instanceId: recognition.__eigoMicReleaseTraceId,
+          resultIndex: event.resultIndex
+        });
         var firstResultTrace = null;
         if (!firstResultSeen) {
           firstResultSeen = true;
@@ -400,7 +408,15 @@
     limit: MIC_RELEASE_TRACE_LIMIT,
     enabled: micReleaseTraceEnabled,
     events: function () { return micReleaseTraceState.events.slice(); },
-    activeRecognitionId: activeRecognitionId
+    activeRecognitionId: activeRecognitionId,
+    subscribe: function (listener) {
+      if (typeof listener !== "function") return function () {};
+      micReleaseTraceSubscribers.push(listener);
+      return function () {
+        var index = micReleaseTraceSubscribers.indexOf(listener);
+        if (index !== -1) micReleaseTraceSubscribers.splice(index, 1);
+      };
+    }
   };
   installMicReleasePageTrace();
 })();
