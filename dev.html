@@ -109,10 +109,10 @@
   <script src="dev/dev-checkpoints.js"></script>
   <script src="dev/dev-jump-manager.js"></script>
   <script src="dev/dev-jump-ui.js"></script>
+  <script src="dev/speech-event-trace-view.js?v=pilot-stop-caller-v1&resultDeliveryTrace=result-delivery-v1&formalTraceViewer=existing-formal-v1"></script>
   <script>
     // Optional playtests must not start over the direct Story entry.
     if (new URLSearchParams(window.location.search).get("jump") !== "S005") {
-      document.write('<script src="dev/speech-event-trace-view.js?v=pilot-stop-caller-v1&resultDeliveryTrace=result-delivery-v1"><\/script>');
       document.write('<script src="dev/communicative-judge-pilot.js?v=communicative-formal-trace-v1&resultDeliveryTrace=result-delivery-v1"><\/script>');
       document.write('<script src="dev/communicative-question-manager-playtest.js?v=communicative-formal-trace-v1"><\/script>');
     }
