@@ -60,20 +60,19 @@
 }
 
 #game-stage #game #scene > .dialogue-box.communication-dialogue {
-  grid-template-rows: 31.2px minmax(0, 1fr) 56px;
+  display: flex;
+  flex-direction: column;
   gap: 3px;
-  height: var(--communication-dialogue-height, 172.8px);
-  min-height: var(--communication-dialogue-height, 172.8px);
-  max-height: var(--communication-dialogue-height, 172.8px);
+  height: auto;
+  min-height: 0;
+  max-height: 200px;
   padding: 4px 16px;
   border-width: 4px;
 }
 
-#game-stage #game #scene > .dialogue-box.communication-dialogue:has(.dialogue-information[hidden]) {
-  grid-template-rows: minmax(0, 1fr) 56px;
-}
-
-#game-stage .communication-dialogue > .dialogue-primary { align-items: flex-start; }
+#game-stage .communication-dialogue > .dialogue-primary { flex: 0 0 auto; align-items: flex-start; }
+#game-stage .communication-dialogue > .dialogue-information { flex: 0 1 auto; }
+#game-stage .communication-dialogue > .controls { flex: 0 0 56px; }
 
 #game-stage .communication-dialogue .dialogue-primary-goal {
   flex: 1 1 auto;
@@ -123,6 +122,7 @@
 }
 
 #game-stage .communication-dialogue .dialogue-listening-label { white-space: nowrap; }
+#game-stage .communication-dialogue .dialogue-listening-label::after { content: " ｜"; }
 
 #game-stage .communication-dialogue .dialogue-listening-transcript {
   min-width: 0;

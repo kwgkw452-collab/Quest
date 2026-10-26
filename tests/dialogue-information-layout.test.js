@@ -93,7 +93,7 @@ manager.showCommunication("ピコ", goal, goal); // Retry gate preserves the exi
 assert.strictEqual(elements.message.textContent, support);
 manager.addControl("話す", () => {});
 manager.showSpeechStatus("ピコ", goal, "🎤 聞き取り中…");
-assert.strictEqual(elements.message.textContent, support);
+assert.strictEqual(elements.message.textContent, "", "listening hides Support without changing its stored content");
 assert.strictEqual(goalNode.textContent, goal);
 assert.strictEqual(elements.speaker.hidden, true);
 assert.strictEqual(elements.controls.children.length, 1);
@@ -107,7 +107,8 @@ manager.showRecognized("Two rooms please", "聞き取り中：");
 assert.strictEqual(status.children[1].textContent, "聞き取った内容：Two rooms please");
 assert.strictEqual(elements.recognizedText.hidden, true);
 assert(!information.textContent.includes("Two rooms please"), "interim transcript belongs in the bottom-right status");
-assert.strictEqual(elements.message.textContent, support);
+assert.strictEqual(elements.message.textContent, "", "listening has no information region");
+assert.strictEqual(information.hidden, true);
 assert.strictEqual(elements.dialogueBox.scrollTop, 0);
 manager.showCommunication("ピコ", goal + "\n\n" + support, goal);
 assert.strictEqual(elements.controls.textContent, "", "completed listening must clear the whole status row");

@@ -225,7 +225,8 @@
       clearControls();
       hideRecognized();
       primaryGoal.textContent = goal || goalContent;
-      setCommunicationInformation(supportContent);
+      // Keep stored Support for later; the listening view only shows Goal/status.
+      setCommunicationInformation("");
       setSpeechLayout(true);
       var indicator = document.createElement("div");
       indicator.className = "dialogue-listening-status";
