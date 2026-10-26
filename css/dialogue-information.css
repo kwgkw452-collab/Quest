@@ -1,13 +1,16 @@
 /* Presentation only, scoped to the existing wide Story profile. */
 #game-stage #game #scene > .dialogue-box.dialogue-wide-ui {
-  display: grid;
-  grid-template-rows: minmax(0, 1fr) minmax(0, auto) auto;
-  row-gap: 7px;
+  --compact-two-row-height: 100.2px;
+  --compact-three-row-height: 140px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  height: var(--compact-two-row-height);
+  min-height: var(--compact-two-row-height);
+  max-height: var(--compact-two-row-height);
+  padding: 4px 16px;
+  border-width: 4px;
   overflow: hidden;
-}
-
-#game-stage #game #scene > .dialogue-box.dialogue-wide-ui:has(.dialogue-information[hidden]) {
-  grid-template-rows: minmax(0, 1fr) auto;
 }
 
 #game-stage #game #scene > .dialogue-box.dialogue-wide-ui[hidden],
@@ -15,6 +18,7 @@
 
 #game-stage .dialogue-wide-ui > .dialogue-primary {
   display: flex;
+  flex: 1 1 auto;
   align-items: baseline;
   gap: 18px;
   min-width: 0;
@@ -25,7 +29,7 @@
 #game-stage .dialogue-wide-ui .dialogue-primary > .speaker {
   flex: 0 0 auto;
   margin: 0;
-  font-size: 20px;
+  font-size: 22px;
   line-height: 1.32;
   white-space: nowrap;
 }
@@ -36,6 +40,15 @@
   flex: 1 1 auto;
   min-width: 0;
   min-height: 0;
+  max-height: 100%;
+  font-size: 26px;
+  line-height: 1.2;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
   overflow-wrap: anywhere;
 }
 
@@ -51,6 +64,7 @@
 }
 
 #game-stage .dialogue-wide-ui > .controls {
+  flex: 0 0 50px;
   min-width: 0;
   min-height: 0;
   margin: 0;
@@ -63,16 +77,22 @@
   display: flex;
   flex-direction: column;
   gap: 3px;
-  height: auto;
-  min-height: 0;
-  max-height: 200px;
+  height: var(--compact-three-row-height);
+  min-height: var(--compact-three-row-height);
+  max-height: var(--compact-three-row-height);
   padding: 4px 16px;
   border-width: 4px;
 }
 
+#game-stage #game #scene > .dialogue-box.communication-dialogue:has(.dialogue-information[hidden]) {
+  height: var(--compact-two-row-height);
+  min-height: var(--compact-two-row-height);
+  max-height: var(--compact-two-row-height);
+}
+
 #game-stage .communication-dialogue > .dialogue-primary { flex: 0 0 auto; align-items: flex-start; }
 #game-stage .communication-dialogue > .dialogue-information { flex: 0 1 auto; }
-#game-stage .communication-dialogue > .controls { flex: 0 0 56px; }
+#game-stage .communication-dialogue > .controls { flex: 0 0 50px; }
 
 #game-stage .communication-dialogue .dialogue-primary-goal {
   flex: 1 1 auto;
@@ -96,13 +116,13 @@
   line-height: 1.2;
 }
 
-#game-stage .communication-dialogue .control-button {
+#game-stage .dialogue-wide-ui .control-button {
   flex: 0 1 auto;
-  min-width: 180px;
-  height: 56px;
-  min-height: 56px;
-  max-height: 56px;
-  padding: 6px 18px;
+  min-width: 160px;
+  height: 50px;
+  min-height: 50px;
+  max-height: 50px;
+  padding: 6px 16px;
   font-size: 24px;
   line-height: 1.2;
   white-space: nowrap;
@@ -114,7 +134,7 @@
   align-items: center;
   gap: 24px;
   width: 100%;
-  height: 56px;
+  height: 50px;
   min-width: 0;
   color: #bff5ff;
   font-size: 24px;
@@ -131,13 +151,12 @@
   text-overflow: ellipsis;
 }
 
-/* Immediate feedback is one line; Support keeps its existing wrapping/scrolling. */
+/* Feedback fits one line normally; only overflowing content scrolls. */
 #game-stage .communication-feedback > .dialogue-information {
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 #game-stage .communication-feedback .dialogue-information > .message {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal;
 }
