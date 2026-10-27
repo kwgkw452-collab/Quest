@@ -192,7 +192,7 @@
       say("Pico", "この町は夜がちょっと物騒ピコ。安全のためホテルにするピコ！"),
 
       // 3．ホテルにチェックイン
-      bg("s005_regen_a_reception_v1"),
+      bg("s005_regen_a_reception_safe_v2"),
       say("Hotel Clerk", "Welcome."),
       say("Hotel Clerk", "Do you have a reservation?"), ask(1),
       say("Hotel Clerk", "How many people?"), ask(2),
@@ -232,7 +232,7 @@
       ben("stage0"),
 
       // 5．Ben
-      C.clear(), bg("s005_regen_b_alley_v1"), ben("stage0"),
+      C.clear(), bg("s005_regen_b_alley_safe_v2"), ben("stage0"),
       say("", "Kongが近づく。"),
       say("", "Benが怖がり、さらに色が薄くなる。"),
       say("Pico", "待つピコ！コングを怖がってるピコ！"),
@@ -296,7 +296,7 @@
       say("", "Benが少しずつ落ち着き、姿が見えてくる。"),
 
       // 9．His name is Ben
-      bg("s005_regen_c_relief_v1"),
+      bg("s005_regen_c_relief_safe_v2"),
       say("", "Benはまだ少し怖そう。"),
       say("主人公", "Wait."),
       say("", "KongがBenの前に立つ。"),
@@ -318,7 +318,7 @@
       say("Woman", "I’m sorry, Ben."),
       say("Ben", "It’s OK."),
       say("", "もう誰もBenを「ghost」「thief」と呼ばない。"),
-      C.clear(), bg("s005_regen_c_relief_v1"),
+      C.clear(), bg("s005_regen_c_relief_safe_v2"),
       say("", "一行がホテルへ戻ろうとする。"),
       say("Woman", "Good night, Ben."),
       say("Townsperson", "Good night, Ben."),
@@ -348,7 +348,7 @@
       say("", "大きなking-size bed。"),
       say("", "Kongがベッドを見る。"),
       say("Kong", "My bed!"),
-      bg("s005_regen_d_rest_v1"),
+      bg("s005_regen_d_rest_safe_v2"),
       say("", "Kongがベッドへ。"),
       say("Kong", "Good night!")
     ]
