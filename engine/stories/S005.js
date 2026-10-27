@@ -177,6 +177,7 @@
       say("Townsperson", "Or a thief."),
       say("Pico", "最近、この町では夜になると変なことが起きるみたいだピコ。"),
       say("", "そこへ別の女性が慌てて走ってくる。"),
+      bg("scene1.5"),
       say("Woman 2", "My bag was gone!"),
       say("Woman 2", "Someone stole it!"),
       say("", "女性は交番へ向かう。"),
@@ -185,11 +186,13 @@
       // 2．今日はキャンプではなくホテル
       say("", "いつものようにキャンプしようとする一行。"),
       say("", "しかしPicoが止める。"),
+      bg("scene1.7"),
       say("Pico", "今日はキャンプはやめるピコ。"),
       say("Kong", "Why?"),
       say("Pico", "この町は夜がちょっと物騒ピコ。安全のためホテルにするピコ！"),
 
       // 3．ホテルにチェックイン
+      bg("scene2"),
       say("Hotel Clerk", "Welcome."),
       say("Hotel Clerk", "Do you have a reservation?"), ask(1),
       say("Hotel Clerk", "How many people?"), ask(2),
@@ -235,12 +238,13 @@
       say("Pico", "待つピコ！コングを怖がってるピコ！"),
       say("Kong", "Me?"),
       say("", "主人公が前へ出る。"),
+      C.clear(), bg("scene6"),
       ask(6), say("Ben", "No..."),
       ask(7), say("Ben", "Ben."),
       say("主人公", "Ben?"),
       say("Ben", "Yes."),
       say("", "ここでBenに少し色が戻る。"),
-      ben("stage1"),
+      bg("scene7"),
       say("", "主人公はバッグ事件を思い出す。"),
       ask(8), say("Ben", "No! I don’t!"),
       say("Kong", "Really?"),
@@ -249,7 +253,7 @@
       say("Kong", "The police station."),
 
       // 6．交番からパン屋へ
-      bg("ben_police_station"),
+      bg("scene8"),
       say("", "交番にはバッグをなくした女性がいる。"),
       say("Police Officer", "Where did you see your bag?"),
       say("Woman", "Near the bakery."),
@@ -262,11 +266,12 @@
       say("Woman", "Yes."),
       say("Kong", "Let’s go."),
       say("", "全員でパン屋へ。"),
-      bg("ben_bakery_bench"),
+      bg("scene9"),
 
       // 7．バッグ発見
       ask(10),
       say("Bakery Clerk", "Yes."),
+      bg("scene10"),
       say("", "店の奥からバッグを出す。"),
       say("Bakery Clerk", "I found it on the bench."),
       say("Bakery Clerk", "I kept it inside."),
@@ -278,7 +283,6 @@
       say("Woman", "I’m sorry, Ben."),
       say("Ben", "It’s OK."),
       say("", "ここでBenの色がさらに戻る。"),
-      ben("stage2"),
 
       // 8．怪現象の正体
       say("Townsperson", "But... the footsteps?"),
@@ -292,6 +296,7 @@
       say("", "Benが少しずつ落ち着き、姿が見えてくる。"),
 
       // 9．His name is Ben
+      bg("scene10.5"),
       say("", "Benはまだ少し怖そう。"),
       say("主人公", "Wait."),
       say("", "KongがBenの前に立つ。"),
@@ -303,19 +308,17 @@
       say("Woman", "Good evening, Ben."),
       say("Ben", "Good evening."),
       say("", "Benの色がさらに戻る。"),
-      ben("stage3"),
       say("Townsperson", "It’s not a ghost."),
       say("Woman", "We can see Ben now."),
       say("Townsperson", "We are happy now."),
       say("", "そして――"),
       say("", "Benの色が完全に戻る。"),
-      ben("stage4_full"),
       say("Ben", "My color is back."),
       say("Kong", "Wow!"),
       say("Woman", "I’m sorry, Ben."),
       say("Ben", "It’s OK."),
       say("", "もう誰もBenを「ghost」「thief」と呼ばない。"),
-      C.clear(), bg("ben_town_relief_cast_night"),
+      C.clear(), bg("scene10.5"),
       say("", "一行がホテルへ戻ろうとする。"),
       say("Woman", "Good night, Ben."),
       say("Townsperson", "Good night, Ben."),
@@ -340,11 +343,12 @@
       say("Pico", "間に合ったピコ！"),
 
       // 11．ホテル
-      bg("ben_hotel_kong_sleep"),
+      bg("scne11.5"),
       say("", "Kongの部屋。"),
       say("", "大きなking-size bed。"),
       say("", "Kongがベッドを見る。"),
       say("Kong", "My bed!"),
+      bg("ben_hotel_kong_sleep"),
       say("", "Kongがベッドへ。"),
       say("Kong", "Good night!")
     ]
