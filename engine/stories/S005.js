@@ -46,7 +46,7 @@
       ]),
       // Scene 3: hotel reception; Challenges 1–6.
       C.sequence([
-        C.background("images/005/s005_regen_a_reception_safe_v2.png"),
+        C.background("images/005/s005_regen_a_reception_correction_v2.png"),
         C.dialogue("Hotel Clerk", "Welcome."),
         C.dialogue("Hotel Clerk", "Do you have a reservation?"),
         C.question("s005.communication.1", "s005Challenge1"),
@@ -95,7 +95,7 @@
       // Scene 5: meet Ben; Challenges 7–10.
       C.sequence([
         C.clear(),
-        C.background("images/005/s005_regen_b_alley_safe_v2.png"),
+        C.background("images/005/s005_regen_b_alley_correction_v2.png"),
         C.dialogue("", "Kongが近づく。"),
         C.dialogue("", "Benが怖がり、さらに色が薄くなる。"),
         C.dialogue("Pico", "待つピコ！コングを怖がってるピコ！"),
@@ -186,7 +186,7 @@
         C.dialogue("Townsperson", "We are happy now."),
         C.dialogue("", "そして――"),
         C.dialogue("", "Benの色が完全に戻る。"),
-        C.background("images/005/s005_regen_c_relief_safe_v2.png"),
+        C.background("images/005/s005_regen_c_relief_correction_v2.png"),
         C.dialogue("Ben", "My color is back!"),
         C.dialogue("町の人", "How cute!"),
         C.dialogue("Kong", "Ben is cool!"),
@@ -196,7 +196,7 @@
         C.dialogue("Ben", "It’s OK."),
         C.dialogue("", "もう誰もBenを「ghost」「thief」と呼ばない。"),
         C.clear(),
-        C.background("images/005/s005_regen_c_relief_safe_v2.png"),
+        C.background("images/005/s005_regen_c_relief_correction_v2.png"),
         C.dialogue("", "一行がホテルへ戻ろうとする。"),
         C.dialogue("Woman", "Good night, Ben."),
         C.dialogue("Townsperson", "Good night, Ben."),
@@ -230,7 +230,7 @@
         C.dialogue("", "大きなking-size bed。"),
         C.dialogue("", "Kongがベッドを見る。"),
         C.dialogue("Kong", "My bed!"),
-        C.background("images/005/s005_regen_d_rest_safe_v2.png"),
+        C.background("images/005/s005_regen_d_rest_correction_v2.png"),
         C.dialogue("", "Kongがベッドへ。"),
         C.dialogue("Kong", "Good night!")
       ])
