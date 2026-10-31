@@ -32,26 +32,26 @@
   {
     "id": "s005.communication.2",
     "category": "word",
-    "prompt": "3人です。",
+    "prompt": "4人です。",
     "answers": [
-      "Three.",
-      "3.",
-      "Three people.",
-      "3 people.",
-      "We are three."
+      "Four.",
+      "4.",
+      "Four people.",
+      "4 people.",
+      "We are four."
     ],
     "success": "",
     "failure": "",
     "picoSupport": [
-      "3人だから……ピコ。",
-      "“Three” を使って答えるピコ。",
-      "Three."
+      "4人だから……ピコ。",
+      "“Four” を使って答えるピコ。",
+      "Four."
     ],
     "communicative": {
-      "conceptId": "hotel.party.three",
+      "conceptId": "hotel.party.four",
       "difficulty": "starter",
       "promptType": "answer",
-      "expectedUtterance": "Three.",
+      "expectedUtterance": "Four.",
       "poolId": "s005.communication.2.v1"
     }
   },
@@ -91,6 +91,30 @@
   {
     "id": "s005.communication.4",
     "category": "word",
+    "prompt": "キングサイズのベッドを1つお願いします。",
+    "answers": [
+      "One king-size bed, please.",
+      "One king size bed please",
+      "A king-size bed, please."
+    ],
+    "success": "",
+    "failure": "",
+    "picoSupport": [
+      "1つお願いするピコ。",
+      "“One king-size bed” を使うピコ。",
+      "One king-size bed, please."
+    ],
+    "communicative": {
+      "conceptId": "hotel.bed.king.one.request",
+      "difficulty": "starter",
+      "promptType": "request",
+      "expectedUtterance": "One king-size bed, please.",
+      "poolId": "s005.communication.4.v1"
+    }
+  },
+  {
+    "id": "s005.communication.5",
+    "category": "word",
     "prompt": "2部屋お願いします。",
     "answers": [
       "Two rooms, please.",
@@ -111,11 +135,11 @@
       "difficulty": "starter",
       "promptType": "request",
       "expectedUtterance": "Two rooms, please.",
-      "poolId": "s005.communication.4.v1"
+      "poolId": "s005.communication.5.v1"
     }
   },
   {
-    "id": "s005.communication.5",
+    "id": "s005.communication.6",
     "category": "word",
     "prompt": "はい、お願いします。",
     "answers": [
@@ -138,11 +162,11 @@
       "difficulty": "starter",
       "promptType": "answer",
       "expectedUtterance": "Yes, please.",
-      "poolId": "s005.communication.5.v1"
+      "poolId": "s005.communication.6.v1"
     }
   },
   {
-    "id": "s005.communication.6",
+    "id": "s005.communication.7",
     "category": "word",
     "prompt": "大丈夫ですか？",
     "answers": [
@@ -167,11 +191,11 @@
       "difficulty": "starter",
       "promptType": "question",
       "expectedUtterance": "Are you OK?",
-      "poolId": "s005.communication.6.v1"
+      "poolId": "s005.communication.7.v1"
     }
   },
   {
-    "id": "s005.communication.7",
+    "id": "s005.communication.8",
     "category": "word",
     "prompt": "（あなたの）名前は何ですか？",
     "answers": [
@@ -204,11 +228,11 @@
       "difficulty": "starter",
       "promptType": "question",
       "expectedUtterance": "What’s your name?",
-      "poolId": "s005.communication.7.v1"
+      "poolId": "s005.communication.8.v1"
     }
   },
   {
-    "id": "s005.communication.8",
+    "id": "s005.communication.9",
     "category": "word",
     "prompt": "物を盗みましたか？",
     "answers": [
@@ -241,11 +265,11 @@
       "difficulty": "starter",
       "promptType": "question",
       "expectedUtterance": "Do you steal things?",
-      "poolId": "s005.communication.8.v1"
+      "poolId": "s005.communication.9.v1"
     }
   },
   {
-    "id": "s005.communication.9",
+    "id": "s005.communication.10",
     "category": "word",
     "prompt": "私たちと一緒に来て。",
     "answers": [
@@ -270,11 +294,11 @@
       "difficulty": "starter",
       "promptType": "invitation",
       "expectedUtterance": "Come with us.",
-      "poolId": "s005.communication.9.v1"
+      "poolId": "s005.communication.10.v1"
     }
   },
   {
-    "id": "s005.communication.10",
+    "id": "s005.communication.11",
     "category": "word",
     "prompt": "バッグを見ましたか？",
     "answers": [
@@ -299,11 +323,11 @@
       "difficulty": "starter",
       "promptType": "question",
       "expectedUtterance": "Did you see a bag?",
-      "poolId": "s005.communication.10.v1"
+      "poolId": "s005.communication.11.v1"
     }
   },
   {
-    "id": "s005.communication.11",
+    "id": "s005.communication.12",
     "category": "word",
     "prompt": "彼の名前はBenです。",
     "answers": [
@@ -329,7 +353,7 @@
       "difficulty": "starter",
       "promptType": "statement",
       "expectedUtterance": "His name is Ben.",
-      "poolId": "s005.communication.11.v1"
+      "poolId": "s005.communication.12.v1"
     }
   }
 ];
@@ -357,19 +381,19 @@
     "promptType": "answer"
   },
   {
-    "conceptId": "hotel.party.three",
+    "conceptId": "hotel.party.four",
     "variants": [
-      "Three.",
-      "3.",
-      "Three people.",
-      "3 people.",
-      "We are three."
+      "Four.",
+      "4.",
+      "Four people.",
+      "4 people.",
+      "We are four."
     ],
     "rejects": [
       {
         "variants": [
           "Two.",
-          "Four."
+          "Three."
         ],
         "reason": "contrary-goal"
       }
@@ -403,6 +427,24 @@
     ],
     "difficulty": "starter",
     "promptType": "question"
+  },
+  {
+    "conceptId": "hotel.bed.king.one.request",
+    "variants": [
+      "One king-size bed, please.",
+      "One king size bed please",
+      "A king-size bed, please."
+    ],
+    "rejects": [
+      {
+        "variants": [
+          "Two king-size beds, please."
+        ],
+        "reason": "contrary-goal"
+      }
+    ],
+    "difficulty": "starter",
+    "promptType": "request"
   },
   {
     "conceptId": "hotel.rooms.two.request",
@@ -646,31 +688,31 @@
     "items": [
       {
         "itemId": "s005.communication.2",
-        "conceptId": "hotel.party.three",
-        "displayValue": "3人です。",
+        "conceptId": "hotel.party.four",
+        "displayValue": "4人です。",
         "prompts": [
           {
             "promptType": "answer",
             "difficulty": "starter",
-            "expectedUtterance": "Three.",
+            "expectedUtterance": "Four.",
             "acceptedVariants": [
-              "Three.",
-              "3.",
-              "Three people.",
-              "3 people.",
-              "We are three."
+              "Four.",
+              "4.",
+              "Four people.",
+              "4 people.",
+              "We are four."
             ]
           },
           {
             "promptType": "answer",
             "difficulty": "starter",
-            "expectedUtterance": "3.",
+            "expectedUtterance": "4.",
             "acceptedVariants": [
-              "Three.",
-              "3.",
-              "Three people.",
-              "3 people.",
-              "We are three."
+              "Four.",
+              "4.",
+              "Four people.",
+              "4 people.",
+              "We are four."
             ]
           }
         ]
@@ -732,6 +774,38 @@
     "items": [
       {
         "itemId": "s005.communication.4",
+        "conceptId": "hotel.bed.king.one.request",
+        "displayValue": "キングサイズのベッドを1つお願いします。",
+        "prompts": [
+          {
+            "promptType": "request",
+            "difficulty": "starter",
+            "expectedUtterance": "One king-size bed, please.",
+            "acceptedVariants": [
+              "One king-size bed, please.",
+              "One king size bed please",
+              "A king-size bed, please."
+            ]
+          },
+          {
+            "promptType": "request",
+            "difficulty": "starter",
+            "expectedUtterance": "A king-size bed, please.",
+            "acceptedVariants": [
+              "One king-size bed, please.",
+              "One king size bed please",
+              "A king-size bed, please."
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "poolId": "s005.communication.5.v1",
+    "items": [
+      {
+        "itemId": "s005.communication.5",
         "conceptId": "hotel.rooms.two.request",
         "displayValue": "2部屋お願いします。",
         "prompts": [
@@ -764,10 +838,10 @@
     ]
   },
   {
-    "poolId": "s005.communication.5.v1",
+    "poolId": "s005.communication.6.v1",
     "items": [
       {
-        "itemId": "s005.communication.5",
+        "itemId": "s005.communication.6",
         "conceptId": "hotel.breakfast.yes",
         "displayValue": "はい、お願いします。",
         "prompts": [
@@ -802,10 +876,10 @@
     ]
   },
   {
-    "poolId": "s005.communication.6.v1",
+    "poolId": "s005.communication.7.v1",
     "items": [
       {
-        "itemId": "s005.communication.6",
+        "itemId": "s005.communication.7",
         "conceptId": "s005.social.wellbeing.ask",
         "displayValue": "大丈夫ですか？",
         "prompts": [
@@ -844,10 +918,10 @@
     ]
   },
   {
-    "poolId": "s005.communication.7.v1",
+    "poolId": "s005.communication.8.v1",
     "items": [
       {
-        "itemId": "s005.communication.7",
+        "itemId": "s005.communication.8",
         "conceptId": "social.name.ask",
         "displayValue": "（あなたの）名前は何ですか？",
         "prompts": [
@@ -902,10 +976,10 @@
     ]
   },
   {
-    "poolId": "s005.communication.8.v1",
+    "poolId": "s005.communication.9.v1",
     "items": [
       {
-        "itemId": "s005.communication.8",
+        "itemId": "s005.communication.9",
         "conceptId": "mystery.stealing.ask",
         "displayValue": "物を盗みましたか？",
         "prompts": [
@@ -960,10 +1034,10 @@
     ]
   },
   {
-    "poolId": "s005.communication.9.v1",
+    "poolId": "s005.communication.10.v1",
     "items": [
       {
-        "itemId": "s005.communication.9",
+        "itemId": "s005.communication.10",
         "conceptId": "social.come.with.us",
         "displayValue": "私たちと一緒に来て。",
         "prompts": [
@@ -1002,10 +1076,10 @@
     ]
   },
   {
-    "poolId": "s005.communication.10.v1",
+    "poolId": "s005.communication.11.v1",
     "items": [
       {
-        "itemId": "s005.communication.10",
+        "itemId": "s005.communication.11",
         "conceptId": "mystery.bag.sighting.ask",
         "displayValue": "バッグを見ましたか？",
         "prompts": [
@@ -1044,10 +1118,10 @@
     ]
   },
   {
-    "poolId": "s005.communication.11.v1",
+    "poolId": "s005.communication.12.v1",
     "items": [
       {
-        "itemId": "s005.communication.11",
+        "itemId": "s005.communication.12",
         "conceptId": "social.ben.introduce",
         "displayValue": "彼の名前はBenです。",
         "prompts": [

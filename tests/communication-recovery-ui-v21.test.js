@@ -20,7 +20,7 @@ const c = { console, Promise, document: { getElementById: () => ({ appendChild(b
     next() { return Promise.resolve("next"); }
   }, addEventListener(_, listener) { listener(); } };
 c.window = c; vm.createContext(c); vm.runInContext(source, c);
-onStep({ step: { type: "question", questionId: "any" } });
+
 (async () => {
  const p = c.CommunicativeQuestionPresenter, token = p.begin();
  p.speech(() => new Promise(() => {}), token, {}, q.prompt);
@@ -40,7 +40,7 @@ onStep({ step: { type: "question", questionId: "any" } });
  await p.recovery({ status: "reject", answer: "High" }, { retry: true, support: true, supportText: "Support 1" }, token);
  assert.strictEqual(ui.text, q.prompt + "\n\nSupport 1");
  assert.strictEqual(ui.feedback, false);
- assert.strictEqual(ui.languages, 1);
+ assert.strictEqual(ui.languages, 0);
  p.speech(() => new Promise(() => {}), token, {}, q.prompt);
  assert.strictEqual(ui.text, q.prompt + "\n\nSupport 1");
  ui.talk.click(); assert(ui.status);

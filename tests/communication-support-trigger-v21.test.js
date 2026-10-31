@@ -15,7 +15,7 @@ const c = { console, Promise, CommunicativeJudgeRuleData: [], LotteryPoolData: [
 }; c.window=c; vm.createContext(c);
 for (const file of ["engine/commands/story-commands.js", "data/s005-communication.js", "engine/stories/S005.js", "engine/controllers/communicative-question-flow-controller.js"]) vm.runInContext(fs.readFileSync(path.join(__dirname,"..",file),"utf8"),c);
 (async()=>{
- assert.strictEqual(questions.length,11);
+ assert.strictEqual(questions.length,12);
  for(const q of questions){
   plans=["support","support","support","support","retry","retry","support","continue"];
   results=["reject","unknown","speech-failure"];seen=[];
@@ -41,6 +41,6 @@ for (const file of ["engine/commands/story-commands.js", "data/s005-communicatio
   await c.CommunicativeQuestionFlowController.start(q.id);
   assert.deepStrictEqual(seen.map(x=>x.text),[null,null,null],"Retry and speech failure never advance Stage 0");
  }
- console.log("communication-support-trigger-v21.test.js: PASS (11 challenges, every stage/result, repeated retry, cap, reset)");
+ console.log("communication-support-trigger-v21.test.js: PASS (12 challenges, every stage/result, repeated retry, cap, reset)");
 })().catch(e=>{console.error(e);process.exitCode=1});
 

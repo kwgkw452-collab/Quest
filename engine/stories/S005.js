@@ -5,6 +5,7 @@
   var story = {
     id: "S005",
     title: "S005 Ben ― 見えない夜",
+    metadata: { perspective: "player", guests: ["player", "kong", "saki", "bernie"], nonGuestCompanions: ["pico"] },
     steps: [
       // Scene 1: arrival and the missing bag.
       C.sequence([
@@ -28,7 +29,7 @@
         C.dialogue("Townsperson", "Or a thief."),
         C.dialogue("Pico", "最近、この町では夜になると変なことが起きるみたいだピコ。"),
         C.dialogue("", "そこへ別の女性が慌てて走ってくる。"),
-        C.background("images/005/scene1.5.png"),
+        C.background("images/005/clean-v1/missing-bag-report.png"),
         C.dialogue("Woman 2", "My bag was gone!"),
         C.dialogue("Woman 2", "Someone stole it!"),
         C.dialogue("", "女性は交番へ向かう。"),
@@ -38,12 +39,12 @@
       C.sequence([
         C.dialogue("", "いつものようにキャンプしようとする一行。"),
         C.dialogue("", "しかしPicoが止める。"),
-        C.background("images/005/scene1.7.png"),
+        C.background("images/005/clean-v1/hotel-decision.png"),
         C.dialogue("Pico", "今日はキャンプはやめるピコ。"),
         C.dialogue("Kong", "Why?"),
         C.dialogue("Pico", "この町は夜がちょっと物騒ピコ。安全のためホテルにするピコ！")
       ]),
-      // Scene 3: hotel reception; Challenges 1–5.
+      // Scene 3: hotel reception; Challenges 1–6.
       C.sequence([
         C.background("images/005/s005_regen_a_reception_safe_v2.png"),
         C.dialogue("Hotel Clerk", "Welcome."),
@@ -51,19 +52,20 @@
         C.question("s005.communication.1", "s005Challenge1"),
         C.dialogue("Hotel Clerk", "How many people?"),
         C.question("s005.communication.2", "s005Challenge2"),
-        C.dialogue("Hotel Clerk", "We have a twin room and a single room."),
+        C.dialogue("Hotel Clerk", "We have rooms for four people."),
         C.dialogue("", "主人公がKongを見る。"),
         C.question("s005.communication.3", "s005Challenge3"),
-        C.dialogue("Hotel Clerk", "Yes. The single room has a king-size bed."),
+        C.dialogue("Hotel Clerk", "Yes, we do."),
         C.question("s005.communication.4", "s005Challenge4"),
+        C.question("s005.communication.5", "s005Challenge5"),
         C.dialogue("Pico", "The king-size bed is for Kong."),
         C.dialogue("Kong", "Yes!"),
         C.dialogue("Hotel Clerk", "Do you want breakfast?"),
-        C.question("s005.communication.5", "s005Challenge5"),
+        C.question("s005.communication.6", "s005Challenge6"),
         C.dialogue("Hotel Clerk", "Breakfast is from seven to nine."),
         C.dialogue("Hotel Clerk", "Here are your room keys."),
         C.dialogue("Hotel Clerk", "The twin room is on the second floor."),
-        C.dialogue("Hotel Clerk", "The single room is next to it."),
+        C.dialogue("Hotel Clerk", "The other room is next to it."),
         C.dialogue("", "時計を指す。"),
         C.dialogue("Hotel Clerk", "The front door closes at twelve."),
         C.dialogue("Kong", "Twelve?"),
@@ -88,41 +90,39 @@
         C.dialogue("", "少しずつ輪郭が見える。"),
         C.dialogue("Pico", "幽霊じゃないピコ！"),
         C.dialogue("", "モンスターだった。"),
-        C.item("images/005/ben_stage0.png")
+        C.background("images/005/clean-v1/ben-introduction.png")
       ]),
-      // Scene 5: meet Ben; Challenges 6–9.
+      // Scene 5: meet Ben; Challenges 7–10.
       C.sequence([
         C.clear(),
         C.background("images/005/s005_regen_b_alley_safe_v2.png"),
-        C.item("images/005/ben_stage0.png"),
         C.dialogue("", "Kongが近づく。"),
         C.dialogue("", "Benが怖がり、さらに色が薄くなる。"),
         C.dialogue("Pico", "待つピコ！コングを怖がってるピコ！"),
         C.dialogue("Kong", "Me?"),
         C.dialogue("", "主人公が前へ出る。"),
         C.clear(),
-        C.background("images/005/scene6.png"),
-        C.question("s005.communication.6", "s005Challenge6"),
-        C.dialogue("Ben", "No..."),
+        C.background("images/005/clean-v1/ben-introduction.png"),
         C.question("s005.communication.7", "s005Challenge7"),
+        C.dialogue("Ben", "No..."),
+        C.question("s005.communication.8", "s005Challenge8"),
         C.dialogue("Ben", "Ben."),
         C.dialogue("主人公", "Ben?"),
         C.dialogue("Ben", "Yes."),
         C.dialogue("", "ここでBenに少し色が戻る。"),
-        C.background("images/005/scene7.png"),
-        C.item("images/005/ben_stage1.png"),
+        C.background("images/005/clean-v1/ben-trust.png"),
         C.dialogue("", "主人公はバッグ事件を思い出す。"),
-        C.question("s005.communication.8", "s005Challenge8"),
+        C.question("s005.communication.9", "s005Challenge9"),
         C.dialogue("Ben", "No! I don’t!"),
         C.dialogue("Kong", "Really?"),
         C.dialogue("Ben", "Yes!"),
-        C.question("s005.communication.9", "s005Challenge9"),
+        C.question("s005.communication.10", "s005Challenge10"),
         C.dialogue("Ben", "Where?"),
         C.dialogue("Kong", "The police station.")
       ]),
       // Scene 6: the police station and the bakery.
       C.sequence([
-        C.background("images/005/scene8.png"),
+        C.background("images/005/clean-v1/police.png"),
         C.dialogue("", "交番にはバッグをなくした女性がいる。"),
         C.dialogue("Police Officer", "Where did you see your bag?"),
         C.dialogue("Woman", "Near the bakery."),
@@ -135,13 +135,13 @@
         C.dialogue("Woman", "Yes."),
         C.dialogue("Kong", "Let’s go."),
         C.dialogue("", "全員でパン屋へ。"),
-        C.background("images/005/scene9.png")
+        C.background("images/005/clean-v1/bakery-question.png")
       ]),
-      // Scene 7: recover the bag; Challenge 10.
+      // Scene 7: recover the bag; Challenge 11.
       C.sequence([
-        C.question("s005.communication.10", "s005Challenge10"),
+        C.question("s005.communication.11", "s005Challenge11"),
         C.dialogue("Bakery Clerk", "Yes."),
-        C.background("images/005/scene10.png"),
+        C.background("images/005/clean-v1/bag-recovered.png"),
         C.dialogue("", "店の奥からバッグを出す。"),
         C.dialogue("Bakery Clerk", "I found it on the bench."),
         C.dialogue("Bakery Clerk", "I kept it inside."),
@@ -153,7 +153,6 @@
         C.dialogue("Woman", "I’m sorry, Ben."),
         C.dialogue("Ben", "It’s OK."),
         C.dialogue("", "ここでBenの色がさらに戻る。"),
-        C.item("images/005/ben_stage2.png")
       ]),
       // Scene 8: understand the strange footsteps.
       C.sequence([
@@ -167,30 +166,31 @@
         C.dialogue("Pico", "ベンが見えなかったから、足音だけ聞こえたり、何かが動いたと思ったピコ！"),
         C.dialogue("", "Benが少しずつ落ち着き、姿が見えてくる。")
       ]),
-      // Scene 9: introduce Ben; Challenge 11 and the completed color stages.
+      // Scene 9: introduce Ben; Challenge 12 and the completed color stages.
       C.sequence([
         C.clear(),
-        C.background("images/005/s005_regen_c_relief_safe_v2.png"),
-        C.item("images/005/ben_stage2.png"),
+        C.background("images/005/clean-v1/ben-relief-stage2.png"),
         C.dialogue("", "Benはまだ少し怖そう。"),
         C.dialogue("主人公", "Wait."),
         C.dialogue("", "KongがBenの前に立つ。"),
         C.dialogue("", "最初はBenを追い詰めるためだったKong。"),
         C.dialogue("", "今度はBenを守るために立つ。"),
-        C.question("s005.communication.11", "s005Challenge11"),
         C.dialogue("町の人", "Ben?"),
         C.dialogue("Kong", "Yes. He is Ben."),
         C.dialogue("Woman", "Good evening, Ben."),
         C.dialogue("Ben", "Good evening."),
         C.dialogue("", "Benの色がさらに戻る。"),
-        C.item("images/005/ben_stage3.png"),
+        C.background("images/005/clean-v1/ben-relief-stage3.png"),
         C.dialogue("Townsperson", "It’s not a ghost."),
         C.dialogue("Woman", "We can see Ben now."),
         C.dialogue("Townsperson", "We are happy now."),
         C.dialogue("", "そして――"),
         C.dialogue("", "Benの色が完全に戻る。"),
-        C.item("images/005/ben_stage4_full.png"),
-        C.dialogue("Ben", "My color is back."),
+        C.background("images/005/s005_regen_c_relief_safe_v2.png"),
+        C.dialogue("Ben", "My color is back!"),
+        C.dialogue("Saki", "How cute!"),
+        C.dialogue("Kong", "Ben is cool!"),
+        C.question("s005.communication.12", "s005Challenge12"),
         C.dialogue("Kong", "Wow!"),
         C.dialogue("Woman", "I’m sorry, Ben."),
         C.dialogue("Ben", "It’s OK."),
@@ -225,7 +225,7 @@
       // Scene 11: Kong's king-size bed.
       C.sequence([
         C.clear(),
-        C.background("images/005/scne11.5.png"),
+        C.background("images/005/clean-v1/king-size-room.png"),
         C.dialogue("", "Kongの部屋。"),
         C.dialogue("", "大きなking-size bed。"),
         C.dialogue("", "Kongがベッドを見る。"),

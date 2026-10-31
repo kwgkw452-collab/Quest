@@ -73,9 +73,9 @@ function harness() {
     "engine/controllers/communicative-question-flow-controller.js"]) {
     vm.runInContext(fs.readFileSync(path.join(__dirname, "..", file), "utf8"), c, { filename: file });
   }
-  c.DialogManager.init(els); events.DOMContentLoaded();
+  c.DialogManager.init(els); 
   return { c, els, questions, outcomes, get calls() { return calls; },
-    start(q) { onStep({ step: { type: "question", questionId: q.id } }); return c.CommunicativeQuestionFlowController.start(q.id); }
+    start(q) { return c.CommunicativeQuestionFlowController.start(q.id); }
   };
 }
 
@@ -87,14 +87,14 @@ async function click(h, label) {
 }
 function support(h, q, stage) {
   assert.strictEqual(h.els.message.textContent, q.picoSupport[stage - 1]);
-  for (const label of ["もう一度話す", "ピコのサポート", "英語を見る", "日本語を見る"]) {
+  for (const label of ["もう一度話す", "ピコのサポート", "冒険を続ける"]) {
     assert(button(h, label), "Support must retain " + label);
   }
 }
 
 (async () => {
   const h = harness();
-  assert.strictEqual(h.questions.length, 11);
+  assert.strictEqual(h.questions.length, 12);
   for (const q of h.questions) {
     h.outcomes.push({ status: "reject" }, { status: "unknown" }, { status: "speech-failure" },
       { status: "reject" }, { status: "speech-failure" }, { status: "success" });
@@ -107,16 +107,10 @@ function support(h, q, stage) {
     assert.strictEqual(h.els.message.textContent, q.picoSupport[0], "S1 is visible at retry speech gate");
     await click(h, "話す"); support(h, q, 1);
 
-    const callsBeforeLanguage = h.calls;
-    await click(h, "英語を見る");
-    assert.strictEqual(h.els.message.textContent, q.communicative.expectedUtterance);
-    await click(h, "日本語を見る");
-    assert.strictEqual(h.els.message.textContent, "", "Japanese Goal is already displayed in header");
-    assert(button(h, "もう一度話す")); assert(button(h, "ピコのサポート"));
-    assert.strictEqual(h.calls, callsBeforeLanguage, "Language controls do not start or resolve an attempt");
+    assert.strictEqual(h.els.controls.children.length, 3, "Only the common recovery actions are shown");
+    assert(!button(h, "英語を見る")); assert(!button(h, "日本語を見る"));
     await click(h, "ピコのサポート"); support(h, q, 2);
     await click(h, "もう一度話す"); await click(h, "話す"); support(h, q, 2);
-    await click(h, "英語を見る");
     await click(h, "ピコのサポート"); support(h, q, 3);
     for (let retry = 0; retry < 2; retry++) {
       await click(h, "もう一度話す"); await click(h, "話す"); support(h, q, 3);
@@ -142,6 +136,6 @@ function support(h, q, stage) {
   await click(h, "ピコのサポート");
   h.c.CommunicativeQuestionFlowController.cancel();
   assert.strictEqual((await cancelled).status, "cancelled");
-  console.log("S005 Production Controller + Presenter + DialogManager: PASS (11 challenges, S1/S2/S3 retries, language controls, cap/reset, settled failure, cancellation)");
+  console.log("S005 Production Controller + Presenter + DialogManager: PASS (12 challenges, S1/S2/S3 retries, common three-action UI, cap/reset, settled failure, cancellation)");
 })().catch(error => { console.error(error); process.exitCode = 1; });
 

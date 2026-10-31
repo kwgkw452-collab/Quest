@@ -1,0 +1,51 @@
+{
+  "goals": [
+    "No, we don’t.",
+    "Four.",
+    "Do you have a king-size bed?",
+    "One king-size bed, please.",
+    "Two rooms, please.",
+    "Yes, please.",
+    "Are you OK?",
+    "What’s your name?",
+    "Do you steal things?",
+    "Come with us.",
+    "Did you see a bag?",
+    "His name is Ben."
+  ],
+  "prompts": [
+    "いいえ、予約していません。",
+    "4人です。",
+    "キングサイズのベッドはありますか？",
+    "キングサイズのベッドを1つお願いします。",
+    "2部屋お願いします。",
+    "はい、お願いします。",
+    "大丈夫ですか？",
+    "（あなたの）名前は何ですか？",
+    "物を盗みましたか？",
+    "私たちと一緒に来て。",
+    "バッグを見ましたか？",
+    "彼の名前はBenです。"
+  ],
+  "cast": [
+    "主人公",
+    "Kong",
+    "Saki",
+    "Bernie"
+  ],
+  "picoCountsAsGuest": false,
+  "ending": [
+    [
+      "Ben",
+      "My color is back!"
+    ],
+    [
+      "Saki",
+      "How cute!"
+    ],
+    [
+      "Kong",
+      "Ben is cool!"
+    ]
+  ]
+}

@@ -59,7 +59,6 @@ const protectedBlobs = {
   "engine/managers/save-manager.js": "46e5d3141925e12807ac048da151984487dc91a4",
   "engine/managers/video-manager.js": "a333690d49ba0789f60076c6227658ff3145d3dd",
   "engine/presenters/communication-task-presenter.js": "7e971d039c6f70d5c3ce278b74aea5ea623f03d4",
-  "engine/presenters/communicative-question-presenter.js": "c681f525770549131dd552cec2aa657516d77633",
   "engine/services/asset-resolver.js": "184038192372fe3b6a58eaba004f4f18dd953191",
   "engine/services/communication-judge-adapter.js": "0dd6911779d9ead60ed5f0b7725e916a8d94036c",
   "engine/services/communication-judge-gateway.js": "702dbccd8590fddbbbfb7533ece5e0cd0e646b6f",
@@ -96,13 +95,13 @@ const protectedBlobs = {
 for (const [file, expected] of Object.entries(protectedBlobs)) {
   const bytes = fs.readFileSync(path.join(root, file));
   const hash = crypto.createHash("sha1").update("blob " + bytes.length + "\0").update(bytes).digest("hex");
-  assert.equal(hash, expected, file + " must remain byte-identical to formal HEAD 006d312");
+  assert.equal(hash, expected, file + " must remain byte-identical to formal HEAD cb391376");
 }
 const story = fs.readFileSync(path.join(root, "engine/stories/S005.js"), "utf8");
 assert.equal((story.match(/function\s*\(/g) || []).length, 1, "Only the conventional Story registration wrapper is allowed");
 assert(!/\bif\s*\(|\bnew\s+|\bsetTimeout\b|\bconsole\.|onEnter|onComplete|onExit|Controller|Presenter|SpeechEngine|QuestionDatabase|CommunicativeJudgeRuleData|\.replace\s*\(/.test(story), "Story contains no runtime, judge, recovery, trace, callback or path patch");
 assert.equal((story.match(/C\.sequence\(/g) || []).length, 11);
-assert.equal((story.match(/C\.question\(/g) || []).length, 11);
+assert.equal((story.match(/C\.question\(/g) || []).length, 12);
 for (const html of ["index.html", "dev.html"]) {
   const page = fs.readFileSync(path.join(root, html), "utf8");
   assert(page.indexOf("data/s005-communication.js") < page.indexOf("engine/stories/S005.js"));
@@ -110,4 +109,5 @@ for (const html of ["index.html", "dev.html"]) {
   assert(!page.includes("data/s005-communicative-judge-rules.js"));
 }
 assert(!fs.existsSync(path.join(root, "data/s005-communicative-judge-rules.js")), "Old S005 judge registration is removed");
+assert(!fs.readFileSync(path.join(root, "engine/presenters/communicative-question-presenter.js"), "utf8").includes("addLanguageControls"));
 console.log("S005 Clean Rebuild architecture: PASS (" + Object.keys(protectedBlobs).length + " shared files byte-identical; no Story-specific engine or callbacks)");

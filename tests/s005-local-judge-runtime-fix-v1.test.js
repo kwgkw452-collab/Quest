@@ -18,11 +18,12 @@ for (const file of [
 const cases = [
   ["hotel.reservation.none", "No"],
   ["hotel.reservation.none", "No, we don't."],
-  ["hotel.party.three", "Three"],
-  ["hotel.party.three", "3"],
+  ["hotel.party.four", "Four"],
+  ["hotel.party.four", "4"],
   ["hotel.bed.king.ask", "King-size bed, please."],
   ["hotel.bed.king.ask", "Do you have king-size beds?"],
   ["hotel.bed.king.ask", "Does this hotel have a king-size bed?"],
+  ["hotel.bed.king.one.request", "One king-size bed, please."],
   ["hotel.rooms.two.request", "2 rooms"],
   ["s005.social.wellbeing.ask", "Are you all right?"],
   ["social.name.ask", "Name, please?"],
@@ -47,12 +48,12 @@ const cases = [
   vm.runInContext(read("data/communicative-judge-rules.js"), c);
   assert.strictEqual(c.CommunicativeJudgeRuleData, canonicalRegistry, "foundation reload preserves canonical registry");
   assert.equal(c.CommunicativeJudgeRuleData.length, count, "foundation reload is idempotent");
-  assert.equal(c.QuestionDatabase.all().filter(q => q.id.startsWith("s005.communication.")).length, 11);
+  assert.equal(c.QuestionDatabase.all().filter(q => q.id.startsWith("s005.communication.")).length, 12);
   assert.equal(c.CommunicativeJudgeRuleData.filter(rule =>
-    ["hotel.reservation.none", "hotel.party.three", "hotel.bed.king.ask",
+    ["hotel.reservation.none", "hotel.party.four", "hotel.bed.king.ask", "hotel.bed.king.one.request",
       "hotel.rooms.two.request", "hotel.breakfast.yes", "s005.social.wellbeing.ask",
       "social.name.ask", "mystery.stealing.ask", "social.come.with.us",
-      "mystery.bag.sighting.ask", "social.ben.introduce"].includes(rule.conceptId)).length, 11);
+      "mystery.bag.sighting.ask", "social.ben.introduce"].includes(rule.conceptId)).length, 12);
   const questionManager = read("engine/managers/question-manager.js");
   assert(questionManager.includes('"judge-start"'));
   assert(questionManager.includes('"judge-result"'));

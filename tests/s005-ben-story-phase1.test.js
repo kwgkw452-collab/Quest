@@ -5,18 +5,9 @@ const path = require("node:path");
 const vm = require("node:vm");
 const root = path.resolve(__dirname, "..");
 const read = name => fs.readFileSync(path.join(root, name), "utf8");
-const goals = [
-  "No, we don’t.", "Three.", "Do you have a king-size bed?",
-  "Two rooms, please.", "Yes, please.", "Are you OK?",
-  "What’s your name?", "Do you steal things?", "Come with us.",
-  "Did you see a bag?", "His name is Ben."
-];
-const prompts = [
-  "いいえ、予約していません。", "3人です。", "キングサイズのベッドはありますか？",
-  "2部屋お願いします。", "はい、お願いします。", "大丈夫ですか？",
-  "（あなたの）名前は何ですか？", "物を盗みましたか？", "私たちと一緒に来て。",
-  "バッグを見ましたか？", "彼の名前はBenです。"
-];
+const lock = JSON.parse(read("tests/fixtures/s005-clean-lock.json"));
+const goals = lock.goals;
+const prompts = lock.prompts;
 const questions = [];
 const rules = [{ conceptId: "social.wellbeing.ask", variants: ["Are you OK?"] }];
 const calls = [];
@@ -59,8 +50,8 @@ for (const file of [
   "engine/services/local-communicative-judge.js"
 ]) vm.runInContext(read(file), context, { filename: file });
 
-assert.equal(questions.length, 11);
-assert.equal(rules.length, 12);
+assert.equal(questions.length, 12);
+assert.equal(rules.length, 13);
 questions.forEach((q, i) => {
   assert.equal(q.id, "s005.communication." + (i + 1));
   assert.equal(q.prompt, prompts[i]);
@@ -80,21 +71,21 @@ assert.equal(registeredStory.steps.length, 11, "Eleven scenes use the existing s
 assert(registeredStory.steps.every(scene => scene.type === "sequence"));
 const story = { ...registeredStory, steps: registeredStory.steps.flatMap(scene => Array.from(scene.steps)) };
 assert(story);
+assert.equal(story.metadata.perspective, "player");
+assert.deepEqual(Array.from(story.metadata.guests), ["player", "kong", "saki", "bernie"]);
 assert.equal(story.nextStoryId, undefined);
-assert.equal(story.steps.filter(s => s.type === "question").length, 11);
+assert.equal(story.steps.filter(s => s.type === "question").length, 12);
 const images = [...new Set(story.steps.filter(s => s.type === "background" || s.type === "item").map(s => s.src))];
-assert.equal(images.length, 21);
+assert(images.length >= 16);
 images.forEach(src => assert(fs.existsSync(path.join(root, src)), src));
 assert(!images.some(src => src.includes("flower_tree_square_day")));
 assert(fs.existsSync(path.join(root, "images/005/ben_flower_tree_square_day.png")));
-const stages = story.steps.filter(s => s.type === "item").map(s => path.basename(s.src, ".png"));
-assert.equal(JSON.stringify([...new Set(stages)]),
-  JSON.stringify(["ben_stage0", "ben_stage1", "ben_stage2", "ben_stage3", "ben_stage4_full"]));
+assert.equal(story.steps.filter(s => s.type === "item").length, 0, "No old Ben sprite placement is inherited");
 const at = (type, text) => story.steps.findIndex(s => s.type === type &&
   (type === "dialogue" ? s.text === text : s.src.endsWith(text + ".png")));
-assert(at("dialogue", "Good evening.") < at("item", "ben_stage3"));
-assert(at("dialogue", "We are happy now.") < at("item", "ben_stage4_full"));
-assert(at("background", "s005_regen_c_relief_safe_v2") < at("dialogue", "11:55"));
+
+
+
 assert(at("dialogue", "11:55") < at("dialogue", "11:57"));
 assert(at("dialogue", "11:57") < at("dialogue", "11:58"));
 assert(at("dialogue", "11:58") < at("dialogue", "11:59"));
@@ -102,23 +93,26 @@ assert(at("dialogue", "My bed!") < at("dialogue", "Good night!"));
 assert.equal(story.steps.at(-2).text, "Kongがベッドへ。");
 assert.equal(story.steps.at(-1).text, "Good night!");
 
+
+const ordered = lock.ending.map(([speaker, text]) => story.steps.findIndex(s => s.type === "dialogue" && s.speaker === speaker && s.text === text));
+const finalCommunication = story.steps.findIndex(s => s.questionId === "s005.communication.12");
+assert(ordered.every(i => i >= 0));
+assert(ordered[0] < ordered[1] && ordered[1] < ordered[2] && ordered[2] < finalCommunication);
+assert.equal(story.steps.filter(s => s.type === "question").at(-1).questionId, "s005.communication.12");
+assert(!story.steps.some(s => s.text && /single room|three people/.test(s.text)));
+
 (async () => {
   let reference;
   for (const status of ["success", "continued"]) {
     calls.length = 0;
     outcome = status;
     const state = await context.StoryEngine.play(registeredStory, {});
-    assert.equal(state.s005Challenge11.status, status);
-    assert.equal(calls.filter(x => x[0] === "question").length, 11);
+    assert.equal(state.s005Challenge12.status, status);
+    assert.equal(calls.filter(x => x[0] === "question").length, 12);
     assert(calls.some(x => x[0] === "event" && x[1] === "story:complete"));
-    const stage1 = calls.findIndex(x => x[0] === "item" && x[1].endsWith("ben_stage1.png"));
-    const stage2 = calls.findIndex(x => x[0] === "item" && x[1].endsWith("ben_stage2.png"));
-    assert(stage1 >= 0 && stage2 > stage1);
-    assert(!calls.slice(stage1, stage2).some(x => x[0] === "clear"),
-      "Ben remains at Stage 1 through the police and bakery scenes");
     const progression = calls.filter(x => ["dialogue", "item", "background"].includes(x[0]));
     if (reference) assert.equal(JSON.stringify(progression), JSON.stringify(reference),
-      "Challenge outcome must not change the locked narrative or Ben stages");
+      "Challenge outcome must not change the locked narrative");
     reference = progression;
   }
   console.log("S005 Ben Story Phase 1: PASS");

@@ -1,0 +1,55 @@
+{
+  "mode": "built-in image_gen",
+  "assets": [
+    {
+      "asset": "images/005/clean-v1/ben-introduction.png",
+      "input": "images/005/scene6.png",
+      "prompt": "Use case: identity-preserve. Edit this approved Eigo DE Quest pixel-art night-alley scene for the game's fixed 19.5:9 landscape stage. Preserve the established pixel-art style, warm lanterns, moonlit stone alley, Kong's exact brown furry body, two ivory horns and red neckerchief, silver robot Pico, and faint frightened squirrel-like Ben. Player character is the camera POV: do not add or depict the protagonist. Recompose the same scene on a 19.5:9 wide canvas (target 1950x900) with all characters and all meaningful action entirely in the TOP 70% of the image. Their complete silhouettes including feet must end above 70% height. Reserve the BOTTOM 30% as continuous quiet cobblestone foreground ONLY, deliberately clear for the game's external Dialogue Box. No UI, no text, no border, no inset panel. Do not place any character body, feet, face, important prop or action in that bottom safety area. Keep this specific scene, character identities, horns and narrative unchanged; change framing and negative space only."
+    },
+    {
+      "asset": "images/005/clean-v1/ben-trust.png",
+      "input": "images/005/scene7.png",
+      "prompt": "Use case: identity-preserve. Edit the approved Eigo DE Quest illustration, keeping its established pixel-art style, architecture, lighting, cast identities and narrative. Image 1 is the scene to recompose; image 2 is the exact horned Kong/Pico/Ben identity reference. Player is the CAMERA POV and must NOT be depicted. Recompose to a very wide 19.5:9 game background, target 1950x900. All characters, their complete silhouettes and feet, important props and all meaningful action must fit entirely in the TOP 70%. The BOTTOM 30% must be quiet continuous foreground scenery ONLY, intentionally reserved for an external Dialogue Box. No UI, no text additions, no panel or border. Preserve the adopted artwork rather than inventing a different scene. Keep the alley meeting. Kong must have his official TWO ivory horns (the original here omits them); use reference image 2 for his exact horned identity. Keep Pico and fox chef Bernie, and exactly one gray, only partly colored squirrel Ben."
+    },
+    {
+      "asset": "images/005/clean-v1/police.png",
+      "input": "images/005/scene8.png",
+      "prompt": "Use case: identity-preserve. Edit the approved Eigo DE Quest illustration, keeping its established pixel-art style, architecture, lighting, cast identities and narrative. Image 1 is the scene to recompose; image 2 is the exact horned Kong/Pico/Ben identity reference. Player is the CAMERA POV and must NOT be depicted. Recompose to a very wide 19.5:9 game background, target 1950x900. All characters, their complete silhouettes and feet, important props and all meaningful action must fit entirely in the TOP 70%. The BOTTOM 30% must be quiet continuous foreground scenery ONLY, intentionally reserved for an external Dialogue Box. No UI, no text additions, no panel or border. Preserve the adopted artwork rather than inventing a different scene. Keep the police station, concerned woman reporting the bag and dog police officer at the counter, official two-horned Kong, silver Pico and fox chef Bernie. Add one small faint gray squirrel Ben standing with the companions; Ben's identity comes from reference image 2. Do not add the player/protagonist."
+    },
+    {
+      "asset": "images/005/clean-v1/bakery-question.png",
+      "input": "images/005/scene9.png",
+      "prompt": "Use case: identity-preserve. Edit the approved Eigo DE Quest illustration, keeping its established pixel-art style, architecture, lighting, cast identities and narrative. Image 1 is the scene to recompose; image 2 is the exact horned Kong/Pico/Ben identity reference. Player is the CAMERA POV and must NOT be depicted. Recompose to a very wide 19.5:9 game background, target 1950x900. All characters, their complete silhouettes and feet, important props and all meaningful action must fit entirely in the TOP 70%. The BOTTOM 30% must be quiet continuous foreground scenery ONLY, intentionally reserved for an external Dialogue Box. No UI, no text additions, no panel or border. Preserve the adopted artwork rather than inventing a different scene. Keep the bakery outside, baker and woman, official two-horned Kong and silver Pico. Fox chef Bernie may stand with the companions. Ben is still gray and only partly colored, not yet fully golden. Keep exactly ONE Ben."
+    },
+    {
+      "asset": "images/005/clean-v1/bag-recovered.png",
+      "input": "images/005/scene10.png",
+      "prompt": "Use case: identity-preserve. Edit the approved Eigo DE Quest illustration, keeping its established pixel-art style, architecture, lighting, cast identities and narrative. Image 1 is the scene to recompose; image 2 is the exact horned Kong/Pico/Ben identity reference. Player is the CAMERA POV and must NOT be depicted. Recompose to a very wide 19.5:9 game background, target 1950x900. All characters, their complete silhouettes and feet, important props and all meaningful action must fit entirely in the TOP 70%. The BOTTOM 30% must be quiet continuous foreground scenery ONLY, intentionally reserved for an external Dialogue Box. No UI, no text additions, no panel or border. Preserve the adopted artwork rather than inventing a different scene. Keep the baker holding the recovered brown handbag, relieved woman, official two-horned Kong, silver Pico, fox chef Bernie, and exactly one squirrel Ben whose color is recovering to pale warm gold but not full color yet."
+    },
+    {
+      "asset": "images/005/clean-v1/missing-bag-report.png",
+      "input": "images/005/scene1.5.png",
+      "prompt": "Use case: identity-preserve. Edit this adopted Eigo DE Quest pixel-art illustration; keep exact scene, style, lighting and character identities. Player is the CAMERA POV, never depict a protagonist. Official Kong must have his two ivory horns and red neckerchief. Recompose as 19.5:9 landscape (1950x900 target), all meaningful action and complete character silhouettes including feet must fit in the TOP 70%. Reserve bottom 30% for quiet continuous ground/floor only, for an external Dialogue Box. No UI, panels, borders, no added lettering. Preserve the concerned townspeople and woman reporting her missing bag, Kong, Pico and fox chef Bernie. Only reframe the same cast and action to leave the safety foreground."
+    },
+    {
+      "asset": "images/005/clean-v1/hotel-decision.png",
+      "input": "images/005/scene1.7.png",
+      "prompt": "Use case: identity-preserve. Edit this adopted Eigo DE Quest pixel-art illustration; keep exact scene, style, lighting and character identities. Player is the CAMERA POV, never depict a protagonist. Official Kong must have his two ivory horns and red neckerchief. Recompose as 19.5:9 landscape (1950x900 target), all meaningful action and complete character silhouettes including feet must fit in the TOP 70%. Reserve bottom 30% for quiet continuous ground/floor only, for an external Dialogue Box. No UI, panels, borders, no added lettering. Preserve the hotel exterior and discussion between Kong, silver Pico, and fox chef Bernie, with the hotel sign. Only reframe for the safety foreground."
+    },
+    {
+      "asset": "images/005/clean-v1/king-size-room.png",
+      "input": "images/005/scne11.5.png",
+      "prompt": "Use case: identity-preserve. Edit this adopted Eigo DE Quest pixel-art illustration; keep exact scene, style, lighting and character identities. Player is the CAMERA POV, never depict a protagonist. Official Kong must have his two ivory horns and red neckerchief. Recompose as 19.5:9 landscape (1950x900 target), all meaningful action and complete character silhouettes including feet must fit in the TOP 70%. Reserve bottom 30% for quiet continuous ground/floor only, for an external Dialogue Box. No UI, panels, borders, no added lettering. Preserve the warm hotel bedroom, king-size bed and excited two-horned Kong pointing at it. He has not gone to sleep yet. All of Kong including feet and the relevant bed must fit above the safety area."
+    },
+    {
+      "asset": "images/005/clean-v1/ben-relief-stage2.png",
+      "input": "images/005/s005_regen_c_relief_safe_v2.png",
+      "prompt": "Use case: identity-preserve. Edit this adopted Eigo DE Quest pixel-art illustration; keep exact scene, style, lighting and character identities. Player is the CAMERA POV, never depict a protagonist. Official Kong must have his two ivory horns and red neckerchief. Recompose as 19.5:9 landscape (1950x900 target), all meaningful action and complete character silhouettes including feet must fit in the TOP 70%. Reserve bottom 30% for quiet continuous ground/floor only, for an external Dialogue Box. No UI, panels, borders, no added lettering. The entire composition already has the correct foreground safety area: preserve it exactly. Change ONLY the central squirrel Ben to a partly colored pale gray/tan intermediate stage, slightly nervous but calmer. Do not change the surrounding townspeople, Kong, Pico, Bernie or buildings. Do not add a second Ben."
+    },
+    {
+      "asset": "images/005/clean-v1/ben-relief-stage3.png",
+      "input": "images/005/s005_regen_c_relief_safe_v2.png",
+      "prompt": "Use case: identity-preserve. Edit this adopted Eigo DE Quest pixel-art illustration; keep exact scene, style, lighting and character identities. Player is the CAMERA POV, never depict a protagonist. Official Kong must have his two ivory horns and red neckerchief. Recompose as 19.5:9 landscape (1950x900 target), all meaningful action and complete character silhouettes including feet must fit in the TOP 70%. Reserve bottom 30% for quiet continuous ground/floor only, for an external Dialogue Box. No UI, panels, borders, no added lettering. The entire composition already has the correct foreground safety area: preserve it exactly. Change ONLY the central squirrel Ben to a nearly restored light warm gold stage, still a little paler than the original full-color Ben. Keep Ben cheerful and visible; preserve the cast, especially Kong's two horns. Do not add a second Ben."
+    }
+  ]
+}

@@ -1,66 +1,32 @@
-# S005 Clean Rebuild V1
+# S005 Clean Rebuild V1 — latest LOCK
 
-Base: `006d312395e54e377b98a0f0333ef1b63f6acecf`, branch `s005-fixed-195-stage-clean-test`.
+Base: `cb391376267fcaf58ddcab663930cbe5bb04fe1f`, branch `s005-fixed-195-stage-clean-test`.
 
-S005 is newly authored as StoryCommands data. The prior Story's helper functions,
-inline Judge functions, conditional registration, and asset-path repair logic are
-not carried forward. Existing dialogue, communication goals, approved answer
-examples, Support wording, and current graphic assets are specifications.
+This specification supersedes the prior eleven-task rebuild. Priority is the latest user-provided Clean Rebuild specification, latest locked S005 details, completed shared S004 foundations, then old branch content only as reference.
 
-## Production composition
+## Content
 
-- `engine/stories/S005.js`: eleven scenes using the existing `sequence`, `clear`,
-  `background`, `item`, `dialogue`, and `question` commands. No callbacks or runtime
-  branching. The shared StoryEngine/EventSystem execute the scenes.
-- `data/s005-communication.js`: eleven Question definitions, three Support texts
-  per Question, approved/rejected answer variants, and shared Lottery pool data.
-  Registration calls the existing databases and LotteryEngine. There is no custom
-  Judge accept function or S005-specific Speech, Controller, Presenter or UI.
-- `index.html` and `dev.html`: load the new definitions before the new Story.
-- `data/s005-communicative-judge-rules.js`: removed; no second legacy registration.
+- Eleven Scene sequences use the existing StoryCommands/StoryEngine/EventSystem. No Scene callbacks, runtime branches or S005-specific Engine/Controller/Presenter are introduced.
+- Twelve declarative Communication definitions use existing QuestionManager, Speech, local Judge, Lottery and Support. Four guests are player, Kong, Saki and Bernie; Pico is not counted. The player remains the camera POV.
+- Challenge 2 is Four / 4人です。 Challenge 3 asks for a king-size bed; Challenge 4 requests One king-size bed, please. The other goals retain their narrative purpose.
+- Ending order: Ben “My color is back!” → Saki “How cute!” → Kong “Ben is cool!” → final Communication 12 “His name is Ben.”
 
-The shared Engine, Speech, Recognition, QuestionManager, Judge, Support Controller,
-Presenter, Audio, UI/CSS, Fixed Stage, Save, other Stories, Battle and Camp are
-unchanged. The architecture test checks 87 shared source files against their
-formal-base Git blob hashes; the commit is built on the complete base tree.
+## Common Support, without the S005 five-button additions
 
-## Scene order
+The existing common Controller owns stage 0→1→2→3→3. Retry, REJECT, UNKNOWN and speech failure preserve stage; only a new Challenge resets it. No S005-specific Support implementation is added.
 
-1. Town arrival and missing bag.
-2. Choose the hotel rather than camping.
-3. Reception: Challenges 1–5.
-4. Follow the unseen visitor.
-5. Meet Ben: Challenges 6–9, color Stage 0→1.
-6. Police station and bakery; keep Stage 1.
-7. Recover the bag: Challenge 10, color Stage 2.
-8. Explain the footsteps and disappearing color.
-9. Introduce Ben: Challenge 11, color Stages 3→4.
-10. Return before twelve: 11:55→11:57→11:58→11:59.
-11. Kong's king-size bed and “Good night!”.
+The prior Communication Presenter additions that captured Story Questions and appended English/Japanese controls are removed. Recovery retains the existing three actions: Retry, Pico Support, Continue. Dialogue translation in PicoSupportController and DialogManager is unchanged. The generic common Formal-flow regression verifies non-S005 behavior.
 
-Graphic references are explicit current-branch paths. The four finalized safe-v2
-graphics and existing Ben stage images are used without path replacement code.
-All 21 referenced graphics were decoded in browser verification.
+SpeechRecognition Adapter, SpeechEngine, QuestionManager core, Judge core, Audio, DialogManager, CSS/UI dimensions, Fixed Stage, Save, other Stories, Monster Battle and Camp remain unchanged. Eighty-six shared source files are checked against base Git blob hashes. Presenter removal is the only shared-runtime change; it deletes old UI additions rather than adding a new path.
 
-## Support contract
+## Graphics
 
-The existing common Controller owns Support state. Each Challenge begins at 0;
-only a Support action advances 0→1→2→3→3. Retry, REJECT, UNKNOWN and speech failure
-preserve the current stage. English/Japanese controls only change presentation.
-Stage 3 keeps Retry available. No S005-specific state machine is introduced.
+Original adopted assets remain in the repository. Ten identity-preserving edited compositions are saved under `images/005/clean-v1/`, using the built-in image_gen tool. Inputs and the final prompt set are recorded in `docs/S005_GRAPHIC_PROMPTS.json`.
 
-## Validation and limits
+Frames use player POV, the official two-horned Kong, and reserved quiet lower foreground for the Dialogue Box. New complete scene compositions replace old character-overlay placements; Ben is rendered once per scene, with intermediate color stages represented by explicit backgrounds. The four already adopted safe-v2 backgrounds are retained where compatible. No Graphic path-replacement callbacks or CSS offsets are added.
 
-Nine targeted suites pass: architecture, Story progression, communication data
-and approved variants, common Speech/Judge/Lottery integration, Support state
-matrix, real Presenter/DialogManager controls, and generic Formal flow regression.
-Story progression is tested for both success and continue outcomes.
+## Verification
 
-Browser verification at 844×390 follows all eleven Challenges through the final
-Dialogue using the production shared runtime. It exercises Support 1–3,
-repeated Retry and language controls, loads all graphics, and reports no script
-errors. Only the native Recognition input is a test fixture outside Production.
+Targeted tests cover twelve ordered goals, four guests, the added bed request, final Communication order, Support state/retry retention, the three-action recovery UI, shared Speech/Judge/Lottery, all eleven Scene sequences and both success/continue Story outcomes. Browser verification uses the actual shared runtime at 844×390; only native Recognition input is a test fixture.
 
-Physical iPhone acceptance and native-microphone stability remain unverified.
-No Speech timeout, recognition teardown, or Audio behavior is changed by this
-Story/data rebuild. No new Trace or Diagnostic is added.
+Physical iPhone acceptance and native microphone stability are not claimed. No Production Trace or Diagnostic is added.

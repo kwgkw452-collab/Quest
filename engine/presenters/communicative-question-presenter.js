@@ -4,28 +4,7 @@
   var runId = 0;
   var cancelPending = null;
   var japaneseGoal = null;
-  var informationQuestion = null;
   var currentSupport = null;
-
-  // Read existing Story data for display only; never alter a question or flow.
-  if (typeof window.addEventListener === "function") {
-    window.addEventListener("DOMContentLoaded", function () {
-      if (!window.StoryEvents || !window.QuestionDatabase) return;
-      StoryEvents.on("step:enter", function (detail) {
-        informationQuestion = detail.step && detail.step.type === "question" ?
-          QuestionDatabase.get(detail.step.questionId) : null;
-      });
-    });
-  }
-
-  function addLanguageControls(token) {
-    if (!informationQuestion || informationQuestion.prompt !== japaneseGoal ||
-        typeof DialogManager.addCommunicationLanguageControls !== "function") return;
-    var definition = informationQuestion.communicative;
-    var english = definition && definition.expectedUtterance ||
-      informationQuestion.answers && informationQuestion.answers[0];
-    DialogManager.addCommunicationLanguageControls(english, japaneseGoal, function () { return active(token); });
-  }
 
   function withGoal(message) {
     return japaneseGoal ? japaneseGoal + "\n\n" + message : message;
@@ -148,7 +127,6 @@
     if (options && options.text) choices.push({ label: "文字で答える", value: "text" });
     choices.push({ label: "冒険を続ける", value: "continue" });
     var pending = DialogManager.choice(choices);
-    if (showingSupport) addLanguageControls(token);
     return waitFor(pending, token);
   }
 
@@ -161,7 +139,6 @@
     if (!active(token)) return "cancelled";
     showInformation(withGoal("大丈夫。冒険を続けよう。"));
     var pending = DialogManager.next("次へ");
-    if (currentSupport) addLanguageControls(token);
     return waitFor(pending, token);
   }
 

@@ -48,22 +48,22 @@ for (const file of [
   "engine/controllers/communicative-question-flow-controller.js", "data/s005-communication.js", "engine/stories/S005.js"
 ]) vm.runInContext(read(file), c, { filename: file });
 const utterances = [
-  "No", "Three", "King-size bed, please.", "2 rooms", "Yes, please.",
+  "No", "Four", "King-size bed, please.", "One king-size bed, please.", "2 rooms", "Yes, please.",
   "Are you all right?", "May I have your name?", "Did you steal?",
   "Come with me.", "Did you find a bag?", "His name is Ben."
 ];
 const additional = [
-  [1, "No, we don't."], [2, "3"], [3, "Do you have king-size beds?"],
-  [3, "Does this hotel have a king-size bed?"], [4, "Two rooms"],
-  [4, "Two room"], [4, "2 room"], [7, "Name, please?"],
-  [8, "Do you steal?"], [9, "Come with us."], [9, "Let's go."],
-  [10, "Did you see a bag?"]
+  [1, "No, we don't."], [2, "4"], [3, "Do you have king-size beds?"],
+  [3, "Does this hotel have a king-size bed?"], [5, "Two rooms"],
+  [5, "Two room"], [5, "2 room"], [8, "Name, please?"],
+  [9, "Do you steal?"], [10, "Come with us."], [10, "Let's go."],
+  [11, "Did you see a bag?"]
 ];
 const html = ["index.html", "dev.html"];
 for (const page of html) {
   const source = read(page);
-  assert(source.includes("data/s005-communication.js?v=s005-clean-rebuild-v1"));
-  assert(source.includes("engine/stories/S005.js?v=s005-clean-rebuild-v1"));
+  assert(source.includes("data/s005-communication.js?v=s005-clean-rebuild-v1-lock12"));
+  assert(source.includes("engine/stories/S005.js?v=s005-clean-rebuild-v1-lock12"));
   assert(source.indexOf("data/s005-communication.js") < source.indexOf("engine/stories/S005.js"));
   assert(!source.includes("data/s005-communicative-judge-rules.js"));
 }
@@ -92,7 +92,7 @@ async function attempt(n, phrase, random) {
   return selected;
 }
 (async () => {
-  for (let n = 1; n <= 11; n++) {
+  for (let n = 1; n <= 12; n++) {
     const first = await attempt(n, utterances[n - 1], 0);
     const second = await attempt(n, utterances[n - 1], 0.99);
     assert.notEqual(first.expectedUtterance, second.expectedUtterance, "Lottery varies within the same locked goal");
