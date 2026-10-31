@@ -30,17 +30,17 @@
   "cast": [
     "主人公",
     "Kong",
-    "Saki",
+    "Pico",
     "Bernie"
   ],
-  "picoCountsAsGuest": false,
+  "picoCountsAsGuest": true,
   "ending": [
     [
       "Ben",
       "My color is back!"
     ],
     [
-      "Saki",
+      "町の人",
       "How cute!"
     ],
     [

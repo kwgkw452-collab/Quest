@@ -7,9 +7,9 @@ This specification supersedes the prior eleven-task rebuild. Priority is the lat
 ## Content
 
 - Eleven Scene sequences use the existing StoryCommands/StoryEngine/EventSystem. No Scene callbacks, runtime branches or S005-specific Engine/Controller/Presenter are introduced.
-- Twelve declarative Communication definitions use existing QuestionManager, Speech, local Judge, Lottery and Support. Four guests are player, Kong, Saki and Bernie; Pico is not counted. The player remains the camera POV.
+- Twelve declarative Communication definitions use existing QuestionManager, Speech, local Judge, Lottery and Support. Four guests are player, Kong, Pico and Bernie; Pico is counted. The player remains the camera POV.
 - Challenge 2 is Four / 4人です。 Challenge 3 asks for a king-size bed; Challenge 4 requests One king-size bed, please. The other goals retain their narrative purpose.
-- Ending order: Ben “My color is back!” → Saki “How cute!” → Kong “Ben is cool!” → final Communication 12 “His name is Ben.”
+- Ending order: Ben “My color is back!” → 町の人 “How cute!” → Kong “Ben is cool!” → final Communication 12 “His name is Ben.”
 
 ## Common Support, without the S005 five-button additions
 

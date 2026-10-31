@@ -5,7 +5,7 @@
   var story = {
     id: "S005",
     title: "S005 Ben ― 見えない夜",
-    metadata: { perspective: "player", guests: ["player", "kong", "saki", "bernie"], nonGuestCompanions: ["pico"] },
+    metadata: { perspective: "player", guests: ["player", "kong", "pico", "bernie"], nonGuestCompanions: [] },
     steps: [
       // Scene 1: arrival and the missing bag.
       C.sequence([
@@ -188,7 +188,7 @@
         C.dialogue("", "Benの色が完全に戻る。"),
         C.background("images/005/s005_regen_c_relief_safe_v2.png"),
         C.dialogue("Ben", "My color is back!"),
-        C.dialogue("Saki", "How cute!"),
+        C.dialogue("町の人", "How cute!"),
         C.dialogue("Kong", "Ben is cool!"),
         C.question("s005.communication.12", "s005Challenge12"),
         C.dialogue("Kong", "Wow!"),
