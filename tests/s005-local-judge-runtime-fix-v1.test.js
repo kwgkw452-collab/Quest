@@ -9,8 +9,8 @@ const c = { console };
 c.window = c;
 vm.createContext(c);
 for (const file of [
-  "data/communicative-judge-rules.js",
-  "data/s005-communicative-judge-rules.js",
+  "data/word-dictionaries.js", "data/questions.js", "data/communicative-judge-rules.js",
+  "data/lottery-pools.js", "engine/services/lottery-engine.js", "data/s005-communication.js",
   "engine/services/local-communicative-judge.js",
   "engine/services/communicative-judge.js"
 ]) vm.runInContext(read(file), c, { filename: file });
@@ -47,8 +47,7 @@ const cases = [
   vm.runInContext(read("data/communicative-judge-rules.js"), c);
   assert.strictEqual(c.CommunicativeJudgeRuleData, canonicalRegistry, "foundation reload preserves canonical registry");
   assert.equal(c.CommunicativeJudgeRuleData.length, count, "foundation reload is idempotent");
-  vm.runInContext(read("data/s005-communicative-judge-rules.js"), c);
-  assert.equal(c.CommunicativeJudgeRuleData.length, count, "registration is idempotent");
+  assert.equal(c.QuestionDatabase.all().filter(q => q.id.startsWith("s005.communication.")).length, 11);
   assert.equal(c.CommunicativeJudgeRuleData.filter(rule =>
     ["hotel.reservation.none", "hotel.party.three", "hotel.bed.king.ask",
       "hotel.rooms.two.request", "hotel.breakfast.yes", "s005.social.wellbeing.ask",
@@ -59,3 +58,4 @@ const cases = [
   assert(questionManager.includes('"judge-result"'));
   console.log("S005 Local Judge Runtime Fix V1: PASS");
 })().catch(error => { console.error(error); process.exitCode = 1; });
+

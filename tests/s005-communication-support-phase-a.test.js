@@ -19,7 +19,8 @@ const context = {
 };
 context.window = context;
 vm.createContext(context);
-for (const file of ["data/questions.js", "data/communicative-judge-rules.js",
+for (const file of ["engine/commands/story-commands.js", "data/word-dictionaries.js", "data/questions.js", "data/communicative-judge-rules.js",
+  "data/lottery-pools.js", "engine/services/lottery-engine.js", "data/s005-communication.js",
   "engine/stories/S005.js", "engine/services/local-communicative-judge.js"]) {
   vm.runInContext(source(file), context, { filename: file });
 }
@@ -161,3 +162,4 @@ for (const file of ["engine/presenters/communicative-question-presenter.js",
   assert(!displayed.some(text => text.includes(prompts[10])), "Previous S005 goal is cleared for other stories");
   console.log("S005 Communication Support Phase A: PASS");
 })().catch(error => { console.error(error); process.exitCode = 1; });
+

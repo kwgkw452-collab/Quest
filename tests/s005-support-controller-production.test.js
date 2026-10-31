@@ -45,7 +45,7 @@ function harness() {
   const els = Object.fromEntries(["dialogueBox", "speaker", "message", "recognizedText", "controls"]
     .map(name => [name, element()]));
   [els.speaker, els.message, els.recognizedText, els.controls].forEach(el => els.dialogueBox.appendChild(el));
-  const c = { console, Promise,
+  const c = { console, Promise, CommunicativeJudgeRuleData: [], LotteryPoolData: [], LotteryEngine: { init() {} },
     GameConfig: { dialogueNextLabel: "つぎへ", recognizedPrefix: "" },
     document: { createElement: element, getElementById: id => id === "controls" ? els.controls : null },
     addEventListener(name, callback) { events[name] = callback; },
@@ -68,7 +68,7 @@ function harness() {
     }
   };
   c.window = c; vm.createContext(c);
-  for (const file of ["engine/commands/story-commands.js", "engine/stories/S005.js",
+  for (const file of ["engine/commands/story-commands.js", "data/s005-communication.js", "engine/stories/S005.js",
     "engine/managers/dialog-manager.js", "engine/presenters/communicative-question-presenter.js",
     "engine/controllers/communicative-question-flow-controller.js"]) {
     vm.runInContext(fs.readFileSync(path.join(__dirname, "..", file), "utf8"), c, { filename: file });
@@ -144,3 +144,4 @@ function support(h, q, stage) {
   assert.strictEqual((await cancelled).status, "cancelled");
   console.log("S005 Production Controller + Presenter + DialogManager: PASS (11 challenges, S1/S2/S3 retries, language controls, cap/reset, settled failure, cancellation)");
 })().catch(error => { console.error(error); process.exitCode = 1; });
+

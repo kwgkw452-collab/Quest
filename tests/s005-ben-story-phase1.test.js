@@ -54,7 +54,8 @@ context.window = context;
 vm.createContext(context);
 for (const file of [
   "engine/commands/story-commands.js", "engine/core/story-registry.js",
-  "engine/core/story-engine.js", "engine/stories/S005.js",
+  "engine/core/story-engine.js", "engine/core/event-system.js",
+  "data/lottery-pools.js", "engine/services/lottery-engine.js", "data/s005-communication.js", "engine/stories/S005.js",
   "engine/services/local-communicative-judge.js"
 ]) vm.runInContext(read(file), context, { filename: file });
 
@@ -74,12 +75,15 @@ assert.equal(context.LocalCommunicativeJudge.evaluate(
 assert.equal(context.LocalCommunicativeJudge.evaluate(
   { conceptId: questions[0].communicative.conceptId, utterance: "Are you happy?" }, rules).verdict, "UNKNOWN");
 
-const story = context.StoryRegistry.get("S005");
+const registeredStory = context.StoryRegistry.get("S005");
+assert.equal(registeredStory.steps.length, 11, "Eleven scenes use the existing sequence command");
+assert(registeredStory.steps.every(scene => scene.type === "sequence"));
+const story = { ...registeredStory, steps: registeredStory.steps.flatMap(scene => Array.from(scene.steps)) };
 assert(story);
 assert.equal(story.nextStoryId, undefined);
 assert.equal(story.steps.filter(s => s.type === "question").length, 11);
 const images = [...new Set(story.steps.filter(s => s.type === "background" || s.type === "item").map(s => s.src))];
-assert.equal(images.length, 14);
+assert.equal(images.length, 21);
 images.forEach(src => assert(fs.existsSync(path.join(root, src)), src));
 assert(!images.some(src => src.includes("flower_tree_square_day")));
 assert(fs.existsSync(path.join(root, "images/005/ben_flower_tree_square_day.png")));
@@ -90,7 +94,7 @@ const at = (type, text) => story.steps.findIndex(s => s.type === type &&
   (type === "dialogue" ? s.text === text : s.src.endsWith(text + ".png")));
 assert(at("dialogue", "Good evening.") < at("item", "ben_stage3"));
 assert(at("dialogue", "We are happy now.") < at("item", "ben_stage4_full"));
-assert(at("background", "ben_town_relief_cast_night") < at("dialogue", "11:55"));
+assert(at("background", "s005_regen_c_relief_safe_v2") < at("dialogue", "11:55"));
 assert(at("dialogue", "11:55") < at("dialogue", "11:57"));
 assert(at("dialogue", "11:57") < at("dialogue", "11:58"));
 assert(at("dialogue", "11:58") < at("dialogue", "11:59"));
@@ -103,7 +107,7 @@ assert.equal(story.steps.at(-1).text, "Good night!");
   for (const status of ["success", "continued"]) {
     calls.length = 0;
     outcome = status;
-    const state = await context.StoryEngine.play(story, {});
+    const state = await context.StoryEngine.play(registeredStory, {});
     assert.equal(state.s005Challenge11.status, status);
     assert.equal(calls.filter(x => x[0] === "question").length, 11);
     assert(calls.some(x => x[0] === "event" && x[1] === "story:complete"));
@@ -119,3 +123,4 @@ assert.equal(story.steps.at(-1).text, "Good night!");
   }
   console.log("S005 Ben Story Phase 1: PASS");
 })().catch(error => { console.error(error); process.exitCode = 1; });
+

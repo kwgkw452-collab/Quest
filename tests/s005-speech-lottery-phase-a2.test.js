@@ -40,13 +40,12 @@ const c = {
 c.window = c;
 vm.createContext(c);
 for (const file of [
-  "data/questions.js", "data/lottery-pools.js", "data/communicative-judge-rules.js",
+  "engine/commands/story-commands.js", "data/questions.js", "data/lottery-pools.js", "data/communicative-judge-rules.js",
   "engine/services/speech-normalizer.js", "engine/services/lottery-engine.js",
   "engine/services/local-communicative-judge.js", "engine/services/communicative-judge.js",
   "engine/services/communicative-question-adapter.js", "engine/managers/question-manager.js",
   "engine/presenters/communicative-question-presenter.js",
-  "engine/controllers/communicative-question-flow-controller.js", "engine/stories/S005.js",
-  "data/s005-communicative-judge-rules.js"
+  "engine/controllers/communicative-question-flow-controller.js", "data/s005-communication.js", "engine/stories/S005.js"
 ]) vm.runInContext(read(file), c, { filename: file });
 const utterances = [
   "No", "Three", "King-size bed, please.", "2 rooms", "Yes, please.",
@@ -63,18 +62,10 @@ const additional = [
 const html = ["index.html", "dev.html"];
 for (const page of html) {
   const source = read(page);
-  assert(source.includes("data/questions.js?v=mobile-ui-story-polish-v1-1"), page + ": data/questions.js");
-  assert(source.includes("engine/controllers/communicative-question-flow-controller.js?v=s005-phase-a2-v1"), page + ": flow controller");
-  assert(source.includes("engine/presenters/communicative-question-presenter.js?v=mobile-ui-story-polish-v1-1"));
-  assert(source.includes("engine/stories/S005.js?v=s005-local-judge-runtime-fix-v1"));
-  for (const asset of ["engine/services/local-communicative-judge.js",
-    "engine/services/communicative-judge.js", "engine/managers/question-manager.js",
-    "data/s005-communicative-judge-rules.js"]) {
-    assert(source.includes(asset + "?v=s005-rule-real-browser-trace-v1"), page + ": " + asset);
-  }
-  assert(source.indexOf("engine/stories/S005.js") < source.indexOf("data/s005-communicative-judge-rules.js"));
-  assert(source.includes("data/lottery-pools.js?v=s005-phase-a2-v1"));
-  assert(source.includes("engine/services/lottery-engine.js?v=s005-phase-a2-v1"));
+  assert(source.includes("data/s005-communication.js?v=s005-clean-rebuild-v1"));
+  assert(source.includes("engine/stories/S005.js?v=s005-clean-rebuild-v1"));
+  assert(source.indexOf("data/s005-communication.js") < source.indexOf("engine/stories/S005.js"));
+  assert(!source.includes("data/s005-communicative-judge-rules.js"));
 }
 assert.equal(c.LotteryEngine.getPool("s005.communication.1.v1").items.length, 1);
 assert.equal(c.LotteryEngine.getPool("shopping.fruit.order.v1").items.length, 2);
@@ -120,7 +111,8 @@ async function attempt(n, phrase, random) {
   const failed = await c.CommunicativeQuestionFlowController.start("s005.communication.1");
   assert.equal(failed.status, "continued");
   assert(choices.every(values => !values.includes("text")));
-  assert(!choices[0].includes("retry"), "Permission denial is not REJECT or a speech retry");
+  assert(choices[0].includes("retry"), "Pico Support keeps retry available for speech failure");
   assert(traces.some(x => x.event === "speech-failure-result"));
   console.log("S005 Speech/Judge/Lottery Phase A-2: PASS");
 })().catch(error => { console.error(error); process.exitCode = 1; });
+

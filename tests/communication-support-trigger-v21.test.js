@@ -3,7 +3,7 @@ const assert = require("assert");
 const fs = require("fs"), path = require("path"), vm = require("vm");
 const questions = [];
 let plans, results, seen;
-const c = { console, Promise, StoryRegistry: { register() {} },
+const c = { console, Promise, CommunicativeJudgeRuleData: [], LotteryPoolData: [], LotteryEngine: { init() {} }, StoryRegistry: { register() {} },
  QuestionDatabase: { register(q) { questions.push(q); }, get(id) { return questions.find(q => q.id === id); } },
  QuestionManager: { cancel() {}, async start() { return { status: results.shift(), answer: "High" }; } },
  CommunicativeQuestionPresenter: { begin() { return 1; }, cancel() {}, async continued() { return "next"; },
@@ -13,7 +13,7 @@ const c = { console, Promise, StoryRegistry: { register() {} },
    return plans.shift();
   } }
 }; c.window=c; vm.createContext(c);
-for (const file of ["engine/commands/story-commands.js", "engine/stories/S005.js", "engine/controllers/communicative-question-flow-controller.js"]) vm.runInContext(fs.readFileSync(path.join(__dirname,"..",file),"utf8"),c);
+for (const file of ["engine/commands/story-commands.js", "data/s005-communication.js", "engine/stories/S005.js", "engine/controllers/communicative-question-flow-controller.js"]) vm.runInContext(fs.readFileSync(path.join(__dirname,"..",file),"utf8"),c);
 (async()=>{
  assert.strictEqual(questions.length,11);
  for(const q of questions){
@@ -43,3 +43,4 @@ for (const file of ["engine/commands/story-commands.js", "engine/stories/S005.js
  }
  console.log("communication-support-trigger-v21.test.js: PASS (11 challenges, every stage/result, repeated retry, cap, reset)");
 })().catch(e=>{console.error(e);process.exitCode=1});
+
