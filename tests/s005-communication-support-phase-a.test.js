@@ -131,7 +131,7 @@ for (const file of ["engine/presenters/communicative-question-presenter.js",
 (async () => {
   for (let i = 0; i < questions.length; i += 1) {
     displayed.length = 0;
-    actionQueue = ["support", "support", "continue"];
+    actionQueue = ["support", "support", "support", "continue"];
     const previousSpeechCount = speechCount;
     const result = await context.CommunicativeQuestionFlowController.start(questions[i].id);
     assert.equal(result.status, "continued", `challenge ${i + 1}`);
@@ -145,7 +145,7 @@ for (const file of ["engine/presenters/communicative-question-presenter.js",
   }
   for (let i = 0; i < questions.length; i += 1) {
     displayed.length = 0;
-    actionQueue = ["retry", "support", "continue"];
+    actionQueue = ["retry", "support", "support", "support", "continue"];
     const previousSpeechCount = speechCount;
     const result = await context.CommunicativeQuestionFlowController.start(questions[i].id);
     assert.equal(result.status, "continued", `retry challenge ${i + 1}`);
