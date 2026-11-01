@@ -97,7 +97,6 @@
         C.clear(),
         C.background("images/005/s005_regen_b_alley_v1.png"),
         C.dialogue("", "Kongが近づく。"),
-        C.dialogue("", "Benが怖がり、さらに色が薄くなる。"),
         C.dialogue("Pico", "待つピコ！コングを怖がってるピコ！"),
         C.dialogue("Kong", "Me?"),
         C.dialogue("", "主人公が前へ出る。"),
@@ -109,7 +108,6 @@
         C.dialogue("Ben", "Ben."),
         C.dialogue("主人公", "Ben?"),
         C.dialogue("Ben", "Yes."),
-        C.dialogue("", "ここでBenに少し色が戻る。"),
         C.background("images/005/clean-v1/ben-trust.png"),
         C.dialogue("", "主人公はバッグ事件を思い出す。"),
         C.question("s005.communication.9", "s005Challenge9"),
@@ -151,8 +149,7 @@
         C.dialogue("Kong", "Ben didn’t take it."),
         C.dialogue("", "女性がBenを見る。"),
         C.dialogue("Woman", "I’m sorry, Ben."),
-        C.dialogue("Ben", "It’s OK."),
-        C.dialogue("", "ここでBenの色がさらに戻る。"),
+        C.dialogue("Ben", "It’s OK.")
       ]),
       // Scene 8: understand the strange footsteps.
       C.sequence([
@@ -166,24 +163,21 @@
         C.dialogue("Pico", "ベンが見えなかったから、足音だけ聞こえたり、何かが動いたと思ったピコ！"),
         C.dialogue("", "Benが少しずつ落ち着き、姿が見えてくる。")
       ]),
-      // Scene 9: introduce Ben; Challenge 12 and the completed color stages.
+      // Scene 9: introduce Ben; Challenge 12.
       C.sequence([
         C.clear(),
         C.background("images/005/reference-v1/Scene9.3.png"),
         C.dialogue("", "Benはまだ少し怖そう。"),
         C.dialogue("主人公", "Wait."),
-        C.dialogue("", "KongがBenの前に立つ。"),
         C.dialogue("町の人", "Ben?"),
         C.dialogue("Kong", "Yes. He is Ben."),
         C.dialogue("Woman", "Good evening, Ben."),
         C.dialogue("Ben", "Good evening."),
-        C.dialogue("", "Benの色がさらに戻る。"),
         C.background("images/005/reference-v1/Scene9.5.png"),
         C.dialogue("Townsperson", "It’s not a ghost."),
         C.dialogue("Woman", "We can see Ben now."),
         C.dialogue("Townsperson", "We are happy now."),
         C.dialogue("", "そして――"),
-        C.dialogue("", "Benの色が完全に戻る。"),
         C.background("images/005/reference-v1/Scene9.7.png"),
         C.dialogue("Ben", "My color is back!"),
         C.dialogue("町の人", "How cute!"),
