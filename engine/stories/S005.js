@@ -10,7 +10,7 @@
       // Scene 1: arrival and the missing bag.
       C.sequence([
         C.clear(),
-        C.background("images/005/ben_town_night.png"),
+        C.background("images/005/reference-v1/Scene1.png"),
         C.dialogue("", "夕方、一行が新しい町に着く。"),
         C.dialogue("", "町は一見普通だが、店を早めに閉める人が多く、どこか落ち着かない。"),
         C.dialogue("", "突然――"),
@@ -39,14 +39,14 @@
       C.sequence([
         C.dialogue("", "いつものようにキャンプしようとする一行。"),
         C.dialogue("", "しかしPicoが止める。"),
-        C.background("images/005/clean-v1/hotel-decision.png"),
+        C.background("images/005/reference-v1/Scene2.1.png"),
         C.dialogue("Pico", "今日はキャンプはやめるピコ。"),
         C.dialogue("Kong", "Why?"),
         C.dialogue("Pico", "この町は夜がちょっと物騒ピコ。安全のためホテルにするピコ！")
       ]),
       // Scene 3: hotel reception; Challenges 1–6.
       C.sequence([
-        C.background("images/005/s005_regen_a_reception_framing_v3.png"),
+        C.background("images/005/reference-v1/Scene3.png"),
         C.dialogue("Hotel Clerk", "Welcome."),
         C.dialogue("Hotel Clerk", "Do you have a reservation?"),
         C.question("s005.communication.1", "s005Challenge1"),
@@ -122,7 +122,7 @@
       ]),
       // Scene 6: the police station and the bakery.
       C.sequence([
-        C.background("images/005/clean-v1/police.png"),
+        C.background("images/005/reference-v1/Scene6.1.png"),
         C.dialogue("", "交番にはバッグをなくした女性がいる。"),
         C.dialogue("Police Officer", "Where did you see your bag?"),
         C.dialogue("Woman", "Near the bakery."),
@@ -169,7 +169,7 @@
       // Scene 9: introduce Ben; Challenge 12 and the completed color stages.
       C.sequence([
         C.clear(),
-        C.background("images/005/clean-v1/ben-relief-stage2.png"),
+        C.background("images/005/reference-v1/Scene9.3.png"),
         C.dialogue("", "Benはまだ少し怖そう。"),
         C.dialogue("主人公", "Wait."),
         C.dialogue("", "KongがBenの前に立つ。"),
@@ -180,13 +180,13 @@
         C.dialogue("Woman", "Good evening, Ben."),
         C.dialogue("Ben", "Good evening."),
         C.dialogue("", "Benの色がさらに戻る。"),
-        C.background("images/005/clean-v1/ben-relief-stage3.png"),
+        C.background("images/005/reference-v1/Scene9.5.png"),
         C.dialogue("Townsperson", "It’s not a ghost."),
         C.dialogue("Woman", "We can see Ben now."),
         C.dialogue("Townsperson", "We are happy now."),
         C.dialogue("", "そして――"),
         C.dialogue("", "Benの色が完全に戻る。"),
-        C.background("images/005/s005_regen_c_relief_correction_v2.png"),
+        C.background("images/005/reference-v1/Scene9.7.png"),
         C.dialogue("Ben", "My color is back!"),
         C.dialogue("町の人", "How cute!"),
         C.dialogue("Kong", "Ben is cool!"),
@@ -196,7 +196,7 @@
         C.dialogue("Ben", "It’s OK."),
         C.dialogue("", "もう誰もBenを「ghost」「thief」と呼ばない。"),
         C.clear(),
-        C.background("images/005/s005_regen_c_relief_correction_v2.png"),
+        C.background("images/005/reference-v1/Scene9.7.png"),
         C.dialogue("", "一行がホテルへ戻ろうとする。"),
         C.dialogue("Woman", "Good night, Ben."),
         C.dialogue("Townsperson", "Good night, Ben."),
@@ -208,7 +208,7 @@
       ]),
       // Scene 10: return before the hotel closes.
       C.sequence([
-        C.background("images/005/ben_town_night.png"),
+        C.background("images/005/reference-v1/Scene10.5.png"),
         C.dialogue("", "時計を見る。"),
         C.dialogue("", "11:55"),
         C.dialogue("Kong", "Oh!"),
@@ -230,7 +230,7 @@
         C.dialogue("", "大きなking-size bed。"),
         C.dialogue("", "Kongがベッドを見る。"),
         C.dialogue("Kong", "My bed!"),
-        C.background("images/005/s005_regen_d_rest_correction_v2.png"),
+        C.background("images/005/reference-v1/Scene11.1.png"),
         C.dialogue("", "Kongがベッドへ。"),
         C.dialogue("Kong", "Good night!")
       ])
