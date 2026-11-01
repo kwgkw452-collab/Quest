@@ -173,8 +173,6 @@
         C.dialogue("", "Benはまだ少し怖そう。"),
         C.dialogue("主人公", "Wait."),
         C.dialogue("", "KongがBenの前に立つ。"),
-        C.dialogue("", "最初はBenを追い詰めるためだったKong。"),
-        C.dialogue("", "今度はBenを守るために立つ。"),
         C.dialogue("町の人", "Ben?"),
         C.dialogue("Kong", "Yes. He is Ben."),
         C.dialogue("Woman", "Good evening, Ben."),
@@ -191,20 +189,13 @@
         C.dialogue("町の人", "How cute!"),
         C.dialogue("Kong", "Ben is cool!"),
         C.question("s005.communication.12", "s005Challenge12"),
-        C.dialogue("Kong", "Wow!"),
-        C.dialogue("Woman", "I’m sorry, Ben."),
-        C.dialogue("Ben", "It’s OK."),
-        C.dialogue("", "もう誰もBenを「ghost」「thief」と呼ばない。"),
+        C.dialogue("", "Benの色が戻り、街は幽霊の心配がなくなった。"),
         C.clear(),
         C.background("images/005/reference-v1/Scene9.7.png"),
         C.dialogue("", "一行がホテルへ戻ろうとする。"),
         C.dialogue("Woman", "Good night, Ben."),
         C.dialogue("Townsperson", "Good night, Ben."),
-        C.dialogue("Ben", "Good night."),
-        C.dialogue("Pico", "もう誰もベンを怖がっていないピコ！"),
-        C.dialogue("Pico", "今夜のベンは、もう一人じゃないピコ。"),
-        C.dialogue("", "町を見る。"),
-        C.dialogue("Pico", "街の変な物音も、もうなくなるピコ！")
+        C.dialogue("Ben", "Good night.")
       ]),
       // Scene 10: return before the hotel closes.
       C.sequence([
