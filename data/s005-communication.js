@@ -251,7 +251,9 @@
       "Stole things?",
       "Did you take something?",
       "Did you take anything?",
-      "Did you take the bag?"
+      "Did you take the bag?",
+      "Do you still?",
+      "Did you still?"
     ],
     "success": "",
     "failure": "",
@@ -357,9 +359,21 @@
     }
   }
 ];
+  function s005HasAny(text, words) {
+    var tokens = String(text || "")
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, " ")
+      .trim()
+      .split(/\s+/);
+    return words.some(function (word) {
+      return tokens.indexOf(word) !== -1;
+    });
+  }
+
   var rules = [
   {
     "conceptId": "hotel.reservation.none",
+    "accept": function (text) { return s005HasAny(text, ["no"]); },
     "variants": [
       "No, we don’t.",
       "No.",
@@ -382,6 +396,7 @@
   },
   {
     "conceptId": "hotel.party.four",
+    "accept": function (text) { return s005HasAny(text, ["four", "4"]); },
     "variants": [
       "Four.",
       "4.",
@@ -403,6 +418,10 @@
   },
   {
     "conceptId": "hotel.bed.king.ask",
+    "accept": function (text) {
+      return s005HasAny(text, ["bed", "beds", "bet", "bets"]) &&
+        s005HasAny(text, ["king", "size", "side"]);
+    },
     "variants": [
       "Do you have a king-size bed?",
       "Do you have king-size beds?",
@@ -430,6 +449,7 @@
   },
   {
     "conceptId": "hotel.bed.king.one.request",
+    "accept": function (text) { return s005HasAny(text, ["one", "1"]); },
     "variants": [
       "One king-size bed, please.",
       "One king size bed please",
@@ -448,6 +468,7 @@
   },
   {
     "conceptId": "hotel.rooms.two.request",
+    "accept": function (text) { return s005HasAny(text, ["to", "two", "2", "true", "tulum", "truth", "ture"]); },
     "variants": [
       "Two rooms, please.",
       "two rooms",
@@ -512,6 +533,7 @@
   },
   {
     "conceptId": "social.name.ask",
+    "accept": function (text) { return s005HasAny(text, ["name"]); },
     "variants": [
       "What’s your name?",
       "What is your name?",
@@ -559,7 +581,11 @@
       "Stole things?",
       "Did you take something?",
       "Did you take anything?",
-      "Did you take the bag?"
+      "Did you take the bag?",
+              "Do you still?",
+              "Did you still?",
+      "Do you still?",
+      "Did you still?"
     ],
     "rejects": [
       {
@@ -597,6 +623,10 @@
   },
   {
     "conceptId": "mystery.bag.sighting.ask",
+    "accept": function (text) {
+      return s005HasAny(text, ["bag", "bad", "bug", "back", "pig", "park", "pack", "bed", "bet"]) &&
+        s005HasAny(text, ["see", "seen", "find", "found"]);
+    },
     "variants": [
       "Did you see a bag?",
       "Do you see a bag?",
@@ -1003,7 +1033,9 @@
               "Stole things?",
               "Did you take something?",
               "Did you take anything?",
-              "Did you take the bag?"
+              "Did you take the bag?",
+              "Do you still?",
+              "Did you still?"
             ]
           },
           {
