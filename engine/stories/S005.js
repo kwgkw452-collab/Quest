@@ -122,7 +122,7 @@
       ]),
       // Scene 6: the police station and the bakery.
       C.sequence([
-        C.background("images/005/reference-v1/Scene6.1.png"),
+        C.background("images/005/clean-v1/police.png"),
         C.dialogue("", "交番にはバッグをなくした女性がいる。"),
         C.dialogue("Police Officer", "Where did you see your bag?"),
         C.dialogue("Woman", "Near the bakery."),
