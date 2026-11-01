@@ -582,8 +582,6 @@
       "Did you take something?",
       "Did you take anything?",
       "Did you take the bag?",
-              "Do you still?",
-              "Did you still?",
       "Do you still?",
       "Did you still?"
     ],
