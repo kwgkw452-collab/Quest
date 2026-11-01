@@ -46,7 +46,7 @@
       ]),
       // Scene 3: hotel reception; Challenges 1–6.
       C.sequence([
-        C.background("images/005/s005_regen_a_reception_correction_v2.png"),
+        C.background("images/005/s005_regen_a_reception_framing_v3.png"),
         C.dialogue("Hotel Clerk", "Welcome."),
         C.dialogue("Hotel Clerk", "Do you have a reservation?"),
         C.question("s005.communication.1", "s005Challenge1"),
@@ -95,7 +95,7 @@
       // Scene 5: meet Ben; Challenges 7–10.
       C.sequence([
         C.clear(),
-        C.background("images/005/s005_regen_b_alley_correction_v2.png"),
+        C.background("images/005/s005_regen_b_alley_v1.png"),
         C.dialogue("", "Kongが近づく。"),
         C.dialogue("", "Benが怖がり、さらに色が薄くなる。"),
         C.dialogue("Pico", "待つピコ！コングを怖がってるピコ！"),
