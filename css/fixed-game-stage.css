@@ -177,6 +177,11 @@
 
 #game-stage #scene:has(#background[style*="s004_map_key_choice_final.png"]) > .dialogue-box { top: 25%; bottom: auto; left: 24%; right: 24%; max-height: 18%; padding-top: 8px; padding-right: 16px; padding-bottom: 8px; padding-left: 16px; }
 
+/* S005 image-specific framing correction: keep lower subject area visible on 19.5:9 cover crop. */
+#game-stage #background[style*="Scene9.3.png"],
+#game-stage #background[style*="Scene9.7.png"],
+#game-stage #background[style*="Scene10.5.png"] { background-position: center bottom; }
+
 @keyframes fixedStagenumberMonsterHit { 
   0%, 100% { transform: translateX(0px); box-shadow: rgba(255, 20, 20, 0) 0px 0px 0px 0px inset; }
   20% { transform: translateX(-10px); box-shadow: rgba(255, 28, 28, 0.5) 0px 0px 0px 1560px inset; }
