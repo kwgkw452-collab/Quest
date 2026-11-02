@@ -5,6 +5,11 @@
   var story = {
     id: "S005",
     title: "S005 Ben ― 見えない夜",
+    onExit: function () {
+      try {
+        if (window.SpeechEngine && typeof SpeechEngine.stop === "function") SpeechEngine.stop();
+      } catch (_) {}
+    },
     metadata: { perspective: "player", guests: ["player", "kong", "pico", "bernie"], nonGuestCompanions: [] },
     steps: [
       // Scene 1: arrival and the missing bag.
@@ -217,7 +222,9 @@
         C.dialogue("Kong", "My bed!"),
         C.background("images/005/reference-v1/Scene11.1.png"),
         C.dialogue("", "Kongがベッドへ。"),
-        C.dialogue("Kong", "Good night!")
+        C.dialogue("Kong", "Good night!"),
+        C.hideDialogue(),
+        C.clear()
       ])
     ]
   };
