@@ -197,7 +197,8 @@
     try {
       for (var i = 0; i < story.steps.length; i += 1) {
         state.stepIndex = i;
-        await runStep(story.steps[i], state, i, story);
+        var stepResult = await runStep(story.steps[i], state, i, story);
+        if (stepResult && stepResult.storyControl === "cancelled") return state;
       }
 
       await callHook(story.onComplete, storyContext);

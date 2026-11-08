@@ -72,7 +72,7 @@
     DialogManager.showRecognized(text, "聞き取り中：");
   }
 
-  function speech(startListening, token, traceContext, japanesePrompt) {
+  function speech(startListening, token, traceContext, japanesePrompt, nativeStatus) {
     if (!active(token)) return Promise.resolve("cancelled");
     japaneseGoal = japanesePrompt || null;
     trace("speech-gate-create", traceContext);
@@ -93,10 +93,24 @@
         if (started || !active(token)) return;
         started = true;
         trace("speech-gate-click", traceContext);
-        listening("", token);
+        if (nativeStatus) {
+          showInformation(withGoal(currentSupport || "マイクの準備中…"));
+        } else {
+          listening("", token);
+        }
+        function stopShowingListening() {
+          if (nativeStatus && active(token)) showInformation(withGoal(currentSupport || ""));
+        }
         try {
-          Promise.resolve(startListening()).then(resolve, reject);
+          Promise.resolve(startListening()).then(function (value) {
+            stopShowingListening();
+            resolve(value);
+          }, function (error) {
+            stopShowingListening();
+            reject(error);
+          });
         } catch (error) {
+          stopShowingListening();
           reject(error);
         }
       }));

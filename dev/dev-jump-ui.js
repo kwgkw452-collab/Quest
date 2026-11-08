@@ -21,8 +21,9 @@
     GameCore.cache();
     SaveManager.init();
 
-    if (new URLSearchParams(window.location.search).get("jump") === "S005") {
-      DevJumpManager.start("S005").catch(function (error) {
+    var jump = new URLSearchParams(window.location.search).get("jump");
+    if (jump === "S005" || jump === "S006") {
+      DevJumpManager.start(jump).catch(function (error) {
         DialogManager.show("DEV", error && error.message ? error.message : String(error));
       });
       return;

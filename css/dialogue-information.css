@@ -160,3 +160,48 @@
 #game-stage .communication-feedback .dialogue-information > .message {
   white-space: normal;
 }
+
+/* S006 uses three rows only while a Communication Goal is visible. */
+#game-stage #scene:has(#background[style*="images/006/S006-Scene-"]) {
+  --s006-dialogue-height: 100.2px;
+}
+
+#game-stage #scene:has(#background[style*="images/006/S006-Scene-"]):has(> .communication-dialogue:not([hidden]) .dialogue-primary-goal:not([hidden]):not(:empty)) {
+  --s006-dialogue-height: 140px;
+}
+
+#game-stage #scene:has(#background[style*="images/006/S006-Scene-"]) > #dialogue-box.dialogue-wide-ui {
+  height: var(--s006-dialogue-height);
+  min-height: var(--s006-dialogue-height);
+  max-height: var(--s006-dialogue-height);
+}
+
+#game-stage #background[style*="images/006/S006-Scene-"] {
+  bottom: var(--s006-dialogue-height);
+  background-size: cover;
+  background-position: center top;
+}
+
+
+/* S006 Communication: retain hands/feet without changing normal backgrounds. */
+#game-stage #scene:has(> .communication-dialogue:not([hidden]) .dialogue-primary-goal:not([hidden]):not(:empty)) #background:is(
+  [style*="images/006/S006-Scene-07.png"],
+  [style*="images/006/S006-Scene-08.png"],
+  [style*="images/006/S006-Scene-10.png"],
+  [style*="images/006/S006-Scene-11.png"]
+) {
+  background-position: center -32px;
+}
+
+#game-stage #scene:has(> .communication-dialogue:not([hidden]) .dialogue-primary-goal:not([hidden]):not(:empty)) #background[style*="images/006/S006-Scene-04.png"] {
+  background-position: center -12px;
+}
+
+
+#game-stage #scene:has(> .communication-dialogue:not([hidden]) .dialogue-primary-goal:not([hidden]):not(:empty)) #background[style*="images/006/S006-Scene-12.png"] {
+  background-position: center -12px;
+}
+
+#game-stage #scene:has(#background[style*="images/006/S006-Scene-"]) .dialogue-wide-ui:not(.communication-dialogue) .message {
+  font-size: 24px;
+}

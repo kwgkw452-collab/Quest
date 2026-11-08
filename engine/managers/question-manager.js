@@ -306,6 +306,7 @@
       },
       onStart: function () {
         trace("listening-start", traceContext);
+        if (acceptsCandidates && typeof options.onSpeechStart === "function") options.onSpeechStart();
       }
     };
     function startListening() {

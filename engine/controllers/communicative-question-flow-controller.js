@@ -78,6 +78,7 @@
     var textFallbacks = 0;
     var attempts = 0;
     var supportStage = 0;
+    var nativeStatus = /^s006\.communication\./.test(questionId);
     var attemptTraceContext = traceContext;
     trace("formal-flow-start", traceContext, { questionId: questionId });
 
@@ -97,9 +98,15 @@
       if (questionOptions.inputMode !== "text") {
         questionOptions.speechStart = function (startListening) {
           return CommunicativeQuestionPresenter.speech(startListening, presenterToken, currentAttemptTraceContext,
-            question.picoSupport ? question.prompt : null);
+            question.picoSupport ? question.prompt : null, nativeStatus);
         };
+        if (nativeStatus) {
+          questionOptions.onSpeechStart = function () {
+            if (currentRun === runId) CommunicativeQuestionPresenter.listening("", presenterToken);
+          };
+        }
         questionOptions.onInterim = function (value) {
+          if (currentRun !== runId || (nativeStatus && value === "…")) return;
           CommunicativeQuestionPresenter.listening(value, presenterToken);
         };
       }

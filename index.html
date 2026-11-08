@@ -6,7 +6,8 @@
   <title>Eigo DE Quest - Game Engine Ver.2.0.1 Stable</title>
   <link rel="stylesheet" href="css/style.css?v=mobile-ui-story-polish-v1-1">
   <link rel="stylesheet" href="css/fixed-game-stage.css">
-  <link rel="stylesheet" href="css/dialogue-information.css?v=communication-feedback-v22&communicationUI=button-final-43-v1">
+  <link rel="stylesheet" href="css/dialogue-information.css?v=communication-feedback-v22&communicationUI=button-final-43-v1&s006Dialogue=v2">
+  <link rel="stylesheet" href="css/s006-ending.css?v=s006-ending-v1">
 </head>
 <body>
   <main id="game" aria-live="polite">
@@ -60,7 +61,7 @@
   <script src="engine/services/speech-engine.js?v=iphone-speech-audio-restore-timing-ab-v1&resultDeliveryTrace=result-delivery-v1"></script>
   <script src="engine/services/speech-start-controller.js?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1"></script>
   <script src="engine/services/lottery-engine.js?v=s005-phase-a2-v1"></script>
-  <script src="engine/services/local-communicative-judge.js?v=s005-rule-real-browser-trace-v1"></script>
+  <script src="engine/services/local-communicative-judge.js?v=s005-rule-real-browser-trace-v1&s006Integration=v2"></script>
   <script src="engine/services/communicative-judge.js?v=s005-rule-real-browser-trace-v1"></script>
   <script src="engine/services/communicative-question-adapter.js?v=communicative-formal-runtime-unified-v1-legacy-speech-trace-v1"></script>
   <script src="engine/services/speech.js"></script>
@@ -71,9 +72,9 @@
   <script src="engine/managers/dialog-manager.js?v=communication-feedback-v22&communicationUI=compact-final-v1"></script>
   <script src="engine/managers/character-manager.js"></script>
   <script src="engine/managers/monster-manager.js"></script>
-  <script src="engine/managers/question-manager.js?v=s005-rule-real-browser-trace-v1&resultDeliveryTrace=result-delivery-v1"></script>
-  <script src="engine/presenters/communicative-question-presenter.js?v=shared-communication-three-actions-v1"></script>
-  <script src="engine/controllers/communicative-question-flow-controller.js?v=communication-recovery-v21"></script>
+  <script src="engine/managers/question-manager.js?v=s005-rule-real-browser-trace-v1&resultDeliveryTrace=result-delivery-v1&s006Integration=v2"></script>
+  <script src="engine/presenters/communicative-question-presenter.js?v=shared-communication-three-actions-v1&s006Integration=v2"></script>
+  <script src="engine/controllers/communicative-question-flow-controller.js?v=communication-recovery-v21&s006Integration=v2"></script>
   <script src="engine/managers/camp-manager.js"></script>
   <script src="engine/managers/morning-manager.js?v=finite-rescue-runtime-wiring-v1"></script>
   <script src="engine/managers/monster-battle-presenter.js"></script>
@@ -92,7 +93,7 @@
   <script src="engine/core/story-registry.js"></script>
   <script src="engine/core/story-events.js"></script>
   <script src="js/fixed-game-stage.js"></script>
-  <script src="engine/core/story-engine.js?v=adventure-return-fix-v1"></script>
+  <script src="engine/core/story-engine.js?v=adventure-return-fix-v1&s006Integration=v2"></script>
   <script src="engine/core/event-system.js"></script>
   <script src="engine/core/scene-manager.js?v=adventure-return-fix-v1"></script>
   <script src="engine/stories/S001.js"></script>
@@ -104,6 +105,10 @@
   <script src="engine/stories/m004.js"></script>
   <script src="data/s005-communication.js?v=s005-clean-rebuild-v1-lock12"></script>
   <script src="engine/stories/S005.js?v=s005-user-graphic-reference-v1"></script>
+  <script src="data/s006-communication.js?v=s006-final-q7-v1"></script>
+  <script src="data/s006-ending.js?v=s006-ending-v1"></script>
+  <script src="engine/controllers/s006-ending-controller.js?v=s006-ending-v1"></script>
+  <script src="engine/stories/S006.js?v=s006-v22-ending-q7-v1"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

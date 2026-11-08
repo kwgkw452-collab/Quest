@@ -37,6 +37,9 @@
       if (rule.accept !== undefined && typeof rule.accept !== "function") {
         errors.push(label + " accept must be a function.");
       }
+      if (rule.reject !== undefined && typeof rule.reject !== "function") {
+        errors.push(label + " reject must be a function.");
+      }
       if (rule.difficulty !== undefined && !(typeof rule.difficulty === "string" ||
           (Array.isArray(rule.difficulty) && rule.difficulty.every(function (value) { return typeof value === "string" && value; })))) {
         errors.push(label + " difficulty must be a string or an array of strings.");
@@ -72,6 +75,10 @@
   }
 
   function evaluateCandidate(rule, text, traceState) {
+    // Optional definition-level guard; existing rules without it are unchanged.
+    if (typeof rule.reject === "function" && rule.reject(text)) {
+      return { verdict: "REJECT", source: "rule", reason: "contrary-goal", matchedVariant: String(text) };
+    }
     var rejects = rule.rejects || [];
     for (var i = 0; i < rejects.length; i += 1) {
       var rejected = exactMatch(text, rejects[i].variants);

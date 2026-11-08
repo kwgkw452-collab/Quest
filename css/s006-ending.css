@@ -1,0 +1,12 @@
+/* S006 letter only. Shared Dialogue/Communication sizing remains unchanged. */
+#s006-ending-letter {
+  position: absolute;
+  left: 300px;
+  top: 14px;
+  width: 960px;
+  height: 552px;
+  pointer-events: none;
+  z-index: 35;
+}
+#s006-ending-letter img { display: block; width: 100%; height: 100%; object-fit: contain; }
+#game-stage #game #scene > #dialogue-box.s006-ending-dialogue .message { font-size: 26px; }
