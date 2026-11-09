@@ -1,0 +1,73 @@
+{
+  "id": "bird-names.v1",
+  "status": "candidate-not-runtime-registered",
+  "target": "future bird vocabulary monster battle",
+  "requiredUniqueAnswers": 3,
+  "entries": [
+    {
+      "canonical": "bird",
+      "aliases": [
+        "birdy"
+      ]
+    },
+    {
+      "canonical": "crow",
+      "aliases": []
+    },
+    {
+      "canonical": "duck",
+      "aliases": []
+    },
+    {
+      "canonical": "owl",
+      "aliases": []
+    },
+    {
+      "canonical": "eagle",
+      "aliases": []
+    },
+    {
+      "canonical": "penguin",
+      "aliases": []
+    },
+    {
+      "canonical": "parrot",
+      "aliases": []
+    },
+    {
+      "canonical": "swan",
+      "aliases": []
+    },
+    {
+      "canonical": "sparrow",
+      "aliases": []
+    },
+    {
+      "canonical": "pigeon",
+      "aliases": []
+    },
+    {
+      "canonical": "flamingo",
+      "aliases": []
+    },
+    {
+      "canonical": "peacock",
+      "aliases": []
+    },
+    {
+      "canonical": "swallow",
+      "aliases": []
+    },
+    {
+      "canonical": "chicken",
+      "aliases": [
+        "chiken"
+      ]
+    },
+    {
+      "canonical": "hawk",
+      "aliases": []
+    }
+  ],
+  "source_note": "Earlier bird name proposal retained; user-added duck, swallow, sparrow, bird, birdy, chiken, hawk, crow. birdy maps to bird, chiken maps to chicken; synonyms count once."
+}
