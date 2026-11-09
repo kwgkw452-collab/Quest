@@ -102,6 +102,20 @@
     var flow = graphicFlow(monster);
     if (!flow) return false;
 
+    // Optional data-driven progress sprites. Existing battles have no progressStates,
+    // so their current reaction/layer behavior is unchanged.
+    var progressStates = monster.battle && monster.battle.progressStates;
+    if (Array.isArray(progressStates)) {
+      var context = active;
+      var hits = context ? context.acceptedAnswers.length : 0;
+      var progressState = progressStates[hits];
+      if (progressState && monster.image && monster.image[progressState]) {
+        await playEffect(monster.effect.success);
+        MonsterBattlePresenter.showMonster(monster, progressState);
+        return true;
+      }
+    }
+
     var answerVisuals = monster.battle && monster.battle.answerVisuals;
     var answerState = answerVisuals && answerVisuals[canonicalAnswer];
     if (answerState && monster.image && monster.image[answerState]) {

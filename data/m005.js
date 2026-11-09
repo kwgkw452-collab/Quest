@@ -44,7 +44,7 @@
       stage2: root + "birdie_stage2.png",
       defeated: root + "birdie_stage3.png"
     },
-    effect: { intro: "shake", success: "flash", retreat: "fadeOut" },
+    effect: { intro: "shake", success: null, retreat: "fadeOut" },
     audio: { warning: "monsterWarning" },
     encyclopedia: { entryId: "m005", targetCategory: "鳥の名前" },
     presentation: { background: "forestClearing", className: "monster-birdie" },
@@ -55,6 +55,7 @@
       guide: "鳥たちと友達になりたいバーディに、鳥の名前を英語で3つ教えてあげるピコ！",
       requiredUniqueAnswers: 3,
       dictionaryId: "bird-names.v1",
+      progressStates: ["normal", "reaction", "stage2", "defeated"],
       graphicFlow: {
         normal: "normal", reaction: "reaction", postReaction: "reaction",
         complete: "defeated", reactionMs: 450, purifyMs: 300

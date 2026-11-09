@@ -15,7 +15,7 @@ Status: STAGED ONLY — not wired to Production or Dev Menu, not browser/iPhone 
 
 ## BLOCKERS BEFORE ACTIVATION
 1. Upload and visually inspect four approved *actual* Birdie image files. Required paths: images/monsters/m005/birdie_stage0.png through birdie_stage3.png. These files do NOT exist at this commit. DO NOT wire registration while absent.
-2. Existing MonsterBattleManager graphicFlow advances normal->reaction->postReaction then complete, not 0/1/2/3 by unique-answer count. The defined stage2 file is reserved but is NOT displayed yet. Implement a tested generic hit-count visual mapping (rather than modifying m004 behavior) before claiming four-state runtime.
+2. Progress mapping was added as an opt-in `battle.progressStates` array (0/1/2/3); existing m004 and other monsters without this setting retain their behavior. Runtime/browser testing of this addition remains pending because the actual approved images are not yet installed.
 3. Existing m005 lacks established Pico camp IDs; campIds intentionally empty. Review failure/retry/pseudoCamp wiring prior to launch. No changes to audio, Speech, common engine, S006.
 4. Confirm how Dev Menu can start m005 independently, without automatically inserting it into S006->S007 progression. Ensure success/abandon return paths and iPhone mic/audio acceptance.
 5. Run dictionary canonicalization tests, duplicate and three-hit tests, complete visual path tests, Dev Menu/browser inspection, S005/S006/m004 regression suite. Record any existing failures separately.
