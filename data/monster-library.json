@@ -24,6 +24,7 @@
   {
     "name_jp": "百獣のキメラ",
     "target_category": "動物の名前 (Dog, Catなど)",
+    "vocabulary_candidates": ["mouse"],
     "pico_guide": "マスター！動物たちの魂が迷っているピコ！知っている『動物』の英語を叫んで落ち着かせて！",
     "image_start": "images/monsters/beast_chimera_10.png",
     "image_end": "images/monsters/beast_chimera_02.png",

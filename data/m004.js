@@ -4,7 +4,7 @@
   WordDictionaryDatabase.register({
     id: "face-parts.v1",
     entries: [
-      { canonical: "eyes", aliases: ["eye"] },
+      { canonical: "eyes", aliases: ["eye", "ice"] },
       { canonical: "nose", aliases: [] },
       { canonical: "mouth", aliases: [] },
       { canonical: "ears", aliases: ["ear"] }
