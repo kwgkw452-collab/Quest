@@ -65,13 +65,13 @@ function button(els, label) {
   assert.strictEqual(first.els.message.textContent, "");
   assert(button(first.els, "次へ"));
   button(first.els, "ピコのサポート").click();
-  assert(button(first.els, "英文を見る"));
+  assert(button(first.els, "英語を見る"));
   assert(button(first.els, "日本語を見る"));
   assert.strictEqual(button(first.els, "もう一度聞く").disabled, true);
   first.pending.shift()({ status: "ended" });
   await Promise.resolve(); await Promise.resolve();
   assert.strictEqual(button(first.els, "もう一度聞く").disabled, false);
-  button(first.els, "英文を見る").click();
+  button(first.els, "英語を見る").click();
   assert.strictEqual(first.els.message.textContent, "Can you hear me?");
   button(first.els, "日本語を見る").click();
   assert.strictEqual(first.els.message.textContent, "私の声が聞こえるの？");
@@ -90,8 +90,8 @@ function button(els, label) {
     speaker: "コング", text: "Wow!", voiceKey: "voice_c02_st004_001", button: "Next"
   });
   button(noJapanese.els, "ピコのサポート").click();
-  assert(button(noJapanese.els, "英文を見る"));
-  assert.strictEqual(button(noJapanese.els, "日本語を見る"), undefined);
+  assert(button(noJapanese.els, "英語を見る"));
+  assert.strictEqual(button(noJapanese.els, "日本語を見る").disabled, true);
   button(noJapanese.els, "次へ").click();
   await noJapaneseCompletion;
 
@@ -114,10 +114,10 @@ function button(els, label) {
     initialView: "japanese", button: "もう一度言う"
   });
   assert.strictEqual(initiallyOpen.els.message.textContent, "残っているのは、鼻と口と耳ピコ！");
-  assert(button(initiallyOpen.els, "英文を見る"));
+  assert(button(initiallyOpen.els, "英語を見る"));
   assert(button(initiallyOpen.els, "日本語を見る"));
   assert(button(initiallyOpen.els, "もう一度聞く"));
-  button(initiallyOpen.els, "英文を見る").click();
+  button(initiallyOpen.els, "英語を見る").click();
   assert.strictEqual(initiallyOpen.els.message.textContent, "nose\nmouth\nears");
   button(initiallyOpen.els, "もう一度言う").click();
   await initiallyOpenCompletion;
