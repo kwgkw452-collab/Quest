@@ -92,6 +92,11 @@ function button(els, label) {
   button(noJapanese.els, "ピコのサポート").click();
   assert(button(noJapanese.els, "英語を見る"));
   assert.strictEqual(button(noJapanese.els, "日本語を見る").disabled, true);
+  assert.strictEqual(button(noJapanese.els, "次へ").disabled, true,
+    "Next remains disabled while the initial voice is playing");
+  noJapanese.pending.shift()({ status: "ended" });
+  await Promise.resolve(); await Promise.resolve();
+  assert.strictEqual(button(noJapanese.els, "次へ").disabled, false);
   button(noJapanese.els, "次へ").click();
   await noJapaneseCompletion;
 
