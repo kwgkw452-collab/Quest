@@ -135,6 +135,9 @@
       message.slice(prefix.length) : (goal && message !== goal ? message : "");
     primaryGoal.textContent = goalContent;
     setCommunicationInformation(supportContent);
+    // Only a visible three-stage Pico explanation expands the dialogue to three rows.
+    els.dialogueBox.classList.toggle("communication-has-explanation",
+      Boolean(options && options.support === true && supportContent));
   }
 
   function resetCommunicationInformation() {
@@ -145,6 +148,7 @@
   function setCommunicationInformation(message) {
     if (!communicationLayout) return;
     els.message.textContent = message || "";
+    if (!message) els.dialogueBox.classList.remove("communication-has-explanation");
     updateInformationVisibility();
   }
 
