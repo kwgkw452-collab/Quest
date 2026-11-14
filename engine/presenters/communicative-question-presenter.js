@@ -94,12 +94,12 @@
         started = true;
         trace("speech-gate-click", traceContext);
         if (nativeStatus) {
-          showInformation(withGoal(currentSupport || "マイクの準備中…"));
+          showInformation(withGoal(currentSupport || "マイクの準備中…"), { support: Boolean(currentSupport) });
         } else {
           listening("", token);
         }
         function stopShowingListening() {
-          if (nativeStatus && active(token)) showInformation(withGoal(currentSupport || ""));
+          if (nativeStatus && active(token)) showInformation(withGoal(currentSupport || ""), { support: Boolean(currentSupport) });
         }
         try {
           Promise.resolve(startListening()).then(function (value) {
