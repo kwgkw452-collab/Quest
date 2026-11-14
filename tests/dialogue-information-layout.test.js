@@ -62,6 +62,15 @@ const { manager, elements } = ui;
 const goal = "日本語Goal";
 const support = "既存のヒント\n次の行";
 manager.showCommunication("ピコ", goal + "\n\n" + support, goal);
+// Common Pico V1: Goal and feedback alone must retain the two-row layout.
+assert(!elements.dialogueBox.className.includes("communication-has-explanation"));
+manager.showCommunication("ピコ", goal + "\n\n" + support, goal, { support: true });
+assert(elements.dialogueBox.className.includes("communication-has-explanation"),
+  "Only an explicitly opened three-stage explanation enables three rows");
+manager.showCommunication("ピコ", goal + "\n\n" + support, goal, { feedback: true });
+assert(!elements.dialogueBox.className.includes("communication-has-explanation"),
+  "Feedback is not a three-stage explanation");
+manager.showCommunication("ピコ", goal + "\n\n" + support, goal);
 const information = elements.message.parentNode;
 const primary = elements.dialogueBox.children[0];
 const goalNode = primary.children[1];
