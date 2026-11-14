@@ -136,8 +136,11 @@
     primaryGoal.textContent = goalContent;
     setCommunicationInformation(supportContent);
     // Only a visible three-stage Pico explanation expands the dialogue to three rows.
-    els.dialogueBox.classList.toggle("communication-has-explanation",
-      Boolean(options && options.support === true && supportContent));
+    if (options && options.support === true && supportContent) {
+      els.dialogueBox.classList.add("communication-has-explanation");
+    } else {
+      els.dialogueBox.classList.remove("communication-has-explanation");
+    }
   }
 
   function resetCommunicationInformation() {
