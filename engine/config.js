@@ -6,7 +6,7 @@
     initialStoryId: "S001",
     openingEnabled: true,
     defaultLanguage: "en-US",
-    dialogueNextLabel: "つぎへ",
+    dialogueNextLabel: "次へ",
     speechButtonLabel: "🎤 話す",
     recognizedPrefix: "聞き取り中：",
     speechSuccessDelayMs: 500,
