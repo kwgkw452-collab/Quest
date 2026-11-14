@@ -85,21 +85,22 @@
         });
         return;
       }
-      DialogManager.addControl("英文を見る", function () {
+      DialogManager.addControl("英語を見る", function () {
         if (!isCurrent()) return;
         state.englishVisible = true;
         state.japaneseVisible = false;
         setVisibleContent();
       });
-      if (options.supportText) {
-        DialogManager.addControl("日本語を見る", function () {
-          if (!isCurrent()) return;
-          state.englishVisible = false;
-          state.japaneseVisible = true;
-          setVisibleContent();
-        });
-      }
-      DialogManager.addControl("もう一度聞く", startVoice, { disabled: state.voicePlaying });
+      DialogManager.addControl("日本語を見る", function () {
+        if (!isCurrent() || !options.supportText) return;
+        state.englishVisible = false;
+        state.japaneseVisible = true;
+        setVisibleContent();
+      }, { disabled: !options.supportText });
+      DialogManager.addControl("もう一度聞く", startVoice, {
+        disabled: state.voicePlaying || !options.voiceKey ||
+          !window.DialogueVoiceController || typeof DialogueVoiceController.play !== "function"
+      });
     }
 
     DialogManager.show(options.speaker || "", "", options.modeClass);
