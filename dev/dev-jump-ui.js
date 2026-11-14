@@ -22,7 +22,7 @@
     SaveManager.init();
 
     var jump = new URLSearchParams(window.location.search).get("jump");
-    if (jump === "S005" || jump === "S006") {
+    if (jump === "S005" || jump === "S006" || jump === "S007") {
       DevJumpManager.start(jump).catch(function (error) {
         DialogManager.show("DEV", error && error.message ? error.message : String(error));
       });

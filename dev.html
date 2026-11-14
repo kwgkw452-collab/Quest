@@ -110,6 +110,8 @@
   <script src="data/s006-ending.js?v=s006-ending-v1"></script>
   <script src="engine/controllers/s006-ending-controller.js?v=s006-ending-v1"></script>
   <script src="engine/stories/S006.js?v=s006-v22-ending-q7-v1"></script>
+  <script src="data/s007-communication.js?v=s007-draft-v1"></script>
+  <script src="engine/stories/S007.js?v=s007-draft-v1"></script>
   <script src="dev/dev-jump-runtime-trace.js"></script>
   <script src="dev/dev-checkpoints.js?v=s006-integration-v2"></script>
   <script src="dev/dev-jump-manager.js"></script>
@@ -118,7 +120,7 @@
   <script>
     // Optional playtests must not start over the direct Story entry.
     var directJump = new URLSearchParams(window.location.search).get("jump");
-    if (directJump !== "S005" && directJump !== "S006") {
+    if (directJump !== "S005" && directJump !== "S006" && directJump !== "S007") {
       document.write('<script src="dev/communicative-judge-pilot.js?v=communicative-formal-trace-v1&resultDeliveryTrace=result-delivery-v1"><\/script>');
       document.write('<script src="dev/communicative-question-manager-playtest.js?v=communicative-formal-trace-v1"><\/script>');
     }

@@ -134,6 +134,17 @@
       continueWith: [],
       progressStoryId: "S006"
     }
+    ,{
+      id: "S007",
+      label: "S007",
+      direct: true,
+      entry: { kind: "story", id: "S007" },
+      party: [1, 2, 4],
+      completedStories: ["S001", "m001", "S002", "S003", "S004", "st004", "m004", "S005", "S006"],
+      bestiary: { m001: defeated, m002: defeated, m003: defeated, m004: defeated },
+      continueWith: [],
+      progressStoryId: "S007"
+    }
   ];
 
   function clone(value) {
