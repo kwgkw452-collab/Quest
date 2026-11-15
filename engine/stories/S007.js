@@ -144,7 +144,33 @@
       C.dialogue("Meg", "Thank you. I'll remember your words."),
       C.dialogue("Pico", "We stayed back. And we helped!"),
       C.dialogue("Bernie", "You have a picture, Meg."),
-      C.dialogue("Meg", "And we all have a happy memory.")
+      C.dialogue("Meg", "And we all have a happy memory."),
+      // Scene 12 — 新しい仲間、メグ
+      C.clear(),
+      C.background("images/007/S007-Scene-12.png"),
+      C.dialogue("Meg", "What will you do next?"),
+      C.dialogue("Kong", "We are looking for the Best Thing."),
+      C.dialogue("Meg", "The Best Thing? What's that?"),
+      C.dialogue("Kong", "We don't know yet."),
+      C.dialogue("Kong", "We travel around the world."),
+      C.dialogue("Kong", "We go to many countries."),
+      C.dialogue("Kong", "We meet many people and animals."),
+      C.dialogue("Pico", "And we see many beautiful places!"),
+      C.dialogue("Meg", "Wow! I can take many pictures!"),
+      C.dialogue("Meg", "Pictures of people, animals, and places!"),
+      C.dialogue("Kong", "Do you want to come with us?"),
+      C.dialogue("Meg", "Yes! I want to see the world!"),
+      C.dialogue("Bernie", "Welcome, Meg!"),
+      C.dialogue("Pico", "Let's go together!"),
+      // Meg has no registered numeric Character ID yet; persist her joining via existing Save flags.
+      C.setFlag("s007.megJoined", true),
+      // Scene 13 — 次の旅へ
+      C.clear(),
+      C.background("images/007/S007-Scene-13.png"),
+      C.dialogue("Meg", "Look! The Happiness Birds!"),
+      C.dialogue("Pico", "They're flying together!"),
+      C.dialogue("Kong", "Let's go!"),
+      C.dialogue("Meg", "Yes! Our new adventure!")
     ]
   };
   StoryRegistry.register(story);
