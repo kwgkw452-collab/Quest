@@ -151,7 +151,7 @@
   function setCommunicationInformation(message) {
     if (!communicationLayout) return;
     els.message.textContent = message || "";
-    if (!message) els.dialogueBox.classList.remove("communication-has-explanation");
+    els.dialogueBox.classList.remove("communication-has-explanation");
     updateInformationVisibility();
   }
 

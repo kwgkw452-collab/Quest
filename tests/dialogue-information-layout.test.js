@@ -80,6 +80,7 @@ assert.strictEqual(elements.speaker.hidden, true);
 assert.strictEqual(elements.message.textContent, support, "Goal must not be repeated in Support");
 assert.deepStrictEqual(elements.dialogueBox.children, [primary, information, elements.controls]);
 assert.strictEqual(elements.recognizedText.parentNode, information);
+manager.showCommunication("ピコ", goal + "\n\n" + support, goal, { support: true });
 manager.addControl("もう一度話す", () => {});
 const retryAction = elements.controls.children[0];
 let current = true;
@@ -87,6 +88,7 @@ manager.addCommunicationLanguageControls("Existing model English.", goal, () => 
 const englishButton = elements.controls.children[1];
 const japaneseButton = elements.controls.children[2];
 englishButton.listeners.click();
+assert(!elements.dialogueBox.className.includes("communication-has-explanation"), "language view ends the yellow explanation");
 assert.strictEqual(elements.message.textContent, "Existing model English.");
 assert.strictEqual(goalNode.textContent, goal);
 assert.strictEqual(elements.controls.children[0], retryAction);

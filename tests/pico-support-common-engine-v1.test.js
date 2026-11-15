@@ -64,7 +64,7 @@ function button(els, label) {
   });
   assert.strictEqual(first.els.message.textContent, "");
   assert(button(first.els, "次へ"));
-  button(first.els, "ピコのサポート").click();
+  button(first.els, "ピコサポート").click();
   assert(button(first.els, "英語を見る"));
   assert(button(first.els, "日本語を見る"));
   assert.strictEqual(button(first.els, "もう一度聞く").disabled, true);
@@ -89,7 +89,7 @@ function button(els, label) {
   const noJapaneseCompletion = noJapanese.context.PicoSupportController.present({
     speaker: "コング", text: "Wow!", voiceKey: "voice_c02_st004_001", button: "Next"
   });
-  button(noJapanese.els, "ピコのサポート").click();
+  button(noJapanese.els, "ピコサポート").click();
   assert(button(noJapanese.els, "英語を見る"));
   assert.strictEqual(button(noJapanese.els, "日本語を見る").disabled, true);
   assert.strictEqual(button(noJapanese.els, "次へ").disabled, true,
@@ -106,12 +106,12 @@ function button(els, label) {
     voiceKey: "voice_c01_s002_004", button: false
   }), "automatic");
   assert.strictEqual(button(automatic.els, "次へ"), undefined);
-  assert(button(automatic.els, "ピコのサポート"));
+  assert(button(automatic.els, "ピコサポート"));
   automatic.context.PicoSupportController.dismiss();
   automatic.context.DialogManager.show("ピコ", "次の案内");
   automatic.pending.shift()({ status: "ended" });
   await Promise.resolve(); await Promise.resolve();
-  assert.strictEqual(button(automatic.els, "ピコのサポート"), undefined);
+  assert.strictEqual(button(automatic.els, "ピコサポート"), undefined);
 
   const initiallyOpen = harness();
   const initiallyOpenCompletion = initiallyOpen.context.PicoSupportController.present({
@@ -126,6 +126,48 @@ function button(els, label) {
   assert.strictEqual(initiallyOpen.els.message.textContent, "nose\nmouth\nears");
   button(initiallyOpen.els, "もう一度言う").click();
   await initiallyOpenCompletion;
+
+  const silent = harness();
+  const silentDone = silent.context.PicoSupportController.present({ text: "Existing English", supportText: "", button: "つぎへ" });
+  assert.deepStrictEqual(silent.els.controls.children.map(b => b.textContent), ["次へ", "ピコサポート"]);
+  button(silent.els, "ピコサポート").click();
+  assert.deepStrictEqual(silent.els.controls.children.map(b => b.textContent), ["次へ", "英語を見る", "日本語を見る", "もう一度聞く"]);
+  assert(button(silent.els, "日本語を見る").disabled);
+  assert(button(silent.els, "もう一度聞く").disabled);
+  button(silent.els, "英語を見る").click();
+  assert.strictEqual(silent.els.message.textContent, "Existing English");
+  button(silent.els, "次へ").click(); await silentDone;
+  const stale = button(silent.els, "英語を見る");
+  const nextDone = silent.context.PicoSupportController.present({ text: "Next English" });
+  stale.click();
+  assert.strictEqual(silent.els.message.textContent, "");
+  assert.strictEqual(silent.els.controls.children.length, 2);
+  button(silent.els, "次へ").click(); await nextDone;
+
+  for (const failure of ["throw", "reject", "missing"]) {
+    const failed = harness();
+    failed.context.DialogueVoiceController.play = () => {
+      if (failure === "throw") throw new Error("audio failure");
+      return failure === "reject" ? Promise.reject(new Error("audio failure")) : Promise.resolve({ status: "missing" });
+    };
+    const done = failed.context.PicoSupportController.present({ text: "Hello", voiceKey: "unknown" });
+    await Promise.resolve(); await Promise.resolve();
+    button(failed.els, "ピコサポート").click();
+    assert.strictEqual(button(failed.els, "次へ").disabled, false);
+    if (failure === "missing") assert(button(failed.els, "もう一度聞く").disabled);
+    button(failed.els, "次へ").click(); await done;
+  }
+
+  const integrated = harness();
+  vm.runInContext(read("engine/core/story-engine.js"), integrated.context);
+  const stepDone = integrated.context.StoryEngine.runStep({ type: "dialogue", speaker: "Meg", text: "Hello!" }, {}, 0, { id: "S007" });
+  await Promise.resolve(); await Promise.resolve(); await Promise.resolve(); await Promise.resolve();
+  assert.strictEqual(integrated.els.message.textContent, "", "unvoiced Story Dialogue must also start hidden");
+  assert.strictEqual(integrated.els.controls.children.length, 2);
+  button(integrated.els, "ピコサポート").click();
+  button(integrated.els, "英語を見る").click();
+  assert.strictEqual(integrated.els.message.textContent, "Hello!");
+  button(integrated.els, "次へ").click(); await stepDone;
 
   const storyEngine = read("engine/core/story-engine.js");
   const monsterManager = read("engine/managers/monster-battle-manager.js");
