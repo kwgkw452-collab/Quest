@@ -65,6 +65,7 @@
         C.question("s005.communication.5", "s005Challenge5"),
         C.dialogue("Pico", "The king-size bed is for Kong."),
         C.dialogue("Kong", "Yes!"),
+        C.dialogue("Pico", "ピコは寝ないから、ベッドは必要ないピコ。"),
         C.dialogue("Hotel Clerk", "Do you want breakfast?"),
         C.question("s005.communication.6", "s005Challenge6"),
         C.dialogue("Hotel Clerk", "Breakfast is from seven to nine."),
