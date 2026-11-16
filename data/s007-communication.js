@@ -370,17 +370,18 @@
   var variants = data.map(function (d) { return d.answers.slice(); });
   var rules = data.map(function (d, index) {
     var allowed = variants[index].map(norm);
+    function isAccepted(value) {
+      var t = norm(value);
+      if (!t || (/\b(?:do not|dont|never)\b/.test(t) && (index === 1 || index === 3))) return false;
+      if (allowed.indexOf(t) !== -1) return true;
+      if (index === 1) return /\byou\b/.test(t) && /\b(?:take|takes|took)\b.*\b(?:picture|pictures|photo|photos)\b/.test(t);
+      if (index === 3) return /\blook at\b/.test(t) && /\bbirds?\b/.test(t);
+      return false;
+    }
     return { conceptId: d.communicative.conceptId, variants: d.answers.slice(),
       difficulty: "starter", promptType: d.communicative.promptType,
-      accept: function (value) {
-        var t = norm(value);
-        if (!t || /\b(?:do not|dont|never)\b/.test(t) && (index === 1 || index === 3)) return false;
-        if (allowed.indexOf(t) !== -1) return true;
-        if (index === 1) return /\byou\b/.test(t) && /\b(?:take|takes|took)\b.*\b(?:picture|pictures|photo|photos)\b/.test(t);
-        if (index === 3) return /\blook at\b/.test(t) && /\bbirds?\b/.test(t);
-        return false;
-      },
-      reject: function (value) { var t = norm(value); return !!t && !this.accept(value); }
+      accept: isAccepted,
+      reject: function (value) { var t = norm(value); return !!t && !isAccepted(value); }
     };
   });
   var pools = data.map(function (d) {
