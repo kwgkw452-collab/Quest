@@ -15,7 +15,7 @@
     var initialView = options.initialView === "english" || options.initialView === "japanese" ? options.initialView : null;
     var state = {
       supportOpen: Boolean(initialView),
-      englishVisible: initialView === "english",
+      englishVisible: initialView === "english" || Boolean(options.showEnglishInitially),
       japaneseVisible: initialView === "japanese",
       voicePlaying: false
     };
@@ -78,7 +78,7 @@
       DialogManager.clearControls();
       addNext();
       if (!state.supportOpen) {
-        DialogManager.addControl(options.supportLabel || "Pico's Support", function () {
+        DialogManager.addControl(options.supportLabel || "ピコサポート", function () {
           if (!isCurrent()) return;
           state.supportOpen = true;
           renderControls();
@@ -99,11 +99,11 @@
           setVisibleContent();
         });
       }
-      DialogManager.addControl("もう一度聞く", startVoice, { disabled: state.voicePlaying });
+      DialogManager.addControl("もう一度聞く", startVoice, { disabled: state.voicePlaying || !options.voiceKey || !window.DialogueVoiceController || typeof DialogueVoiceController.play !== "function" });
     }
 
     DialogManager.show(options.speaker || "", "", options.modeClass);
-    if (initialView) setVisibleContent();
+    if (initialView || options.showEnglishInitially) setVisibleContent();
     state.voicePlaying = Boolean(options.voiceKey && window.DialogueVoiceController &&
       typeof DialogueVoiceController.play === "function");
     renderControls();
