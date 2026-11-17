@@ -230,7 +230,7 @@
   register("floatingText", async function (step, state) { CharacterManager.addFloatingText(valueOf(step.text, state), step.className); });
 
   register("dialogue", async function (step, state) {
-    if (step.voiceKey && window.PicoSupportController && typeof PicoSupportController.present === "function") {
+    if (window.PicoSupportController && typeof PicoSupportController.present === "function") {
       await PicoSupportController.present({
         speaker: valueOf(step.speaker, state) || "",
         text: valueOf(step.text, state) || "",
@@ -238,6 +238,7 @@
         voiceGain: step.voiceGain,
         voiceEffect: step.voiceEffect,
         supportText: valueOf(step.supportText, state) || "",
+        showEnglishInitially: !step.voiceKey,
         supportSpeaker: valueOf(step.supportSpeaker, state) || "ピコ",
         supportLabel: step.supportLabel,
         button: step.button,
