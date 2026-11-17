@@ -89,9 +89,9 @@
       // Scene 8
       [
         C.background("images/006/S006-Scene-10.png?v=s006-v22"),
-        C.dialogue("Pico", "この台車に、探している箱があるか聞いてみるピコ！"),
+        C.dialogue("Pico", "荷物係の人に、探している箱を見たか聞いてみるピコ！"),
         C.question("s006.communication.7", "s006Challenge7"),
-        C.dialogue("Worker", "No. It's at the bus terminal.", { supportText: "いいえ。バス乗り場にあります。" }),
+        C.dialogue("Worker", "Yes. I saw it. Someone took it to the bus terminal.", { supportText: "はい、見ました。誰かがバス乗り場へ運んでいきました。" }),
         C.dialogue("Kong", "The bus!", { supportText: "バスだ！" }),
         C.dialogue("Bernie", "Let's hurry!", { supportText: "急ごう！" })
       ],

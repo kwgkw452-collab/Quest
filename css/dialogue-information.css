@@ -77,17 +77,17 @@
   display: flex;
   flex-direction: column;
   gap: 3px;
-  height: var(--compact-three-row-height);
-  min-height: var(--compact-three-row-height);
-  max-height: var(--compact-three-row-height);
+  height: var(--compact-two-row-height);
+  min-height: var(--compact-two-row-height);
+  max-height: var(--compact-two-row-height);
   padding: 4px 16px;
   border-width: 4px;
 }
 
-#game-stage #game #scene > .dialogue-box.communication-dialogue:has(.dialogue-information[hidden]) {
-  height: var(--compact-two-row-height);
-  min-height: var(--compact-two-row-height);
-  max-height: var(--compact-two-row-height);
+#game-stage #game #scene > .dialogue-box.communication-dialogue.communication-has-explanation {
+  height: var(--compact-three-row-height);
+  min-height: var(--compact-three-row-height);
+  max-height: var(--compact-three-row-height);
 }
 
 #game-stage .communication-dialogue > .dialogue-primary { flex: 0 0 auto; align-items: flex-start; }
@@ -161,12 +161,12 @@
   white-space: normal;
 }
 
-/* S006 uses three rows only while a Communication Goal is visible. */
+/* S006 uses three rows only while a three-stage Pico explanation is visible. */
 #game-stage #scene:has(#background[style*="images/006/S006-Scene-"]) {
   --s006-dialogue-height: 100.2px;
 }
 
-#game-stage #scene:has(#background[style*="images/006/S006-Scene-"]):has(> .communication-dialogue:not([hidden]) .dialogue-primary-goal:not([hidden]):not(:empty)) {
+#game-stage #scene:has(#background[style*="images/006/S006-Scene-"]):has(> .communication-dialogue.communication-has-explanation:not([hidden])) {
   --s006-dialogue-height: 140px;
 }
 
@@ -184,7 +184,7 @@
 
 
 /* S006 Communication: retain hands/feet without changing normal backgrounds. */
-#game-stage #scene:has(> .communication-dialogue:not([hidden]) .dialogue-primary-goal:not([hidden]):not(:empty)) #background:is(
+#game-stage #scene:has(> .communication-dialogue.communication-has-explanation:not([hidden])) #background:is(
   [style*="images/006/S006-Scene-07.png"],
   [style*="images/006/S006-Scene-08.png"],
   [style*="images/006/S006-Scene-10.png"],
@@ -193,12 +193,12 @@
   background-position: center -32px;
 }
 
-#game-stage #scene:has(> .communication-dialogue:not([hidden]) .dialogue-primary-goal:not([hidden]):not(:empty)) #background[style*="images/006/S006-Scene-04.png"] {
+#game-stage #scene:has(> .communication-dialogue.communication-has-explanation:not([hidden])) #background[style*="images/006/S006-Scene-04.png"] {
   background-position: center -12px;
 }
 
 
-#game-stage #scene:has(> .communication-dialogue:not([hidden]) .dialogue-primary-goal:not([hidden]):not(:empty)) #background[style*="images/006/S006-Scene-12.png"] {
+#game-stage #scene:has(> .communication-dialogue.communication-has-explanation:not([hidden])) #background[style*="images/006/S006-Scene-12.png"] {
   background-position: center -12px;
 }
 

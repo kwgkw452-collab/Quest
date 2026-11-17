@@ -80,7 +80,7 @@
       DialogManager.resetCommunicationInformation();
     }
     showInformation(currentSupport ? withGoal(currentSupport) :
-      (japanesePrompt || "準備できたよ。話してみよう。"));
+      (japanesePrompt || "準備できたよ。話してみよう。"), { support: Boolean(currentSupport) });
     trace("speech-gate-shown", traceContext);
     var pending = new Promise(function (resolve, reject) {
       var controls = document.getElementById("controls");
@@ -94,12 +94,12 @@
         started = true;
         trace("speech-gate-click", traceContext);
         if (nativeStatus) {
-          showInformation(withGoal(currentSupport || "マイクの準備中…"));
+          showInformation(withGoal(currentSupport || "マイクの準備中…"), { support: Boolean(currentSupport) });
         } else {
           listening("", token);
         }
         function stopShowingListening() {
-          if (nativeStatus && active(token)) showInformation(withGoal(currentSupport || ""));
+          if (nativeStatus && active(token)) showInformation(withGoal(currentSupport || ""), { support: Boolean(currentSupport) });
         }
         try {
           Promise.resolve(startListening()).then(function (value) {
@@ -134,7 +134,7 @@
     } else if (result && result.status !== "speech-failure" && result.answer) {
       information = result.answer + " と聞こえたよ。 ｜ " + information;
     }
-    showInformation(withGoal(information), { feedback: !showingSupport });
+    showInformation(withGoal(information), { feedback: !showingSupport, support: showingSupport });
     var choices = [];
     if (options && options.retry) choices.push({ label: "もう一度話す", value: "retry" });
     if (options && options.support) choices.push({ label: "ピコのサポート", value: "support" });
