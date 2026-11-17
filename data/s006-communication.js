@@ -190,37 +190,44 @@
   {
     "id": "s006.communication.7",
     "category": "word",
-    "prompt": "その台車（カート）に箱はありますか？",
+    "prompt": "箱を見ましたか？",
     "answers": [
-      "Is the box on the cart?",
-      "The box on the cart?",
-      "Box on the cart?",
-      "My box on the cart?",
-      "Is my box on the cart?",
-      "Is the box in the cart?",
-      "Is there a box on the cart?",
-      "Is there my box on the cart?",
-      "Are there boxes on the cart?",
-      "Are there any boxes on the cart?",
-      "There is a box on the cart?",
-      "Do you have the box on the cart?"
+      "Did you see the box?",
+      "Did you see a box?",
+      "Did you see my box?",
+      "Did you see that box?",
+      "Did you see any boxes?",
+      "Do you see the box?",
+      "Do you see a box?",
+      "Do you see the boxes?",
+      "Can you see the box?",
+      "Can you see any boxes?",
+      "Have you seen the box?",
+      "Have you seen my box?",
+      "Have you seen a box?",
+      "Have you seen the boxes?",
+      "You saw the box?",
+      "Did you see the book?",
+      "Did you see the books?",
+      "Do you see the book?",
+      "Can you see the books?",
+      "Have you seen the book?"
     ],
     "success": "",
     "failure": "",
     "picoSupport": [
-      "Is the box ...? で始めるピコ！",
-      "台車は cart、上にあるなら on だピコ！",
-      "Is the box on the cart? と聞くピコ！"
+      "荷物係の人に「箱を見ましたか？」と尋ねるピコ。",
+      "「見ましたか？」は Did you see ...?。「箱」は box だピコ。",
+      "Did you see the box? と尋ねるピコ。"
     ],
     "communicative": {
       "conceptId": "s006.mystery.7",
       "difficulty": "starter",
       "promptType": "question",
-      "expectedUtterance": "Is the box on the cart?",
+      "expectedUtterance": "Did you see the box?",
       "poolId": "s006.communication.7.v1"
     }
   },
-
   {
     "id": "s006.communication.8",
     "category": "word",
@@ -266,30 +273,36 @@
   {
     "id": "s006.communication.9",
     "category": "word",
-    "prompt": "私の箱を見つけてもらえますか？",
+    "prompt": "その箱を見つけてください。",
     "answers": [
-      "Can you find my box?",
-      "Can you find the box?",
-      "Could you find my box?",
-      "Will you find my box?",
+      "Please find the box.",
+      "Find the box, please.",
+      "Find the box.",
       "Please find my box.",
-      "Can you help me find my box?",
-      "Can you look for my box?",
-      "Please look for my box.",
-      "Would you help us find our box?"
+      "Please find that box.",
+      "Can you find the box?",
+      "Can you find my box?",
+      "Could you find the box?",
+      "Can you help me find the box?",
+      "Help me find the box, please.",
+      "Please look for the box.",
+      "Can you look for the box?",
+      "Please find a box.",
+      "Find my box, please.",
+      "Please find the boxes."
     ],
     "success": "",
     "failure": "",
     "picoSupport": [
-      "運転手さんに、箱を見つけてもらうようお願いするピコ。",
-      "『見つける』は find。Can you ...? を使うピコ。",
-      "Can you find my box? とお願いするピコ。"
+      "運転手さんに、その箱を見つけてくれるようお願いするピコ。",
+      "「見つける」は find。「〜してください」は Please ... だピコ。",
+      "Please find the box. とお願いするピコ。"
     ],
     "communicative": {
       "conceptId": "s006.mystery.9",
       "difficulty": "starter",
       "promptType": "request",
-      "expectedUtterance": "Can you find my box?",
+      "expectedUtterance": "Please find the box.",
       "poolId": "s006.communication.9.v1"
     }
   },
@@ -366,22 +379,22 @@
     function (t) { return matches(polite(t), "(?:(?:do|does) )?you have " + box + "|have you got " + box + "|(?:is|are) " + box + " here"); },
     function (t) { return matches(polite(t), "(?:(?:can|could|would|will) you )?(?:look at|take a look at|check) " + ribbon); },
     function (t) {
-      // Q7 only: confirmation that a box is on/in a cart, including ellipsis.
-      var b = "(?:(?:any|some) )?" + box;
-      var c = "(?:(?:the|that|this|a|your|my|our|these|those) )*(?:carts?|trolleys?)";
-      var place = "(?:on|in) " + c;
-      return matches(polite(t), "(?:(?:is|are) (?:there )?)?" + b + " " + place +
-        "|there (?:(?:is|are) )?" + b + " " + place +
-        "|" + b + " (?:is|are) " + place +
-        "|(?:(?:do|does) )?you have " + b + " " + place +
-        "|have you got " + b + " " + place +
-        "|" + place + " (?:(?:is|are) )?" + b);
+      // Q7: ask if the worker saw a box (also accept present/perfect forms
+      // and book/books as a known speech-recognition ambiguity).
+      var object = "(?:(?:the|that|this|my|your|our|a|any|some|those|these|another) )*(?:boxes|box|books|book|it)";
+      return matches(polite(t),
+        "(?:did|do|does) you see " + object +
+        "|(?:can|could) you see " + object +
+        "|have you seen " + object +
+        "|(?:did|do|does) you (?:see|saw) " + object +
+        "|you (?:saw|see) " + object +
+        "|(?:have you|did you) (?:ever )?seen " + object);
     },
     function (t) {
       t = polite(t);
       return matches(t, "(?:(?:can|could|would|will) you )?wait(?: (?:for (?:me|us)|here|a (?:second|minute|moment)))?|(?:just )?(?:a|one) (?:moment|minute|second)|(?:hold|hang) on|give (?:me|us) (?:a|one) (?:second|minute|moment)|do not (?:go|leave)(?: yet)?|stop(?: the bus)?");
     },
-    function (t) { return matches(polite(t), "(?:(?:can|could|will|would) you )?(?:find|look for) " + box + "|(?:(?:can|could|will|would) you )?help (?:me|us) (?:to )?find " + box); },
+    function (t) { return matches(polite(t), "(?:(?:can|could|will|would) you )?(?:find|look for) " + box + "|(?:(?:can|could|will|would) you )?help (?:me|us) (?:to )?find " + box + "|help (?:me|us) find " + box); },
     function (t) { return matches(polite(t), "(?:i|we) (?:found|find|got|get|have|have found|have got) " + box + "(?: (?:now|at last|finally))?|(?:here (?:is|are)|this is|these are) " + box + "|" + box + " (?:is|are) here"); }
   ];
   var rules = defs.map(function (d, i) {
