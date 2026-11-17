@@ -32,8 +32,8 @@ const press=label=>{const b=ui.controls.find(x=>x.label===label);assert(b&&!b.di
   press("次へ");await missing;
   for(const id of ["S005","S006","S007"]){
     const s=source("engine/stories/"+id+".js");
-    const calls=[...s.matchAll(/C\\.dialogue\\("([^"]*)", "((?:[^"\\\\]|\\\\.)*)"(?:, (\\{[^\\n]*\\}))?\\)/g)];
-    const english=calls.filter(m=>/[A-Za-z]/.test(m[2])&&!/[\\u3040-\\u30ff\\u3400-\\u9fff]/.test(m[2])&&!/^\\d\\d:\\d\\d$/.test(m[2]));
+    const calls=[...s.matchAll(/C\.dialogue\("([^"]*)", "((?:[^"\\]|\\.)*)"(?:, (\{[^\n]*\}))?\)/g)];
+    const english=calls.filter(m=>/[A-Za-z]/.test(m[2])&&!/[\u3040-\u30ff\u3400-\u9fff]/.test(m[2])&&!/^\d\d:\d\d$/.test(m[2]));
     assert(english.length>0,id+" no English dialogue");
     assert(english.every(m=>m[3]&&m[3].includes("supportText:")),id+" untranslated");
   }
