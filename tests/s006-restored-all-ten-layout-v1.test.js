@@ -51,7 +51,7 @@ for (const utterance of ["Please find the book.", "Do not find the box."]) {
   assert(!rules[8].accept(utterance), "Q9 accepted wrong purpose: " + utterance);
 }
 const story = load("engine/stories/S006.js");
-assert.equal((story.match(/C\\.question\\("s006\\.communication\\./g) || []).length, 10);
+assert.equal((story.match(/C\.question\("s006\.communication\./g) || []).length, 10);
 assert(story.includes("はい、見ました。誰かがバス乗り場へ運んでいきました。"));
 assert(story.includes('{ type: "s006EndingLetter" }'));
 const css = load("css/dialogue-information.css");
