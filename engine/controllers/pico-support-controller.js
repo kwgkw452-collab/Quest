@@ -91,14 +91,12 @@
         state.japaneseVisible = false;
         setVisibleContent();
       });
-      if (options.supportText) {
-        DialogManager.addControl("日本語を見る", function () {
-          if (!isCurrent()) return;
-          state.englishVisible = false;
-          state.japaneseVisible = true;
-          setVisibleContent();
-        });
-      }
+      DialogManager.addControl("日本語を見る", function () {
+        if (!isCurrent() || !options.supportText) return;
+        state.englishVisible = false;
+        state.japaneseVisible = true;
+        setVisibleContent();
+      }, { disabled: !options.supportText });
       DialogManager.addControl("もう一度聞く", startVoice, { disabled: state.voicePlaying || !options.voiceKey || !window.DialogueVoiceController || typeof DialogueVoiceController.play !== "function" });
     }
 
