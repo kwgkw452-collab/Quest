@@ -17,8 +17,8 @@
     "success": "",
     "failure": "",
     "picoSupport": [
-      "「いいえ」だから……ピコ。",
-      "“No” を使って答えるピコ。",
+      "“No” から始めるピコ。",
+      "“we don’t” を続けてもいいピコ。",
       "No, we don’t."
     ],
     "communicative": {
@@ -43,8 +43,8 @@
     "success": "",
     "failure": "",
     "picoSupport": [
-      "4人だから……ピコ。",
-      "“Four” を使って答えるピコ。",
+      "“Four” と言えば人数が伝わるピコ。",
+      "“Four” だけでもいいし、 “four people” でもいいピコ。",
       "Four."
     ],
     "communicative": {
@@ -100,8 +100,8 @@
     "success": "",
     "failure": "",
     "picoSupport": [
-      "1つお願いするピコ。",
-      "“One king-size bed” を使うピコ。",
+      "“One” と “bed” を使うピコ。",
+      "“king-size bed” に “please” をつけるピコ。",
       "One king-size bed, please."
     ],
     "communicative": {
@@ -126,8 +126,8 @@
     "success": "",
     "failure": "",
     "picoSupport": [
-      "2だから……ピコ。",
-      "“Two” から始めるピコ。",
+      "“Two” と “rooms” を使うピコ。",
+      "お願いするときは “please” をつけるピコ。",
       "Two rooms, please."
     ],
     "communicative": {
@@ -153,8 +153,8 @@
     "success": "",
     "failure": "",
     "picoSupport": [
-      "「はい」だから……ピコ。",
-      "“Yes” を使って答えるピコ。",
+      "“Yes” から始めるピコ。",
+      "丁寧に答えるなら “please” を続けるピコ。",
       "Yes, please."
     ],
     "communicative": {
