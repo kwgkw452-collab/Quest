@@ -1,418 +1,359 @@
 (function () {
   "use strict";
-  // S006 definitions only. Existing Question / Lottery / Local Judge contracts.
-  var defs = [
+
+  // Sole S006 specification: approved Final Review, 2026-11-19.
+  // Public IDs/Story positions remain unchanged; no V1 definitions or patches.
+  var tasks = [
   {
-    "id": "s006.communication.1",
-    "category": "word",
-    "prompt": "お手伝いしましょうか？",
-    "answers": [
+    "number": 1,
+    "goal": "お手伝いしましょうか？",
+    "model": "Can I help you?",
+    "variants": [
       "Can we help you?",
-      "Can I help you?",
-      "Shall I help you?",
-      "Shall we help you?",
-      "Could I help you?",
-      "Could we help you?",
-      "May I help you?",
-      "May we help you?",
       "Do you need help?",
       "Let me help you.",
-      "Let us help you.",
       "Would you like some help?",
-      "Can I give you a hand?"
+      "May I help?"
     ],
-    "success": "",
-    "failure": "",
-    "picoSupport": [
-      "駅員さんに、お手伝いを申し出るピコ。",
-      "『手伝う』は help。Can I ...? などを使うピコ。",
-      "Can we help you? と言うピコ。"
+    "hints": [
+      "「手伝う」は help。Can I ...? で始めるピコ。",
+      "Can I のあとに help you を続けるピコ。",
+      "Can I help you?"
     ],
-    "communicative": {
-      "conceptId": "s006.mystery.1",
-      "difficulty": "starter",
-      "promptType": "offer",
-      "expectedUtterance": "Can we help you?",
-      "poolId": "s006.communication.1.v1"
-    }
+    "type": "offer",
+    "rejectExamples": [
+      "I can't help you.",
+      "Help me."
+    ]
   },
   {
-    "id": "s006.communication.2",
-    "category": "word",
-    "prompt": "その箱は何色ですか？",
-    "answers": [
-      "What color is the box?",
-      "What color is it?",
-      "What color is that box?",
+    "number": 2,
+    "goal": "あなたの箱は何色ですか？",
+    "model": "What color is it?",
+    "variants": [
       "What color is your box?",
-      "What is the color of the box?",
-      "What colour is your box?",
-      "What does it look like?",
+      "What colour is the box?",
       "What does your box look like?",
       "Can you describe your box?"
     ],
-    "success": "",
-    "failure": "",
-    "picoSupport": [
-      "箱の色を聞いてみるピコ。",
-      "『何色』は What color、『箱』は box だピコ。",
-      "What color is the box? と聞くピコ。"
+    "hints": [
+      "「何色」は What color。これで始めるピコ。",
+      "What color のあとに is it を続けるピコ。",
+      "What color is it?"
     ],
-    "communicative": {
-      "conceptId": "s006.mystery.2",
-      "difficulty": "starter",
-      "promptType": "question",
-      "expectedUtterance": "What color is the box?",
-      "poolId": "s006.communication.2.v1"
-    }
+    "type": "question",
+    "rejectExamples": [
+      "Is it brown?",
+      "What size is the box?"
+    ]
   },
   {
-    "id": "s006.communication.3",
-    "category": "word",
-    "prompt": "ほかの箱はどこにありますか？",
-    "answers": [
-      "Where are the other boxes?",
+    "number": 3,
+    "goal": "ほかの箱はどこにありますか？",
+    "model": "Where are the other boxes?",
+    "variants": [
       "Where is the other box?",
-      "Where is another box?",
       "Where are the boxes?",
-      "Where can I find another box?",
       "Where can we find the other boxes?",
-      "Where is box?",
-      "Where are the other box?"
+      "Where did the other box go?"
     ],
-    "success": "",
-    "failure": "",
-    "picoSupport": [
-      "場所を尋ねるピコ。",
-      "“Where” と “boxes” を使ってみるピコ。",
+    "hints": [
+      "「どこ」は Where。「ほかの箱」は the other boxes だピコ。",
+      "Where are のあとに the other boxes を続けるピコ。",
       "Where are the other boxes?"
     ],
-    "communicative": {
-      "conceptId": "s006.mystery.3",
-      "difficulty": "starter",
-      "promptType": "question",
-      "expectedUtterance": "Where are the other boxes?",
-      "poolId": "s006.communication.3.v1"
-    }
+    "type": "question",
+    "rejectExamples": [
+      "Where is the bus?",
+      "The box is here."
+    ]
   },
   {
-    "id": "s006.communication.4",
-    "category": "word",
-    "prompt": "その箱を見せてもらえますか？",
-    "answers": [
+    "number": 4,
+    "goal": "その箱を見せてもらえますか？",
+    "model": "Can I see the box?",
+    "variants": [
       "Can we see that box?",
-      "Can I see the box?",
-      "Can we see the box?",
-      "Can I see that box?",
-      "May I see the box?",
-      "Could you show me the box?",
+      "May I look at the box?",
       "Please show me the box.",
-      "Can I look at the box?",
-      "Can we check the box?",
-      "Could we have a look at that box?"
+      "Could you show us that box?"
     ],
-    "success": "",
-    "failure": "",
-    "picoSupport": [
-      "箱を見せてもらうようお願いするピコ。",
-      "“Can we see” と “box” を使うピコ。",
-      "Can we see that box?"
+    "hints": [
+      "「見てもいい？」は Can I see ...? だピコ。",
+      "Can I see のあとに the box を続けるピコ。",
+      "Can I see the box?"
     ],
-    "communicative": {
-      "conceptId": "s006.mystery.4",
-      "difficulty": "starter",
-      "promptType": "request",
-      "expectedUtterance": "Can we see that box?",
-      "poolId": "s006.communication.4.v1"
-    }
+    "type": "request",
+    "rejectExamples": [
+      "I can't see the box.",
+      "Open the box."
+    ]
   },
   {
-    "id": "s006.communication.5",
-    "category": "word",
-    "prompt": "その箱を持っていますか？",
-    "answers": [
-      "Do you have the box?",
-      "Do you have that box?",
-      "Do you have my box?",
+    "number": 5,
+    "goal": "その箱を持っていますか？",
+    "model": "Do you have the box?",
+    "variants": [
       "Have you got the box?",
-      "Have you got that box?",
+      "Do you have my box?",
       "Is the box here?",
-      "Is that box here?",
-      "Do you have a box?",
-      "Have you got my boxes?",
-      "You have the box?"
+      "Have you got it?"
     ],
-    "success": "",
-    "failure": "",
-    "picoSupport": [
-      "荷物係さんが、その箱を持っているか聞くピコ。",
-      "『持っていますか？』は Do you have ...? を使うピコ。",
-      "Do you have the box? と聞くピコ。"
+    "hints": [
+      "「持っていますか？」は Do you have ...? だピコ。",
+      "Do you have のあとに the box を続けるピコ。",
+      "Do you have the box?"
     ],
-    "communicative": {
-      "conceptId": "s006.mystery.5",
-      "difficulty": "starter",
-      "promptType": "question",
-      "expectedUtterance": "Do you have the box?",
-      "poolId": "s006.communication.5.v1"
-    }
+    "type": "question",
+    "rejectExamples": [
+      "I have the box.",
+      "You don't have the box."
+    ]
   },
   {
-    "id": "s006.communication.6",
-    "category": "word",
-    "prompt": "このリボンを見てください。",
-    "answers": [
-      "Please look at this ribbon.",
-      "Look at this ribbon.",
-      "Look at the ribbon.",
-      "Look at ribbon.",
-      "Look at this red ribbon.",
-      "Can you look at the ribbon?",
-      "Please look at the red ribbon.",
-      "Look at my ribbon, please.",
-      "Could you look at these ribbons?"
+    "number": 6,
+    "goal": "このリボンを見てください。",
+    "model": "Look at this ribbon.",
+    "variants": [
+      "Please look at the ribbon.",
+      "Can you look at this ribbon?",
+      "Take a look at this red ribbon.",
+      "Please check this ribbon."
     ],
-    "success": "",
-    "failure": "",
-    "picoSupport": [
-      "赤い切れ端に注目してもらうピコ。",
-      "“Look at” と “ribbon” を使うピコ。",
-      "Please look at this ribbon."
+    "hints": [
+      "「見て」は Look at ...。「リボン」は ribbon だピコ。",
+      "Look at のあとに this ribbon を続けるピコ。",
+      "Look at this ribbon."
     ],
-    "communicative": {
-      "conceptId": "s006.mystery.6",
-      "difficulty": "starter",
-      "promptType": "request",
-      "expectedUtterance": "Please look at this ribbon.",
-      "poolId": "s006.communication.6.v1"
-    }
+    "type": "request",
+    "rejectExamples": [
+      "Give me the ribbon.",
+      "Don't look at the ribbon."
+    ]
   },
   {
-    "id": "s006.communication.7",
-    "category": "word",
-    "prompt": "箱を見ましたか？",
-    "answers": [
-      "Did you see the box?",
-      "Did you see a box?",
-      "Did you see my box?",
-      "Did you see that box?",
-      "Did you see any boxes?",
-      "Do you see the box?",
-      "Do you see a box?",
-      "Do you see the boxes?",
-      "Can you see the box?",
-      "Can you see any boxes?",
+    "number": 7,
+    "goal": "探している箱を見ましたか？",
+    "model": "Did you see the box?",
+    "variants": [
       "Have you seen the box?",
-      "Have you seen my box?",
-      "Have you seen a box?",
-      "Have you seen the boxes?",
-      "You saw the box?",
-      "Did you see the book?",
-      "Did you see the books?",
-      "Do you see the book?",
-      "Can you see the books?",
-      "Have you seen the book?"
+      "Have you seen a brown box?",
+      "Did you see a box with a red ribbon?",
+      "Do you know where the box is?"
     ],
-    "success": "",
-    "failure": "",
-    "picoSupport": [
-      "荷物係の人に「箱を見ましたか？」と尋ねるピコ。",
-      "「見ましたか？」は Did you see ...?。「箱」は box だピコ。",
-      "Did you see the box? と尋ねるピコ。"
+    "hints": [
+      "「見ましたか？」は Did you see ...? だピコ。",
+      "Did you see のあとに the box を続けるピコ。",
+      "Did you see the box?"
     ],
-    "communicative": {
-      "conceptId": "s006.mystery.7",
-      "difficulty": "starter",
-      "promptType": "question",
-      "expectedUtterance": "Did you see the box?",
-      "poolId": "s006.communication.7.v1"
-    }
+    "type": "question",
+    "rejectExamples": [
+      "Is the box on the cart?",
+      "Did you see the book?"
+    ]
   },
   {
-    "id": "s006.communication.8",
-    "category": "word",
-    "prompt": "ちょっと待ってください！",
-    "answers": [
+    "number": 8,
+    "goal": "ちょっと待ってください！",
+    "model": "Wait, please!",
+    "variants": [
       "Please wait!",
       "Wait!",
-      "Wait, please!",
-      "Can you wait?",
-      "Could you wait?",
-      "Just a moment.",
-      "Just a minute.",
-      "Just one moment.",
-      "One moment, please.",
-      "One minute, please.",
-      "A moment, please.",
-      "A minute, please.",
+      "Just a moment!",
       "Hold on!",
-      "Hang on!",
-      "Wait a second!",
-      "Just a second!",
-      "Give me a second.",
-      "Please don't go yet!",
-      "Stop the bus, please!",
-      "Please wait for us.",
-      "WAIT!!!"
+      "Please don't leave yet!"
     ],
-    "success": "",
-    "failure": "",
-    "picoSupport": [
-      "運転手さんに、ちょっと待ってもらうピコ！",
-      "『待つ』は wait。一言でもいいピコ！",
-      "Please wait! と言うピコ！"
+    "hints": [
+      "「待って」は Wait。一言でも伝わるピコ。",
+      "Wait に please を添えると丁寧になるピコ。",
+      "Wait, please!"
     ],
-    "communicative": {
-      "conceptId": "s006.mystery.8",
-      "difficulty": "starter",
-      "promptType": "request",
-      "expectedUtterance": "Please wait!",
-      "poolId": "s006.communication.8.v1"
-    }
+    "type": "request",
+    "rejectExamples": [
+      "Go!",
+      "Don't wait!",
+      "Hurry up!"
+    ]
   },
   {
-    "id": "s006.communication.9",
-    "category": "word",
-    "prompt": "その箱を見つけてください。",
-    "answers": [
-      "Please find the box.",
-      "Find the box, please.",
-      "Find the box.",
-      "Please find my box.",
-      "Please find that box.",
-      "Can you find the box?",
-      "Can you find my box?",
-      "Could you find the box?",
-      "Can you help me find the box?",
-      "Help me find the box, please.",
-      "Please look for the box.",
+    "number": 9,
+    "goal": "その箱を探してください。",
+    "model": "Please look for the box.",
+    "variants": [
       "Can you look for the box?",
-      "Please find a box.",
-      "Find my box, please.",
-      "Please find the boxes."
+      "Please help us find the box.",
+      "Can you check for the box?",
+      "Please find my box."
     ],
-    "success": "",
-    "failure": "",
-    "picoSupport": [
-      "運転手さんに、その箱を見つけてくれるようお願いするピコ。",
-      "「見つける」は find。「〜してください」は Please ... だピコ。",
-      "Please find the box. とお願いするピコ。"
+    "hints": [
+      "「探す」は look for。「箱」は box だピコ。",
+      "Please のあとに look for the box を続けるピコ。",
+      "Please look for the box."
     ],
-    "communicative": {
-      "conceptId": "s006.mystery.9",
-      "difficulty": "starter",
-      "promptType": "request",
-      "expectedUtterance": "Please find the box.",
-      "poolId": "s006.communication.9.v1"
-    }
+    "type": "request",
+    "rejectExamples": [
+      "I found the box.",
+      "Don't find the box.",
+      "Please look at the box."
+    ]
   },
   {
-    "id": "s006.communication.10",
-    "category": "word",
-    "prompt": "私は箱を見つけました！",
-    "answers": [
-      "I found the box!",
-      "We found the box!",
-      "I found your box!",
-      "We found your box!",
-      "I find the box!",
-      "We find the box!",
-      "Here is your box!",
+    "number": 10,
+    "goal": "はい、あなたの箱です！",
+    "model": "Here is your box!",
+    "variants": [
+      "Here's your box!",
       "This is your box!",
-      "I got the box!",
-      "We got the box!",
-      "I have the box!",
-      "We have the box!",
-      "I have your box!",
-      "We have your box!",
-      "I get the box!",
-      "We get the box!",
-      "I get your box!",
-      "We get your box!",
-      "We've found your box!",
-      "I've got the box!",
-      "Here are your boxes!"
+      "Here you are!",
+      "I found your box!",
+      "We have your box!"
     ],
-    "success": "",
-    "failure": "",
-    "picoSupport": [
-      "やっと箱が見つかったピコ！ そのことを伝えるピコ。",
-      "『見つけた』は found。find の過去形だピコ。",
-      "I found the box! と言うピコ。"
+    "hints": [
+      "「はい、どうぞ」は Here is ...。「あなたの箱」は your box だピコ。",
+      "Here is のあとに your box を続けるピコ。",
+      "Here is your box!"
     ],
-    "communicative": {
-      "conceptId": "s006.mystery.10",
-      "difficulty": "starter",
-      "promptType": "statement",
-      "expectedUtterance": "I found the box!",
-      "poolId": "s006.communication.10.v1"
-    }
+    "type": "statement",
+    "rejectExamples": [
+      "Where is your box?",
+      "This is not your box.",
+      "Give me your box."
+    ]
   }
 ];
 
-  function norm(value) {
+  function normalize(value) {
     return String(value || "").toLowerCase().replace(/[’‘]/g, "'")
       .replace(/\b(can't|cant)\b/g, "cannot")
       .replace(/\b(don't|dont)\b/g, "do not")
       .replace(/\b(doesn't|doesnt)\b/g, "does not")
       .replace(/\b(didn't|didnt)\b/g, "did not")
       .replace(/\b(won't|wont)\b/g, "will not")
+      .replace(/\b(couldn't|couldnt)\b/g, "could not")
+      .replace(/\b(wouldn't|wouldnt)\b/g, "would not")
+      .replace(/\b(isn't|isnt)\b/g, "is not")
+      .replace(/\b(aren't|arent)\b/g, "are not")
+      .replace(/\b(haven't|havent)\b/g, "have not")
+      .replace(/\b(hasn't|hasnt)\b/g, "has not")
       .replace(/\b(we've|weve)\b/g, "we have")
       .replace(/\b(i've|ive)\b/g, "i have")
+      .replace(/\b(here's|heres)\b/g, "here is")
       .replace(/\b(where's|wheres)\b/g, "where is")
       .replace(/\b(it's|its)\b/g, "it is")
       .replace(/[^a-z0-9]+/g, " ").trim().replace(/\s+/g, " ");
   }
-  var box = "(?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)?";
-  var target = "(?:" + box + "|it)";
-  var cart = "(?:(?:the|that|this|a) )*(?:cart|trolley)";
-  var ribbon = "(?:(?:the|that|this|these|those|your|my|a|red) )*ribbons?";
-  function matches(t, pattern) { return new RegExp("^(?:" + pattern + ")$").test(t); }
-  function polite(t) { return t.replace(/\bplease\b/g, " ").replace(/\s+/g, " ").trim(); }
-  // All patterns match a complete utterance and require both intent and object.
-  // Negated / contradictory tails cannot inherit ACCEPT from a positive prefix.
-  var accept = [
-    function (t) { return matches(polite(t), "(?:can|could|may|shall|should) (?:i|we) help(?: you)?|let (?:me|us) help(?: you)?|(?:do you )?need (?:some )?help|would you like (?:some )?help|(?:i|we) can help you|(?:can|could|may|shall) (?:i|we) give you a hand"); },
-    function (t) { return matches(polite(t), "what colou?r (?:is|are) " + target + "|what (?:is|are) the colou?r of " + target + "|what (?:does|do) " + target + " look like|what (?:kind|type) of box is it|what is " + target + " like|(?:can|could|would) you describe " + target + "|describe " + target); },
-    function (t) { return matches(polite(t), "where (?:is|are) " + box + "|where (?:can|could) (?:i|we) find " + box + "|where did " + box + " go|" + box + " where"); },
-    function (t) { return matches(polite(t), "(?:can|could|may|shall) (?:i|we) (?:see|check|look at|have a look at) " + box + "|(?:(?:can|could|would|will) you )?show (?:me|us) " + box + "|let (?:me|us) (?:see|check|look at) " + box); },
-    function (t) { return matches(polite(t), "(?:(?:do|does) )?you have " + box + "|have you got " + box + "|(?:is|are) " + box + " here"); },
-    function (t) { return matches(polite(t), "(?:(?:can|could|would|will) you )?(?:look at|take a look at|check) " + ribbon); },
-    function (t) {
-      // Q7: ask if the worker saw a box (also accept present/perfect forms
-      // and book/books as a known speech-recognition ambiguity).
-      var object = "(?:(?:the|that|this|my|your|our|a|any|some|those|these|another) )*(?:boxes|box|books|book|it)";
-      return matches(polite(t),
-        "(?:did|do|does) you see " + object +
-        "|(?:can|could) you see " + object +
-        "|have you seen " + object +
-        "|(?:did|do|does) you (?:see|saw) " + object +
-        "|you (?:saw|see) " + object +
-        "|(?:have you|did you) (?:ever )?seen " + object);
-    },
-    function (t) {
-      t = polite(t);
-      return matches(t, "(?:(?:can|could|would|will) you )?wait(?: (?:for (?:me|us)|here|a (?:second|minute|moment)))?|(?:just )?(?:a|one) (?:moment|minute|second)|(?:hold|hang) on|give (?:me|us) (?:a|one) (?:second|minute|moment)|do not (?:go|leave)(?: yet)?|stop(?: the bus)?");
-    },
-    function (t) { return matches(polite(t), "(?:(?:can|could|will|would) you )?(?:find|look for) " + box + "|(?:(?:can|could|will|would) you )?help (?:me|us) (?:to )?find " + box + "|help (?:me|us) find " + box); },
-    function (t) { return matches(polite(t), "(?:i|we) (?:found|find|got|get|have|have found|have got) " + box + "(?: (?:now|at last|finally))?|(?:here (?:is|are)|this is|these are) " + box + "|" + box + " (?:is|are) here"); }
+  function polite(text) {
+    return text.replace(/\bplease\b/g, " ").replace(/\s+/g, " ").trim();
+  }
+  function whole(text, pattern) { return new RegExp("^(?:" + pattern + ")$").test(text); }
+  var box = "(?:(?:the|a|an|this|that|these|those|my|your|our|some|any|another) )?" +
+    "(?:(?:other|brown|wooden|small) )*box(?:es)?" +
+    "(?: with (?:(?:a|the) )?red ribbons?)?";
+  var target = "(?:" + box + "|it|this|that|them)";
+  var ribbon = "(?:(?:the|a|this|that|these|those|my|your|our) )?(?:red )?ribbons?";
+  var ribbonTarget = "(?:" + ribbon + "|it|this|that)";
+  var request = "(?:(?:can|could|would|will) you )?";
+  // Complete intents, never substring matching of a positive prefix.
+  var intentPatterns = [
+    "(?:can|could|may|shall) (?:i|we) help(?: you)?|(?:i|we) (?:can )?help you|" +
+      "let (?:me|us) help(?: you)?|(?:do you )?need (?:some )?help|would you like (?:some )?help",
+    "what colou?r (?:(?:is|are) )?" + target +
+      "|what (?:is|are) the colou?r of " + target +
+      "|what (?:does|do) " + target + " look like|" + request + "describe " + target,
+    "where (?:(?:is|are) )?" + target +
+      "|where (?:can|could) (?:i|we) find " + target +
+      "|where did " + target + " go|" + target + " where",
+    "(?:can|could|may|shall) (?:i|we) (?:see|look at|check|have a look at) " + target +
+      "|" + request + "show (?:me|us) " + target + "|let (?:me|us) (?:see|look at) " + target,
+    "(?:(?:do|does) )?you (?:have|has) " + target +
+      "|have you got " + target + "|(?:is|are) " + target + " here",
+    request + "(?:look(?: at)?|take a look at|check) " + ribbonTarget,
+    "(?:did|do|does) you (?:see|saw) " + target +
+      "|have you seen " + target + "|you (?:see|saw) " + target +
+      "|do you know where " + target + " (?:is|are)",
+    "(?:(?:can|could|would|will) you )?wait(?: (?:for )?(?:me|us)| here| a (?:moment|minute|second))?" +
+      "|(?:just )?(?:a|one) (?:moment|minute|second)|hold on|do not (?:leave|go)(?: yet)?",
+    request + "(?:look for|find|finds|check for) " + target +
+      "|" + request + "help (?:me|us) (?:to )?(?:find|look for) " + target,
+    "here (?:(?:is|are) )?" + target + "|(?:this is|these are) " + target +
+      "|here you are|(?:i|we) (?:found|find|have|have found|got|have got) " + target
   ];
-  var rules = defs.map(function (d, i) {
-    return {
-      conceptId: d.communicative.conceptId,
-      variants: d.answers.slice(), difficulty: "starter", promptType: d.communicative.promptType,
-      accept: function (value) { return accept[i](norm(value)); },
-      reject: function (value) { var t = norm(value); return Boolean(t) && !accept[i](t); }
-    };
+  // Known different intents; an unsupported phrase alone is NOT a rejection.
+  var otherIntentPatterns = [
+    request + "help (?:me|us)",
+    "(?:is|are) " + target + " (?:brown|red|blue|green)|what (?:size|weight) (?:is|are) " + target,
+    target + " (?:is|are) here",
+    request + "(?:open|close|take|buy) " + target,
+    "(?:i|we) (?:have|has|have got) " + target,
+    request + "(?:give (?:me|us)|take|hide) " + ribbonTarget,
+    "(?:is|are) " + target + " (?:on|in|under|near) .+",
+    "(?:go|leave)(?: now)?|hurry up",
+    "(?:i|we) (?:found|have found|have) " + target + "|" + request + "look at " + target,
+    "where (?:is|are) " + target + "|" + request + "give (?:me|us) " + target
+  ];
+  function hasNegativeIntent(text) {
+    // "I am not sure ..." is not an automatic rejection.
+    return /\b(?:cannot|can not|could not|do not|does not|did not|will not|would not|never)\b/.test(text) ||
+      /\b(?:is|are|have|has) not\b/.test(text);
+  }
+  function wrongObject(task, text) {
+    // No book/box ASR alias. Reject only recognizable, named other objects.
+    var relevant = /\b(?:help|see|saw|seen|look|find|finds|found|have|has|got|show|describe|where|color|colour|give|open|check)\b/.test(text);
+    if (!relevant || task.number === 1 || task.number === 8) return false;
+    var wrong = task.number === 6 ?
+      /\b(?:box|boxes|book|books|bus|train|cart|trolley|ticket|tickets)\b/ :
+      /\b(?:book|books|bag|bags|ticket|tickets)\b/;
+    if (wrong.test(text)) return true;
+    // A box with a ribbon (or transported to the bus) is still a box.
+    return task.number !== 6 && !/\bbox(?:es)?\b/.test(text) &&
+      /\b(?:bus|train|cart|trolley|ribbon|ribbons)\b/.test(text);
+  }
+  var rules = [], pools = [];
+  tasks.forEach(function (task, index) {
+    var variants = [task.model].concat(task.variants);
+    var approved = variants.map(function (value) { return polite(normalize(value)); });
+    var explicitRejects = task.rejectExamples.map(function (value) { return polite(normalize(value)); });
+    function acceptText(text) {
+      return approved.indexOf(text) !== -1 || whole(text, intentPatterns[index]);
+    }
+    function rejectText(value) {
+      var text = polite(normalize(value));
+      if (!text) return false;
+      // Approved negative forms such as Q8 "don't leave" express the RIGHT intent.
+      if (acceptText(text)) return false;
+      return explicitRejects.indexOf(text) !== -1 || wrongObject(task, text) ||
+        whole(text, otherIntentPatterns[index]) ||
+        (hasNegativeIntent(text) &&
+          /\b(?:help|see|saw|seen|look|find|found|have|box|boxes|ribbon|wait|go|leave)\b/.test(text));
+    }
+    var id = "s006.communication." + task.number;
+    var conceptId = "s006.mystery.v2." + task.number;
+    var poolId = id + ".v2";
+    QuestionDatabase.register({
+      id: id, category: "word", prompt: task.goal, answers: variants.slice(),
+      success: "", failure: "", picoSupport: task.hints.slice(),
+      communicative: {
+        conceptId: conceptId, difficulty: "starter", promptType: task.type,
+        expectedUtterance: task.model, poolId: poolId
+      }
+    });
+    rules.push({
+      conceptId: conceptId, variants: variants.slice(), difficulty: "starter",
+      promptType: task.type,
+      accept: function (value) {
+        var text = polite(normalize(value));
+        return !wrongObject(task, text) && acceptText(text);
+      },
+      reject: rejectText
+    });
+    pools.push({ poolId: poolId, items: [{
+      itemId: id, conceptId: conceptId, displayValue: task.goal,
+      prompts: [{
+        promptType: task.type, difficulty: "starter",
+        expectedUtterance: task.model, acceptedVariants: variants.slice()
+      }]
+    }] });
   });
-  var pools = defs.map(function (d) {
-    return { poolId: d.communicative.poolId, items: [{
-      itemId: d.id, conceptId: d.communicative.conceptId, displayValue: d.prompt,
-      prompts: [{ promptType: d.communicative.promptType, difficulty: "starter",
-        expectedUtterance: d.communicative.expectedUtterance, acceptedVariants: d.answers.slice() }]
-    }] };
-  });
-  defs.forEach(function (d) { QuestionDatabase.register(d); });
   Array.prototype.push.apply(CommunicativeJudgeRuleData, rules);
   Array.prototype.push.apply(LotteryPoolData, pools);
   LotteryEngine.init(LotteryPoolData);
