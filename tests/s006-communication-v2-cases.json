@@ -1,0 +1,352 @@
+[
+  {
+    "q": 1,
+    "goal": "お手伝いしましょうか？",
+    "model": "Can I help you?",
+    "hints": [
+      "「手伝う」は help。Can I ...? で始めるピコ。",
+      "Can I のあとに help you を続けるピコ。",
+      "Can I help you?"
+    ],
+    "accept": [
+      "Can we help you?",
+      "Do you need help?",
+      "Let me help you.",
+      "Would you like some help?",
+      "May I help?"
+    ],
+    "minor": [
+      "Can I help?",
+      "I help you?"
+    ],
+    "additional": [
+      "Could we help you, please?",
+      "May we help?",
+      "We can help you.",
+      "Let us help you."
+    ],
+    "reject": [
+      "I can't help you.",
+      "Help me.",
+      "Help us, please."
+    ],
+    "unknown": [
+      "flibbertigibbet",
+      "I am not sure."
+    ]
+  },
+  {
+    "q": 2,
+    "goal": "あなたの箱は何色ですか？",
+    "model": "What color is it?",
+    "hints": [
+      "「何色」は What color。これで始めるピコ。",
+      "What color のあとに is it を続けるピコ。",
+      "What color is it?"
+    ],
+    "accept": [
+      "What color is your box?",
+      "What colour is the box?",
+      "What does your box look like?",
+      "Can you describe your box?"
+    ],
+    "minor": [
+      "What color your box?",
+      "What color are the box?"
+    ],
+    "additional": [
+      "What colour are those boxes?",
+      "Could you describe it, please?",
+      "What does it look like?"
+    ],
+    "reject": [
+      "Is it brown?",
+      "What size is the box?",
+      "I cannot help you."
+    ],
+    "unknown": [
+      "flibbertigibbet",
+      "I am not sure."
+    ]
+  },
+  {
+    "q": 3,
+    "goal": "ほかの箱はどこにありますか？",
+    "model": "Where are the other boxes?",
+    "hints": [
+      "「どこ」は Where。「ほかの箱」は the other boxes だピコ。",
+      "Where are のあとに the other boxes を続けるピコ。",
+      "Where are the other boxes?"
+    ],
+    "accept": [
+      "Where is the other box?",
+      "Where are the boxes?",
+      "Where can we find the other boxes?",
+      "Where did the other box go?"
+    ],
+    "minor": [
+      "Where is other box?",
+      "Where are the other box?",
+      "The other boxes, where?"
+    ],
+    "additional": [
+      "Where could we find our boxes?",
+      "Where is it?",
+      "Those boxes, where?"
+    ],
+    "reject": [
+      "Where is the bus?",
+      "The box is here.",
+      "Where is the train?"
+    ],
+    "unknown": [
+      "flibbertigibbet",
+      "I am not sure."
+    ]
+  },
+  {
+    "q": 4,
+    "goal": "その箱を見せてもらえますか？",
+    "model": "Can I see the box?",
+    "hints": [
+      "「見てもいい？」は Can I see ...? だピコ。",
+      "Can I see のあとに the box を続けるピコ。",
+      "Can I see the box?"
+    ],
+    "accept": [
+      "Can we see that box?",
+      "May I look at the box?",
+      "Please show me the box.",
+      "Could you show us that box?"
+    ],
+    "minor": [
+      "Can I see box?",
+      "Show me box, please."
+    ],
+    "additional": [
+      "Can we see the box?",
+      "Could we look at those boxes, please?",
+      "Please show us it."
+    ],
+    "reject": [
+      "I can't see the box.",
+      "Open the box.",
+      "Please open the box."
+    ],
+    "unknown": [
+      "flibbertigibbet",
+      "I am not sure."
+    ]
+  },
+  {
+    "q": 5,
+    "goal": "その箱を持っていますか？",
+    "model": "Do you have the box?",
+    "hints": [
+      "「持っていますか？」は Do you have ...? だピコ。",
+      "Do you have のあとに the box を続けるピコ。",
+      "Do you have the box?"
+    ],
+    "accept": [
+      "Have you got the box?",
+      "Do you have my box?",
+      "Is the box here?",
+      "Have you got it?"
+    ],
+    "minor": [
+      "You have the box?",
+      "Do you has the box?"
+    ],
+    "additional": [
+      "Have you got those boxes?",
+      "Do you have it?",
+      "Are our boxes here?"
+    ],
+    "reject": [
+      "I have the box.",
+      "You don't have the box.",
+      "Do you have the book?"
+    ],
+    "unknown": [
+      "flibbertigibbet",
+      "I am not sure."
+    ]
+  },
+  {
+    "q": 6,
+    "goal": "このリボンを見てください。",
+    "model": "Look at this ribbon.",
+    "hints": [
+      "「見て」は Look at ...。「リボン」は ribbon だピコ。",
+      "Look at のあとに this ribbon を続けるピコ。",
+      "Look at this ribbon."
+    ],
+    "accept": [
+      "Please look at the ribbon.",
+      "Can you look at this ribbon?",
+      "Take a look at this red ribbon.",
+      "Please check this ribbon."
+    ],
+    "minor": [
+      "Look this ribbon.",
+      "Look at ribbon."
+    ],
+    "additional": [
+      "Could you please look at these red ribbons?",
+      "Check it, please."
+    ],
+    "reject": [
+      "Give me the ribbon.",
+      "Don't look at the ribbon.",
+      "Look at the book."
+    ],
+    "unknown": [
+      "flibbertigibbet",
+      "I am not sure."
+    ]
+  },
+  {
+    "q": 7,
+    "goal": "探している箱を見ましたか？",
+    "model": "Did you see the box?",
+    "hints": [
+      "「見ましたか？」は Did you see ...? だピコ。",
+      "Did you see のあとに the box を続けるピコ。",
+      "Did you see the box?"
+    ],
+    "accept": [
+      "Have you seen the box?",
+      "Have you seen a brown box?",
+      "Did you see a box with a red ribbon?",
+      "Do you know where the box is?"
+    ],
+    "minor": [
+      "Did you saw the box?",
+      "You see the box?",
+      "Do you see the box?"
+    ],
+    "additional": [
+      "Have you seen those boxes?",
+      "Did you see it?",
+      "Do you know where it is?"
+    ],
+    "reject": [
+      "Is the box on the cart?",
+      "Did you see the book?",
+      "Did you see the books?"
+    ],
+    "unknown": [
+      "flibbertigibbet",
+      "I am not sure."
+    ]
+  },
+  {
+    "q": 8,
+    "goal": "ちょっと待ってください！",
+    "model": "Wait, please!",
+    "hints": [
+      "「待って」は Wait。一言でも伝わるピコ。",
+      "Wait に please を添えると丁寧になるピコ。",
+      "Wait, please!"
+    ],
+    "accept": [
+      "Please wait!",
+      "Wait!",
+      "Just a moment!",
+      "Hold on!",
+      "Please don't leave yet!"
+    ],
+    "minor": [
+      "Wait!",
+      "Please wait me."
+    ],
+    "additional": [
+      "Can you wait for us?",
+      "Just one moment, please.",
+      "Please do not go yet!"
+    ],
+    "reject": [
+      "Go!",
+      "Don't wait!",
+      "Hurry up!",
+      "Please go now!"
+    ],
+    "unknown": [
+      "flibbertigibbet",
+      "I am not sure."
+    ]
+  },
+  {
+    "q": 9,
+    "goal": "その箱を探してください。",
+    "model": "Please look for the box.",
+    "hints": [
+      "「探す」は look for。「箱」は box だピコ。",
+      "Please のあとに look for the box を続けるピコ。",
+      "Please look for the box."
+    ],
+    "accept": [
+      "Can you look for the box?",
+      "Please help us find the box.",
+      "Can you check for the box?",
+      "Please find my box."
+    ],
+    "minor": [
+      "Please look for box.",
+      "Please find box.",
+      "Can you finds the box?"
+    ],
+    "additional": [
+      "Could you please look for those boxes?",
+      "Can you help me to find it?",
+      "Would you check for it?"
+    ],
+    "reject": [
+      "I found the box.",
+      "Don't find the box.",
+      "Please look at the box.",
+      "Please look for the book."
+    ],
+    "unknown": [
+      "flibbertigibbet",
+      "I am not sure."
+    ]
+  },
+  {
+    "q": 10,
+    "goal": "はい、あなたの箱です！",
+    "model": "Here is your box!",
+    "hints": [
+      "「はい、どうぞ」は Here is ...。「あなたの箱」は your box だピコ。",
+      "Here is のあとに your box を続けるピコ。",
+      "Here is your box!"
+    ],
+    "accept": [
+      "Here's your box!",
+      "This is your box!",
+      "Here you are!",
+      "I found your box!",
+      "We have your box!"
+    ],
+    "minor": [
+      "Here your box!",
+      "Here are your box!",
+      "I find your box!"
+    ],
+    "additional": [
+      "We've found your box!",
+      "Here is it!",
+      "These are your boxes!"
+    ],
+    "reject": [
+      "Where is your box?",
+      "This is not your box.",
+      "Give me your box.",
+      "This is not your box."
+    ],
+    "unknown": [
+      "flibbertigibbet",
+      "I am not sure."
+    ]
+  }
+]
