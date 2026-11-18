@@ -25,7 +25,7 @@
     "failure": "",
     "picoSupport": [
       "“help” を使って、手伝う気持ちを伝えるピコ。",
-      "“Can we” と “help you” をつなげてみるピコ。",
+      "『手伝う』は help。Can I ...? などを使うピコ。",
       "Can we help you? と言うピコ。"
     ],
     "communicative": {
@@ -55,7 +55,7 @@
     "failure": "",
     "picoSupport": [
       "“What color” から始めるピコ。",
-      "箱は “box”。“What color is ...?” と聞くピコ。",
+      "『何色』は What color、『箱』は box だピコ。",
       "What color is the box? と聞くピコ。"
     ],
     "communicative": {
@@ -84,7 +84,7 @@
     "failure": "",
     "picoSupport": [
       "“Where” から始めるピコ。",
-      "ほかの箱は “the other boxes” だピコ。",
+      "“Where” と “boxes” を使ってみるピコ。",
       "Where are the other boxes?"
     ],
     "communicative": {
@@ -115,7 +115,7 @@
     "failure": "",
     "picoSupport": [
       "“Can we see” から始めるピコ。",
-      "その箱は “that box” と言うピコ。",
+      "“Can we see” と “box” を使うピコ。",
       "Can we see that box?"
     ],
     "communicative": {
@@ -146,7 +146,7 @@
     "failure": "",
     "picoSupport": [
       "“Do you have” を使ってみるピコ。",
-      "その箱は “the box”。後ろにつなげるピコ。",
+      "『持っていますか？』は Do you have ...? を使うピコ。",
       "Do you have the box? と聞くピコ。"
     ],
     "communicative": {
@@ -176,7 +176,7 @@
     "failure": "",
     "picoSupport": [
       "“Look at” を使って、見てもらうピコ。",
-      "“this ribbon” に “Please” をつけるピコ。",
+      "“Look at” と “ribbon” を使うピコ。",
       "Please look at this ribbon."
     ],
     "communicative": {
@@ -217,7 +217,7 @@
     "failure": "",
     "picoSupport": [
       "“Did you see” から始めるピコ。",
-      "箱は “the box”。後ろにつなげるピコ。",
+      "「見ましたか？」は Did you see ...?。「箱」は box だピコ。",
       "Did you see the box? と尋ねるピコ。"
     ],
     "communicative": {
@@ -259,7 +259,7 @@
     "failure": "",
     "picoSupport": [
       "“Wait” と言ってみるピコ！",
-      "丁寧に言うなら “Please” をつけるピコ！",
+      "『待つ』は wait。一言でもいいピコ！",
       "Please wait! と言うピコ！"
     ],
     "communicative": {
@@ -295,7 +295,7 @@
     "failure": "",
     "picoSupport": [
       "“find” を使ってみるピコ。",
-      "“Please” と “find the box” をつなげるピコ。",
+      "「見つける」は find。「〜してください」は Please ... だピコ。",
       "Please find the box. とお願いするピコ。"
     ],
     "communicative": {
@@ -337,7 +337,7 @@
     "failure": "",
     "picoSupport": [
       "“found” を使って、見つけたと伝えるピコ！",
-      "“I found” の後ろに “the box” を続けるピコ。",
+      "『見つけた』は found。find の過去形だピコ。",
       "I found the box! と言うピコ。"
     ],
     "communicative": {
