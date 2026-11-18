@@ -55,7 +55,7 @@ assert.equal((story.match(/C\.question\("s006\.communication\./g) || []).length,
 assert(story.includes("はい、見ました。誰かがバス乗り場へ運んでいきました。"));
 assert(story.includes('{ type: "s006EndingLetter" }'));
 const css = load("css/dialogue-information.css");
-assert(css.includes(".communication-dialogue.communication-has-explanation"));
+assert(css.includes(".communication-dialogue:is(.communication-has-explanation, .communication-feedback)"));
 assert(css.includes("--compact-two-row-height: 100.2px"));
 assert(css.includes("--compact-three-row-height: 140px"));
 assert(!css.includes(":has(> .communication-dialogue:not([hidden]) .dialogue-primary-goal:not([hidden]):not(:empty))"));

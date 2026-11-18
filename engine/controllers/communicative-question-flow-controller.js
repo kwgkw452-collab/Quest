@@ -78,6 +78,7 @@
     var textFallbacks = 0;
     var attempts = 0;
     var supportStage = 0;
+    var showLatestRecognition = false;
     var nativeStatus = /^s006\.communication\./.test(questionId);
     var attemptTraceContext = traceContext;
     trace("formal-flow-start", traceContext, { questionId: questionId });
@@ -128,8 +129,9 @@
         retry: Boolean(question.picoSupport) || speechRetryAllowed(result, speechRetries, textFallbacks),
         text: !question.picoSupport && textFallbacks < MAX_TEXT_FALLBACKS,
         support: Boolean(question.picoSupport),
-        supportText: supportStage > 0 && question.picoSupport ? question.picoSupport[supportStage - 1] : null
+        supportText: !showLatestRecognition && supportStage > 0 && question.picoSupport ? question.picoSupport[supportStage - 1] : null
       }, presenterToken, attemptTraceContext);
+      showLatestRecognition = false;
       if (currentRun !== runId || action === "cancelled") {
         result = cancelled(result);
         return finish(snapshot(result));
@@ -140,6 +142,7 @@
         traceContext.speechRetries = speechRetries;
         trace("retry-selected", traceContext);
         result = await runQuestion();
+        showLatestRecognition = true;
         continue;
       }
 
