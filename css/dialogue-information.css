@@ -163,6 +163,44 @@
   white-space: normal;
 }
 
+/* Reserve space for the controls and a full feedback line when the Goal wraps. */
+#game-stage #game #scene > .communication-dialogue.communication-multiline-goal {
+  gap: 1px;
+  padding-block: 1px;
+}
+
+#game-stage .communication-multiline-goal > .dialogue-primary {
+  overflow: visible;
+}
+
+#game-stage .communication-multiline-goal .dialogue-primary-goal {
+  line-height: 27px;
+}
+
+#game-stage .communication-multiline-goal > .controls {
+  flex-basis: 35px;
+}
+
+#game-stage .communication-multiline-goal .control-button {
+  height: 35px;
+  min-height: 35px;
+  max-height: 35px;
+  padding-block: 0;
+}
+
+#game-stage .communication-multiline-goal .dialogue-listening-status {
+  height: 35px;
+}
+
+#game-stage .communication-multiline-goal.communication-feedback > .dialogue-information {
+  min-height: 32px;
+}
+
+/* Keep the hotel party's feet above the expanded panel. */
+#game-stage #scene:has(> .communication-dialogue:is(.communication-has-explanation, .communication-feedback):not([hidden])) #background[style*="images/005/reference-v1/Scene3.png"] {
+  background-position: center -40px;
+}
+
 /* S006 expands for Pico explanations and recovery feedback; both use the approved 140px stage geometry. */
 #game-stage #scene:has(#background[style*="images/006/S006-Scene-"]) {
   --s006-dialogue-height: 100.2px;

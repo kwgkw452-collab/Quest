@@ -5,6 +5,7 @@
   var informationArea = null;
   var primaryArea = null;
   var primaryGoal = null;
+  var goalObserver = null;
   var communicationLayout = false;
   var goalContent = "";
   var supportContent = "";
@@ -21,6 +22,12 @@
     informationArea.hidden = !(communicationLayout && els.message.textContent) && els.recognizedText.hidden;
   }
 
+  function updateGoalLayout() {
+    if (!communicationLayout || !primaryGoal || !window.getComputedStyle) return;
+    var lineHeight = parseFloat(window.getComputedStyle(primaryGoal).lineHeight);
+    els.dialogueBox.classList.toggle("communication-multiline-goal", primaryGoal.offsetHeight > lineHeight + 1);
+  }
+
   function informationLayout(active, communication) {
     if (active && !informationArea) {
       primaryArea = document.createElement("div");
@@ -35,10 +42,16 @@
       els.dialogueBox.insertBefore(primaryArea, els.controls);
       els.dialogueBox.insertBefore(informationArea, els.controls);
       els.dialogueBox.scrollTop = 0;
+      if (window.ResizeObserver) {
+        goalObserver = new window.ResizeObserver(updateGoalLayout);
+        goalObserver.observe(primaryGoal);
+      }
     } else if (!active && informationArea) {
       els.dialogueBox.insertBefore(els.speaker, primaryArea);
       els.dialogueBox.insertBefore(els.message, primaryArea);
       els.dialogueBox.insertBefore(els.recognizedText, primaryArea);
+      if (goalObserver) goalObserver.disconnect();
+      goalObserver = null;
       primaryArea.remove();
       informationArea.remove();
       informationArea = null;
@@ -122,6 +135,7 @@
     speechTranscript = null;
     hideRecognized();
     if (informationArea) informationArea.scrollTop = 0;
+    if (communicationLayout) els.dialogueBox.scrollTop = 0;
   }
 
   function showCommunication(speaker, message, goal, options) {
@@ -134,6 +148,7 @@
     if (!keepSupport) supportContent = prefix && message.indexOf(prefix) === 0 ?
       message.slice(prefix.length) : (goal && message !== goal ? message : "");
     primaryGoal.textContent = goalContent;
+    updateGoalLayout();
     setCommunicationInformation(supportContent);
     // Expand only when the user explicitly opens a three-stage Pico hint.
     if (options && options.support === true && supportContent) {
