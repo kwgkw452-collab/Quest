@@ -22,7 +22,7 @@
     "failure": "",
     "picoSupport": [
       "“Hello!” または “Hi!” で返してみるピコ。",
-      "短いあいさつだけで伝わるピコ。",
+      "「こんにちは」はHelloです。Hiでも伝わります。",
       "例：Hello!（こんにちは！）"
     ],
     "communicative": {
@@ -68,7 +68,7 @@
     "failure": "",
     "picoSupport": [
       "“Do you” から始めて尋ねるピコ。",
-      "写真を撮るは “take pictures”、鳥は “birds” だピコ。",
+      "「あなたは〜しますか？」はDo you ...?。「写真を撮る」はtake picturesです。",
       "例：Do you take pictures of birds?（あなたは鳥の写真を撮りますか？）"
     ],
     "communicative": {
@@ -102,7 +102,7 @@
     "failure": "",
     "picoSupport": [
       "“Let's” から始めるピコ。",
-      "“walk” と “slowly” をつなげるピコ。",
+      "「〜しよう」はLet's。「歩く」はwalk。「ゆっくり」はslowlyです。",
       "例：Let's walk slowly.（ゆっくり歩こう。）"
     ],
     "communicative": {
@@ -138,7 +138,7 @@
     "failure": "",
     "picoSupport": [
       "“Look at” から始めるピコ。",
-      "ひな鳥は “the baby bird” と言うピコ。",
+      "「〜を見て」はLook at ...。「鳥」はbirdです。",
       "例：Look at the baby bird!（あのひな鳥を見て！）"
     ],
     "communicative": {
@@ -174,7 +174,7 @@
     "failure": "",
     "picoSupport": [
       "“Don't” から始めるピコ！",
-      "動くは “move”。“Don't” の後ろにつけるピコ。",
+      "「〜しないで」はDon't。「動く」はmoveです。",
       "例：Don't move!（動かないで！）"
     ],
     "communicative": {
@@ -211,7 +211,7 @@
     "failure": "",
     "picoSupport": [
       "“Don't worry” を使うピコ。",
-      "“It's OK” と言っても安心させられるピコ。",
+      "「心配しないで」はDon't worry.。「大丈夫」はIt's OK.でも伝わります。",
       "例：Don't worry.（心配しないで。）"
     ],
     "communicative": {
@@ -242,7 +242,7 @@
     "failure": "",
     "picoSupport": [
       "“Please wait” を使うピコ。",
-      "ここでは “here”。後ろにつけるピコ。",
+      "「待つ」はwait。「ここで」はhere。「〜してください」はPleaseを使います。",
       "例：Please wait here.（ここで待ってください。）"
     ],
     "communicative": {
@@ -274,7 +274,7 @@
     "failure": "",
     "picoSupport": [
       "“Wait” を使って、ちょっと待ってと伝えるピコ。",
-      "“Just a moment” や “Wait a minute” でもいいピコ。",
+      "「ちょっと待って」は決まった表現Just a moment.です。Wait a minute.でも大丈夫。",
       "例：Just a moment.（ちょっと待って。）"
     ],
     "communicative": {
@@ -305,7 +305,7 @@
     "failure": "",
     "picoSupport": [
       "“Be quiet” を使うピコ。",
-      "“please” をつけると丁寧になるピコ。",
+      "「静かに」はBe quiet.。「お願いします」はpleaseです。",
       "例：Be quiet, please.（静かにしてください。）"
     ],
     "communicative": {
@@ -347,7 +347,7 @@
     "failure": "",
     "picoSupport": [
       "“Nice picture!” と言ってほめるピコ。",
-      "“Great picture!” や “What a nice picture!” でもいいピコ。",
+      "「すてきな写真」はnice pictureやgreat picture。What a ...! でも気持ちが伝わります。",
       "例：Nice picture!（すてきな写真だね！）"
     ],
     "communicative": {
