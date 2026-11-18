@@ -21,8 +21,8 @@
     "success": "",
     "failure": "",
     "picoSupport": [
-      "挨拶を返しましょう。短い一言で大丈夫です。",
-      "「こんにちは」はHelloです。Hiでも伝わります。",
+      "“Hello!” または “Hi!” で返してみるピコ。",
+      "短いあいさつだけで伝わるピコ。",
       "例：Hello!（こんにちは！）"
     ],
     "communicative": {
@@ -67,8 +67,8 @@
     "success": "",
     "failure": "",
     "picoSupport": [
-      "鳥の写真を撮るか、メグに質問しよう。",
-      "「あなたは〜しますか？」はDo you ...?。「写真を撮る」はtake picturesです。",
+      "“Do you” から始めて尋ねるピコ。",
+      "写真を撮るは “take pictures”、鳥は “birds” だピコ。",
       "例：Do you take pictures of birds?（あなたは鳥の写真を撮りますか？）"
     ],
     "communicative": {
@@ -101,8 +101,8 @@
     "success": "",
     "failure": "",
     "picoSupport": [
-      "みんなに歩く速さをゆっくりにしようと提案しよう。",
-      "「〜しよう」はLet's。「歩く」はwalk。「ゆっくり」はslowlyです。",
+      "“Let's” から始めるピコ。",
+      "“walk” と “slowly” をつなげるピコ。",
       "例：Let's walk slowly.（ゆっくり歩こう。）"
     ],
     "communicative": {
@@ -137,8 +137,8 @@
     "success": "",
     "failure": "",
     "picoSupport": [
-      "メグに、ひな鳥を見るよう伝えよう。",
-      "「〜を見て」はLook at ...。「鳥」はbirdです。",
+      "“Look at” から始めるピコ。",
+      "ひな鳥は “the baby bird” と言うピコ。",
       "例：Look at the baby bird!（あのひな鳥を見て！）"
     ],
     "communicative": {
@@ -173,8 +173,8 @@
     "success": "",
     "failure": "",
     "picoSupport": [
-      "バーニーがひな鳥に近づこうとしているよ。まず止めよう。",
-      "「〜しないで」はDon't。「動く」はmoveです。",
+      "“Don't” から始めるピコ！",
+      "動くは “move”。“Don't” の後ろにつけるピコ。",
       "例：Don't move!（動かないで！）"
     ],
     "communicative": {
@@ -210,8 +210,8 @@
     "success": "",
     "failure": "",
     "picoSupport": [
-      "心配しているメグを安心させよう。",
-      "「心配しないで」はDon't worry.。「大丈夫」はIt's OK.でも伝わります。",
+      "“Don't worry” を使うピコ。",
+      "“It's OK” と言っても安心させられるピコ。",
       "例：Don't worry.（心配しないで。）"
     ],
     "communicative": {
@@ -241,8 +241,8 @@
     "success": "",
     "failure": "",
     "picoSupport": [
-      "メグに、この場所で待ってもらおう。",
-      "「待つ」はwait。「ここで」はhere。「〜してください」はPleaseを使います。",
+      "“Please wait” を使うピコ。",
+      "ここでは “here”。後ろにつけるピコ。",
       "例：Please wait here.（ここで待ってください。）"
     ],
     "communicative": {
@@ -273,8 +273,8 @@
     "success": "",
     "failure": "",
     "picoSupport": [
-      "コングが見に行こうとしているよ。少し待ってもらおう。",
-      "「ちょっと待って」は決まった表現Just a moment.です。Wait a minute.でも大丈夫。",
+      "“Wait” を使って、ちょっと待ってと伝えるピコ。",
+      "“Just a moment” や “Wait a minute” でもいいピコ。",
       "例：Just a moment.（ちょっと待って。）"
     ],
     "communicative": {
@@ -304,8 +304,8 @@
     "success": "",
     "failure": "",
     "picoSupport": [
-      "バーニーの大きな声を小さくしてもらおう。",
-      "「静かに」はBe quiet.。「お願いします」はpleaseです。",
+      "“Be quiet” を使うピコ。",
+      "“please” をつけると丁寧になるピコ。",
       "例：Be quiet, please.（静かにしてください。）"
     ],
     "communicative": {
@@ -346,8 +346,8 @@
     "success": "",
     "failure": "",
     "picoSupport": [
-      "メグの撮った写真をほめよう。",
-      "「すてきな写真」はnice pictureやgreat picture。What a ...! でも気持ちが伝わります。",
+      "“Nice picture!” と言ってほめるピコ。",
+      "“Great picture!” や “What a nice picture!” でもいいピコ。",
       "例：Nice picture!（すてきな写真だね！）"
     ],
     "communicative": {
