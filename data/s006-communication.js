@@ -24,7 +24,7 @@
     "success": "",
     "failure": "",
     "picoSupport": [
-      "駅員さんに、お手伝いを申し出るピコ。",
+      "“help” を使って、手伝う気持ちを伝えるピコ。",
       "『手伝う』は help。Can I ...? などを使うピコ。",
       "Can we help you? と言うピコ。"
     ],
@@ -54,7 +54,7 @@
     "success": "",
     "failure": "",
     "picoSupport": [
-      "箱の色を聞いてみるピコ。",
+      "“What color” から始めるピコ。",
       "『何色』は What color、『箱』は box だピコ。",
       "What color is the box? と聞くピコ。"
     ],
@@ -83,7 +83,7 @@
     "success": "",
     "failure": "",
     "picoSupport": [
-      "場所を尋ねるピコ。",
+      "“Where” から始めるピコ。",
       "“Where” と “boxes” を使ってみるピコ。",
       "Where are the other boxes?"
     ],
@@ -114,7 +114,7 @@
     "success": "",
     "failure": "",
     "picoSupport": [
-      "箱を見せてもらうようお願いするピコ。",
+      "“Can we see” から始めるピコ。",
       "“Can we see” と “box” を使うピコ。",
       "Can we see that box?"
     ],
@@ -145,7 +145,7 @@
     "success": "",
     "failure": "",
     "picoSupport": [
-      "荷物係さんが、その箱を持っているか聞くピコ。",
+      "“Do you have” を使ってみるピコ。",
       "『持っていますか？』は Do you have ...? を使うピコ。",
       "Do you have the box? と聞くピコ。"
     ],
@@ -175,7 +175,7 @@
     "success": "",
     "failure": "",
     "picoSupport": [
-      "赤い切れ端に注目してもらうピコ。",
+      "“Look at” を使って、見てもらうピコ。",
       "“Look at” と “ribbon” を使うピコ。",
       "Please look at this ribbon."
     ],
@@ -216,7 +216,7 @@
     "success": "",
     "failure": "",
     "picoSupport": [
-      "荷物係の人に「箱を見ましたか？」と尋ねるピコ。",
+      "“Did you see” から始めるピコ。",
       "「見ましたか？」は Did you see ...?。「箱」は box だピコ。",
       "Did you see the box? と尋ねるピコ。"
     ],
@@ -258,7 +258,7 @@
     "success": "",
     "failure": "",
     "picoSupport": [
-      "運転手さんに、ちょっと待ってもらうピコ！",
+      "“Wait” と言ってみるピコ！",
       "『待つ』は wait。一言でもいいピコ！",
       "Please wait! と言うピコ！"
     ],
@@ -294,7 +294,7 @@
     "success": "",
     "failure": "",
     "picoSupport": [
-      "運転手さんに、その箱を見つけてくれるようお願いするピコ。",
+      "“find” を使ってみるピコ。",
       "「見つける」は find。「〜してください」は Please ... だピコ。",
       "Please find the box. とお願いするピコ。"
     ],
@@ -336,7 +336,7 @@
     "success": "",
     "failure": "",
     "picoSupport": [
-      "やっと箱が見つかったピコ！ そのことを伝えるピコ。",
+      "“found” を使って、見つけたと伝えるピコ！",
       "『見つけた』は found。find の過去形だピコ。",
       "I found the box! と言うピコ。"
     ],
