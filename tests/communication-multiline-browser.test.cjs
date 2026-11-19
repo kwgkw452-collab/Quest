@@ -34,6 +34,9 @@ async function open(story){
   DialogManager.init({dialogueBox:by('dialogue-box'),speaker:by('speaker'),message:by('message'),recognizedText:by('recognized-text'),controls:by('controls')});
   await StoryEvents.emit('story:enter',{story:StoryRegistry.get(story)});
   window.__story=StoryRegistry.get(story);window.__state={storyId:story};window.__done=false;window.__recoveries=[];
+  window.__listeningChecks=[];
+  const listen=DialogManager.showSpeechStatus;
+  DialogManager.showSpeechStatus=function(...args){const r=listen.apply(this,args);__listeningChecks.push({goal:document.querySelector('.dialogue-primary-goal').textContent,status:document.getElementById('controls').textContent});return r;};
   const real=CommunicativeQuestionPresenter.recovery;
   CommunicativeQuestionPresenter.recovery=function(...args){__recoveries.push({result:args[0],options:args[1]});return real.apply(this,args);};
   const flat=[];function walk(ss){ss.forEach(s=>s.type==='sequence'?walk(s.steps):flat.push(s));}walk(__story.steps);
@@ -85,6 +88,37 @@ async function run(){
   }
   console.log(story+' recovery/retention/ACCEPT: checked');await page.close();
  }
+ const stages=await open('S005');
+ await stages.evaluate(()=>__start());
+ await stages.getByRole('button',{name:'話す',exact:true}).click();
+ await stages.waitForFunction(()=>__recoveries.at(-1)?.result.status==='reject');
+ for(const stage of [1,2,3,3]){
+  await stages.getByRole('button',{name:'ピコのサポート',exact:true}).click();
+  check(await stages.evaluate(stage=>document.getElementById('message').textContent===QuestionDatabase.get(__step.questionId).picoSupport[stage-1],stage),'stage '+stage);
+  for(const name of ['英語を見る','日本語を見る'])check(await stages.getByRole('button',{name,exact:true}).count()===1,'single '+name);
+ }
+ for(const mode of ['reject','reject','unknown','failure']){
+  await stages.evaluate(mode=>{__plan=mode==='failure'?{error:'no-speech'}:{text:'Yes, we do.'};if(mode==='unknown'){window.__judge=CommunicativeJudge.judge;CommunicativeJudge.judge=async()=>({verdict:'UNKNOWN',source:'test'});}},mode);
+  const n=await stages.evaluate(()=>__recoveries.length);
+  await stages.getByRole('button',{name:'もう一度話す',exact:true}).click();await stages.getByRole('button',{name:'話す',exact:true}).click();
+  await stages.waitForFunction(n=>__recoveries.length>n,n);
+  check(await stages.evaluate(()=>!__recoveries.at(-1).options.supportText),'latest result priority '+mode);
+  await sample(stages,'stage3-'+mode,true);
+  await stages.getByRole('button',{name:'ピコのサポート',exact:true}).click();
+  check(await stages.evaluate(()=>document.getElementById('message').textContent===QuestionDatabase.get(__step.questionId).picoSupport[2]),'stage 3 retained '+mode);
+  if(mode==='unknown')await stages.evaluate(()=>CommunicativeJudge.judge=__judge);
+ }
+ records.push({label:'listening-checks',values:await stages.evaluate(()=>__listeningChecks)});
+ check(await stages.evaluate(()=>__listeningChecks.length>=5&&__listeningChecks.every(x=>x.goal===QuestionDatabase.get(__step.questionId).prompt&&x.status.includes('聞き取り中'))),'listening status and Goal');
+ await stages.evaluate(()=>{__plan={text:QuestionDatabase.get(__step.questionId).communicative.expectedUtterance};});
+ await stages.getByRole('button',{name:'もう一度話す',exact:true}).click();await stages.getByRole('button',{name:'話す',exact:true}).click();await stages.waitForFunction(()=>__done);
+ await stages.evaluate(()=>{__step={type:'question',questionId:'s005.communication.2'};__plan={text:'Yes, we do.'};__start();});
+ await sample(stages,'next-challenge-stage0');
+ await stages.getByRole('button',{name:'話す',exact:true}).click();await stages.waitForFunction(()=>__recoveries.at(-1)?.result.questionId==='s005.communication.2');
+ check(await stages.evaluate(()=>!__recoveries.at(-1).options.supportText),'next challenge Stage 0');
+ await stages.getByRole('button',{name:'ピコのサポート',exact:true}).click();
+ check(await stages.evaluate(()=>document.getElementById('message').textContent===QuestionDatabase.get(__step.questionId).picoSupport[0]),'next challenge starts Support 1');
+ await continueRecovery(stages);await stages.close();
  const page=await open('S005');
  await page.evaluate(()=>{
   window.__token=CommunicativeQuestionPresenter.begin();

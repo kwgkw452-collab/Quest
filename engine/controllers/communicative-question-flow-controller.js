@@ -125,6 +125,7 @@
     while (currentRun === runId) {
       if (result.status === "success" || result.status === "cancelled") return finish(snapshot(result));
 
+      var redisplaySupport = showLatestRecognition && supportStage > 0;
       var action = await CommunicativeQuestionPresenter.recovery(result, {
         retry: Boolean(question.picoSupport) || speechRetryAllowed(result, speechRetries, textFallbacks),
         text: !question.picoSupport && textFallbacks < MAX_TEXT_FALLBACKS,
@@ -147,7 +148,7 @@
       }
 
       if (action === "support" && question.picoSupport) {
-        supportStage = Math.min(3, supportStage + 1);
+        if (!redisplaySupport) supportStage = Math.min(3, supportStage + 1);
         continue;
       }
 
