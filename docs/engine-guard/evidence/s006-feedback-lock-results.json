@@ -1,0 +1,309 @@
+{
+  "status": "INDEPENDENT_QA_REVALIDATION_PENDING_NOT_FINAL_PASS",
+  "productionAtStart": "70706cfa8dd7efd404b1fb45ef2ec9254e82ca4f",
+  "remotePR11AtStart": "999c514390a8e0faac7ec846d6c27c0008ae4a99",
+  "inheritedLocalQACommit": "fbf407499a0b64f9401595b1197cfd935a5c5da7",
+  "localBranch": "engine-guard-v1-feedback-lock-20261121",
+  "targetPRBranch": "engine-guard-v1-20261121",
+  "authorization": "specs/approved/s006-communication-v2/20261121-feedback-lock.md",
+  "canonicalQuestions": [
+    {
+      "q": 1,
+      "goal": "お手伝いしましょうか？",
+      "model": "Can I help you?",
+      "hints": [
+        "「手伝う」は help。Can I ...? で始めるピコ。",
+        "Can I のあとに help you を続けるピコ。",
+        "Can I help you?"
+      ]
+    },
+    {
+      "q": 2,
+      "goal": "あなたの箱は何色ですか？",
+      "model": "What color is it?",
+      "hints": [
+        "「何色」は What color。これで始めるピコ。",
+        "What color のあとに is it を続けるピコ。",
+        "What color is it?"
+      ]
+    },
+    {
+      "q": 3,
+      "goal": "ほかの箱はどこにありますか？",
+      "model": "Where are the other boxes?",
+      "hints": [
+        "「どこ」は Where。「ほかの箱」は the other boxes だピコ。",
+        "Where are のあとに the other boxes を続けるピコ。",
+        "Where are the other boxes?"
+      ]
+    },
+    {
+      "q": 4,
+      "goal": "その箱を見せてもらえますか？",
+      "model": "Can I see the box?",
+      "hints": [
+        "「見てもいい？」は Can I see ...? だピコ。",
+        "Can I see のあとに the box を続けるピコ。",
+        "Can I see the box?"
+      ]
+    },
+    {
+      "q": 5,
+      "goal": "その箱を持っていますか？",
+      "model": "Do you have the box?",
+      "hints": [
+        "「持っていますか？」は Do you have ...? だピコ。",
+        "Do you have のあとに the box を続けるピコ。",
+        "Do you have the box?"
+      ]
+    },
+    {
+      "q": 6,
+      "goal": "このリボンを見てください。",
+      "model": "Look at this ribbon.",
+      "hints": [
+        "「見て」は Look at ...。「リボン」は ribbon だピコ。",
+        "Look at のあとに this ribbon を続けるピコ。",
+        "Look at this ribbon."
+      ]
+    },
+    {
+      "q": 7,
+      "goal": "箱を見ましたか？",
+      "model": "Did you see the box?",
+      "hints": [
+        "「見ましたか？」は Did you see ...? だピコ。",
+        "Did you see のあとに the box を続けるピコ。",
+        "Did you see the box?"
+      ]
+    },
+    {
+      "q": 8,
+      "goal": "ちょっと待ってください！",
+      "model": "Wait, please!",
+      "hints": [
+        "「待って」は Wait。一言でも伝わるピコ。",
+        "Wait に please を添えると丁寧になるピコ。",
+        "Wait, please!"
+      ]
+    },
+    {
+      "q": 9,
+      "goal": "その箱を見つけてください。",
+      "model": "Please find the box.",
+      "hints": [
+        "「見つける」は find。「箱」は box だピコ。",
+        "Please のあとに find the box を続けるピコ。",
+        "Please find the box."
+      ]
+    },
+    {
+      "q": 10,
+      "goal": "これがあなたの箱です。",
+      "model": "This is your box.",
+      "hints": [
+        "「これ」は This。「あなたの箱」は your box だピコ。",
+        "This is のあとに your box を続けるピコ。",
+        "This is your box."
+      ]
+    }
+  ],
+  "validation": {
+    "executed": 28,
+    "pass": 27,
+    "fail": 0,
+    "hold": 1,
+    "exitCode": 2,
+    "feedbackVerdicts": 273,
+    "qa11Verdicts": 144,
+    "previous18Preserved": true,
+    "finalReviewChecks": 236,
+    "finalReviewMismatches": 0,
+    "syntheticTrustChecks": 14,
+    "checks": [
+      {
+        "id": "engine-guard-unrelated-data",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "id": "engine-guard-layout-contract",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "id": "dialogue-information-layout",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "id": "formal-communicative-flow-v1",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "id": "formal-communicative-isolation-v1",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "id": "s005-support-controller-production",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "id": "s006-ending-v1",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "id": "s001-full-flow",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "id": "s002-story",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "id": "s003-full-flow",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "id": "s004-full-flow",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "id": "s005-clean-rebuild-v1",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "id": "s006-restored-all-ten-layout-v1",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "id": "s007-delta",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "id": "player-name-save",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "id": "communication-recovery-visible-v1",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "id": "communication-recovery-ui-v21",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "id": "pico-first-hint-english-v1",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "id": "s006-communication-v2",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "id": "s006-final-review",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "id": "communication-controls",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "id": "support-flow",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "id": "pr9-negative-control",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "id": "pr7-overwrite-negative-control",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "id": "protected-diff",
+        "status": "HOLD",
+        "exitCode": 2
+      },
+      {
+        "id": "s006-qa11-targets",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "id": "engine-guard-qa-trust",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "id": "s006-feedback-lock",
+        "status": "PASS",
+        "exitCode": 0
+      }
+    ]
+  },
+  "protection": {
+    "status": "HOLD",
+    "qaSnapshotApproved": false,
+    "existingProtectedFilesComparedProvisionally": 397,
+    "changed": [],
+    "baselineLedgerChanged": false,
+    "allowlistExpanded": false,
+    "forbiddenFileChanges": [],
+    "htmlOnlyS006CacheChanged": true,
+    "workflowInstalled": false
+  },
+  "changedFiles": [
+    "data/s006-communication.js",
+    "dev.html",
+    "docs/engine-guard/QA-11-Fixes.md",
+    "docs/engine-guard/README.md",
+    "docs/engine-guard/S006-Feedback-Lock-20261121.md",
+    "docs/engine-guard/evidence/qa11-local-results.json",
+    "docs/engine-guard/evidence/s006-feedback-lock-results.json",
+    "docs/engine-guard/independent-qa-workflow.proposed.yml",
+    "index.html",
+    "specs/approved/s006-communication-v2/20261121-feedback-lock.json",
+    "specs/approved/s006-communication-v2/20261121-feedback-lock.md",
+    "specs/current/engine-guard-v1.json",
+    "tests/engine-guard-qa-trust.test.cjs",
+    "tests/engine-guard-suite.json",
+    "tests/s006-communication-v2-cases.json",
+    "tests/s006-communication-v2.test.js",
+    "tests/s006-feedback-lock.test.cjs",
+    "tests/s006-qa11-targets.test.cjs",
+    "tools/qc/check-diff.cjs",
+    "tools/qc/check-s006-against-final-review.cjs",
+    "tools/qc/run.cjs",
+    "tools/qc/verify-protected-policy.cjs"
+  ],
+  "notVerified": [
+    "browser",
+    "PC rendered geometry",
+    "physical iPhone",
+    "real microphone/speech",
+    "independent QA Lab revalidation"
+  ],
+  "productionMerged": false
+}

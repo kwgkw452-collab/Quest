@@ -1,5 +1,9 @@
 # Engine Guard V1 — 実装・検収記録
 
+> 追加LOCK更新: [S006実機フィードバック反映](S006-Feedback-Lock-20261121.md)。原文と新期待値を記録し、QA-11対策を維持。
+
+> QA-11更新: [限定修正と信頼基準案](QA-11-Fixes.md)。独立QA基準は未確定。保護検査はHOLDであり、過去のPASS記録を現在の最終PASSとして扱わない。Production統合は禁止。
+
 基準Production: `70706cfa8dd7efd404b1fb45ef2ec9254e82ca4f`。前回のQA監査から実装へ進めた専用Branchの候補。Production採用承認ではない。
 
 ## 誰でも同じ手順で実行

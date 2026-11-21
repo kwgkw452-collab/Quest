@@ -50,13 +50,13 @@ for(const c of cases){
  }
 }
 const q7=rules[6],q9=rules[8];
-for(const utterance of ["Did you see the book?","Did you see the books?","Is the box on the cart?"]){
+for(const utterance of ["Did you read the book?","Is the box on the cart?"]){
  assert.notEqual(ctx.LocalCommunicativeJudge.evaluate({conceptId:q7.conceptId,difficulty:"starter",utterance:utterance},rules).verdict,"ACCEPT");
 }
 assert.notEqual(ctx.LocalCommunicativeJudge.evaluate({conceptId:q9.conceptId,difficulty:"starter",utterance:"Please look at the box."},rules).verdict,"ACCEPT");
 for(const html of ["index.html","dev.html"]){
  const text=read(html);
- assert(text.includes("data/s006-communication.js?v=s006-communication-v2-engine-guard-v1"));
+ assert(text.includes("data/s006-communication.js?v=s006-communication-v2-feedback-lock-v1"));
  assert.equal((text.match(/src="data\/s006-communication\.js\?/g)||[]).length,1);
 }
 const story=read("engine/stories/S006.js");

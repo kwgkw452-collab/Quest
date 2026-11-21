@@ -18,6 +18,25 @@ for(const line of toleranceSection.split("\n").filter(x=>/^\| Q\d+ \|/.test(x)&&
  rows[n-1].reject=c[3].replace(/（[^）]*）/g,"").split(/\s*／\s*/);
 }
 if(rows.length!==10||rows.some(x=>x.hints.length!==3||!x.minor.length||!x.reject.length||[...x.minor,...x.reject].some(t=>!/^[A-Za-z]/.test(t))))throw Error("Incomplete Final Review");
+// Explicit user-approved amendment supersedes only its listed Final Review fields.
+// This content authorization is NOT an independent QA protection baseline.
+let amendment=null,amendmentPath=null;
+if(process.argv[4]){
+ amendmentPath=path.resolve(process.argv[4]);amendment=JSON.parse(fs.readFileSync(amendmentPath,"utf8"));
+ if(amendment.status!=="USER_APPROVED_2026_11_21_NOT_INDEPENDENT_QA_BASELINE")throw Error("Unrecognized amendment status");
+ const approvedText=fs.readFileSync(path.join(source,amendment.source));
+ if(crypto.createHash("sha256").update(approvedText).digest("hex")!==amendment.sourceSHA256)throw Error("Approval source changed");
+ for(const row of rows){
+  const n=String(row.q),oldModel=row.model;
+  if(amendment.goals[n])row.goal=amendment.goals[n];
+  if(amendment.models[n])row.model=amendment.models[n];
+  if(amendment.hints[n])row.hints=amendment.hints[n];
+  row.accept=[...new Set([...row.accept,oldModel,...(amendment.additionalAccept[n]||[])])];
+  const superseded=(amendment.supersededRejects||{})[n]||[];
+  row.reject=row.reject.filter(t=>!superseded.includes(t));
+  row.accept.push(...superseded);
+ }
+}
 const c={console:{log(){},warn(){},error(){}},setTimeout,clearTimeout};c.window=c;vm.createContext(c);
 const load=p=>vm.runInContext(fs.readFileSync(path.join(source,p),"utf8"),c,{filename:p});
 ["data/word-dictionaries.js","data/questions.js","data/lottery-pools.js","data/communicative-judge-rules.js",
@@ -56,7 +75,7 @@ function check(kind,q,expected,actual,label){
   const result=await c.CommunicativeJudge.judge({conceptId:q.communicative.conceptId,utterance:t,difficulty:"starter"});
   check("prose-policy",row.q,"ACCEPT",result.verdict,t);
  }
- const report={source,specPath,specSHA256:crypto.createHash("sha256").update(spec).digest("hex"),
+ const report={source,specPath,amendmentPath,amendmentStatus:amendment&&amendment.status,specSHA256:crypto.createHash("sha256").update(spec).digest("hex"),
    checks:checks.length,failures:findings.length,findings,details:checks,canonicalQuestions:rows};
  process.stdout.write(JSON.stringify(report,null,2)+"\n");
  process.exitCode=findings.length?1:0;

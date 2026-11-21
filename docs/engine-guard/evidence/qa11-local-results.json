@@ -1,0 +1,200 @@
+{
+  "status": "INDEPENDENT_QA_RETEST_PENDING",
+  "productionAtStart": "70706cfa8dd7efd404b1fb45ef2ec9254e82ca4f",
+  "pr11AtStart": "999c514390a8e0faac7ec846d6c27c0008ae4a99",
+  "QA1101": {
+    "reproduction": [
+      {
+        "q": 9,
+        "text": "Please find another box.",
+        "expected": "REJECT",
+        "before": "ACCEPT",
+        "after": "REJECT"
+      },
+      {
+        "q": 10,
+        "text": "Here is another box!",
+        "expected": "REJECT",
+        "before": "ACCEPT",
+        "after": "REJECT"
+      },
+      {
+        "q": 3,
+        "text": "Where is another box?",
+        "expected": "ACCEPT",
+        "before": "ACCEPT",
+        "after": "ACCEPT"
+      }
+    ],
+    "verdictChecks": 144,
+    "previous18Preserved": true,
+    "finalReviewChecks": 183,
+    "finalReviewMismatches": 0
+  },
+  "QA1102": {
+    "status": "HOLD",
+    "reason": "Independent QA baseline SHA/repository not approved or configured",
+    "syntheticTrustChecks": 13,
+    "realPolicyAdopted": false,
+    "protectedWorkflowInstalled": false
+  },
+  "localSuite": {
+    "executed": 27,
+    "pass": 26,
+    "fail": 0,
+    "hold": 1,
+    "exitCode": 2,
+    "results": [
+      {
+        "id": "engine-guard-unrelated-data",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "id": "engine-guard-layout-contract",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "id": "dialogue-information-layout",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "id": "formal-communicative-flow-v1",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "id": "formal-communicative-isolation-v1",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "id": "s005-support-controller-production",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "id": "s006-ending-v1",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "id": "s001-full-flow",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "id": "s002-story",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "id": "s003-full-flow",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "id": "s004-full-flow",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "id": "s005-clean-rebuild-v1",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "id": "s006-restored-all-ten-layout-v1",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "id": "s007-delta",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "id": "player-name-save",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "id": "communication-recovery-visible-v1",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "id": "communication-recovery-ui-v21",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "id": "pico-first-hint-english-v1",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "id": "s006-communication-v2",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "id": "s006-final-review",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "id": "communication-controls",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "id": "support-flow",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "id": "pr9-negative-control",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "id": "pr7-overwrite-negative-control",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "id": "protected-diff",
+        "status": "HOLD",
+        "exitCode": 2
+      },
+      {
+        "id": "s006-qa11-targets",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "id": "engine-guard-qa-trust",
+        "status": "PASS",
+        "exitCode": 0
+      }
+    ]
+  },
+  "protectedContent": {
+    "method": "Diagnostic byte comparison to PM-authorized provisional Production; starting PR manifest only selects the existing 397 paths, NOT an approved trust root",
+    "checked": 397,
+    "changed": [],
+    "otherRuntimeChanges": [],
+    "questionTextModelHintsChanged": false
+  },
+  "notRun": [
+    "browser",
+    "PC rendered geometry",
+    "physical iPhone",
+    "real microphone/speech",
+    "independent QA Lab revalidation"
+  ],
+  "productionMerged": false
+}

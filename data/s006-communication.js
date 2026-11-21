@@ -22,7 +22,11 @@
       "Shall I help you?",
       "Could I help you?",
       "May we help you?",
-      "Let us help you."
+      "Let us help you.",
+      "Let us help you?",
+      "Could we help you?",
+      "Could I help?",
+      "Could we help?"
     ],
     "no": [
       "I can't help you.",
@@ -52,7 +56,10 @@
       "What color are the box?",
       "What does it look like?",
       "What is the color of the box?",
-      "What colour is your box?"
+      "What colour is your box?",
+      "What color is it?",
+      "What is the color?",
+      "What is its color?"
     ],
     "no": [
       "Is it brown?",
@@ -109,7 +116,14 @@
       "Can we see the box?",
       "Could you show me the box?",
       "Can I look at the box?",
-      "May I see the box?"
+      "May I see the box?",
+      "Show me the box.",
+      "Show us the box.",
+      "Show me that box.",
+      "Show us that box.",
+      "Please show us the box.",
+      "Show me box.",
+      "Show us box."
     ],
     "no": [
       "I can't see the box.",
@@ -166,18 +180,27 @@
       "Look at ribbon.",
       "Please look at this ribbon.",
       "Look at my ribbon, please.",
-      "Could you look at these ribbons?"
+      "Could you look at these ribbons?",
+      "Look at that.",
+      "Look at this.",
+      "Look at it.",
+      "Please look at that.",
+      "Please look at this.",
+      "Look at the ribbon.",
+      "Look at the"
     ],
     "no": [
       "Give me the ribbon.",
       "Don't look at the ribbon.",
       "Do not look at the ribbon.",
       "Look at the bus.",
-      "The ribbon is red."
+      "The ribbon is red.",
+      "Look at the box.",
+      "Look at box."
     ]
   },
   {
-    "goal": "探している箱を見ましたか？",
+    "goal": "箱を見ましたか？",
     "model": "Did you see the box?",
     "type": "question",
     "h": [
@@ -201,9 +224,9 @@
     ],
     "no": [
       "Is the box on the cart?",
-      "Did you see the book?",
-      "Did you see the books?",
       "Did you hear the box?",
+      "Did you read the book?",
+      "Do not see the box.",
       "Where is the cart?"
     ]
   },
@@ -230,7 +253,18 @@
       "Hang on!",
       "Wait a second!",
       "Stop the bus, please!",
-      "Please don't go yet!"
+      "Please don't go yet!",
+      "Wait a minute.",
+      "Wait a moment.",
+      "Wait a second.",
+      "Just a minute.",
+      "Just a moment.",
+      "Just a second.",
+      "One second, please.",
+      "Hold on a minute.",
+      "Wait for me.",
+      "Wait for us.",
+      "Please wait."
     ],
     "no": [
       "Go!",
@@ -244,13 +278,13 @@
     ]
   },
   {
-    "goal": "その箱を探してください。",
-    "model": "Please look for the box.",
+    "goal": "その箱を見つけてください。",
+    "model": "Please find the box.",
     "type": "request",
     "h": [
-      "「探す」は look for。「箱」は box だピコ。",
-      "Please のあとに look for the box を続けるピコ。",
-      "Please look for the box."
+      "「見つける」は find。「箱」は box だピコ。",
+      "Please のあとに find the box を続けるピコ。",
+      "Please find the box."
     ],
     "yes": [
       "Can you look for the box?",
@@ -264,7 +298,9 @@
       "Find the box, please.",
       "Can you find the box?",
       "Can you help me find the box?",
-      "Can you check the luggage for the box?"
+      "Can you check the luggage for the box?",
+      "Find the box.",
+      "Please look for the box."
     ],
     "no": [
       "I found the box.",
@@ -276,13 +312,13 @@
     ]
   },
   {
-    "goal": "はい、あなたの箱です！",
-    "model": "Here is your box!",
+    "goal": "これがあなたの箱です。",
+    "model": "This is your box.",
     "type": "statement",
     "h": [
-      "「はい、どうぞ」は Here is ...。「あなたの箱」は your box だピコ。",
-      "Here is のあとに your box を続けるピコ。",
-      "Here is your box!"
+      "「これ」は This。「あなたの箱」は your box だピコ。",
+      "This is のあとに your box を続けるピコ。",
+      "This is your box."
     ],
     "yes": [
       "Here's your box!",
@@ -297,7 +333,11 @@
       "I found the box!",
       "We found your box!",
       "I have your box!",
-      "There is your box!"
+      "There is your box!",
+      "This is your box.",
+      "Here is your box.",
+      "Here is your box!",
+      "This is the box."
     ],
     "no": [
       "Where is your box?",
@@ -313,6 +353,8 @@
 ];
   function norm(value) {
     return String(value || "").toLowerCase().replace(/[’‘]/g, "'")
+      // User-approved ASR rescue belongs ONLY to these S006 rules, never Speech/Judge Core.
+      .replace(/\bbooks\b/g, "boxes").replace(/\bbook\b/g, "box")
       .replace(/\b(colour)\b/g, "color").replace(/\b(here's)\b/g, "here is")
       .replace(/\b(can't|cant)\b/g, "cannot").replace(/\b(don't|dont)\b/g, "do not")
       .replace(/\b(doesn't|doesnt)\b/g, "does not").replace(/\b(didn't|didnt)\b/g, "did not")
@@ -329,22 +371,26 @@
     });
   }
   // Purpose-bound patterns permit common combinations, not arbitrary semantic guesses.
-  var box = "(?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)?";
-  var obj = "(?:" + box + "|it|this|that)";
+  var box = "(?:(?:the|that|this|your|my|our|a|those|these) )*box(?:es)?";
+  var otherBox = "(?:(?:the|that|this|your|my|our|a|those|these) )*(?:another|other|different) box(?:es)?";
+  // Q3 asks for OTHER boxes; Q2/Q4/Q5/Q7/Q9/Q10 refer to the identified box.
+  // Do not broaden the target of every question just because Q3 permits another.
+  var targetObjects = [null, box, "(?:" + box + "|" + otherBox + ")", box,
+    box, null, box, null, box, box];
   var ribbon = "(?:(?:the|that|this|your|my|a|red|these|those) )*ribbons?";
   var ribbonObject = "(?:" + ribbon + "|it|this|that)";
-  var patterns = [
+  function intentPatterns(obj) { return [
     "^(?:(?:can|could|may|shall) (?:i|we) help(?: you)?|(?:do you )?need (?:some )?help|let (?:me|us) help(?: you)?|would you like (?:some )?help)$",
-    "^(?:what color (?:is|are) " + obj + "|what color " + obj + "|what (?:is|are) the color of " + obj + "|what (?:does|do) " + obj + " look like|(?:can|could) you describe " + obj + ")$",
+    "^(?:what (?:is|are) (?:the|its) color|what color (?:is|are) " + obj + "|what color " + obj + "|what (?:is|are) the color of " + obj + "|what (?:does|do) " + obj + " look like|(?:can|could) you describe " + obj + ")$",
     "^(?:where (?:is|are) " + obj + "|where (?:can|could) (?:i|we) find " + obj + "|where did " + obj + " go|" + obj + " where)$",
     "^(?:(?:can|could|may) (?:i|we) (?:see|look at) " + obj + "|(?:can|could|would) you show (?:me|us) " + obj + "|show (?:me|us) " + obj + ")$",
     "^(?:(?:do|does) you (?:have|has) " + obj + "|you have " + obj + "|have you got " + obj + "|is " + obj + " here)$",
     "^(?:(?:(?:can|could|would) you )?(?:look at|look|check) " + ribbonObject + "|(?:take a look at|look at) " + ribbonObject + ")$",
     "^(?:(?:did|do|does) you (?:see|saw) " + obj + "|(?:have you|did you) seen " + obj + "|you (?:saw|see) " + obj + "|(?:can|could) you see " + obj + "|do you know where " + obj + " is)$",
-    "^(?:(?:can|could|would) you )?wait(?: (?:for )?(?:me|us))?$|^(?:(?:just )?(?:a|one) (?:moment|minute|second)|(?:hold|hang) on|stop the bus|do not (?:go|leave)(?: yet)?)$",
+    "^(?:(?:can|could|would) you )?wait(?: (?:(?:for )?(?:me|us)|(?:a|one) (?:moment|minute|second)))?$|^(?:(?:just )?(?:a|one) (?:moment|minute|second)|(?:hold|hang) on(?: (?:a|one) (?:moment|minute|second))?|stop the bus|do not (?:go|leave)(?: yet)?)$",
     "^(?:(?:(?:can|could|will|would) you )?(?:find|finds|look for|check for) " + obj + "|(?:can|could) you help (?:me|us) find " + obj + "|help (?:me|us) find " + obj + ")$",
     "^(?:(?:here (?:is|are)|this is|there is) " + obj + "|(?:i|we) (?:found|find|got|get|have|have found|have got) " + obj + "|here you are)$"
-  ];
+  ]; }
   function withoutPlease(s) { return s.replace(/\bplease\b/g, " ").replace(/\s+/g, " ").trim(); }
   specs.forEach(function (spec, i) {
     var id = "s006.communication." + (i + 1);
@@ -354,7 +400,10 @@
     var accepted = Object.create(null), rejected = Object.create(null);
     answers.forEach(function (x) { accepted[norm(x)] = true; });
     spec.no.forEach(function (x) { rejected[norm(x)] = true; });
-    var matcher = new RegExp(patterns[i]);
+    var target = targetObjects[i] || box;
+    var matcher = new RegExp(intentPatterns("(?:" + target + "|it|this|that)")[i]);
+    var otherTargetMatcher = targetObjects[i] && i !== 2 ?
+      new RegExp(intentPatterns(otherBox)[i]) : null;
     function accepts(value) {
       var t = norm(value);
       if (!t || rejected[t]) return false;
@@ -365,6 +414,9 @@
       var t = norm(value);
       if (!t || accepts(t)) return false;
       if (rejected[t]) return true;
+      // Same question intent, explicitly different referent: REJECT, not UNKNOWN.
+      // Mere mentions of "another box" without this intent remain UNKNOWN.
+      if (otherTargetMatcher && otherTargetMatcher.test(withoutPlease(t))) return true;
       // Explicit contradictory intent is rejected; other unrecognized speech is UNKNOWN.
       // A negative word alone (e.g. "I am not sure") is not contrary intent.
       // Only a negated, otherwise recognized target action is rejected.

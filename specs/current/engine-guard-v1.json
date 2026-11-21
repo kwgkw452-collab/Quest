@@ -7,7 +7,7 @@
     "sha256": "ee8fcad0dd81995658084d2c21da168e4025cd5a1417f9bbcda58f9592979734",
     "provenance": "Original Final Review; user V2 implementation authorization and Engine Guard V1 instruction. Production adoption is separate."
   },
-  "s006ScriptVersion": "s006-communication-v2-engine-guard-v1",
+  "s006ScriptVersion": "s006-communication-v2-feedback-lock-v1",
   "communication": {
     "actions": [
       "もう一度話す",
@@ -88,5 +88,17 @@
     "tools/qc/prove-negative-controls.cjs",
     "tools/qc/prove-pr7-v2-overwrite.cjs",
     "tools/qc/run.cjs"
+  ],
+  "userApprovedAmendments": [
+    {
+      "path": "specs/approved/s006-communication-v2/20261121-feedback-lock.json",
+      "sha256": "45ef70668012d1841bc7abbb850d61cba66e44adf34e6a9583e589680fd6457b",
+      "status": "USER_APPROVED_2026_11_21_NOT_INDEPENDENT_QA_BASELINE"
+    },
+    {
+      "path": "specs/approved/s006-communication-v2/20261121-feedback-lock.md",
+      "sha256": "cd0c9218a25230212bfe16c721a29f886a6a974b05412a249ca5d6acfe019270",
+      "status": "USER_APPROVED_2026_11_21_NOT_INDEPENDENT_QA_BASELINE"
+    }
   ]
 }

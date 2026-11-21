@@ -119,7 +119,8 @@
       "args": [
         "tools/qc/check-s006-against-final-review.cjs",
         ".",
-        "specs/approved/s006-communication-v2/Final-Review.md"
+        "specs/approved/s006-communication-v2/Final-Review.md",
+        "specs/approved/s006-communication-v2/20261121-feedback-lock.json"
       ]
     },
     {
@@ -152,6 +153,24 @@
       "id": "protected-diff",
       "args": [
         "tools/qc/check-diff.cjs"
+      ]
+    },
+    {
+      "id": "s006-qa11-targets",
+      "args": [
+        "tests/s006-qa11-targets.test.cjs"
+      ]
+    },
+    {
+      "id": "engine-guard-qa-trust",
+      "args": [
+        "tests/engine-guard-qa-trust.test.cjs"
+      ]
+    },
+    {
+      "id": "s006-feedback-lock",
+      "args": [
+        "tests/s006-feedback-lock.test.cjs"
       ]
     }
   ],
