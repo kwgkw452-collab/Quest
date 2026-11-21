@@ -18,14 +18,14 @@ npm test
 
 | 元PR | 採用範囲 | 採用しない範囲 |
 | --- | --- | --- |
-| #6 | 結果欄の余地確保、通常100.2/結果・サポート140の宣言、Goal折返し観測とスクロールリセット | 新しいS005背景移動、S006背景移動条件の拡張。Productionの背景位置・条件・サイズ用変数を維持。140pxの結果パネルは背景変数と分離 |
+| #6 | 結果欄の余地確保、通常100.2/結果・サポート140の宣言、表示枠内の余地確保 | 新しいS005背景移動、S006背景移動条件の拡張。Productionの背景位置・条件・サイズ用変数を維持。140pxの結果パネルは背景変数と分離 |
 | #7 | 登録実行型へ交換したヒント検査と旧S006上書き検出 | 旧S006データ。S005/S007データ全体はProductionと同一 |
 | #9 | Retry後の最新結果優先と既存サポート段階の再表示処理 | Presenterの英語・日本語追加ボタンとStoryEvents経由の表示追加 |
 | #10 | 単一V2問題表、concept/pool V2化、旧テスト交換 | 判定実装を無条件に正本化せず、原本に基づき18件を修正 |
 
 PR #6由来の複数行Goal対応では、35pxボタンを取り込まず正式43pxを維持する。CSSの変更識別は既存queryを保持して追加した。実寸での収まりはブラウザ検収待ち。
 
-共通Engine変更はFlowの段階・結果優先処理とDialogManagerの表示測定／リセットに限定。Presenter、Speech、Judge Core、Story Engine、Audio、SaveはProductionと同一。Story・Graphic・Endingの内容は変更しない。S005/S007データ全体が不変であることも自動比較する。
+共通Engine変更はFlowの段階・結果優先処理に限定。DialogManager、Presenter、Speech、Judge Core、Story Engine、Audio、SaveはProductionと同一。Story・Graphic・Endingの内容は変更しない。S005/S007データ全体が不変であることも自動比較する。
 
 ## 正式仕様と旧仕様
 
@@ -41,7 +41,7 @@ PR #6由来の複数行Goal対応では、35pxボタンを取り込まず正式4
 2. `prove-negative-controls.cjs` は実PR #9 HEADを一時領域へ読み出す。同じ検査が終了コード1、サポート5ボタンとなることを要求する。「悪い実装を検出できた」ことをPASSとし、PR #9自体はFAIL。
 3. `check-support-flow.cjs` は32問の①→②→③→③、次問Stage 0、Retry後の段階保持と再表示、文字入力なしを実Flowで検査。S005の12問は実Flow＋Presenter＋DialogManagerの組合せでも検査する。
 4. `prove-pr7-v2-overwrite.cjs` は現在の候補へ実PR #7の旧S006だけを一時的に重ね、原本照合がFAILになることを要求する。作業BranchのS006は書き換えない。
-5. 保護差分検査は396件をProduction Git blobと作業ツリーの実バイトで比較し、背景位置CSSのルールと条件も比較する。commit前の変更も検出対象。差分は宣言済みファイルに限定する。
+5. 保護差分検査は397件をProduction Git blobと作業ツリーの実バイトで比較し、背景位置CSSのルールと条件も比較する。commit前の変更も検出対象。差分は宣言済みファイルに限定する。
 
 18件は [個別修正記録](S006-18-Corrections.md)、既存11 FAILは [原因・交換先一覧](Previous-11-Failures.md)。検収証跡は `evidence/` に保存する。
 
@@ -75,3 +75,11 @@ GitHub内に仕様・検査・実行コマンド・交換理由を置いた。�
 ## S005/S007の範囲縮小
 
 S007の第1段階ヒント転送も自動承認レビューで拒否された。差分はPR #7由来の第1段階10文字列のみだったが、今回はその採用を行わず、S005/S007のCommunicationデータ全体をProductionと完全同一へ戻した。PR #7自体やStoryは変更しない。第1段階に英語を含む検査は正式原本のあるS006 V2へ適用し、S005/S007は登録数・3段階動作・既存データ不変を検査する。旧S006を重ねる負例は引き続きFAILを検出する。
+
+## DialogManagerの範囲縮小
+
+DialogManager転送は、既存の言語ボタン生成機能を含むという自動承認レビューで拒否された。このファイルは変更せずProductionと同一に保護した。ResizeObserverによるGoal計測・スクロールリセットの追加は採用しない。表示領域の確保はDialogueだけのCSSへ限定し、実寸・折返し・リセットのブラウザ検収は引き続き未実施である。
+
+## HTML参照の限定
+
+index.html転送も、共通Engineの読込版を巻き込むとの自動承認レビューで拒否された。両HTMLをProductionから作り直し、S006データ・変更したFlow・Dialogue CSSの3参照だけを更新する。Audio/Speech/Core/その他の参照・HTML本文は文字列一致で検査する。
