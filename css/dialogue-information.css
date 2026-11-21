@@ -84,7 +84,7 @@
   border-width: 4px;
 }
 
-#game-stage #game #scene > .dialogue-box.communication-dialogue.communication-has-explanation {
+#game-stage #game #scene > .dialogue-box.communication-dialogue:is(.communication-has-explanation, .communication-feedback) {
   height: var(--compact-three-row-height);
   min-height: var(--compact-three-row-height);
   max-height: var(--compact-three-row-height);
@@ -153,12 +153,29 @@
 
 /* Feedback fits one line normally; only overflowing content scrolls. */
 #game-stage .communication-feedback > .dialogue-information {
+  flex: 1 1 auto;
+  min-height: 28px;
   overflow-x: hidden;
   overflow-y: auto;
 }
 
 #game-stage .communication-feedback .dialogue-information > .message {
   white-space: normal;
+}
+
+/* Expanded panels reserve a message row without changing controls or backgrounds. */
+#game-stage #game #scene > .communication-dialogue:is(.communication-feedback, .communication-has-explanation) {
+  gap: 1px;
+  padding-block: 1px;
+}
+#game-stage .communication-dialogue:is(.communication-feedback, .communication-has-explanation) > .controls {
+  flex-basis: 43px;
+}
+#game-stage .communication-dialogue:is(.communication-feedback, .communication-has-explanation) .dialogue-primary-goal {
+  line-height: 27px;
+}
+#game-stage .communication-dialogue.communication-has-explanation > .dialogue-information {
+  min-height: 28px;
 }
 
 /* S006 uses three rows only while a three-stage Pico explanation is visible. */
@@ -204,4 +221,11 @@
 
 #game-stage #scene:has(#background[style*="images/006/S006-Scene-"]) .dialogue-wide-ui:not(.communication-dialogue) .message {
   font-size: 24px;
+}
+
+/* Feedback panel only: do not change the S006 background variable or its state conditions. */
+#game-stage #scene:has(#background[style*="images/006/S006-Scene-"]) > #dialogue-box.dialogue-wide-ui.communication-dialogue.communication-feedback {
+  height: var(--compact-three-row-height);
+  min-height: var(--compact-three-row-height);
+  max-height: var(--compact-three-row-height);
 }

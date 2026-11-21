@@ -1,0 +1,1594 @@
+{
+  "status": "ENGINE_GUARD_V1_LOCK_BASELINE",
+  "commit": "70706cfa8dd7efd404b1fb45ef2ec9254e82ca4f",
+  "files": [
+    {
+      "path": "audio/ambient/ambient_bazaar_crowd_v1.mp3",
+      "git_blob": "dc50f2f7aa0bcdd3f6125467ced8e332039ca100"
+    },
+    {
+      "path": "audio/ambient/ambient_camp_night_v1.mp3",
+      "git_blob": "8487afa8d512d82410719d819c2af2a5d5d6b953"
+    },
+    {
+      "path": "audio/ambient/ambient_morning_garden_v1.mp3",
+      "git_blob": "48817ca737d68796c830366ebba02d7f9be746ef"
+    },
+    {
+      "path": "audio/ambient/ambient_morning_garden_v2.mp3",
+      "git_blob": "9a9931540877e9486f1da042254097dc214a5f0b"
+    },
+    {
+      "path": "audio/bgm/bgm_bazaar_middle_east_v1.mp3",
+      "git_blob": "0650bcccbcb02d79d6f537dcdbdec509f9712008"
+    },
+    {
+      "path": "audio/bgm/bgm_bernie_confident_v1.mp3",
+      "git_blob": "1b01fa752d895f5dc10cf79bda1f16d1fa280152"
+    },
+    {
+      "path": "audio/bgm/bgm_bernie_uncertain_v1.mp3",
+      "git_blob": "bfdc4a1d1fcc5c2646714cd47536208368c43890"
+    },
+    {
+      "path": "audio/bgm/bgm_future_city_pixel_v1.mp3",
+      "git_blob": "7149e7bcb4dfbac331df6876e13a6befbb1620f4"
+    },
+    {
+      "path": "audio/bgm/bgm_kong_emotional_silent_tears_v1.mp3",
+      "git_blob": "662b4f23972c548d27ea296f959748d329ebc8a4"
+    },
+    {
+      "path": "audio/bgm/bgm_nocturnal_bloom_loop_v1.mp3",
+      "git_blob": "76338d132f2d93dcee947b513c4cc270d731fcb8"
+    },
+    {
+      "path": "audio/bgm/bgm_zephyr_fields_main.mp3",
+      "git_blob": "6b90c162d7fcaf6a708161e69de5c777bb616f96"
+    },
+    {
+      "path": "audio/jingle/jingle_m004_completion_fanfare_v1.mp3",
+      "git_blob": "b5a300c647b3effee48f68cd076023618edab642"
+    },
+    {
+      "path": "audio/jingle/jingle_zephyr_departure_v1.mp3",
+      "git_blob": "75225e681327e66d0a72df0632e21067e6401ca7"
+    },
+    {
+      "path": "audio/jingle/jingle_zephyr_entrance_v1.mp3",
+      "git_blob": "b792a9a2d2a40966225536468d7f3ce296cfa450"
+    },
+    {
+      "path": "audio/jingle/jingle_zephyr_friendship_v1.mp3",
+      "git_blob": "58d5805a671a0f3d3a901941d1838ba472403f98"
+    },
+    {
+      "path": "audio/jingle/jingle_zephyr_go_v3.mp3",
+      "git_blob": "92dae5ef931d68e444416221a2d467ab121d8f32"
+    },
+    {
+      "path": "audio/jingle/jingle_zephyr_success_v1.mp3",
+      "git_blob": "1de83e54ba6a607af02e655433148ea87aa57760"
+    },
+    {
+      "path": "audio/jingle/jingle_zephyr_victory_v1.mp3",
+      "git_blob": "572ca790273791428d02079d6ea4177dfead823c"
+    },
+    {
+      "path": "audio/se/se_battle_hit_v1.mp3",
+      "git_blob": "bbce2d18ca739288bf07a50b7c62d57ca786f632"
+    },
+    {
+      "path": "audio/se/se_battle_purify_v1.mp3",
+      "git_blob": "f61ce88d48c01aa421efbec440322924b40024df"
+    },
+    {
+      "path": "audio/se/se_kong_entrance_v1.mp3",
+      "git_blob": "7f9996f313b79ae75f217effbe883389ae7706c9"
+    },
+    {
+      "path": "audio/se/se_m004_recovery_magic_v1.mp3",
+      "git_blob": "8ada17e114daebcc764501f49d2e66e535a8d594"
+    },
+    {
+      "path": "audio/se/se_monster_defeat_explosion_v1.mp3",
+      "git_blob": "27609caf7dcb0efb8d5c312595429fd6a837fd39"
+    },
+    {
+      "path": "audio/se/se_monster_warning_creepy_v1.mp3",
+      "git_blob": "0c8d6187398ffb8e91dd09b45ae4aef3e53082f3"
+    },
+    {
+      "path": "audio/se/se_monster_warning_normal_v1.mp3",
+      "git_blob": "bff0a5468ef9c809a7ea0b2bafea9b1a607384e8"
+    },
+    {
+      "path": "audio/se/se_monster_warning_reveal_v1.mp3",
+      "git_blob": "b5a0b446c0ccc14e7ffaead5a34772b9b32f98b7"
+    },
+    {
+      "path": "audio/se/se_monster_warning_tense_piano_v1.mp3",
+      "git_blob": "0c8d6187398ffb8e91dd09b45ae4aef3e53082f3"
+    },
+    {
+      "path": "audio/se/se_mystery_shop_sting_v1.mp3",
+      "git_blob": "e0f66354e6c93be8108058cff9fbd75a024e876a"
+    },
+    {
+      "path": "audio/se/se_pico_entrance_v1.mp3",
+      "git_blob": "ff44eab3cc92242fccc0885601e59e86cdd8ec1d"
+    },
+    {
+      "path": "audio/se/se_pico_wakeup_v1.mp3",
+      "git_blob": "9820f7a955e480366d04165d54076d938cf21bff"
+    },
+    {
+      "path": "audio/voice/c01_pico/voice_c01_m001_001_v1.mp3",
+      "git_blob": "1d18d6869200a3010cf3cb23f87928d1fd719746"
+    },
+    {
+      "path": "audio/voice/c01_pico/voice_c01_m001_002_v1.mp3",
+      "git_blob": "909eeb4ea71158d9947cb90fa68f9f2a95ce9ccc"
+    },
+    {
+      "path": "audio/voice/c01_pico/voice_c01_s002_001_v1.mp3",
+      "git_blob": "c3dea600d8da0bbbe6fd147a3854c088fcc6bf1f"
+    },
+    {
+      "path": "audio/voice/c01_pico/voice_c01_s002_002_v1.mp3",
+      "git_blob": "1e129850470555854eff126e1c8b67b701887e88"
+    },
+    {
+      "path": "audio/voice/c01_pico/voice_c01_s002_003_v1.mp3",
+      "git_blob": "a3d1964a1756ea606497625c747665b212b5742e"
+    },
+    {
+      "path": "audio/voice/c01_pico/voice_c01_s002_004_v1.mp3",
+      "git_blob": "60b723f78abb227eb68052d596d2d6cbe4ba7449"
+    },
+    {
+      "path": "audio/voice/c01_pico/voice_c01_s002_005_v1.mp3",
+      "git_blob": "f58510fb07cbbbb2fbcfcc3a5f98e5bf96f4e19b"
+    },
+    {
+      "path": "audio/voice/c01_pico/voice_c01_s002_006_v1.mp3",
+      "git_blob": "e7e76888481a12a640f5fcd3b6370b040a2ffe14"
+    },
+    {
+      "path": "audio/voice/c01_pico/voice_c01_st004_001_v1.mp3",
+      "git_blob": "d00dadaa9f4e7870865327cdc5317236e6ebbd21"
+    },
+    {
+      "path": "audio/voice/c01_pico/voice_c01_st004_002_v1.mp3",
+      "git_blob": "4041134cdae66f78eebafb5bbc8759a27da875e7"
+    },
+    {
+      "path": "audio/voice/c01_pico/voice_c01_st004_003_v1.mp3",
+      "git_blob": "54b0e11feb1e7bbf269f9aa027bc66f37429096e"
+    },
+    {
+      "path": "audio/voice/c01_pico/voice_c01_st004_004_v1.mp3",
+      "git_blob": "87e0ec9c9a6769183570193deb05115e61de107e"
+    },
+    {
+      "path": "audio/voice/c01_pico/voice_c01_st004_005_v1.mp3",
+      "git_blob": "4ff817e27b3f459c3b3006ef9675d7316ebd2831"
+    },
+    {
+      "path": "audio/voice/c01_pico/voice_c01_st004_006_v1.mp3",
+      "git_blob": "96ffd499f28caaee905052fbe580fa12caa3b428"
+    },
+    {
+      "path": "audio/voice/c02_kong/voice_c02_s001_001_v1.mp3",
+      "git_blob": "4401066d3986a7213c1128daac961188f09b9158"
+    },
+    {
+      "path": "audio/voice/c02_kong/voice_c02_s001_002_v1.mp3",
+      "git_blob": "36a5b82069745590392e5ddb3b3d174879d34e0a"
+    },
+    {
+      "path": "audio/voice/c02_kong/voice_c02_s001_003_v1.mp3",
+      "git_blob": "88e8c53a7269e3262739c6ed3f826a703ebb16b1"
+    },
+    {
+      "path": "audio/voice/c02_kong/voice_c02_s001_005_v1.mp3",
+      "git_blob": "d068c940669c672e09d59ea3cc8527540d368bbc"
+    },
+    {
+      "path": "audio/voice/c02_kong/voice_c02_s002_001_v1.mp3",
+      "git_blob": "35120f2fed05fe2ea2371273d5f92df7a1f3063c"
+    },
+    {
+      "path": "audio/voice/c02_kong/voice_c02_s002_002_v1.mp3",
+      "git_blob": "e7f374d17ab21a23115adf55190c5eb2efceda49"
+    },
+    {
+      "path": "audio/voice/c02_kong/voice_c02_s004_001_v1.mp3",
+      "git_blob": "7b5c2d477e56471b10cb005d4d1b03023d2396a5"
+    },
+    {
+      "path": "audio/voice/c02_kong/voice_c02_s004_002_v1.mp3",
+      "git_blob": "f037635eaac61f998c44102a91cc35b16088c4b3"
+    },
+    {
+      "path": "audio/voice/c02_kong/voice_c02_s004_003_v1.mp3",
+      "git_blob": "e5285c744abe45b74d34a0e34015b4cccb61025e"
+    },
+    {
+      "path": "audio/voice/c02_kong/voice_c02_s004_004_v1.mp3",
+      "git_blob": "102154d61b909f31fa256589f867e63225882518"
+    },
+    {
+      "path": "audio/voice/c02_kong/voice_c02_s004_005_v1.mp3",
+      "git_blob": "e44aec4dbcd28c360f459db112f082aa00614a2f"
+    },
+    {
+      "path": "audio/voice/c02_kong/voice_c02_s004_006_v1.mp3",
+      "git_blob": "21b096e5869da13634896ec8ac079577fa4bc7fe"
+    },
+    {
+      "path": "audio/voice/c02_kong/voice_c02_st004_001_v1.mp3",
+      "git_blob": "50ffe3f62808a1ecf996641bc1003e9435e09155"
+    },
+    {
+      "path": "audio/voice/c02_kong/voice_c02_st004_002_v1.mp3",
+      "git_blob": "d2aecda624aa5121d22b13acaeb50e1604098a1f"
+    },
+    {
+      "path": "audio/voice/c02_kong/voice_c02_st004_003_v1.mp3",
+      "git_blob": "1e417fe51b03dec62acdbc2a7225ae8cf013ee01"
+    },
+    {
+      "path": "audio/voice/c02_kong/voice_c02_st004_004_v1.mp3",
+      "git_blob": "632021b7d522c217bd7ea73d22fa852b4f78d91f"
+    },
+    {
+      "path": "audio/voice/c02_kong/voice_c02_st004_005_v1.mp3",
+      "git_blob": "0174a08cb1ed313f45813f3ffb21e355ec1c4aef"
+    },
+    {
+      "path": "audio/voice/c02_kong/voice_c02_st004_006_v1.mp3",
+      "git_blob": "fc271eae3bfcafbef0e073ec16ce602673a22a7d"
+    },
+    {
+      "path": "audio/voice/c02_kong/voice_c02_st004_007_v1.mp3",
+      "git_blob": "19340bb9b73b3fd214e506aff0540028d0e8a8d4"
+    },
+    {
+      "path": "audio/voice/c03_saki/voice_c03_s002_001_v1.mp3",
+      "git_blob": "aaf76fefad8d67a4eb089418c234b4bcbebe3703"
+    },
+    {
+      "path": "audio/voice/c03_saki/voice_c03_s002_002_v1.mp3",
+      "git_blob": "8bdac433ce29a626e2cfa5bb7635a87998a8661f"
+    },
+    {
+      "path": "audio/voice/c03_saki/voice_c03_s002_003_v1.mp3",
+      "git_blob": "8ba1216e55abb7ff6c77f3c093e5b295fba06c30"
+    },
+    {
+      "path": "audio/voice/c03_saki/voice_c03_s002_004_v1.mp3",
+      "git_blob": "0f56742323c471d24d53fcdf9304e659e2ab4433"
+    },
+    {
+      "path": "audio/voice/c03_saki/voice_c03_s002_005_v1.mp3",
+      "git_blob": "b34bc5e5f5315e9dbb10b334cc7771da8715c363"
+    },
+    {
+      "path": "audio/voice/c03_saki/voice_c03_s002_006_v1.mp3",
+      "git_blob": "661855afba9256535bbd0cb669f19c8663648b8a"
+    },
+    {
+      "path": "audio/voice/c03_saki/voice_c03_s002_007_v1.mp3",
+      "git_blob": "b359417b29fbe0cb3c87348224ba4644ffffdb9e"
+    },
+    {
+      "path": "audio/voice/c03_saki/voice_c03_s002_008_v1.mp3",
+      "git_blob": "c9072b038d177c6585c82d808d97b7c03887b9b6"
+    },
+    {
+      "path": "audio/voice/c03_saki/voice_c03_s002_009_v1.mp3",
+      "git_blob": "ce927cf5e570d044b0b3671bbab5211ff29ded5d"
+    },
+    {
+      "path": "audio/voice/c03_saki/voice_c03_s004_001_v1.mp3",
+      "git_blob": "e24215c777d09a2e02a031bc1d364a9311fa324b"
+    },
+    {
+      "path": "audio/voice/c03_saki/voice_c03_st004_001_v1.mp3",
+      "git_blob": "274d3a5b54853e3a50366dec96e4d17e36065744"
+    },
+    {
+      "path": "audio/voice/c03_saki/voice_c03_st004_002_v1.mp3",
+      "git_blob": "ca50674d7e9bcb5ef4c8fa1e154e4fda9b3843cd"
+    },
+    {
+      "path": "audio/voice/c03_saki/voice_c03_st004_003_v1.mp3",
+      "git_blob": "8378875bc7221f45201bbe07e591e65d8c897836"
+    },
+    {
+      "path": "audio/voice/c03_saki/voice_c03_st004_004_v1.mp3",
+      "git_blob": "14c4f5c3af153c8d5a47e69a887c5de6522c3ffc"
+    },
+    {
+      "path": "audio/voice/c03_saki/voice_c03_st004_005_v1.mp3",
+      "git_blob": "c834ac41008dfb74e7132098191e1b3e9f2077ca"
+    },
+    {
+      "path": "audio/voice/c03_saki/voice_c03_st004_006_v1.mp3",
+      "git_blob": "873efa3bac3492aa8368de244f1a0f877fd7ef14"
+    },
+    {
+      "path": "audio/voice/c03_saki/voice_c03_st004_007_v1.mp3",
+      "git_blob": "59755079b1d1a01e4d1f6f071d0c8556881f7538"
+    },
+    {
+      "path": "audio/voice/c03_saki/voice_c03_st004_008_v1.mp3",
+      "git_blob": "1b4b1de50bad2d7d4472e42cf4128bbe912f7751"
+    },
+    {
+      "path": "audio/voice/c03_saki/voice_c03_st004_009_v1.mp3",
+      "git_blob": "af39dd9d5e419b1b7a5aad737b3597c059c7f101"
+    },
+    {
+      "path": "audio/voice/c03_saki/voice_c03_st004_010_v1.mp3",
+      "git_blob": "e3f9fbcafd662f8c0864d04b0cdf9f427303a8ca"
+    },
+    {
+      "path": "audio/voice/c03_saki/voice_c03_st004_011_v1.mp3",
+      "git_blob": "ee55caea855e44ac35cbecbfb71f92c113ee6b10"
+    },
+    {
+      "path": "audio/voice/c03_saki/voice_c03_st004_012_v1.mp3",
+      "git_blob": "aa559d831960971855630b8a0e20eb94938c1352"
+    },
+    {
+      "path": "audio/voice/c03_saki/voice_c03_st004_013_v1.mp3",
+      "git_blob": "aa19fcc95b03121b02dc777df2ff971e5d9c4bac"
+    },
+    {
+      "path": "audio/voice/c03_saki/voice_c03_st004_014_v1.mp3",
+      "git_blob": "7d8b64cf5975756b62f2fef1c6f340d607b284f9"
+    },
+    {
+      "path": "audio/voice/c03_saki/voice_c03_st004_015_v1.mp3",
+      "git_blob": "3835d7d8741a7a77682a21f90bf1241e4bd2e53b"
+    },
+    {
+      "path": "audio/voice/c03_saki/voice_c03_st004_016_v1.mp3",
+      "git_blob": "ce52b9ae0077562383b8a4f8da565d43258f279e"
+    },
+    {
+      "path": "audio/voice/c03_saki/voice_c03_st004_017_v1.mp3",
+      "git_blob": "8b97b267220ea8b8bbe8ae7c061dc17e366daf32"
+    },
+    {
+      "path": "audio/voice/c03_saki/voice_c03_st004_018_v1.mp3",
+      "git_blob": "caaa9b6c885b5340e9140cee369216028f05be16"
+    },
+    {
+      "path": "audio/voice/c04_bernie/voice_c04_s004_001_v1.mp3",
+      "git_blob": "563fbc97acbff2a9b90a3dc3cf759e067cef3b12"
+    },
+    {
+      "path": "audio/voice/c04_bernie/voice_c04_s004_002_v1.mp3",
+      "git_blob": "38941e6ea4822394d078ec91c30586adeaddcece"
+    },
+    {
+      "path": "audio/voice/c04_bernie/voice_c04_s004_003_v1.mp3",
+      "git_blob": "cc3d149a7d989c65c235fd8107e78bd97dbb0c26"
+    },
+    {
+      "path": "audio/voice/c04_bernie/voice_c04_s004_004_v1.mp3",
+      "git_blob": "1e218b05d110fe92fc47601bfd2de9e82d0ba3c9"
+    },
+    {
+      "path": "audio/voice/c04_bernie/voice_c04_s004_005_v1.mp3",
+      "git_blob": "d0f3526337db2a8b54e922873c84bc89b62cbc77"
+    },
+    {
+      "path": "audio/voice/c04_bernie/voice_c04_s004_006_v1.mp3",
+      "git_blob": "ab6a7c3669479176a5f0668dcb71511a09d7db9a"
+    },
+    {
+      "path": "audio/voice/c04_bernie/voice_c04_s004_007_v1.mp3",
+      "git_blob": "4c1a113d30ecbfe9263b0e9722dd70fcba2315ed"
+    },
+    {
+      "path": "audio/voice/c04_bernie/voice_c04_s004_008_v1.mp3",
+      "git_blob": "2a14f56e13c246e60988c346e9ada98661cd26fd"
+    },
+    {
+      "path": "audio/voice/c04_bernie/voice_c04_s004_009_v1.mp3",
+      "git_blob": "078084c047604741ac6d84d7180306f74934f215"
+    },
+    {
+      "path": "audio/voice/c04_bernie/voice_c04_s004_010_v1.mp3",
+      "git_blob": "1871c175097a7a3c919dfbad3d9153ca4670bc9e"
+    },
+    {
+      "path": "audio/voice/c04_bernie/voice_c04_s004_011_v1.mp3",
+      "git_blob": "0862cee01e5b940541dc42cb499e877083bdcd30"
+    },
+    {
+      "path": "audio/voice/c04_bernie/voice_c04_s004_012_v1.mp3",
+      "git_blob": "974681866c0aebdccd9f47f617d1ef27c2fa953c"
+    },
+    {
+      "path": "audio/voice/c04_bernie/voice_c04_s004_013_v1.mp3",
+      "git_blob": "dcef2b9e3061c1d264b18a8cce248c80b8f8f718"
+    },
+    {
+      "path": "audio/voice/c04_bernie/voice_c04_s004_014_v1.mp3",
+      "git_blob": "3d4d4c631d2e72d6d7564020b0328db4a7c9379d"
+    },
+    {
+      "path": "audio/voice/c04_bernie/voice_c04_s004_015_v1.mp3",
+      "git_blob": "005cacf17e01256f8e33a6e8c52417bbce422763"
+    },
+    {
+      "path": "audio/voice/c04_bernie/voice_c04_s004_016_v1.mp3",
+      "git_blob": "bdd5a0098afcf0aad227649c1babec20dadbeca1"
+    },
+    {
+      "path": "audio/voice/c04_bernie/voice_c04_st004_001_v1.mp3",
+      "git_blob": "747c207bc019182474402a47478b169b715f7245"
+    },
+    {
+      "path": "audio/voice/c04_bernie/voice_c04_st004_002_v1.mp3",
+      "git_blob": "c674fdd058d8e11c6ee26c45a04e16ebb0de328e"
+    },
+    {
+      "path": "audio/voice/c04_bernie/voice_c04_st004_003_v1.mp3",
+      "git_blob": "5dc2128f2505d151e69719f19847abd9fc99a298"
+    },
+    {
+      "path": "audio/voice/c04_bernie/voice_c04_st004_004_v1.mp3",
+      "git_blob": "84239913af3f6ccf10aaeb6305994496d1a2001c"
+    },
+    {
+      "path": "audio/voice/c05_season_tree/voice_c05_m003_001_v1.mp3",
+      "git_blob": "891c04f4aabfd77232d73f62585dc5a199cdbf02"
+    },
+    {
+      "path": "audio/voice/c05_season_tree/voice_c05_m003_002_v1.mp3",
+      "git_blob": "9dd7e16e29d34311f14a1dda9522ea6f0801a4f2"
+    },
+    {
+      "path": "audio/voice/c05_season_tree/voice_c05_m003_003_v1.mp3",
+      "git_blob": "01a6ae2fe28b02593925d07ec8f9d40cabb50e9c"
+    },
+    {
+      "path": "audio/voice/c05_season_tree/voice_c05_m003_004_v1.mp3",
+      "git_blob": "77cd5131be05306b6a58528265273d22aabedc90"
+    },
+    {
+      "path": "audio/voice/c05_season_tree/voice_c05_m003_005_v1.mp3",
+      "git_blob": "3ed6bd3a716042ac1a75a1f0c82a0dcc5ec223ef"
+    },
+    {
+      "path": "audio/voice/c05_season_tree/voice_c05_m003_006_v1.mp3",
+      "git_blob": "bfb347ff5554583e8abdb67e20604e877caf0272"
+    },
+    {
+      "path": "audio/voice/c05_season_tree/voice_c05_m003_007_v1.mp3",
+      "git_blob": "f6f8b1dff429dfe208998c8cbf526ab79065cc86"
+    },
+    {
+      "path": "audio/voice/c05_season_tree/voice_c05_m003_008_v1.mp3",
+      "git_blob": "a5481e4b56882cb97b728114d088028f486d7529"
+    },
+    {
+      "path": "audio/voice/c05_season_tree/voice_c05_m003_009_v1.mp3",
+      "git_blob": "ad6b6aeac6d8b356f5b18dbbace31b043d91c3e8"
+    },
+    {
+      "path": "audio/voice/c06_shop_owner/voice_c06_st004_001_v1.mp3",
+      "git_blob": "d9bd50c3bdbc81887f18a529b1533858f7fdb051"
+    },
+    {
+      "path": "audio/voice/c06_shop_owner/voice_c06_st004_002_v1.mp3",
+      "git_blob": "abe512edc6fbbe1c3b33e9317753a4d8aeec2c52"
+    },
+    {
+      "path": "audio/voice/c06_shop_owner/voice_c06_st004_005_v1.mp3",
+      "git_blob": "851625a4cfd18b8fa4300c101275cda58d4e7083"
+    },
+    {
+      "path": "audio/voice/c07_shop_clerk/voice_c07_st004_001_v1.mp3",
+      "git_blob": "b0736f692273f931b14cbe410a8f90109926a2d8"
+    },
+    {
+      "path": "audio/voice/c07_shop_clerk/voice_c07_st004_002_v1.mp3",
+      "git_blob": "97f8f4be246ffb873ca7b5ea3adb3c3084c813cf"
+    },
+    {
+      "path": "audio/voice/c07_shop_clerk/voice_c07_st004_003_v1.mp3",
+      "git_blob": "b981eda33a0b8e2b55f82cfdeff334beb498b273"
+    },
+    {
+      "path": "audio/voice/c07_shop_clerk/voice_c07_st004_004_v1.mp3",
+      "git_blob": "b16c68b226e04f6ba70b167f7355f91e9edee96d"
+    },
+    {
+      "path": "audio/voice/c07_shop_clerk/voice_c07_st004_005_v1.mp3",
+      "git_blob": "5896339a8e598c632a28d2561d7a50b5357c9586"
+    },
+    {
+      "path": "audio/voice/c08_traveler_a/voice_c08_st004_001_v1.mp3",
+      "git_blob": "a161aceced7ce873896c3a0d962f7b96d5006030"
+    },
+    {
+      "path": "audio/voice/c09_traveler_b/voice_c09_st004_001_v1.mp3",
+      "git_blob": "b47796a351e822aedb8a073562b07ac58fe9e9fd"
+    },
+    {
+      "path": "audio/voice/c10_traveler_c/voice_c10_st004_001_v1.mp3",
+      "git_blob": "4af60963b9c06408d404527fa3f07074007b6710"
+    },
+    {
+      "path": "audio/voice/c11_local_woman/voice_c11_st004_001_v1.mp3",
+      "git_blob": "e55697d57f88e191f38d121622c6ce402eb797ef"
+    },
+    {
+      "path": "audio/voice/c11_local_woman/voice_c11_st004_002_v1.mp3",
+      "git_blob": "a2068678d40f6b5f04c8daa4e7d6ddd682af0c9e"
+    },
+    {
+      "path": "audio/voice/c11_local_woman/voice_c11_st004_003_v1.mp3",
+      "git_blob": "1cefb22bd03ec371ef95ad4ce3456eeb68f3ba7c"
+    },
+    {
+      "path": "audio/voice/c12_townsperson/voice_c12_st004_001_v1.mp3",
+      "git_blob": "192441c062b5634875df3175c2c11feabbcf2210"
+    },
+    {
+      "path": "audio/voice/c13_fruit_monster/voice_c13_m001_001_v1.mp3",
+      "git_blob": "98cbbba5362f78da88c8cec52d7e51345f671114"
+    },
+    {
+      "path": "audio/voice/c14_face_parts_monster/voice_c14_m004_001_v1.mp3",
+      "git_blob": "b4ae5e516005c85b9ef57f5c7b08d66af6e5aebb"
+    },
+    {
+      "path": "audio/voice/c14_face_parts_monster/voice_c14_m004_002_v1.mp3",
+      "git_blob": "01d915f15deba5ae36584cc425a171bda88c198f"
+    },
+    {
+      "path": "audio/voice/c14_face_parts_monster/voice_c14_m004_003_v1.mp3",
+      "git_blob": "9ab769b8ea5bb3c623101e03d838393284f06f09"
+    },
+    {
+      "path": "audio/voice/c14_face_parts_monster/voice_c14_m004_004_v1.mp3",
+      "git_blob": "b7c7f80915ebde52969c9f9651d15813f06ab2bb"
+    },
+    {
+      "path": "audio/voice/c14_face_parts_monster/voice_c14_m004_005_v1.mp3",
+      "git_blob": "f4b2e1bcfc4e8e00e665cbc96c4566ae5db3aa1d"
+    },
+    {
+      "path": "audio/voice/s006/letter-01.mp3",
+      "git_blob": "d41b680d93994b37895e125bc524f692174ecc50"
+    },
+    {
+      "path": "audio/voice/s006/letter-02.mp3",
+      "git_blob": "2d293aaa2fefdc1bdad59fd79e45d688d4b84462"
+    },
+    {
+      "path": "audio/voice/s006/letter-03.mp3",
+      "git_blob": "b3ab8d728327047f876e4cee0876bfe01c007381"
+    },
+    {
+      "path": "audio/voice/s006/letter-04.mp3",
+      "git_blob": "2ea83864e09a8d643054398a8817b8818a9031d4"
+    },
+    {
+      "path": "audio/voice/s006/letter-05.mp3",
+      "git_blob": "e5e66bbe22ec3d712637da94092f83aed13b67e7"
+    },
+    {
+      "path": "audio/voice/s006/letter-06.mp3",
+      "git_blob": "cd9f6e6fb55a2068763ad7a508d63e458bda2686"
+    },
+    {
+      "path": "audio/voice/s006/letter-07.mp3",
+      "git_blob": "ff2d9831823db82ff9238410492609ddb86d4a5c"
+    },
+    {
+      "path": "audio/voice/s006/letter-08.mp3",
+      "git_blob": "09d55cfc25d22732466e11522cc2a25cd19a772b"
+    },
+    {
+      "path": "audio/voice/s006/letter-09.mp3",
+      "git_blob": "9f449512eef7af166f5eb02b5f58b67f3b057f71"
+    },
+    {
+      "path": "audio/voice/s006/letter-10.mp3",
+      "git_blob": "3af9039a367a13e47259a5a4707bdb43743268b3"
+    },
+    {
+      "path": "audio/voice/s006/letter-11.mp3",
+      "git_blob": "38cc47298b42cba0d281e9f13e0af994384e0f16"
+    },
+    {
+      "path": "audio/voice/s006/letter-12.mp3",
+      "git_blob": "0793067f556fadea304a74e9539baa89f1cf8cd1"
+    },
+    {
+      "path": "audio/voice/s006/letter-13.mp3",
+      "git_blob": "4ae332f92fee4b04ef521397ed191b60506b18f7"
+    },
+    {
+      "path": "audio/voice/s006/letter-14.mp3",
+      "git_blob": "eef4484654f9a1404c14d54620c70cc817616ef2"
+    },
+    {
+      "path": "audio/voice/s006/letter-15.mp3",
+      "git_blob": "027ab60d55d283d1727db67b0ea90c946ea984fe"
+    },
+    {
+      "path": "audio/voice/s006/letter-16.mp3",
+      "git_blob": "f2807aa8ff49205b0fb84bbf599af116e5e98d16"
+    },
+    {
+      "path": "css/fixed-game-stage.css",
+      "git_blob": "93ba2be29ee14472a934df1f58098a9abc83c61a"
+    },
+    {
+      "path": "data/audio-mix-profile.js",
+      "git_blob": "4ed8f6f6689d126d7197800491e0617bb97659ea"
+    },
+    {
+      "path": "data/audio.js",
+      "git_blob": "238d950483ca8d3f20cdd103d6530cb7b8860b17"
+    },
+    {
+      "path": "data/s005-communication.js",
+      "git_blob": "f67e05170d36f0dc3259ca53063ab27196e886f5"
+    },
+    {
+      "path": "data/s006-ending.js",
+      "git_blob": "8f18f098cd756c5a7d2436a2fc8c78ebc200d588"
+    },
+    {
+      "path": "data/s007-communication.js",
+      "git_blob": "c9e3475f521f7e830ef66098ff711d8f496c687a"
+    },
+    {
+      "path": "engine/commands/story-commands.js",
+      "git_blob": "7fb778b8ecf5faae0de404fb97df4945f72aac43"
+    },
+    {
+      "path": "engine/config.js",
+      "git_blob": "4242bd64a1b02e69fb24d373b5bb9c59de4aa551"
+    },
+    {
+      "path": "engine/controllers/communication-task-progress-controller.js",
+      "git_blob": "d75c92b8981ae0dced5a24fe9795647e67ffb493"
+    },
+    {
+      "path": "engine/controllers/pico-support-controller.js",
+      "git_blob": "0a38c9d22036ebff647b9dcdac3c27d61df0d9a7"
+    },
+    {
+      "path": "engine/controllers/s006-ending-controller.js",
+      "git_blob": "c5b8f18076f1ba0a43de2abb981ea63beca9e7c8"
+    },
+    {
+      "path": "engine/core/core.js",
+      "git_blob": "4488586ff25cfbee8c54c9d33264ee42407ac140"
+    },
+    {
+      "path": "engine/core/event-system.js",
+      "git_blob": "e741408e4749daa541c2d1cf53dbb81367e7c94e"
+    },
+    {
+      "path": "engine/core/scene-manager.js",
+      "git_blob": "1c746f8fd5612dbbe44d64c49306e06bfb66caef"
+    },
+    {
+      "path": "engine/core/story-compiler.js",
+      "git_blob": "f15a006df58be0e191663620f0ceea4c6c4e5963"
+    },
+    {
+      "path": "engine/core/story-engine.js",
+      "git_blob": "cd4f2915a9d0b1bb2bf05370cf998ed495ab2c13"
+    },
+    {
+      "path": "engine/core/story-events.js",
+      "git_blob": "7958bc1cb1a5a995246490f7312fe9c63629b177"
+    },
+    {
+      "path": "engine/core/story-registry.js",
+      "git_blob": "310824a57a768ab3af921542ad26134166f79193"
+    },
+    {
+      "path": "engine/managers/audio-manager.js",
+      "git_blob": "8a738625f74b5d7875b6fbfbc7bf3cd2a225a343"
+    },
+    {
+      "path": "engine/managers/camp-manager.js",
+      "git_blob": "daaf9474f59962c93ffbf09a89cae62b716c228b"
+    },
+    {
+      "path": "engine/managers/character-manager.js",
+      "git_blob": "4ae1a427dd3d0ef4a02f5d3c3da44491e7bf8ce3"
+    },
+    {
+      "path": "engine/managers/dialog-manager.js",
+      "git_blob": "4108919722e593e337cb50912773a136bc3587d7"
+    },
+    {
+      "path": "engine/managers/effect-manager.js",
+      "git_blob": "6f89fce14c1f32735d316ce2f4d82af1256d4132"
+    },
+    {
+      "path": "engine/managers/monster-battle-manager.js",
+      "git_blob": "1cbc20d6baf16fc6d1d822dffd293e158533c482"
+    },
+    {
+      "path": "engine/managers/monster-battle-presenter.js",
+      "git_blob": "b93fe4ffa8ba469bb33ce6338a724c35877b3ff0"
+    },
+    {
+      "path": "engine/managers/monster-manager.js",
+      "git_blob": "adc3fec79ec9eca862e04b2aaef0dff336dbf17f"
+    },
+    {
+      "path": "engine/managers/morning-manager.js",
+      "git_blob": "1f276c0cb8e0802c13425eab43e30d344592987a"
+    },
+    {
+      "path": "engine/managers/pico-break-manager.js",
+      "git_blob": "d63d50b62dd4d1c14e9d1245fef04fb8448a9ce5"
+    },
+    {
+      "path": "engine/managers/question-manager.js",
+      "git_blob": "a7f8ae1fbd41e767b7b6661cafb867479f89c1fe"
+    },
+    {
+      "path": "engine/managers/save-manager.js",
+      "git_blob": "46e5d3141925e12807ac048da151984487dc91a4"
+    },
+    {
+      "path": "engine/managers/video-manager.js",
+      "git_blob": "a333690d49ba0789f60076c6227658ff3145d3dd"
+    },
+    {
+      "path": "engine/presenters/communication-task-presenter.js",
+      "git_blob": "7e971d039c6f70d5c3ce278b74aea5ea623f03d4"
+    },
+    {
+      "path": "engine/presenters/communicative-question-presenter.js",
+      "git_blob": "3980b6f238bdf0f34ef788a29c301023cf26f576"
+    },
+    {
+      "path": "engine/services/asset-resolver.js",
+      "git_blob": "184038192372fe3b6a58eaba004f4f18dd953191"
+    },
+    {
+      "path": "engine/services/communication-judge-adapter.js",
+      "git_blob": "0dd6911779d9ead60ed5f0b7725e916a8d94036c"
+    },
+    {
+      "path": "engine/services/communication-judge-gateway.js",
+      "git_blob": "702dbccd8590fddbbbfb7533ece5e0cd0e646b6f"
+    },
+    {
+      "path": "engine/services/communicative-judge.js",
+      "git_blob": "66de53ecd3630f1eebd9552d446857814e7ec7c6"
+    },
+    {
+      "path": "engine/services/communicative-question-adapter.js",
+      "git_blob": "fa07f9984710b6b59cc45dd21fda4e931098a674"
+    },
+    {
+      "path": "engine/services/dialogue-voice-controller.js",
+      "git_blob": "e6c08cbcdf8e4674b767458fbc32eedab239acf8"
+    },
+    {
+      "path": "engine/services/legacy-speech-trace.js",
+      "git_blob": "caa33ca56cf7deb8994e67481dcac5345e90aca9"
+    },
+    {
+      "path": "engine/services/local-communication-judge-provider.js",
+      "git_blob": "28ddc6ddcdfd28aa8435d91c59f4abf3edc372df"
+    },
+    {
+      "path": "engine/services/local-communicative-judge.js",
+      "git_blob": "2de6e7f6d91d5778b2e9f40298f3e9e998479946"
+    },
+    {
+      "path": "engine/services/local-pico-support-provider.js",
+      "git_blob": "21d5e15d5725450c789c364f7a7a47b080fdaabe"
+    },
+    {
+      "path": "engine/services/lottery-engine.js",
+      "git_blob": "8072ec55acc9108a8550953eca1cfb056e10ffb1"
+    },
+    {
+      "path": "engine/services/m004-battle-extension.js",
+      "git_blob": "b402b8047aa549f42f1b85e90ab582d18ec1d0a3"
+    },
+    {
+      "path": "engine/services/monster-battle-data.js",
+      "git_blob": "07ae7aa986cc15ed4bb3590f5778cf92aa344a5d"
+    },
+    {
+      "path": "engine/services/opening.js",
+      "git_blob": "8a45ffd6bc3203ba338dd99d815437d496f39038"
+    },
+    {
+      "path": "engine/services/pico-break-catalog.js",
+      "git_blob": "4057e6bffaedb8c0660b49d5133e9e35bdee5ab7"
+    },
+    {
+      "path": "engine/services/pico-break-store.js",
+      "git_blob": "fd721ea1a4a95555682efee54159a22868d105d4"
+    },
+    {
+      "path": "engine/services/speech-engine.js",
+      "git_blob": "a628eb19c9d8cf07c691003fd6ecb8a040ba9637"
+    },
+    {
+      "path": "engine/services/speech-normalizer.js",
+      "git_blob": "2201e53a73be1a5894eb8a564ca3ed5679685ee0"
+    },
+    {
+      "path": "engine/services/speech-recognition-adapter.js",
+      "git_blob": "e9cefc56238609da7b277949ffd7c62dfc64bfea"
+    },
+    {
+      "path": "engine/services/speech-start-controller.js",
+      "git_blob": "c729047fda63131f86e66ac4f82ef97cff24ec82"
+    },
+    {
+      "path": "engine/services/speech.js",
+      "git_blob": "26301ab5040d3becd2f26ef1f9f2c1be6330b958"
+    },
+    {
+      "path": "engine/services/support-focus-resolver.js",
+      "git_blob": "c8b6ef16f516daf9819bed954ac211df722fc76b"
+    },
+    {
+      "path": "engine/stories/S000_TEMPLATE.js",
+      "git_blob": "0eb5254c54be98b11be81684d99afe1b953915ce"
+    },
+    {
+      "path": "engine/stories/S001.js",
+      "git_blob": "ee4ae43f75d971b87f2463180cca129caafb03e7"
+    },
+    {
+      "path": "engine/stories/S002.js",
+      "git_blob": "1d5dd872fbe94fc2b50f7e50dab6ec728b59ed9f"
+    },
+    {
+      "path": "engine/stories/S003.js",
+      "git_blob": "4e086522ae49f6b8fdf67a2683567f9cd79739d4"
+    },
+    {
+      "path": "engine/stories/S004.js",
+      "git_blob": "019eeb7d10ad94b9c61eaaac4bc6eeb77606dfa5"
+    },
+    {
+      "path": "engine/stories/S005.js",
+      "git_blob": "64adbaf198fa098fa203421f902882c00196db49"
+    },
+    {
+      "path": "engine/stories/S006.js",
+      "git_blob": "8e8699fb05f2caee5cb159016233b312ba79da60"
+    },
+    {
+      "path": "engine/stories/S007.js",
+      "git_blob": "d4b2c44e5452fa15444dff3d41294dfa840c8ffa"
+    },
+    {
+      "path": "engine/stories/m001.js",
+      "git_blob": "04044849da8e3d7ed9b405cd45b049b9bec641fa"
+    },
+    {
+      "path": "engine/stories/m004.js",
+      "git_blob": "a77452e958bfb0306b7f385441999df66701b377"
+    },
+    {
+      "path": "engine/stories/m005.js",
+      "git_blob": "9dbd2a97a66894d08c2d48981a0ffdc3dc43288c"
+    },
+    {
+      "path": "engine/stories/story-saki-departure.js",
+      "git_blob": "2bd6e18b6c3ff19a5fb3b75f3496a2917bb69435"
+    },
+    {
+      "path": "images/002/bg_future_city_active.png",
+      "git_blob": "21a1cd1ddc9b437ebcc0f3787c70a44afd30351d"
+    },
+    {
+      "path": "images/002/bg_future_city_overview.png",
+      "git_blob": "ca199c2c129fa37424a2a9374fd136fc1b521145"
+    },
+    {
+      "path": "images/002/bg_future_city_sos.png",
+      "git_blob": "8b79e894121a8a553d619ac74a8e5d6739c3d8c0"
+    },
+    {
+      "path": "images/004/s004_background.png",
+      "git_blob": "8fbff7bb73cd123009f36eb541fa26ebde6c8dc9"
+    },
+    {
+      "path": "images/004/s004_bazaar_rumor_scene.png",
+      "git_blob": "4329018835007dac4ed9d79382ab3c41ef3afd28"
+    },
+    {
+      "path": "images/004/s004_bernie_ingredient_shop.png",
+      "git_blob": "35aeb7c9316c0dd4469d0a54c1c39e923db09594"
+    },
+    {
+      "path": "images/004/s004_ethnic_bazaar_overview.png",
+      "git_blob": "066e79eb3a91fe103ac5268bd064805c9adaa940"
+    },
+    {
+      "path": "images/004/s004_ethnic_bazaar_overview_illustrated.png",
+      "git_blob": "4442b848d41e4d94c606c6a8f27b5dae19bc9d3c"
+    },
+    {
+      "path": "images/004/s004_frying_pan_01.png",
+      "git_blob": "ade5ea0ecf03fea8e2c0e4eda5b33d98dbc19cfd"
+    },
+    {
+      "path": "images/004/s004_frying_pan_02.png",
+      "git_blob": "1ddecf7657b3b5a1ce28cd38fcfc495814e4c3b3"
+    },
+    {
+      "path": "images/004/s004_frying_pan_03.png",
+      "git_blob": "920bd1440a28e9dc2bdb64bc8c96e8b82c01ec43"
+    },
+    {
+      "path": "images/004/s004_frying_pan_04.png",
+      "git_blob": "233f398478e70f8bb96351b3264d3e5ce81a2f9b"
+    },
+    {
+      "path": "images/004/s004_kong_fruit_shop.png",
+      "git_blob": "e79e292729dcccdb0578dc535ae7b3a970b53062"
+    },
+    {
+      "path": "images/004/s004_map_key_choice.png",
+      "git_blob": "59d3da4a50835f8484a8adf4df38d06726bc5d80"
+    },
+    {
+      "path": "images/004/s004_map_key_choice_final.png",
+      "git_blob": "81fc62e5210dedd915d99542472951a733502d0e"
+    },
+    {
+      "path": "images/004/s004_meal_event.png",
+      "git_blob": "9253be0a91b2f613e6a092eda322e137f34a6579"
+    },
+    {
+      "path": "images/004/s004_mysterious_bazaar_shop.png",
+      "git_blob": "00470d21bc394b5b94a487862aa53104fb85f170"
+    },
+    {
+      "path": "images/004/s004_orange_banana_choice.png",
+      "git_blob": "dd7438205e6a1f5e7646bd04b921770f8b0cf173"
+    },
+    {
+      "path": "images/004/s004_saki_bazaar_conversation.png",
+      "git_blob": "de9b7ef663bea96557e794949e47d4d9578a5272"
+    },
+    {
+      "path": "images/004/s004_saki_headset_call.png",
+      "git_blob": "02af22fc0ab4c3dea003fb3a267b6e0d58de6808"
+    },
+    {
+      "path": "images/004/s004_saki_headset_call_final.png",
+      "git_blob": "02af22fc0ab4c3dea003fb3a267b6e0d58de6808"
+    },
+    {
+      "path": "images/005/ben_alley_dead_end.png",
+      "git_blob": "885243a7630244e43b6386d4cc348fb021dc1679"
+    },
+    {
+      "path": "images/005/ben_alley_kong.png",
+      "git_blob": "d787572af2efec9366f5a22a11152a648d142d2b"
+    },
+    {
+      "path": "images/005/ben_bakery_bench.png",
+      "git_blob": "368dc219142f4e57cf606e4d82f2c7d5fcb2a2d4"
+    },
+    {
+      "path": "images/005/ben_flower_tree_square_day.png",
+      "git_blob": "f40b1e4f990dfb38c1f56cda13f9c347d9453c1f"
+    },
+    {
+      "path": "images/005/ben_hotel_kong_sleep.png",
+      "git_blob": "add2cf6578b9315273b314ca2c07fcca335fcc74"
+    },
+    {
+      "path": "images/005/ben_police_station.png",
+      "git_blob": "3111ee5014790eec3f8fd78edf70b0b0c10ba24a"
+    },
+    {
+      "path": "images/005/ben_stage0.png",
+      "git_blob": "053289cf5f35f175c3a35429e28bb2867a05f98a"
+    },
+    {
+      "path": "images/005/ben_stage1.png",
+      "git_blob": "d820020121c5e4daad55e5b58f989abf4ceb9ddf"
+    },
+    {
+      "path": "images/005/ben_stage2.png",
+      "git_blob": "27c3339aeee7e73806685348906497204ab5877b"
+    },
+    {
+      "path": "images/005/ben_stage3.png",
+      "git_blob": "6d8da861ec69c5a1ca7ac5af223a1ba808a6b807"
+    },
+    {
+      "path": "images/005/ben_stage4_full.png",
+      "git_blob": "b7ef265599d4ad092cbbb8b871c0efccf7c838b4"
+    },
+    {
+      "path": "images/005/ben_town_night.png",
+      "git_blob": "c2ba0cc86926168759bafd29ec0b1ae6a3159062"
+    },
+    {
+      "path": "images/005/ben_town_night_anomaly.png",
+      "git_blob": "cf80bb025764001b59ab1c27cd4f9c7ca62792e1"
+    },
+    {
+      "path": "images/005/ben_town_relief_cast_night.png",
+      "git_blob": "dc65d8ed8f284692e2bc4005af78dbe1164de811"
+    },
+    {
+      "path": "images/005/ben_town_shops_night.png",
+      "git_blob": "fc9d2533edbfd0e65dc0f28d6caa16414fadbd37"
+    },
+    {
+      "path": "images/005/clean-v1/bag-recovered.png",
+      "git_blob": "181f32d8cfff554ffabb5db235994b5506beb8d3"
+    },
+    {
+      "path": "images/005/clean-v1/bakery-question.png",
+      "git_blob": "3e39847f468ed8b8b90bbd91d7520dc263fa13da"
+    },
+    {
+      "path": "images/005/clean-v1/ben-introduction.png",
+      "git_blob": "3094a660999393e365ebde7c0a60373e637f6198"
+    },
+    {
+      "path": "images/005/clean-v1/ben-relief-stage2.png",
+      "git_blob": "84b8c9ed15e0351de7fa25efde39122519c11f15"
+    },
+    {
+      "path": "images/005/clean-v1/ben-relief-stage3.png",
+      "git_blob": "0c3dcd7172d8fcb503323344ce77421936512ee8"
+    },
+    {
+      "path": "images/005/clean-v1/ben-trust.png",
+      "git_blob": "8c5977aab8cf0bc163f25f2b460778621d58e789"
+    },
+    {
+      "path": "images/005/clean-v1/hotel-decision.png",
+      "git_blob": "84243825b72ebd7a65d690fed6239fc571782da3"
+    },
+    {
+      "path": "images/005/clean-v1/king-size-room.png",
+      "git_blob": "3a5e05286ee09b9f95ae522e3ba4c63d707400bd"
+    },
+    {
+      "path": "images/005/clean-v1/missing-bag-report.png",
+      "git_blob": "37947a54d2e4511bcf668c8e78bebe772694df2d"
+    },
+    {
+      "path": "images/005/clean-v1/police.png",
+      "git_blob": "79e9c74e5fd3a96992980ea6e3c4338fc58e9055"
+    },
+    {
+      "path": "images/005/reference-v1/Scene1.png",
+      "git_blob": "d7e05c943a572e320850658031f972c2ed95745c"
+    },
+    {
+      "path": "images/005/reference-v1/Scene10.5.png",
+      "git_blob": "6c39fc1ba7ed7d89aeba083a8f83b5f8cbf1c2cd"
+    },
+    {
+      "path": "images/005/reference-v1/Scene11.1.png",
+      "git_blob": "add2cf6578b9315273b314ca2c07fcca335fcc74"
+    },
+    {
+      "path": "images/005/reference-v1/Scene2.1.png",
+      "git_blob": "8898ec0c5a745fcf4fd2c0c01a6acf16b28af469"
+    },
+    {
+      "path": "images/005/reference-v1/Scene3.png",
+      "git_blob": "ffad49e1294e47f696a2d3f0ee551633a98a94b7"
+    },
+    {
+      "path": "images/005/reference-v1/Scene9.3.png",
+      "git_blob": "d2d3557b4ff28c9f12876f56690ac76f3a179b31"
+    },
+    {
+      "path": "images/005/reference-v1/Scene9.5.png",
+      "git_blob": "040d94dea119523cbab9c329b982493d2d3eeb0f"
+    },
+    {
+      "path": "images/005/reference-v1/Scene9.7.png",
+      "git_blob": "ef9d59158a0c1d9d53cc87a4d83482fd5a7da69d"
+    },
+    {
+      "path": "images/005/s005_regen_a_reception_correction_v2.png",
+      "git_blob": "0e13819dce95fa4466e1f0f66f8a771ec8b0633b"
+    },
+    {
+      "path": "images/005/s005_regen_a_reception_framing_v3.png",
+      "git_blob": "14e1b5581cf1d1d4413fc56c89be2a7d0df5d520"
+    },
+    {
+      "path": "images/005/s005_regen_a_reception_safe_v2.png",
+      "git_blob": "4373c45b14d216af722b068097f6148685fcac2c"
+    },
+    {
+      "path": "images/005/s005_regen_a_reception_v1.png",
+      "git_blob": "53be6c7e929d33ffee518fb2d853c6b9abd89dbd"
+    },
+    {
+      "path": "images/005/s005_regen_b_alley_correction_v2.png",
+      "git_blob": "801056d4cdfc6e0939efcc32307ee262000e3170"
+    },
+    {
+      "path": "images/005/s005_regen_b_alley_safe_v2.png",
+      "git_blob": "c1acc8387ccb1289e36e1d811b9b2bf6ef594d46"
+    },
+    {
+      "path": "images/005/s005_regen_b_alley_v1.png",
+      "git_blob": "22fbc6fa5b364966c593836a95675069530c29c0"
+    },
+    {
+      "path": "images/005/s005_regen_c_relief_correction_v2.png",
+      "git_blob": "0c98dedd8a3ebd1e8ccbd1134747e5ad37ae82ba"
+    },
+    {
+      "path": "images/005/s005_regen_c_relief_safe_v2.png",
+      "git_blob": "f88c1af211f2abe1b5dfdeb7aad6059e5c559b74"
+    },
+    {
+      "path": "images/005/s005_regen_c_relief_v1.png",
+      "git_blob": "8c664d4154dd93c444c7c35aff857fc028d60d99"
+    },
+    {
+      "path": "images/005/s005_regen_d_rest_correction_v2.png",
+      "git_blob": "02c77b75ed0fb9270d4d5a058d254770b515fce0"
+    },
+    {
+      "path": "images/005/s005_regen_d_rest_safe_v2.png",
+      "git_blob": "ed74e0b441b2304858f0286e9c08fa70630ef059"
+    },
+    {
+      "path": "images/005/s005_regen_d_rest_v1.png",
+      "git_blob": "bc56ff91540d87f91a1a8a470478e65533ee2fd6"
+    },
+    {
+      "path": "images/005/scene1.5.png",
+      "git_blob": "442c37fdd353c42916a67f31e29c3fd9aba28b5a"
+    },
+    {
+      "path": "images/005/scene1.7.png",
+      "git_blob": "d25fe75e611cbeb505240565fd9de0d9414c3d85"
+    },
+    {
+      "path": "images/005/scene10.5.png",
+      "git_blob": "65b6d268fecba08cde679bf3cf23eb3e26b5d967"
+    },
+    {
+      "path": "images/005/scene10.png",
+      "git_blob": "4d2b99f7afdca045420db8ffa59c8506f1ee4428"
+    },
+    {
+      "path": "images/005/scene2.png",
+      "git_blob": "cc723b19e0d9e6261e512cc81d38d350bdd4340d"
+    },
+    {
+      "path": "images/005/scene6.png",
+      "git_blob": "00faf9a35e5c2ec0f12ab758d46a0da91b4a0864"
+    },
+    {
+      "path": "images/005/scene7.png",
+      "git_blob": "8cd772c732bb62e5aab47ae31841d1954085c459"
+    },
+    {
+      "path": "images/005/scene8.png",
+      "git_blob": "4b4ef4bbb2153a53d2d9d3301bdc89352e8865c4"
+    },
+    {
+      "path": "images/005/scene9.png",
+      "git_blob": "0e421c5374e8db0a81f085dbe56b803b856bcada"
+    },
+    {
+      "path": "images/005/scne11.5.png",
+      "git_blob": "7f36777f05d30bfae0bfe22052312c25f1cbd877"
+    },
+    {
+      "path": "images/006/S006-Ending-Letter-V5.png",
+      "git_blob": "984dacb0c2d8007ec2dee7be4daca6db0ac0c353"
+    },
+    {
+      "path": "images/006/S006-Scene-01.png",
+      "git_blob": "ce51aeca2dc9120e98f8451e07942fc3a30fd981"
+    },
+    {
+      "path": "images/006/S006-Scene-02.png",
+      "git_blob": "dff13a0917753e3f5bebb5f93996b7f025a8c14b"
+    },
+    {
+      "path": "images/006/S006-Scene-03.png",
+      "git_blob": "13d52c60c8413c000ff97175661bebb9ced60502"
+    },
+    {
+      "path": "images/006/S006-Scene-04.png",
+      "git_blob": "640dd9b929670637af55489e004502a799e338c9"
+    },
+    {
+      "path": "images/006/S006-Scene-05.png",
+      "git_blob": "61c3e13d09b3cb2c76fd8d558ce3ebd24fd8238e"
+    },
+    {
+      "path": "images/006/S006-Scene-06.png",
+      "git_blob": "5e79f4acf26cb33198c20537161e119903e1febc"
+    },
+    {
+      "path": "images/006/S006-Scene-07.png",
+      "git_blob": "e771b2eb060d00b8e499e22bfb53124d6767c884"
+    },
+    {
+      "path": "images/006/S006-Scene-08.png",
+      "git_blob": "243d5c6b61fbcac2c81b7eaffa787212a794450d"
+    },
+    {
+      "path": "images/006/S006-Scene-09.png",
+      "git_blob": "90b8c74d042adc7c9edd7189146ad0f28dfef38e"
+    },
+    {
+      "path": "images/006/S006-Scene-10.png",
+      "git_blob": "3ce3cd5eab17815ea236e35d3ae84c5fe716fa54"
+    },
+    {
+      "path": "images/006/S006-Scene-11.png",
+      "git_blob": "20a497347d27b26c6af2120e5665d6619b21625e"
+    },
+    {
+      "path": "images/006/S006-Scene-12.png",
+      "git_blob": "6684b9aae02d77d973fd2e03b2070caf3bd55ff4"
+    },
+    {
+      "path": "images/006/S006-Scene-13.png",
+      "git_blob": "60dfbdb9805b91e468c8480943349b51ba883cc0"
+    },
+    {
+      "path": "images/007/S007-Scene-01.png",
+      "git_blob": "60bf991f5f0fa3788a3c335d1f4e3e67fca1cdca"
+    },
+    {
+      "path": "images/007/S007-Scene-02.png",
+      "git_blob": "e9bf392880d6a46706e736838e39d91edde88c6f"
+    },
+    {
+      "path": "images/007/S007-Scene-03.png",
+      "git_blob": "4b4a0ac4e10f40439dba63736b69da2789dc5fc0"
+    },
+    {
+      "path": "images/007/S007-Scene-04.png",
+      "git_blob": "c49f5c6b42a9b9691e17fd81cf5d51998ffbf2ee"
+    },
+    {
+      "path": "images/007/S007-Scene-05.png",
+      "git_blob": "8fb0952c3305c598533f2ea5b5dbabdeccd4ae15"
+    },
+    {
+      "path": "images/007/S007-Scene-06.png",
+      "git_blob": "ee328b26c93df46ef17d65ca77870df8d16b6e3e"
+    },
+    {
+      "path": "images/007/S007-Scene-07.png",
+      "git_blob": "2509da89301da6d25818de955958587dbf9b8c36"
+    },
+    {
+      "path": "images/007/S007-Scene-08.png",
+      "git_blob": "6330da8b0362b45b6a3a8dc1a432f3cab9233508"
+    },
+    {
+      "path": "images/007/S007-Scene-09.png",
+      "git_blob": "2fdc821cc274d6bc95159957ce8ec36dee8301ab"
+    },
+    {
+      "path": "images/007/S007-Scene-10.png",
+      "git_blob": "de1c16dd7c86a10539f259eb53071ae61f0702e4"
+    },
+    {
+      "path": "images/007/S007-Scene-11.png",
+      "git_blob": "8d5c50d2e07e620419c955ba1cdbc2409f883a8b"
+    },
+    {
+      "path": "images/007/S007-Scene-12.png",
+      "git_blob": "5cd70678a3383ed3a15d127ea009d4b3a56ad0a1"
+    },
+    {
+      "path": "images/007/S007-Scene-13.png",
+      "git_blob": "f7816d4ea31ac77bf3cfb4e4b0d8377362f6b0f9"
+    },
+    {
+      "path": "images/backgrounds/bg_camp.png",
+      "git_blob": "60f36af7693b6ea8f3c77cf4f248c996b81edd52"
+    },
+    {
+      "path": "images/backgrounds/bg_city.png",
+      "git_blob": "e5b655b49b5942dfae43c8ab5ab1c2eae2859331"
+    },
+    {
+      "path": "images/backgrounds/bg_country.png",
+      "git_blob": "d1739f08fe30cd81bf02856c19a089f4e5ca60b6"
+    },
+    {
+      "path": "images/backgrounds/bg_forest.png",
+      "git_blob": "ada19bd8127700415da2c0cecbcd69cb06f332db"
+    },
+    {
+      "path": "images/backgrounds/bg_forest_clearing.png",
+      "git_blob": "af4e5fb32c9f2d76a2ebb6b8cb3acf9c1b71496a"
+    },
+    {
+      "path": "images/backgrounds/bg_forest_evening.png",
+      "git_blob": "5c220bda906ac179cebdbf8990ad81777affa215"
+    },
+    {
+      "path": "images/backgrounds/bg_forest_morning.png",
+      "git_blob": "b42e8c021912e7a0c657bd1eb7510a1a78c87ae1"
+    },
+    {
+      "path": "images/backgrounds/bg_suburb.png",
+      "git_blob": "42b419d57164f97d1327c6921daf2bb846cbe8b1"
+    },
+    {
+      "path": "images/backgrounds/morning_01.png",
+      "git_blob": "3477ef22485db90e0c0203a5ae5c6b0c63558a15"
+    },
+    {
+      "path": "images/characters/bernie/bernie_01.png",
+      "git_blob": "8133028a0ae23aa235ca9d4d98ae9f8ed55003f1"
+    },
+    {
+      "path": "images/characters/bernie/bernie_02.png",
+      "git_blob": "b1b7a172456241e271cab7c80734fde6af9633f3"
+    },
+    {
+      "path": "images/characters/bernie/bernie_03.png",
+      "git_blob": "3da34e78a99d659dbc9173ef0e7d97b0afe40dbd"
+    },
+    {
+      "path": "images/characters/bernie/bernie_04.png",
+      "git_blob": "6f82bbbbd18779c1d801bb5014fee5c6e0523e91"
+    },
+    {
+      "path": "images/characters/bernie/bernie_05.png",
+      "git_blob": "fc45bb9dfdea09ec05d49fa1c7551fbc7cfeee2a"
+    },
+    {
+      "path": "images/characters/bernie/bernie_06.png",
+      "git_blob": "3e3ffad38c43667f4cdf593fe2708b9011179479"
+    },
+    {
+      "path": "images/characters/bernie/bernie_07.png",
+      "git_blob": "af3046706af65e32bb66469b57665e7abbbb17f6"
+    },
+    {
+      "path": "images/characters/bernie/bernie_08.png",
+      "git_blob": "2ac327d0c77c97e925e5a31e4a397a759f30730b"
+    },
+    {
+      "path": "images/characters/bernie/bernie_09.png",
+      "git_blob": "04fa3fcd0b9eb9a007eda311287076d9b7b81f9d"
+    },
+    {
+      "path": "images/characters/bernie/bernie_11.png",
+      "git_blob": "794ff69c07cecf44dd5a71ae3263c9536a95c6da"
+    },
+    {
+      "path": "images/characters/income/income_01.png",
+      "git_blob": "23f7d689a4ab5f7935db3db0046dd4f3ade05479"
+    },
+    {
+      "path": "images/characters/income/income_02.png",
+      "git_blob": "4b93f4f929e7af0c362431287a19ab97db7e9bfb"
+    },
+    {
+      "path": "images/characters/income/income_04.png",
+      "git_blob": "c9fe891237525585cfe804335cf36f8d86cc1eec"
+    },
+    {
+      "path": "images/characters/income/income_09.png",
+      "git_blob": "701c7ba9e1700e1101105cd567ec0b6de341b20b"
+    },
+    {
+      "path": "images/characters/kong/kong_01.png",
+      "git_blob": "266775cbe01bc8dc8cb35ba4a4364aacdc5e101a"
+    },
+    {
+      "path": "images/characters/kong/kong_02.png",
+      "git_blob": "6437e4ba980dbe624151792e65e6a22b55b4357a"
+    },
+    {
+      "path": "images/characters/kong/kong_03.png",
+      "git_blob": "03425df245fec822ae187d125204a3a8f14fc52f"
+    },
+    {
+      "path": "images/characters/kong/kong_04.png",
+      "git_blob": "70517303534c8a09ea29380d70713e97552af940"
+    },
+    {
+      "path": "images/characters/kong/kong_05.png",
+      "git_blob": "d81419d450c8fd214919762b5670da93ef452954"
+    },
+    {
+      "path": "images/characters/kong/kong_06.png",
+      "git_blob": "249b9a97094c91f45cacae457a4a6b8397ab6220"
+    },
+    {
+      "path": "images/characters/kong/kong_07.png",
+      "git_blob": "6a0268ac3423f4d09c2984c9f65b3801b528ad98"
+    },
+    {
+      "path": "images/characters/kong/kong_08.png",
+      "git_blob": "ef7af261457e5ad8427942844b4168082994db39"
+    },
+    {
+      "path": "images/characters/kong/kong_09.png",
+      "git_blob": "42d74d8f05b02d62cf63862c1d69a5a561f2b8c9"
+    },
+    {
+      "path": "images/characters/kong/kong_10.png",
+      "git_blob": "2bb1e2118ae78cc30d3bb18d720598bc103c7ce1"
+    },
+    {
+      "path": "images/characters/pico/pico_01.png",
+      "git_blob": "e30510dea82186b0d75e7693017d21a5ddaecb00"
+    },
+    {
+      "path": "images/characters/pico/pico_02.png",
+      "git_blob": "3a1448eb143d89703d1c48401fa47175a80844a9"
+    },
+    {
+      "path": "images/characters/pico/pico_03.png",
+      "git_blob": "90c6c6c167bb7b3486847eb3b44d1a3ce2940270"
+    },
+    {
+      "path": "images/characters/pico/pico_04.png",
+      "git_blob": "fc02c0b07eb40183377b9e522d2aff77dee5d313"
+    },
+    {
+      "path": "images/characters/pico/pico_05.png",
+      "git_blob": "17b44c935838b140d6c5bb53add2e5f5d412d635"
+    },
+    {
+      "path": "images/characters/pico/pico_06.png",
+      "git_blob": "7fcf304000476c03b45b2054c36f1a952bd487e2"
+    },
+    {
+      "path": "images/characters/pico/pico_07.png",
+      "git_blob": "46afd9968f3140b96d44b97fe523a5976a680678"
+    },
+    {
+      "path": "images/characters/pico/pico_08.png",
+      "git_blob": "6ab9aaaf2189cab0f031b863a9b126d65484a050"
+    },
+    {
+      "path": "images/characters/pico/pico_09.png",
+      "git_blob": "852abbc60eff70861a94018fa65889aaf3381902"
+    },
+    {
+      "path": "images/items/book_01.png",
+      "git_blob": "e10ebb6f0cc01540d51ee4444211574d3c70f12a"
+    },
+    {
+      "path": "images/monsters/m001_damage.png",
+      "git_blob": "7879ca1edf9cbaaaa671cc9f3a0f0b85cab0efd9"
+    },
+    {
+      "path": "images/monsters/m001_explosion.png",
+      "git_blob": "771b0935284f0d2a8a8b45bc7e348440fc8655e8"
+    },
+    {
+      "path": "images/monsters/m001_fruits.png",
+      "git_blob": "c739550b59fa97c46aeb06f1ae789649b850fb61"
+    },
+    {
+      "path": "images/monsters/m001_normal.png",
+      "git_blob": "b732a559a94fcb1e598be56ecb8d1a95f7666fa0"
+    },
+    {
+      "path": "images/monsters/m002_attack.png",
+      "git_blob": "724275ebff4e49dc2df1a243ccdf03cce7347ae7"
+    },
+    {
+      "path": "images/monsters/m002_normal.png",
+      "git_blob": "f54afd0e326e2abb9184ad732a94b69e81184d30"
+    },
+    {
+      "path": "images/monsters/m002_purify.png",
+      "git_blob": "a01b39cb728518385b9515127603a5af296332f4"
+    },
+    {
+      "path": "images/monsters/m002_reaction.png",
+      "git_blob": "c2c333b66026cb33574d9287a4496b337a981421"
+    },
+    {
+      "path": "images/monsters/m002_smile.png",
+      "git_blob": "c39f667977c346065a94f9a9437f135186397751"
+    },
+    {
+      "path": "images/monsters/m004/m004_base.png",
+      "git_blob": "06049fd4201651206c69c094de6008f0f78b6e8f"
+    },
+    {
+      "path": "images/monsters/m004/m004_ears.png",
+      "git_blob": "c941af9d15f9fe6f4e5b4cfab7a8e037ec43cebf"
+    },
+    {
+      "path": "images/monsters/m004/m004_eyes.png",
+      "git_blob": "5674b91763feee5c21406385520d1cbb9935a848"
+    },
+    {
+      "path": "images/monsters/m004/m004_hair.png",
+      "git_blob": "cdf67d837954e0776996d947d94fe9ef70a081b0"
+    },
+    {
+      "path": "images/monsters/m004/m004_mouth.png",
+      "git_blob": "fa788991572a3605b75da603d0d5eb39d4808fe9"
+    },
+    {
+      "path": "images/monsters/m004/m004_nose.png",
+      "git_blob": "2429b8caf529830940f4f62b32642b45ec075091"
+    },
+    {
+      "path": "images/monsters/m004/m004_smile.png",
+      "git_blob": "a51bce0fe5f49ce320795a4c6b4a7115104ad747"
+    },
+    {
+      "path": "images/monsters/season_tree_02.png",
+      "git_blob": "68b6eee231461833e5a8a657d165ee7e977125f7"
+    },
+    {
+      "path": "images/monsters/season_tree_03.png",
+      "git_blob": "4a9cb1b00ff74a0628d00094f3660d359fa2f9cc"
+    },
+    {
+      "path": "images/monsters/season_tree_autumn.png",
+      "git_blob": "bbe9ee8f70be6e31921a4aecd57febf1cf0dff4a"
+    },
+    {
+      "path": "images/monsters/season_tree_hit.png",
+      "git_blob": "81f7d0c5e50bb4eeceeababec440e591e620f441"
+    },
+    {
+      "path": "images/monsters/season_tree_spring.png",
+      "git_blob": "b65f9e7c70c5601e5e7fdb600fa011b70862f516"
+    },
+    {
+      "path": "images/monsters/season_tree_summer.png",
+      "git_blob": "1c87bc14fb26448bb715fe239c8cee48406e757c"
+    },
+    {
+      "path": "images/monsters/season_tree_winter.png",
+      "git_blob": "f536201cf0039781a021233790cfe4d2090e6b3a"
+    },
+    {
+      "path": "images/st004/bg_ethnic_bazaar.png",
+      "git_blob": "c57e8ed955274e3196b3af443b24e24766744c55"
+    },
+    {
+      "path": "js/fixed-game-stage.js",
+      "git_blob": "84cf656809f86d644d5f150205f4fa6c8c833d04"
+    },
+    {
+      "path": "video/The world is closed.(2).mp4",
+      "git_blob": "29d6107f2318f48fba984a2c6bb9447134a0e10f"
+    }
+  ]
+}

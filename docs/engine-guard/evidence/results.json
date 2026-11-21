@@ -1,0 +1,1135 @@
+{
+  "executed": 25,
+  "pass": 25,
+  "fail": 0,
+  "results": [
+    {
+      "id": "engine-guard-unrelated-data",
+      "status": "PASS",
+      "exitCode": 0,
+      "seconds": 0.159,
+      "command": [
+        "node",
+        "tests/engine-guard-unrelated-data.test.cjs"
+      ],
+      "log": "engine-guard-unrelated-data.log"
+    },
+    {
+      "id": "engine-guard-layout-contract",
+      "status": "PASS",
+      "exitCode": 0,
+      "seconds": 0.11,
+      "command": [
+        "node",
+        "tests/engine-guard-layout-contract.test.cjs"
+      ],
+      "log": "engine-guard-layout-contract.log"
+    },
+    {
+      "id": "dialogue-information-layout",
+      "status": "PASS",
+      "exitCode": 0,
+      "seconds": 0.072,
+      "command": [
+        "node",
+        "tests/dialogue-information-layout.test.js"
+      ],
+      "log": "dialogue-information-layout.log"
+    },
+    {
+      "id": "formal-communicative-flow-v1",
+      "status": "PASS",
+      "exitCode": 0,
+      "seconds": 0.592,
+      "command": [
+        "node",
+        "tests/formal-communicative-flow-v1.test.js"
+      ],
+      "log": "formal-communicative-flow-v1.log"
+    },
+    {
+      "id": "formal-communicative-isolation-v1",
+      "status": "PASS",
+      "exitCode": 0,
+      "seconds": 0.086,
+      "command": [
+        "node",
+        "tests/formal-communicative-isolation-v1.test.js"
+      ],
+      "log": "formal-communicative-isolation-v1.log"
+    },
+    {
+      "id": "s005-support-controller-production",
+      "status": "PASS",
+      "exitCode": 0,
+      "seconds": 0.093,
+      "command": [
+        "node",
+        "tests/s005-support-controller-production.test.js"
+      ],
+      "log": "s005-support-controller-production.log"
+    },
+    {
+      "id": "s006-ending-v1",
+      "status": "PASS",
+      "exitCode": 0,
+      "seconds": 0.085,
+      "command": [
+        "node",
+        "tests/s006-ending-v1.test.js"
+      ],
+      "log": "s006-ending-v1.log"
+    },
+    {
+      "id": "s001-full-flow",
+      "status": "PASS",
+      "exitCode": 0,
+      "seconds": 0.102,
+      "command": [
+        "node",
+        "tests/s001-full-flow.test.js"
+      ],
+      "log": "s001-full-flow.log"
+    },
+    {
+      "id": "s002-story",
+      "status": "PASS",
+      "exitCode": 0,
+      "seconds": 0.135,
+      "command": [
+        "node",
+        "tests/s002-story.test.js"
+      ],
+      "log": "s002-story.log"
+    },
+    {
+      "id": "s003-full-flow",
+      "status": "PASS",
+      "exitCode": 0,
+      "seconds": 0.076,
+      "command": [
+        "node",
+        "tests/s003-full-flow.test.js"
+      ],
+      "log": "s003-full-flow.log"
+    },
+    {
+      "id": "s004-full-flow",
+      "status": "PASS",
+      "exitCode": 0,
+      "seconds": 0.098,
+      "command": [
+        "node",
+        "tests/s004-full-flow.test.js"
+      ],
+      "log": "s004-full-flow.log"
+    },
+    {
+      "id": "s005-clean-rebuild-v1",
+      "status": "PASS",
+      "exitCode": 0,
+      "seconds": 0.071,
+      "command": [
+        "node",
+        "tests/s005-clean-rebuild-v1.test.js"
+      ],
+      "log": "s005-clean-rebuild-v1.log"
+    },
+    {
+      "id": "s006-restored-all-ten-layout-v1",
+      "status": "PASS",
+      "exitCode": 0,
+      "seconds": 0.068,
+      "command": [
+        "node",
+        "tests/s006-restored-all-ten-layout-v1.test.js"
+      ],
+      "log": "s006-restored-all-ten-layout-v1.log"
+    },
+    {
+      "id": "s007-delta",
+      "status": "PASS",
+      "exitCode": 0,
+      "seconds": 0.081,
+      "command": [
+        "node",
+        "tests/s007-delta.test.js"
+      ],
+      "log": "s007-delta.log"
+    },
+    {
+      "id": "player-name-save",
+      "status": "PASS",
+      "exitCode": 0,
+      "seconds": 0.096,
+      "command": [
+        "node",
+        "tests/player-name-save.test.js"
+      ],
+      "log": "player-name-save.log"
+    },
+    {
+      "id": "communication-recovery-visible-v1",
+      "status": "PASS",
+      "exitCode": 0,
+      "seconds": 0.1,
+      "command": [
+        "node",
+        "tests/communication-recovery-visible-v1.test.js"
+      ],
+      "log": "communication-recovery-visible-v1.log"
+    },
+    {
+      "id": "communication-recovery-ui-v21",
+      "status": "PASS",
+      "exitCode": 0,
+      "seconds": 0.093,
+      "command": [
+        "node",
+        "tests/communication-recovery-ui-v21.test.js"
+      ],
+      "log": "communication-recovery-ui-v21.log"
+    },
+    {
+      "id": "pico-first-hint-english-v1",
+      "status": "PASS",
+      "exitCode": 0,
+      "seconds": 0.073,
+      "command": [
+        "node",
+        "tests/pico-first-hint-english-v1.test.js"
+      ],
+      "log": "pico-first-hint-english-v1.log"
+    },
+    {
+      "id": "s006-communication-v2",
+      "status": "PASS",
+      "exitCode": 0,
+      "seconds": 0.091,
+      "command": [
+        "node",
+        "tests/s006-communication-v2.test.js"
+      ],
+      "log": "s006-communication-v2.log"
+    },
+    {
+      "id": "s006-final-review",
+      "status": "PASS",
+      "exitCode": 0,
+      "seconds": 0.113,
+      "command": [
+        "node",
+        "tools/qc/check-s006-against-final-review.cjs",
+        ".",
+        "specs/approved/s006-communication-v2/Final-Review.md"
+      ],
+      "log": "s006-final-review.log"
+    },
+    {
+      "id": "communication-controls",
+      "status": "PASS",
+      "exitCode": 0,
+      "seconds": 0.131,
+      "command": [
+        "node",
+        "tools/qc/check-communication-controls.cjs",
+        "."
+      ],
+      "log": "communication-controls.log"
+    },
+    {
+      "id": "support-flow",
+      "status": "PASS",
+      "exitCode": 0,
+      "seconds": 0.103,
+      "command": [
+        "node",
+        "tools/qc/check-support-flow.cjs",
+        "."
+      ],
+      "log": "support-flow.log"
+    },
+    {
+      "id": "pr9-negative-control",
+      "status": "PASS",
+      "exitCode": 0,
+      "seconds": 0.498,
+      "command": [
+        "node",
+        "tools/qc/prove-negative-controls.cjs"
+      ],
+      "log": "pr9-negative-control.log"
+    },
+    {
+      "id": "pr7-overwrite-negative-control",
+      "status": "PASS",
+      "exitCode": 0,
+      "seconds": 0.205,
+      "command": [
+        "node",
+        "tools/qc/prove-pr7-v2-overwrite.cjs"
+      ],
+      "log": "pr7-overwrite-negative-control.log"
+    },
+    {
+      "id": "protected-diff",
+      "status": "PASS",
+      "exitCode": 0,
+      "seconds": 0.805,
+      "command": [
+        "node",
+        "tools/qc/check-diff.cjs"
+      ],
+      "log": "protected-diff.log"
+    }
+  ],
+  "historical": [
+    {
+      "path": "tests/historical/pre-engine-guard/formal-communicative-isolation-v1.test.js",
+      "status": "HISTORICAL_NOT_RUN",
+      "reason": "superseded; see tests/historical/README.md"
+    },
+    {
+      "path": "tests/historical/pre-engine-guard/s005-clean-rebuild-v1.test.js",
+      "status": "HISTORICAL_NOT_RUN",
+      "reason": "superseded; see tests/historical/README.md"
+    },
+    {
+      "path": "tests/historical/pre-engine-guard/s005-support-controller-production.test.js",
+      "status": "HISTORICAL_NOT_RUN",
+      "reason": "superseded; see tests/historical/README.md"
+    },
+    {
+      "path": "tests/historical/pre-engine-guard/s007-delta.test.js",
+      "status": "HISTORICAL_NOT_RUN",
+      "reason": "superseded; see tests/historical/README.md"
+    },
+    {
+      "path": "tests/historical/s006-v1/s006-communication-final-v1.test.js",
+      "status": "HISTORICAL_NOT_RUN",
+      "reason": "superseded; see tests/historical/README.md"
+    },
+    {
+      "path": "tests/historical/s006-v1/s006-q7-final-correction-v1.test.js",
+      "status": "HISTORICAL_NOT_RUN",
+      "reason": "superseded; see tests/historical/README.md"
+    }
+  ],
+  "notRun": [
+    {
+      "path": "tests/audio-additions-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/audio-context-interrupted-recovery-fix-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/audio-director-playtest-phase2.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/audio-director-unified.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/audio-engine-unification-v1-phase1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/audio-foundation-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/audio-gainnode-unification-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/audio-loudness-balance-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/audio-manager-safety.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/audio-mix-duck-calibration-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/audio-phase1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/audio-playtest-correction-v2.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/audio-playtest-correction-v3.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/audio-story-director-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/audio-voice-reliability-fix-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/audio-voice-runtime-path-audit-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/bernie-graphics-replacement.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/bernie-invitation-question.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/bernie-voice-production-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/camp-character-data.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/camp-manager.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/camp-production-dom.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/camp-production-wiring.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/central-audio-recovery-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/character-party-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/come-with-us-final-transcript-trace-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/communication-judge-pico-support-runtime-v1-phase1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/communication-runtime-data-spec-v1-phase1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/communication-runtime-v1-control-ui.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/communication-support-trigger-v21.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/communicative-judge-foundation-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/communicative-judge-pilot.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/communicative-question-manager-integration.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/communicative-question-manager-playtest.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/companion-state.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/dev-jump-checkpoints.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/dev-jump-formal-communicative-runtime-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/dev-jump-manager.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/dev-jump-opening-layer.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/dev-jump-production-separation.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/dev-jump-runtime-dispatch-trace-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/dialogue-action-auto-reveal-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/final-voice-production-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/finite-rescue-final-message-consistency-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/finite-rescue-runtime-wiring-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/finite-rescue-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/formal-communicative-question-data-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/formal-communicative-runtime-trace-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/formal-communicative-runtime-version-unified-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/formal-communicative-speech-fallback-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/formal-communicative-speech-start-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/formal-speech-trace-view.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/gainnode-iphone-runtime-trace-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/gas-candidate-store-provider-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/id-asset-database-phase1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/iphone-audio-lifecycle-trace-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/iphone-bgm-motif-runtime-trace-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/iphone-reload-audio-identity-trace-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/iphone-safari-audio-final-isolation-diagnostic-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/iphone-safari-initial-audio-unlock-trace-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/iphone-safari-loud-audio-graph-identity-trace-v2.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/iphone-safari-speech-result-audio-route-trace-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/iphone-speech-audio-restore-timing-ab-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/iphone-speech-native-mic-release-boundary-trace-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/iphone-speech-recognition-teardown-serialization-fix-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/iphone-speech-teardown-order-trace-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/iphone-speech-teardown-order-trace-v2.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/kong-remaining-voice-production-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/legacy-interim-fallback-condition-trace-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/legacy-speech-common-interim-rescue-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/legacy-speech-early-commit-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/legacy-speech-interim-fallback-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/legacy-speech-runtime-trace-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/lottery-engine-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/m001-damage-effect.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/m001-fruit-monster-voice-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/m001-fruit-story.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/m001-graphic-flow.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/m002-graphic-flow.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/m002-number-monster.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/m002-numeral-recognition.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/m003-answer-visuals.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/m003-season-tree.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/m003-start-smoke.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/m004-audio-finalization-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/m004-entry-connection-fixed.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/m004-face-layer-alignment-fix-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/m004-final-audio-timing-polish-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/m004-final-sound-integration-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/m004-finite-rescue-alias-wiring-v4.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/m004-graphic-layer.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/m004-post-battle-progression-fixed.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/m004-presentation-polish-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/m004-retry-second-attempt-runtime-v3.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/m005-birdie-vocabulary-graphic.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/master-clean-regression.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/missing-japanese-support-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/mobile-audio-foundation-fix-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/mobile-ui-runtime-apply-fix-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/mobile-ui-story-polish-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/monster-battle-final-choice-loop-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/monster-battle-manager.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/monster-battle-template-v1-p0.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/monster-library-separation.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/morning-manager.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/opening-audio-flow.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/pico-break-catalog.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/pico-break-demo.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/pico-break-manager.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/pico-break-story-commands.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/pico-japanese-four-button-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/pico-story-dialogue-v2.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/pico-support-common-engine-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/pico-voice-production-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/question-manager.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/radio-voice-silence-trace-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/recognition-termination-diagnostics.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/recognition-timeout-start.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/running-but-silent-signal-trace-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/s001-alignment.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/s001-audio-finalized-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/s001-audio-finalized-v2.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/s001-generated-doc.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/s001-kong-voice-production-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/s001-smoke.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/s001-speech-ducking-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/s002-camp-completion.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/s002-saki-voice-production-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/s002-yes-support.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/s003-camp-completion.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/s003-connection.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/s003-s004-connection.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/s003-s004-end-label-m004-recognition-rescue-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/s004-cooking-categories.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/s004-event-fullscreen.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/s004-m003-connection.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/s004-vegetable-vocabulary-14-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/s005-ben-story-phase1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/s005-communication-support-phase-a.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/s005-local-judge-runtime-fix-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/s005-speech-lottery-phase-a2.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/s005-speech-runtime-trace.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/s007-scenes-12-13.test.mjs",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/scene-manager-single-story.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/se-pack-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/speech-engine-retry-contract.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/speech-event-trace-view.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/speech-mode-audio-isolation-v1-phase1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/speech-mode-audio-isolation-v1-phase2.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/speech-mode-canonical-isolation-fix-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/speech-native-event-diagnostics.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/speech-result-delivery-diagnostic.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/speech-ux-foundation-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/speech-ux-v11-morning-retry.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/st004-bazaar-front-half.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/st004-map-key-event.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/st004-saki-departure.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/st004-saki-ending.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/story-morning-question-commands.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/ui-japanese-v1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/voice-communication-polish-v1-phase1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/voice-foundation-v1-phase1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    },
+    {
+      "path": "tests/voice-production-database-v1-1.test.js",
+      "status": "NOT_RUN",
+      "reason": "outside Engine Guard V1 Node contract scope; no PASS claim"
+    }
+  ]
+}

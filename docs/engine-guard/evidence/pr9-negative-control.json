@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "meaning": "Negative control correctly rejected; PR9 itself FAIL",
+  "sourceSHA": "e81b06496bf40c9248d1218c94e1546d1208c111",
+  "detectorExitCode": 1,
+  "snapshots": 192,
+  "supportButtons": [
+    "もう一度話す",
+    "ピコのサポート",
+    "冒険を続ける",
+    "英語を見る",
+    "日本語を見る"
+  ]
+}

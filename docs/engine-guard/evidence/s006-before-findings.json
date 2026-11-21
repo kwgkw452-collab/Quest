@@ -1,0 +1,152 @@
+{
+  "sourceSHA": "1648c60f3be518478679a8131b9f0ad8cdddc0ca",
+  "specSHA256": "ee8fcad0dd81995658084d2c21da168e4025cd5a1417f9bbcda58f9592979734",
+  "checks": 183,
+  "failures": 18,
+  "findings": [
+    {
+      "kind": "judge",
+      "q": 1,
+      "label": "unknown: I am not sure.",
+      "expected": "UNKNOWN",
+      "actual": "REJECT",
+      "status": "FAIL"
+    },
+    {
+      "kind": "judge",
+      "q": 2,
+      "label": "unknown: I am not sure.",
+      "expected": "UNKNOWN",
+      "actual": "REJECT",
+      "status": "FAIL"
+    },
+    {
+      "kind": "prose-policy",
+      "q": 2,
+      "label": "What colour is that?",
+      "expected": "ACCEPT",
+      "actual": "UNKNOWN",
+      "status": "FAIL"
+    },
+    {
+      "kind": "judge",
+      "q": 3,
+      "label": "unknown: I am not sure.",
+      "expected": "UNKNOWN",
+      "actual": "REJECT",
+      "status": "FAIL"
+    },
+    {
+      "kind": "prose-policy",
+      "q": 3,
+      "label": "Where is it?",
+      "expected": "ACCEPT",
+      "actual": "UNKNOWN",
+      "status": "FAIL"
+    },
+    {
+      "kind": "judge",
+      "q": 4,
+      "label": "unknown: I am not sure.",
+      "expected": "UNKNOWN",
+      "actual": "REJECT",
+      "status": "FAIL"
+    },
+    {
+      "kind": "prose-policy",
+      "q": 4,
+      "label": "Can we see it?",
+      "expected": "ACCEPT",
+      "actual": "UNKNOWN",
+      "status": "FAIL"
+    },
+    {
+      "kind": "judge",
+      "q": 5,
+      "label": "unknown: I am not sure.",
+      "expected": "UNKNOWN",
+      "actual": "REJECT",
+      "status": "FAIL"
+    },
+    {
+      "kind": "prose-policy",
+      "q": 5,
+      "label": "Do you have this?",
+      "expected": "ACCEPT",
+      "actual": "UNKNOWN",
+      "status": "FAIL"
+    },
+    {
+      "kind": "judge",
+      "q": 6,
+      "label": "unknown: I am not sure.",
+      "expected": "UNKNOWN",
+      "actual": "REJECT",
+      "status": "FAIL"
+    },
+    {
+      "kind": "prose-policy",
+      "q": 6,
+      "label": "Look at that, please.",
+      "expected": "ACCEPT",
+      "actual": "UNKNOWN",
+      "status": "FAIL"
+    },
+    {
+      "kind": "judge",
+      "q": 7,
+      "label": "unknown: I am not sure.",
+      "expected": "UNKNOWN",
+      "actual": "REJECT",
+      "status": "FAIL"
+    },
+    {
+      "kind": "prose-policy",
+      "q": 7,
+      "label": "Did you see that?",
+      "expected": "ACCEPT",
+      "actual": "UNKNOWN",
+      "status": "FAIL"
+    },
+    {
+      "kind": "judge",
+      "q": 8,
+      "label": "unknown: I am not sure.",
+      "expected": "UNKNOWN",
+      "actual": "REJECT",
+      "status": "FAIL"
+    },
+    {
+      "kind": "judge",
+      "q": 9,
+      "label": "unknown: I am not sure.",
+      "expected": "UNKNOWN",
+      "actual": "REJECT",
+      "status": "FAIL"
+    },
+    {
+      "kind": "prose-policy",
+      "q": 9,
+      "label": "Please look for it.",
+      "expected": "ACCEPT",
+      "actual": "UNKNOWN",
+      "status": "FAIL"
+    },
+    {
+      "kind": "judge",
+      "q": 10,
+      "label": "unknown: I am not sure.",
+      "expected": "UNKNOWN",
+      "actual": "REJECT",
+      "status": "FAIL"
+    },
+    {
+      "kind": "prose-policy",
+      "q": 10,
+      "label": "This is it!",
+      "expected": "ACCEPT",
+      "actual": "UNKNOWN",
+      "status": "FAIL"
+    }
+  ]
+}

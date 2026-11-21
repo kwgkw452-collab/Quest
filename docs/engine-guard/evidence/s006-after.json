@@ -1,0 +1,1806 @@
+{
+  "source": "/workspace/scratch/0710805e3de2/quest-engine-guard",
+  "specPath": "/workspace/scratch/0710805e3de2/quest-engine-guard/specs/approved/s006-communication-v2/Final-Review.md",
+  "specSHA256": "ee8fcad0dd81995658084d2c21da168e4025cd5a1417f9bbcda58f9592979734",
+  "checks": 183,
+  "failures": 0,
+  "findings": [],
+  "details": [
+    {
+      "kind": "registry",
+      "q": null,
+      "label": "question count",
+      "expected": 10,
+      "actual": 10,
+      "status": "PASS"
+    },
+    {
+      "kind": "registry",
+      "q": null,
+      "label": "rule count",
+      "expected": 10,
+      "actual": 10,
+      "status": "PASS"
+    },
+    {
+      "kind": "registry",
+      "q": null,
+      "label": "pool count",
+      "expected": 10,
+      "actual": 10,
+      "status": "PASS"
+    },
+    {
+      "kind": "text",
+      "q": 1,
+      "label": "Goal",
+      "expected": "お手伝いしましょうか？",
+      "actual": "お手伝いしましょうか？",
+      "status": "PASS"
+    },
+    {
+      "kind": "text",
+      "q": 1,
+      "label": "model",
+      "expected": "Can I help you?",
+      "actual": "Can I help you?",
+      "status": "PASS"
+    },
+    {
+      "kind": "text",
+      "q": 1,
+      "label": "all three hints verbatim",
+      "expected": [
+        "「手伝う」は help。Can I ...? で始めるピコ。",
+        "Can I のあとに help you を続けるピコ。",
+        "Can I help you?"
+      ],
+      "actual": [
+        "「手伝う」は help。Can I ...? で始めるピコ。",
+        "Can I のあとに help you を続けるピコ。",
+        "Can I help you?"
+      ],
+      "status": "PASS"
+    },
+    {
+      "kind": "version",
+      "q": 1,
+      "label": "conceptId",
+      "expected": "s006.mystery.v2.1",
+      "actual": "s006.mystery.v2.1",
+      "status": "PASS"
+    },
+    {
+      "kind": "version",
+      "q": 1,
+      "label": "poolId",
+      "expected": "s006.communication.1.v2",
+      "actual": "s006.communication.1.v2",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 1,
+      "label": "model: Can I help you?",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 1,
+      "label": "natural: Can we help you?",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 1,
+      "label": "natural: Do you need help?",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 1,
+      "label": "natural: Let me help you.",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 1,
+      "label": "natural: Would you like some help?",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 1,
+      "label": "natural: May I help?",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 1,
+      "label": "minor: Can I help?",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 1,
+      "label": "minor: I help you?",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 1,
+      "label": "explicit-reject: I can't help you.",
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 1,
+      "label": "explicit-reject: Help me.",
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 1,
+      "label": "unknown: I am not sure.",
+      "expected": "UNKNOWN",
+      "actual": "UNKNOWN",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 1,
+      "label": "unknown: flibbertigibbet",
+      "expected": "UNKNOWN",
+      "actual": "UNKNOWN",
+      "status": "PASS"
+    },
+    {
+      "kind": "prose-policy",
+      "q": 1,
+      "label": "Can we help?",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "text",
+      "q": 2,
+      "label": "Goal",
+      "expected": "あなたの箱は何色ですか？",
+      "actual": "あなたの箱は何色ですか？",
+      "status": "PASS"
+    },
+    {
+      "kind": "text",
+      "q": 2,
+      "label": "model",
+      "expected": "What color is it?",
+      "actual": "What color is it?",
+      "status": "PASS"
+    },
+    {
+      "kind": "text",
+      "q": 2,
+      "label": "all three hints verbatim",
+      "expected": [
+        "「何色」は What color。これで始めるピコ。",
+        "What color のあとに is it を続けるピコ。",
+        "What color is it?"
+      ],
+      "actual": [
+        "「何色」は What color。これで始めるピコ。",
+        "What color のあとに is it を続けるピコ。",
+        "What color is it?"
+      ],
+      "status": "PASS"
+    },
+    {
+      "kind": "version",
+      "q": 2,
+      "label": "conceptId",
+      "expected": "s006.mystery.v2.2",
+      "actual": "s006.mystery.v2.2",
+      "status": "PASS"
+    },
+    {
+      "kind": "version",
+      "q": 2,
+      "label": "poolId",
+      "expected": "s006.communication.2.v2",
+      "actual": "s006.communication.2.v2",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 2,
+      "label": "model: What color is it?",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 2,
+      "label": "natural: What color is your box?",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 2,
+      "label": "natural: What colour is the box?",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 2,
+      "label": "natural: What does your box look like?",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 2,
+      "label": "natural: Can you describe your box?",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 2,
+      "label": "minor: What color your box?",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 2,
+      "label": "minor: What color are the box?",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 2,
+      "label": "explicit-reject: Is it brown?",
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 2,
+      "label": "explicit-reject: What size is the box?",
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 2,
+      "label": "unknown: I am not sure.",
+      "expected": "UNKNOWN",
+      "actual": "UNKNOWN",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 2,
+      "label": "unknown: flibbertigibbet",
+      "expected": "UNKNOWN",
+      "actual": "UNKNOWN",
+      "status": "PASS"
+    },
+    {
+      "kind": "prose-policy",
+      "q": 2,
+      "label": "What colour is that?",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "text",
+      "q": 3,
+      "label": "Goal",
+      "expected": "ほかの箱はどこにありますか？",
+      "actual": "ほかの箱はどこにありますか？",
+      "status": "PASS"
+    },
+    {
+      "kind": "text",
+      "q": 3,
+      "label": "model",
+      "expected": "Where are the other boxes?",
+      "actual": "Where are the other boxes?",
+      "status": "PASS"
+    },
+    {
+      "kind": "text",
+      "q": 3,
+      "label": "all three hints verbatim",
+      "expected": [
+        "「どこ」は Where。「ほかの箱」は the other boxes だピコ。",
+        "Where are のあとに the other boxes を続けるピコ。",
+        "Where are the other boxes?"
+      ],
+      "actual": [
+        "「どこ」は Where。「ほかの箱」は the other boxes だピコ。",
+        "Where are のあとに the other boxes を続けるピコ。",
+        "Where are the other boxes?"
+      ],
+      "status": "PASS"
+    },
+    {
+      "kind": "version",
+      "q": 3,
+      "label": "conceptId",
+      "expected": "s006.mystery.v2.3",
+      "actual": "s006.mystery.v2.3",
+      "status": "PASS"
+    },
+    {
+      "kind": "version",
+      "q": 3,
+      "label": "poolId",
+      "expected": "s006.communication.3.v2",
+      "actual": "s006.communication.3.v2",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 3,
+      "label": "model: Where are the other boxes?",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 3,
+      "label": "natural: Where is the other box?",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 3,
+      "label": "natural: Where are the boxes?",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 3,
+      "label": "natural: Where can we find the other boxes?",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 3,
+      "label": "natural: Where did the other box go?",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 3,
+      "label": "minor: Where is other box?",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 3,
+      "label": "minor: Where are the other box?",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 3,
+      "label": "minor: The other boxes, where?",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 3,
+      "label": "explicit-reject: Where is the bus?",
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 3,
+      "label": "explicit-reject: The box is here.",
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 3,
+      "label": "unknown: I am not sure.",
+      "expected": "UNKNOWN",
+      "actual": "UNKNOWN",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 3,
+      "label": "unknown: flibbertigibbet",
+      "expected": "UNKNOWN",
+      "actual": "UNKNOWN",
+      "status": "PASS"
+    },
+    {
+      "kind": "prose-policy",
+      "q": 3,
+      "label": "Where is it?",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "text",
+      "q": 4,
+      "label": "Goal",
+      "expected": "その箱を見せてもらえますか？",
+      "actual": "その箱を見せてもらえますか？",
+      "status": "PASS"
+    },
+    {
+      "kind": "text",
+      "q": 4,
+      "label": "model",
+      "expected": "Can I see the box?",
+      "actual": "Can I see the box?",
+      "status": "PASS"
+    },
+    {
+      "kind": "text",
+      "q": 4,
+      "label": "all three hints verbatim",
+      "expected": [
+        "「見てもいい？」は Can I see ...? だピコ。",
+        "Can I see のあとに the box を続けるピコ。",
+        "Can I see the box?"
+      ],
+      "actual": [
+        "「見てもいい？」は Can I see ...? だピコ。",
+        "Can I see のあとに the box を続けるピコ。",
+        "Can I see the box?"
+      ],
+      "status": "PASS"
+    },
+    {
+      "kind": "version",
+      "q": 4,
+      "label": "conceptId",
+      "expected": "s006.mystery.v2.4",
+      "actual": "s006.mystery.v2.4",
+      "status": "PASS"
+    },
+    {
+      "kind": "version",
+      "q": 4,
+      "label": "poolId",
+      "expected": "s006.communication.4.v2",
+      "actual": "s006.communication.4.v2",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 4,
+      "label": "model: Can I see the box?",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 4,
+      "label": "natural: Can we see that box?",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 4,
+      "label": "natural: May I look at the box?",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 4,
+      "label": "natural: Please show me the box.",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 4,
+      "label": "natural: Could you show us that box?",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 4,
+      "label": "minor: Can I see box?",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 4,
+      "label": "minor: Show me box, please.",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 4,
+      "label": "explicit-reject: I can't see the box.",
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 4,
+      "label": "explicit-reject: Open the box.",
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 4,
+      "label": "unknown: I am not sure.",
+      "expected": "UNKNOWN",
+      "actual": "UNKNOWN",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 4,
+      "label": "unknown: flibbertigibbet",
+      "expected": "UNKNOWN",
+      "actual": "UNKNOWN",
+      "status": "PASS"
+    },
+    {
+      "kind": "prose-policy",
+      "q": 4,
+      "label": "Can we see it?",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "text",
+      "q": 5,
+      "label": "Goal",
+      "expected": "その箱を持っていますか？",
+      "actual": "その箱を持っていますか？",
+      "status": "PASS"
+    },
+    {
+      "kind": "text",
+      "q": 5,
+      "label": "model",
+      "expected": "Do you have the box?",
+      "actual": "Do you have the box?",
+      "status": "PASS"
+    },
+    {
+      "kind": "text",
+      "q": 5,
+      "label": "all three hints verbatim",
+      "expected": [
+        "「持っていますか？」は Do you have ...? だピコ。",
+        "Do you have のあとに the box を続けるピコ。",
+        "Do you have the box?"
+      ],
+      "actual": [
+        "「持っていますか？」は Do you have ...? だピコ。",
+        "Do you have のあとに the box を続けるピコ。",
+        "Do you have the box?"
+      ],
+      "status": "PASS"
+    },
+    {
+      "kind": "version",
+      "q": 5,
+      "label": "conceptId",
+      "expected": "s006.mystery.v2.5",
+      "actual": "s006.mystery.v2.5",
+      "status": "PASS"
+    },
+    {
+      "kind": "version",
+      "q": 5,
+      "label": "poolId",
+      "expected": "s006.communication.5.v2",
+      "actual": "s006.communication.5.v2",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 5,
+      "label": "model: Do you have the box?",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 5,
+      "label": "natural: Have you got the box?",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 5,
+      "label": "natural: Do you have my box?",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 5,
+      "label": "natural: Is the box here?",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 5,
+      "label": "natural: Have you got it?",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 5,
+      "label": "minor: You have the box?",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 5,
+      "label": "minor: Do you has the box?",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 5,
+      "label": "explicit-reject: I have the box.",
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 5,
+      "label": "explicit-reject: You don't have the box.",
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 5,
+      "label": "unknown: I am not sure.",
+      "expected": "UNKNOWN",
+      "actual": "UNKNOWN",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 5,
+      "label": "unknown: flibbertigibbet",
+      "expected": "UNKNOWN",
+      "actual": "UNKNOWN",
+      "status": "PASS"
+    },
+    {
+      "kind": "prose-policy",
+      "q": 5,
+      "label": "Do you have this?",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "text",
+      "q": 6,
+      "label": "Goal",
+      "expected": "このリボンを見てください。",
+      "actual": "このリボンを見てください。",
+      "status": "PASS"
+    },
+    {
+      "kind": "text",
+      "q": 6,
+      "label": "model",
+      "expected": "Look at this ribbon.",
+      "actual": "Look at this ribbon.",
+      "status": "PASS"
+    },
+    {
+      "kind": "text",
+      "q": 6,
+      "label": "all three hints verbatim",
+      "expected": [
+        "「見て」は Look at ...。「リボン」は ribbon だピコ。",
+        "Look at のあとに this ribbon を続けるピコ。",
+        "Look at this ribbon."
+      ],
+      "actual": [
+        "「見て」は Look at ...。「リボン」は ribbon だピコ。",
+        "Look at のあとに this ribbon を続けるピコ。",
+        "Look at this ribbon."
+      ],
+      "status": "PASS"
+    },
+    {
+      "kind": "version",
+      "q": 6,
+      "label": "conceptId",
+      "expected": "s006.mystery.v2.6",
+      "actual": "s006.mystery.v2.6",
+      "status": "PASS"
+    },
+    {
+      "kind": "version",
+      "q": 6,
+      "label": "poolId",
+      "expected": "s006.communication.6.v2",
+      "actual": "s006.communication.6.v2",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 6,
+      "label": "model: Look at this ribbon.",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 6,
+      "label": "natural: Please look at the ribbon.",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 6,
+      "label": "natural: Can you look at this ribbon?",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 6,
+      "label": "natural: Take a look at this red ribbon.",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 6,
+      "label": "natural: Please check this ribbon.",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 6,
+      "label": "minor: Look this ribbon.",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 6,
+      "label": "minor: Look at ribbon.",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 6,
+      "label": "explicit-reject: Give me the ribbon.",
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 6,
+      "label": "explicit-reject: Don't look at the ribbon.",
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 6,
+      "label": "unknown: I am not sure.",
+      "expected": "UNKNOWN",
+      "actual": "UNKNOWN",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 6,
+      "label": "unknown: flibbertigibbet",
+      "expected": "UNKNOWN",
+      "actual": "UNKNOWN",
+      "status": "PASS"
+    },
+    {
+      "kind": "prose-policy",
+      "q": 6,
+      "label": "Look at that, please.",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "text",
+      "q": 7,
+      "label": "Goal",
+      "expected": "探している箱を見ましたか？",
+      "actual": "探している箱を見ましたか？",
+      "status": "PASS"
+    },
+    {
+      "kind": "text",
+      "q": 7,
+      "label": "model",
+      "expected": "Did you see the box?",
+      "actual": "Did you see the box?",
+      "status": "PASS"
+    },
+    {
+      "kind": "text",
+      "q": 7,
+      "label": "all three hints verbatim",
+      "expected": [
+        "「見ましたか？」は Did you see ...? だピコ。",
+        "Did you see のあとに the box を続けるピコ。",
+        "Did you see the box?"
+      ],
+      "actual": [
+        "「見ましたか？」は Did you see ...? だピコ。",
+        "Did you see のあとに the box を続けるピコ。",
+        "Did you see the box?"
+      ],
+      "status": "PASS"
+    },
+    {
+      "kind": "version",
+      "q": 7,
+      "label": "conceptId",
+      "expected": "s006.mystery.v2.7",
+      "actual": "s006.mystery.v2.7",
+      "status": "PASS"
+    },
+    {
+      "kind": "version",
+      "q": 7,
+      "label": "poolId",
+      "expected": "s006.communication.7.v2",
+      "actual": "s006.communication.7.v2",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 7,
+      "label": "model: Did you see the box?",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 7,
+      "label": "natural: Have you seen the box?",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 7,
+      "label": "natural: Have you seen a brown box?",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 7,
+      "label": "natural: Did you see a box with a red ribbon?",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 7,
+      "label": "natural: Do you know where the box is?",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 7,
+      "label": "minor: Did you saw the box?",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 7,
+      "label": "minor: You see the box?",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 7,
+      "label": "minor: Do you see the box?",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 7,
+      "label": "explicit-reject: Is the box on the cart?",
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 7,
+      "label": "explicit-reject: Did you see the book?",
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 7,
+      "label": "unknown: I am not sure.",
+      "expected": "UNKNOWN",
+      "actual": "UNKNOWN",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 7,
+      "label": "unknown: flibbertigibbet",
+      "expected": "UNKNOWN",
+      "actual": "UNKNOWN",
+      "status": "PASS"
+    },
+    {
+      "kind": "prose-policy",
+      "q": 7,
+      "label": "Did you see that?",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "text",
+      "q": 8,
+      "label": "Goal",
+      "expected": "ちょっと待ってください！",
+      "actual": "ちょっと待ってください！",
+      "status": "PASS"
+    },
+    {
+      "kind": "text",
+      "q": 8,
+      "label": "model",
+      "expected": "Wait, please!",
+      "actual": "Wait, please!",
+      "status": "PASS"
+    },
+    {
+      "kind": "text",
+      "q": 8,
+      "label": "all three hints verbatim",
+      "expected": [
+        "「待って」は Wait。一言でも伝わるピコ。",
+        "Wait に please を添えると丁寧になるピコ。",
+        "Wait, please!"
+      ],
+      "actual": [
+        "「待って」は Wait。一言でも伝わるピコ。",
+        "Wait に please を添えると丁寧になるピコ。",
+        "Wait, please!"
+      ],
+      "status": "PASS"
+    },
+    {
+      "kind": "version",
+      "q": 8,
+      "label": "conceptId",
+      "expected": "s006.mystery.v2.8",
+      "actual": "s006.mystery.v2.8",
+      "status": "PASS"
+    },
+    {
+      "kind": "version",
+      "q": 8,
+      "label": "poolId",
+      "expected": "s006.communication.8.v2",
+      "actual": "s006.communication.8.v2",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 8,
+      "label": "model: Wait, please!",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 8,
+      "label": "natural: Please wait!",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 8,
+      "label": "natural: Wait!",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 8,
+      "label": "natural: Just a moment!",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 8,
+      "label": "natural: Hold on!",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 8,
+      "label": "natural: Please don't leave yet!",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 8,
+      "label": "minor: Wait!",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 8,
+      "label": "minor: Please wait me.",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 8,
+      "label": "explicit-reject: Go!",
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 8,
+      "label": "explicit-reject: Don't wait!",
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 8,
+      "label": "explicit-reject: Hurry up!",
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 8,
+      "label": "unknown: I am not sure.",
+      "expected": "UNKNOWN",
+      "actual": "UNKNOWN",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 8,
+      "label": "unknown: flibbertigibbet",
+      "expected": "UNKNOWN",
+      "actual": "UNKNOWN",
+      "status": "PASS"
+    },
+    {
+      "kind": "prose-policy",
+      "q": 8,
+      "label": "Please wait for us.",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "text",
+      "q": 9,
+      "label": "Goal",
+      "expected": "その箱を探してください。",
+      "actual": "その箱を探してください。",
+      "status": "PASS"
+    },
+    {
+      "kind": "text",
+      "q": 9,
+      "label": "model",
+      "expected": "Please look for the box.",
+      "actual": "Please look for the box.",
+      "status": "PASS"
+    },
+    {
+      "kind": "text",
+      "q": 9,
+      "label": "all three hints verbatim",
+      "expected": [
+        "「探す」は look for。「箱」は box だピコ。",
+        "Please のあとに look for the box を続けるピコ。",
+        "Please look for the box."
+      ],
+      "actual": [
+        "「探す」は look for。「箱」は box だピコ。",
+        "Please のあとに look for the box を続けるピコ。",
+        "Please look for the box."
+      ],
+      "status": "PASS"
+    },
+    {
+      "kind": "version",
+      "q": 9,
+      "label": "conceptId",
+      "expected": "s006.mystery.v2.9",
+      "actual": "s006.mystery.v2.9",
+      "status": "PASS"
+    },
+    {
+      "kind": "version",
+      "q": 9,
+      "label": "poolId",
+      "expected": "s006.communication.9.v2",
+      "actual": "s006.communication.9.v2",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 9,
+      "label": "model: Please look for the box.",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 9,
+      "label": "natural: Can you look for the box?",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 9,
+      "label": "natural: Please help us find the box.",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 9,
+      "label": "natural: Can you check for the box?",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 9,
+      "label": "natural: Please find my box.",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 9,
+      "label": "minor: Please look for box.",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 9,
+      "label": "minor: Please find box.",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 9,
+      "label": "minor: Can you finds the box?",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 9,
+      "label": "explicit-reject: I found the box.",
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 9,
+      "label": "explicit-reject: Don't find the box.",
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 9,
+      "label": "explicit-reject: Please look at the box.",
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 9,
+      "label": "unknown: I am not sure.",
+      "expected": "UNKNOWN",
+      "actual": "UNKNOWN",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 9,
+      "label": "unknown: flibbertigibbet",
+      "expected": "UNKNOWN",
+      "actual": "UNKNOWN",
+      "status": "PASS"
+    },
+    {
+      "kind": "prose-policy",
+      "q": 9,
+      "label": "Please look for it.",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "text",
+      "q": 10,
+      "label": "Goal",
+      "expected": "はい、あなたの箱です！",
+      "actual": "はい、あなたの箱です！",
+      "status": "PASS"
+    },
+    {
+      "kind": "text",
+      "q": 10,
+      "label": "model",
+      "expected": "Here is your box!",
+      "actual": "Here is your box!",
+      "status": "PASS"
+    },
+    {
+      "kind": "text",
+      "q": 10,
+      "label": "all three hints verbatim",
+      "expected": [
+        "「はい、どうぞ」は Here is ...。「あなたの箱」は your box だピコ。",
+        "Here is のあとに your box を続けるピコ。",
+        "Here is your box!"
+      ],
+      "actual": [
+        "「はい、どうぞ」は Here is ...。「あなたの箱」は your box だピコ。",
+        "Here is のあとに your box を続けるピコ。",
+        "Here is your box!"
+      ],
+      "status": "PASS"
+    },
+    {
+      "kind": "version",
+      "q": 10,
+      "label": "conceptId",
+      "expected": "s006.mystery.v2.10",
+      "actual": "s006.mystery.v2.10",
+      "status": "PASS"
+    },
+    {
+      "kind": "version",
+      "q": 10,
+      "label": "poolId",
+      "expected": "s006.communication.10.v2",
+      "actual": "s006.communication.10.v2",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 10,
+      "label": "model: Here is your box!",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 10,
+      "label": "natural: Here's your box!",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 10,
+      "label": "natural: This is your box!",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 10,
+      "label": "natural: Here you are!",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 10,
+      "label": "natural: I found your box!",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 10,
+      "label": "natural: We have your box!",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 10,
+      "label": "minor: Here your box!",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 10,
+      "label": "minor: Here are your box!",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 10,
+      "label": "minor: I find your box!",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 10,
+      "label": "explicit-reject: Where is your box?",
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 10,
+      "label": "explicit-reject: This is not your box.",
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 10,
+      "label": "explicit-reject: Give me your box.",
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 10,
+      "label": "unknown: I am not sure.",
+      "expected": "UNKNOWN",
+      "actual": "UNKNOWN",
+      "status": "PASS"
+    },
+    {
+      "kind": "judge",
+      "q": 10,
+      "label": "unknown: flibbertigibbet",
+      "expected": "UNKNOWN",
+      "actual": "UNKNOWN",
+      "status": "PASS"
+    },
+    {
+      "kind": "prose-policy",
+      "q": 10,
+      "label": "This is it!",
+      "expected": "ACCEPT",
+      "actual": "ACCEPT",
+      "status": "PASS"
+    }
+  ],
+  "canonicalQuestions": [
+    {
+      "q": 1,
+      "goal": "お手伝いしましょうか？",
+      "model": "Can I help you?",
+      "accept": [
+        "Can we help you?",
+        "Do you need help?",
+        "Let me help you.",
+        "Would you like some help?",
+        "May I help?"
+      ],
+      "hints": [
+        "「手伝う」は help。Can I ...? で始めるピコ。",
+        "Can I のあとに help you を続けるピコ。",
+        "Can I help you?"
+      ],
+      "minor": [
+        "Can I help?",
+        "I help you?"
+      ],
+      "reject": [
+        "I can't help you.",
+        "Help me."
+      ]
+    },
+    {
+      "q": 2,
+      "goal": "あなたの箱は何色ですか？",
+      "model": "What color is it?",
+      "accept": [
+        "What color is your box?",
+        "What colour is the box?",
+        "What does your box look like?",
+        "Can you describe your box?"
+      ],
+      "hints": [
+        "「何色」は What color。これで始めるピコ。",
+        "What color のあとに is it を続けるピコ。",
+        "What color is it?"
+      ],
+      "minor": [
+        "What color your box?",
+        "What color are the box?"
+      ],
+      "reject": [
+        "Is it brown?",
+        "What size is the box?"
+      ]
+    },
+    {
+      "q": 3,
+      "goal": "ほかの箱はどこにありますか？",
+      "model": "Where are the other boxes?",
+      "accept": [
+        "Where is the other box?",
+        "Where are the boxes?",
+        "Where can we find the other boxes?",
+        "Where did the other box go?"
+      ],
+      "hints": [
+        "「どこ」は Where。「ほかの箱」は the other boxes だピコ。",
+        "Where are のあとに the other boxes を続けるピコ。",
+        "Where are the other boxes?"
+      ],
+      "minor": [
+        "Where is other box?",
+        "Where are the other box?",
+        "The other boxes, where?"
+      ],
+      "reject": [
+        "Where is the bus?",
+        "The box is here."
+      ]
+    },
+    {
+      "q": 4,
+      "goal": "その箱を見せてもらえますか？",
+      "model": "Can I see the box?",
+      "accept": [
+        "Can we see that box?",
+        "May I look at the box?",
+        "Please show me the box.",
+        "Could you show us that box?"
+      ],
+      "hints": [
+        "「見てもいい？」は Can I see ...? だピコ。",
+        "Can I see のあとに the box を続けるピコ。",
+        "Can I see the box?"
+      ],
+      "minor": [
+        "Can I see box?",
+        "Show me box, please."
+      ],
+      "reject": [
+        "I can't see the box.",
+        "Open the box."
+      ]
+    },
+    {
+      "q": 5,
+      "goal": "その箱を持っていますか？",
+      "model": "Do you have the box?",
+      "accept": [
+        "Have you got the box?",
+        "Do you have my box?",
+        "Is the box here?",
+        "Have you got it?"
+      ],
+      "hints": [
+        "「持っていますか？」は Do you have ...? だピコ。",
+        "Do you have のあとに the box を続けるピコ。",
+        "Do you have the box?"
+      ],
+      "minor": [
+        "You have the box?",
+        "Do you has the box?"
+      ],
+      "reject": [
+        "I have the box.",
+        "You don't have the box."
+      ]
+    },
+    {
+      "q": 6,
+      "goal": "このリボンを見てください。",
+      "model": "Look at this ribbon.",
+      "accept": [
+        "Please look at the ribbon.",
+        "Can you look at this ribbon?",
+        "Take a look at this red ribbon.",
+        "Please check this ribbon."
+      ],
+      "hints": [
+        "「見て」は Look at ...。「リボン」は ribbon だピコ。",
+        "Look at のあとに this ribbon を続けるピコ。",
+        "Look at this ribbon."
+      ],
+      "minor": [
+        "Look this ribbon.",
+        "Look at ribbon."
+      ],
+      "reject": [
+        "Give me the ribbon.",
+        "Don't look at the ribbon."
+      ]
+    },
+    {
+      "q": 7,
+      "goal": "探している箱を見ましたか？",
+      "model": "Did you see the box?",
+      "accept": [
+        "Have you seen the box?",
+        "Have you seen a brown box?",
+        "Did you see a box with a red ribbon?",
+        "Do you know where the box is?"
+      ],
+      "hints": [
+        "「見ましたか？」は Did you see ...? だピコ。",
+        "Did you see のあとに the box を続けるピコ。",
+        "Did you see the box?"
+      ],
+      "minor": [
+        "Did you saw the box?",
+        "You see the box?",
+        "Do you see the box?"
+      ],
+      "reject": [
+        "Is the box on the cart?",
+        "Did you see the book?"
+      ]
+    },
+    {
+      "q": 8,
+      "goal": "ちょっと待ってください！",
+      "model": "Wait, please!",
+      "accept": [
+        "Please wait!",
+        "Wait!",
+        "Just a moment!",
+        "Hold on!",
+        "Please don't leave yet!"
+      ],
+      "hints": [
+        "「待って」は Wait。一言でも伝わるピコ。",
+        "Wait に please を添えると丁寧になるピコ。",
+        "Wait, please!"
+      ],
+      "minor": [
+        "Wait!",
+        "Please wait me."
+      ],
+      "reject": [
+        "Go!",
+        "Don't wait!",
+        "Hurry up!"
+      ]
+    },
+    {
+      "q": 9,
+      "goal": "その箱を探してください。",
+      "model": "Please look for the box.",
+      "accept": [
+        "Can you look for the box?",
+        "Please help us find the box.",
+        "Can you check for the box?",
+        "Please find my box."
+      ],
+      "hints": [
+        "「探す」は look for。「箱」は box だピコ。",
+        "Please のあとに look for the box を続けるピコ。",
+        "Please look for the box."
+      ],
+      "minor": [
+        "Please look for box.",
+        "Please find box.",
+        "Can you finds the box?"
+      ],
+      "reject": [
+        "I found the box.",
+        "Don't find the box.",
+        "Please look at the box."
+      ]
+    },
+    {
+      "q": 10,
+      "goal": "はい、あなたの箱です！",
+      "model": "Here is your box!",
+      "accept": [
+        "Here's your box!",
+        "This is your box!",
+        "Here you are!",
+        "I found your box!",
+        "We have your box!"
+      ],
+      "hints": [
+        "「はい、どうぞ」は Here is ...。「あなたの箱」は your box だピコ。",
+        "Here is のあとに your box を続けるピコ。",
+        "Here is your box!"
+      ],
+      "minor": [
+        "Here your box!",
+        "Here are your box!",
+        "I find your box!"
+      ],
+      "reject": [
+        "Where is your box?",
+        "This is not your box.",
+        "Give me your box."
+      ]
+    }
+  ]
+}

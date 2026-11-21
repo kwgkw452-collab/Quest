@@ -1,0 +1,7 @@
+{
+  "status": "PASS",
+  "meaning": "Negative overwrite correctly rejected; old PR7 S006 is NOT adopted",
+  "sourceSHA": "bfdb08666f3a9b12b4d9ff13483ab14d13c7638f",
+  "detectorExitCode": 1,
+  "mismatches": 84
+}

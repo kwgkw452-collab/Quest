@@ -1,0 +1,396 @@
+[
+  {
+    "q": 1,
+    "goal": "お手伝いしましょうか？",
+    "model": "Can I help you?",
+    "hints": [
+      "「手伝う」は help。Can I ...? で始めるピコ。",
+      "Can I のあとに help you を続けるピコ。",
+      "Can I help you?"
+    ],
+    "accept": [
+      "Can I help you?",
+      "Can we help you?",
+      "Do you need help?",
+      "Let me help you.",
+      "Would you like some help?",
+      "May I help?",
+      "Can I help?",
+      "I help you?",
+      "Shall I help you?",
+      "Could I help you?",
+      "May we help you?",
+      "Let us help you.",
+      "Let us help you?",
+      "Could we help you?",
+      "Could I help?",
+      "Could we help?"
+    ],
+    "reject": [
+      "I can't help you.",
+      "Help me.",
+      "Can you help me?",
+      "I need help.",
+      "Can I help him?",
+      "Don't help me."
+    ],
+    "unknown": [
+      "I like apples.",
+      "zebra and sunshine."
+    ]
+  },
+  {
+    "q": 2,
+    "goal": "あなたの箱は何色ですか？",
+    "model": "What color is it?",
+    "hints": [
+      "「何色」は What color。これで始めるピコ。",
+      "What color のあとに is it を続けるピコ。",
+      "What color is it?"
+    ],
+    "accept": [
+      "What color is it?",
+      "What color is your box?",
+      "What colour is the box?",
+      "What color is the box?",
+      "What does your box look like?",
+      "Can you describe your box?",
+      "What color your box?",
+      "What color are the box?",
+      "What does it look like?",
+      "What is the color of the box?",
+      "What colour is your box?",
+      "What is the color?",
+      "What is its color?"
+    ],
+    "reject": [
+      "Is it brown?",
+      "What size is the box?",
+      "What color is the bus?",
+      "The box is brown.",
+      "Where is the box?"
+    ],
+    "unknown": [
+      "I like apples.",
+      "zebra and sunshine."
+    ]
+  },
+  {
+    "q": 3,
+    "goal": "ほかの箱はどこにありますか？",
+    "model": "Where are the other boxes?",
+    "hints": [
+      "「どこ」は Where。「ほかの箱」は the other boxes だピコ。",
+      "Where are のあとに the other boxes を続けるピコ。",
+      "Where are the other boxes?"
+    ],
+    "accept": [
+      "Where are the other boxes?",
+      "Where is the other box?",
+      "Where are the boxes?",
+      "Where can we find the other boxes?",
+      "Where did the other box go?",
+      "Where is other box?",
+      "Where are the other box?",
+      "The other boxes, where?",
+      "Where is another box?",
+      "Where can I find another box?",
+      "Where is box?"
+    ],
+    "reject": [
+      "Where is the bus?",
+      "The box is here.",
+      "I found the box.",
+      "Where is the cart?"
+    ],
+    "unknown": [
+      "I like apples.",
+      "zebra and sunshine."
+    ]
+  },
+  {
+    "q": 4,
+    "goal": "その箱を見せてもらえますか？",
+    "model": "Can I see the box?",
+    "hints": [
+      "「見てもいい？」は Can I see ...? だピコ。",
+      "Can I see のあとに the box を続けるピコ。",
+      "Can I see the box?"
+    ],
+    "accept": [
+      "Can I see the box?",
+      "Can we see that box?",
+      "May I look at the box?",
+      "Please show me the box.",
+      "Could you show us that box?",
+      "Can I see box?",
+      "Show me box, please.",
+      "Can we see the box?",
+      "Could you show me the box?",
+      "Can I look at the box?",
+      "May I see the box?",
+      "Show me the box.",
+      "Show us the box.",
+      "Show me that box.",
+      "Show us that box.",
+      "Please show us the box.",
+      "Show me box.",
+      "Show us box."
+    ],
+    "reject": [
+      "I can't see the box.",
+      "Open the box.",
+      "Don't show me the box.",
+      "Can I see the bus?",
+      "I see the box."
+    ],
+    "unknown": [
+      "I like apples.",
+      "zebra and sunshine."
+    ]
+  },
+  {
+    "q": 5,
+    "goal": "その箱を持っていますか？",
+    "model": "Do you have the box?",
+    "hints": [
+      "「持っていますか？」は Do you have ...? だピコ。",
+      "Do you have のあとに the box を続けるピコ。",
+      "Do you have the box?"
+    ],
+    "accept": [
+      "Do you have the box?",
+      "Have you got the box?",
+      "Do you have my box?",
+      "Is the box here?",
+      "Have you got it?",
+      "You have the box?",
+      "Do you has the box?",
+      "Do you have that box?",
+      "Have you got that box?",
+      "Is that box here?",
+      "Do you have a box?"
+    ],
+    "reject": [
+      "I have the box.",
+      "You don't have the box.",
+      "Do you have a ticket?",
+      "The box is not here.",
+      "Where did you take the boxes?"
+    ],
+    "unknown": [
+      "I like apples.",
+      "zebra and sunshine."
+    ]
+  },
+  {
+    "q": 6,
+    "goal": "このリボンを見てください。",
+    "model": "Look at this ribbon.",
+    "hints": [
+      "「見て」は Look at ...。「リボン」は ribbon だピコ。",
+      "Look at のあとに this ribbon を続けるピコ。",
+      "Look at this ribbon."
+    ],
+    "accept": [
+      "Look at this ribbon.",
+      "Please look at the ribbon.",
+      "Can you look at this ribbon?",
+      "Take a look at this red ribbon.",
+      "Please check this ribbon.",
+      "Look this ribbon.",
+      "Look at ribbon.",
+      "Please look at this ribbon.",
+      "Look at my ribbon, please.",
+      "Could you look at these ribbons?",
+      "Look at that.",
+      "Look at this.",
+      "Look at it.",
+      "Please look at that.",
+      "Please look at this.",
+      "Look at the ribbon.",
+      "Look at the"
+    ],
+    "reject": [
+      "Give me the ribbon.",
+      "Don't look at the ribbon.",
+      "Do not look at the ribbon.",
+      "Look at the bus.",
+      "The ribbon is red."
+    ],
+    "unknown": [
+      "I like apples.",
+      "zebra and sunshine."
+    ]
+  },
+  {
+    "q": 7,
+    "goal": "箱を見ましたか？",
+    "model": "Did you see the box?",
+    "hints": [
+      "「見ましたか？」は Did you see ...? だピコ。",
+      "Did you see のあとに the box を続けるピコ。",
+      "Did you see the box?"
+    ],
+    "accept": [
+      "Did you see the box?",
+      "Have you seen the box?",
+      "Have you seen a brown box?",
+      "Did you see a box with a red ribbon?",
+      "Do you know where the box is?",
+      "Did you saw the box?",
+      "You see the box?",
+      "Do you see the box?",
+      "Did you see a box?",
+      "Have you seen my box?",
+      "Can you see the box?",
+      "Did you see my box?",
+      "You saw the box?",
+      "Did you see the book?",
+      "Did you see the books?"
+    ],
+    "reject": [
+      "Is the box on the cart?",
+      "Did you hear the box?",
+      "Where is the cart?",
+      "Did you read the book?"
+    ],
+    "unknown": [
+      "I like apples.",
+      "zebra and sunshine."
+    ]
+  },
+  {
+    "q": 8,
+    "goal": "ちょっと待ってください！",
+    "model": "Wait, please!",
+    "hints": [
+      "「待って」は Wait。一言でも伝わるピコ。",
+      "Wait に please を添えると丁寧になるピコ。",
+      "Wait, please!"
+    ],
+    "accept": [
+      "Wait, please!",
+      "Please wait!",
+      "Wait!",
+      "Just a moment!",
+      "Hold on!",
+      "Please don't leave yet!",
+      "Please wait me.",
+      "Can you wait?",
+      "Could you wait?",
+      "Just a minute!",
+      "One moment, please.",
+      "Hang on!",
+      "Wait a second!",
+      "Stop the bus, please!",
+      "Please don't go yet!",
+      "Wait a minute.",
+      "Wait a moment.",
+      "Wait a second.",
+      "Just a minute.",
+      "Just a moment.",
+      "Just a second.",
+      "One second, please.",
+      "Hold on a minute.",
+      "Wait for me.",
+      "Wait for us.",
+      "Please wait."
+    ],
+    "reject": [
+      "Go!",
+      "Don't wait!",
+      "Hurry up!",
+      "Go now.",
+      "Don't stop the bus.",
+      "I will wait.",
+      "I can't wait.",
+      "Please don't wait."
+    ],
+    "unknown": [
+      "I like apples.",
+      "zebra and sunshine."
+    ]
+  },
+  {
+    "q": 9,
+    "goal": "その箱を見つけてください。",
+    "model": "Please find the box.",
+    "hints": [
+      "「見つける」は find。「箱」は box だピコ。",
+      "Please のあとに find the box を続けるピコ。",
+      "Please find the box."
+    ],
+    "accept": [
+      "Please look for the box.",
+      "Can you look for the box?",
+      "Please help us find the box.",
+      "Can you check for the box?",
+      "Please find my box.",
+      "Please look for box.",
+      "Please find box.",
+      "Can you finds the box?",
+      "Please find the box.",
+      "Find the box, please.",
+      "Can you find the box?",
+      "Can you help me find the box?",
+      "Can you check the luggage for the box?",
+      "Find the box."
+    ],
+    "reject": [
+      "I found the box.",
+      "Don't find the box.",
+      "Please look at the box.",
+      "Do not look for the box.",
+      "Can you find my ticket?",
+      "I cannot find the box."
+    ],
+    "unknown": [
+      "I like apples.",
+      "zebra and sunshine."
+    ]
+  },
+  {
+    "q": 10,
+    "goal": "これがあなたの箱です。",
+    "model": "This is your box.",
+    "hints": [
+      "「これ」は This。「あなたの箱」は your box だピコ。",
+      "This is のあとに your box を続けるピコ。",
+      "This is your box."
+    ],
+    "accept": [
+      "Here is your box!",
+      "Here's your box!",
+      "This is your box!",
+      "Here you are!",
+      "I found your box!",
+      "We have your box!",
+      "Here your box!",
+      "Here are your box!",
+      "I find your box!",
+      "We found the box!",
+      "I found the box!",
+      "We found your box!",
+      "I have your box!",
+      "There is your box!",
+      "This is your box.",
+      "Here is your box.",
+      "This is the box."
+    ],
+    "reject": [
+      "Where is your box?",
+      "This is not your box.",
+      "Give me your box.",
+      "I did not find the box.",
+      "We don't have the box.",
+      "Can you find the box?",
+      "I will find the box.",
+      "We want to get the box."
+    ],
+    "unknown": [
+      "I like apples.",
+      "zebra and sunshine."
+    ]
+  }
+]

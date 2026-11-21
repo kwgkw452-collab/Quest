@@ -1,0 +1,57 @@
+# Installation on a protected base/default branch requires independent QA + user approval.
+# This PR proposes the workflow; it does not install it on Production or configure its environment.
+name: Engine Guard independent QA
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+    inputs:
+      candidate_sha:
+        description: Full candidate commit SHA to inspect (no candidate code executed)
+        required: true
+        type: string
+permissions:
+  contents: read
+jobs:
+  protected-content:
+    name: Independent QA protected content
+    runs-on: ubuntu-latest
+    environment: engine-guard-independent-qa
+    timeout-minutes: 10
+    env:
+      QA_REPOSITORY: ${{ vars.ENGINE_GUARD_QA_REPOSITORY }}
+      QA_COMMIT: ${{ vars.ENGINE_GUARD_QA_COMMIT }}
+      CANDIDATE_SHA: ${{ github.event.pull_request.head.sha || inputs.candidate_sha }}
+    steps:
+      - name: Require externally approved immutable QA configuration
+        shell: bash
+        run: |
+          if [[ -z "$QA_REPOSITORY" || -z "$QA_COMMIT" ]]; then
+            echo 'HOLD: independent QA baseline is unconfigured; no protection PASS.'
+            exit 2
+          fi
+          [[ "$QA_REPOSITORY" =~ ^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$ ]] || exit 1
+          [[ "$QA_COMMIT" =~ ^[a-f0-9]{40}$ ]] || exit 1
+          [[ "$CANDIDATE_SHA" =~ ^[a-f0-9]{40}$ ]] || exit 1
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ env.QA_REPOSITORY }}
+          ref: ${{ env.QA_COMMIT }}
+          path: qa-approved
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.CANDIDATE_SHA }}
+          path: candidate
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run only the independently pinned verifier, never PR scripts
+        shell: bash
+        run: |
+          [[ "$(git -C qa-approved rev-parse HEAD)" == "$QA_COMMIT" ]] || exit 1
+          [[ "$(git -C candidate rev-parse HEAD)" == "$CANDIDATE_SHA" ]] || exit 1
+          node qa-approved/tools/qc/verify-protected-policy.cjs \
+            candidate qa-approved/specs/qa/engine-guard-policy.json

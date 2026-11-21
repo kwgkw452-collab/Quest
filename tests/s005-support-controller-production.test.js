@@ -79,6 +79,14 @@ function harness() {
   };
 }
 
+async function retryResult(h, q, stage) {
+  await click(h, "もう一度話す");
+  await click(h, "話す");
+  assert.notEqual(h.els.message.textContent, q.picoSupport[stage - 1], "Latest result takes priority over saved hint");
+  assert(h.els.message.textContent.length > 0, "Retry result is visible");
+  await click(h, "ピコのサポート");
+  support(h, q, stage); // Redisplay the retained stage, without incrementing it.
+}
 async function flush() { for (let i = 0; i < 24; i++) await Promise.resolve(); }
 function button(h, label) { return h.els.controls.children.find(el => el.textContent === label); }
 async function click(h, label) {
@@ -105,15 +113,17 @@ function support(h, q, stage) {
     await click(h, "ピコのサポート"); support(h, q, 1);
     await click(h, "もう一度話す");
     assert.strictEqual(h.els.message.textContent, q.picoSupport[0], "S1 is visible at retry speech gate");
-    await click(h, "話す"); support(h, q, 1);
+    await click(h, "話す");
+    assert(h.els.message.textContent.includes("判断できなかった"));
+    await click(h, "ピコのサポート"); support(h, q, 1);
 
     assert.strictEqual(h.els.controls.children.length, 3, "Only the common recovery actions are shown");
     assert(!button(h, "英語を見る")); assert(!button(h, "日本語を見る"));
     await click(h, "ピコのサポート"); support(h, q, 2);
-    await click(h, "もう一度話す"); await click(h, "話す"); support(h, q, 2);
+    await retryResult(h, q, 2);
     await click(h, "ピコのサポート"); support(h, q, 3);
     for (let retry = 0; retry < 2; retry++) {
-      await click(h, "もう一度話す"); await click(h, "話す"); support(h, q, 3);
+      await retryResult(h, q, 3);
     }
     await click(h, "ピコのサポート"); support(h, q, 3);
     await click(h, "もう一度話す"); await click(h, "話す");

@@ -1,0 +1,109 @@
+{
+  "status": "USER_APPROVED_2026_11_21_NOT_INDEPENDENT_QA_BASELINE",
+  "source": "specs/approved/s006-communication-v2/20261121-feedback-lock.md",
+  "sourceSHA256": "cd0c9218a25230212bfe16c721a29f886a6a974b05412a249ca5d6acfe019270",
+  "goals": {
+    "7": "箱を見ましたか？",
+    "9": "その箱を見つけてください。",
+    "10": "これがあなたの箱です。"
+  },
+  "models": {
+    "9": "Please find the box.",
+    "10": "This is your box."
+  },
+  "hints": {
+    "9": [
+      "「見つける」は find。「箱」は box だピコ。",
+      "Please のあとに find the box を続けるピコ。",
+      "Please find the box."
+    ],
+    "10": [
+      "「これ」は This。「あなたの箱」は your box だピコ。",
+      "This is のあとに your box を続けるピコ。",
+      "This is your box."
+    ]
+  },
+  "additionalAccept": {
+    "1": [
+      "Let us help you.",
+      "Let us help you?",
+      "Could I help you?",
+      "Could we help you?",
+      "Could I help?",
+      "Could we help?"
+    ],
+    "2": [
+      "What color is it?",
+      "What is the color?",
+      "What is its color?",
+      "What color is your box?",
+      "What colour is the box?"
+    ],
+    "4": [
+      "Show me the box.",
+      "Show us the box.",
+      "Show me that box.",
+      "Show us that box.",
+      "Please show me the box.",
+      "Please show us the box.",
+      "Show me box.",
+      "Show us box."
+    ],
+    "6": [
+      "Look at that.",
+      "Look at this.",
+      "Look at it.",
+      "Please look at that.",
+      "Please look at this.",
+      "Look at the ribbon.",
+      "Look at ribbon.",
+      "Look at the"
+    ],
+    "8": [
+      "Wait a minute.",
+      "Wait a moment.",
+      "Wait a second.",
+      "Just a minute.",
+      "Just a moment.",
+      "Just a second.",
+      "One moment, please.",
+      "One second, please.",
+      "Hold on a minute.",
+      "Wait for me.",
+      "Wait for us.",
+      "Please wait.",
+      "Wait!"
+    ],
+    "9": [
+      "Please find the box.",
+      "Find the box, please.",
+      "Find the box.",
+      "Can you find the box?",
+      "Please look for the box.",
+      "Can you look for the box?",
+      "Please help us find the box.",
+      "Please find my box."
+    ],
+    "10": [
+      "This is your box.",
+      "Here is your box.",
+      "Here is your box!",
+      "Here's your box!",
+      "Here you are!",
+      "I found your box!",
+      "We have your box!",
+      "This is the box."
+    ]
+  },
+  "recognitionRescue": {
+    "scope": "S006 only",
+    "book": "box",
+    "books": "boxes"
+  },
+  "supersededRejects": {
+    "7": [
+      "Did you see the book?",
+      "Did you see the books?"
+    ]
+  }
+}
