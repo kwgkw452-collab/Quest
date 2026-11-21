@@ -17,7 +17,7 @@
     "success": "",
     "failure": "",
     "picoSupport": [
-      "“No” から始めるピコ。",
+      "「いいえ」だから……ピコ。",
       "“No” を使って答えるピコ。",
       "No, we don’t."
     ],
@@ -43,7 +43,7 @@
     "success": "",
     "failure": "",
     "picoSupport": [
-      "“Four” と言えば人数が伝わるピコ。",
+      "4人だから……ピコ。",
       "“Four” を使って答えるピコ。",
       "Four."
     ],
@@ -100,7 +100,7 @@
     "success": "",
     "failure": "",
     "picoSupport": [
-      "“One” と “bed” を使うピコ。",
+      "1つお願いするピコ。",
       "“One king-size bed” を使うピコ。",
       "One king-size bed, please."
     ],
@@ -126,7 +126,7 @@
     "success": "",
     "failure": "",
     "picoSupport": [
-      "“Two” と “rooms” を使うピコ。",
+      "2だから……ピコ。",
       "“Two” から始めるピコ。",
       "Two rooms, please."
     ],
@@ -153,7 +153,7 @@
     "success": "",
     "failure": "",
     "picoSupport": [
-      "“Yes” から始めるピコ。",
+      "「はい」だから……ピコ。",
       "“Yes” を使って答えるピコ。",
       "Yes, please."
     ],
