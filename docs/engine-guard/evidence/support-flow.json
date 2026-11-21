@@ -1,0 +1,814 @@
+{
+  "source": "/workspace/scratch/0710805e3de2/quest-engine-guard",
+  "boundary": "real Flow, QuestionManager/Presenter stubbed; no DOM claims",
+  "questions": 32,
+  "failures": 0,
+  "summary": {
+    "cap": 32,
+    "reset": 32,
+    "noText": 32,
+    "retry": 32
+  },
+  "results": [
+    {
+      "id": "s005.communication.1",
+      "cap": true,
+      "reset": true,
+      "noText": true,
+      "retry": true,
+      "expected": [
+        null,
+        "「いいえ」だから……ピコ。",
+        "“No” を使って答えるピコ。",
+        null,
+        "“No” を使って答えるピコ。",
+        "No, we don’t.",
+        "No, we don’t."
+      ],
+      "actual": [
+        null,
+        "「いいえ」だから……ピコ。",
+        "“No” を使って答えるピコ。",
+        null,
+        "“No” を使って答えるピコ。",
+        "No, we don’t.",
+        "No, we don’t."
+      ]
+    },
+    {
+      "id": "s005.communication.2",
+      "cap": true,
+      "reset": true,
+      "noText": true,
+      "retry": true,
+      "expected": [
+        null,
+        "4人だから……ピコ。",
+        "“Four” を使って答えるピコ。",
+        null,
+        "“Four” を使って答えるピコ。",
+        "Four.",
+        "Four."
+      ],
+      "actual": [
+        null,
+        "4人だから……ピコ。",
+        "“Four” を使って答えるピコ。",
+        null,
+        "“Four” を使って答えるピコ。",
+        "Four.",
+        "Four."
+      ]
+    },
+    {
+      "id": "s005.communication.3",
+      "cap": true,
+      "reset": true,
+      "noText": true,
+      "retry": true,
+      "expected": [
+        null,
+        "“Do you...” から始めてみるピコ。",
+        "“king-size bed” を使うピコ。",
+        null,
+        "“king-size bed” を使うピコ。",
+        "Do you have a king-size bed?",
+        "Do you have a king-size bed?"
+      ],
+      "actual": [
+        null,
+        "“Do you...” から始めてみるピコ。",
+        "“king-size bed” を使うピコ。",
+        null,
+        "“king-size bed” を使うピコ。",
+        "Do you have a king-size bed?",
+        "Do you have a king-size bed?"
+      ]
+    },
+    {
+      "id": "s005.communication.4",
+      "cap": true,
+      "reset": true,
+      "noText": true,
+      "retry": true,
+      "expected": [
+        null,
+        "1つお願いするピコ。",
+        "“One king-size bed” を使うピコ。",
+        null,
+        "“One king-size bed” を使うピコ。",
+        "One king-size bed, please.",
+        "One king-size bed, please."
+      ],
+      "actual": [
+        null,
+        "1つお願いするピコ。",
+        "“One king-size bed” を使うピコ。",
+        null,
+        "“One king-size bed” を使うピコ。",
+        "One king-size bed, please.",
+        "One king-size bed, please."
+      ]
+    },
+    {
+      "id": "s005.communication.5",
+      "cap": true,
+      "reset": true,
+      "noText": true,
+      "retry": true,
+      "expected": [
+        null,
+        "2だから……ピコ。",
+        "“Two” から始めるピコ。",
+        null,
+        "“Two” から始めるピコ。",
+        "Two rooms, please.",
+        "Two rooms, please."
+      ],
+      "actual": [
+        null,
+        "2だから……ピコ。",
+        "“Two” から始めるピコ。",
+        null,
+        "“Two” から始めるピコ。",
+        "Two rooms, please.",
+        "Two rooms, please."
+      ]
+    },
+    {
+      "id": "s005.communication.6",
+      "cap": true,
+      "reset": true,
+      "noText": true,
+      "retry": true,
+      "expected": [
+        null,
+        "「はい」だから……ピコ。",
+        "“Yes” を使って答えるピコ。",
+        null,
+        "“Yes” を使って答えるピコ。",
+        "Yes, please.",
+        "Yes, please."
+      ],
+      "actual": [
+        null,
+        "「はい」だから……ピコ。",
+        "“Yes” を使って答えるピコ。",
+        null,
+        "“Yes” を使って答えるピコ。",
+        "Yes, please.",
+        "Yes, please."
+      ]
+    },
+    {
+      "id": "s005.communication.7",
+      "cap": true,
+      "reset": true,
+      "noText": true,
+      "retry": true,
+      "expected": [
+        null,
+        "“Are you...” から始めるピコ。",
+        "“OK” を使うピコ。",
+        null,
+        "“OK” を使うピコ。",
+        "Are you OK?",
+        "Are you OK?"
+      ],
+      "actual": [
+        null,
+        "“Are you...” から始めるピコ。",
+        "“OK” を使うピコ。",
+        null,
+        "“OK” を使うピコ。",
+        "Are you OK?",
+        "Are you OK?"
+      ]
+    },
+    {
+      "id": "s005.communication.8",
+      "cap": true,
+      "reset": true,
+      "noText": true,
+      "retry": true,
+      "expected": [
+        null,
+        "“What’s...” から始めてみるピコ。",
+        "“your name” を使うピコ。",
+        null,
+        "“your name” を使うピコ。",
+        "What’s your name?",
+        "What’s your name?"
+      ],
+      "actual": [
+        null,
+        "“What’s...” から始めてみるピコ。",
+        "“your name” を使うピコ。",
+        null,
+        "“your name” を使うピコ。",
+        "What’s your name?",
+        "What’s your name?"
+      ]
+    },
+    {
+      "id": "s005.communication.9",
+      "cap": true,
+      "reset": true,
+      "noText": true,
+      "retry": true,
+      "expected": [
+        null,
+        "“Did you...” または “Do you...” から始めるピコ。",
+        "“steal” を使うピコ。",
+        null,
+        "“steal” を使うピコ。",
+        "Did you steal something?",
+        "Did you steal something?"
+      ],
+      "actual": [
+        null,
+        "“Did you...” または “Do you...” から始めるピコ。",
+        "“steal” を使うピコ。",
+        null,
+        "“steal” を使うピコ。",
+        "Did you steal something?",
+        "Did you steal something?"
+      ]
+    },
+    {
+      "id": "s005.communication.10",
+      "cap": true,
+      "reset": true,
+      "noText": true,
+      "retry": true,
+      "expected": [
+        null,
+        "“Come” または “Let’s” から始めるピコ。",
+        "“with us” または “go” を使うピコ。",
+        null,
+        "“with us” または “go” を使うピコ。",
+        "Come with us.\nLet’s go.",
+        "Come with us.\nLet’s go."
+      ],
+      "actual": [
+        null,
+        "“Come” または “Let’s” から始めるピコ。",
+        "“with us” または “go” を使うピコ。",
+        null,
+        "“with us” または “go” を使うピコ。",
+        "Come with us.\nLet’s go.",
+        "Come with us.\nLet’s go."
+      ]
+    },
+    {
+      "id": "s005.communication.11",
+      "cap": true,
+      "reset": true,
+      "noText": true,
+      "retry": true,
+      "expected": [
+        null,
+        "“Did you...” から始めるピコ。",
+        "“see” と “bag” を使うピコ。",
+        null,
+        "“see” と “bag” を使うピコ。",
+        "Did you see a bag?",
+        "Did you see a bag?"
+      ],
+      "actual": [
+        null,
+        "“Did you...” から始めるピコ。",
+        "“see” と “bag” を使うピコ。",
+        null,
+        "“see” と “bag” を使うピコ。",
+        "Did you see a bag?",
+        "Did you see a bag?"
+      ]
+    },
+    {
+      "id": "s005.communication.12",
+      "cap": true,
+      "reset": true,
+      "noText": true,
+      "retry": true,
+      "expected": [
+        null,
+        "“His...” から始めるピコ。",
+        "“name” と “Ben” を使うピコ。",
+        null,
+        "“name” と “Ben” を使うピコ。",
+        "His name is Ben.",
+        "His name is Ben."
+      ],
+      "actual": [
+        null,
+        "“His...” から始めるピコ。",
+        "“name” と “Ben” を使うピコ。",
+        null,
+        "“name” と “Ben” を使うピコ。",
+        "His name is Ben.",
+        "His name is Ben."
+      ]
+    },
+    {
+      "id": "s006.communication.1",
+      "cap": true,
+      "reset": true,
+      "noText": true,
+      "retry": true,
+      "expected": [
+        null,
+        "「手伝う」は help。Can I ...? で始めるピコ。",
+        "Can I のあとに help you を続けるピコ。",
+        null,
+        "Can I のあとに help you を続けるピコ。",
+        "Can I help you?",
+        "Can I help you?"
+      ],
+      "actual": [
+        null,
+        "「手伝う」は help。Can I ...? で始めるピコ。",
+        "Can I のあとに help you を続けるピコ。",
+        null,
+        "Can I のあとに help you を続けるピコ。",
+        "Can I help you?",
+        "Can I help you?"
+      ]
+    },
+    {
+      "id": "s006.communication.2",
+      "cap": true,
+      "reset": true,
+      "noText": true,
+      "retry": true,
+      "expected": [
+        null,
+        "「何色」は What color。これで始めるピコ。",
+        "What color のあとに is it を続けるピコ。",
+        null,
+        "What color のあとに is it を続けるピコ。",
+        "What color is it?",
+        "What color is it?"
+      ],
+      "actual": [
+        null,
+        "「何色」は What color。これで始めるピコ。",
+        "What color のあとに is it を続けるピコ。",
+        null,
+        "What color のあとに is it を続けるピコ。",
+        "What color is it?",
+        "What color is it?"
+      ]
+    },
+    {
+      "id": "s006.communication.3",
+      "cap": true,
+      "reset": true,
+      "noText": true,
+      "retry": true,
+      "expected": [
+        null,
+        "「どこ」は Where。「ほかの箱」は the other boxes だピコ。",
+        "Where are のあとに the other boxes を続けるピコ。",
+        null,
+        "Where are のあとに the other boxes を続けるピコ。",
+        "Where are the other boxes?",
+        "Where are the other boxes?"
+      ],
+      "actual": [
+        null,
+        "「どこ」は Where。「ほかの箱」は the other boxes だピコ。",
+        "Where are のあとに the other boxes を続けるピコ。",
+        null,
+        "Where are のあとに the other boxes を続けるピコ。",
+        "Where are the other boxes?",
+        "Where are the other boxes?"
+      ]
+    },
+    {
+      "id": "s006.communication.4",
+      "cap": true,
+      "reset": true,
+      "noText": true,
+      "retry": true,
+      "expected": [
+        null,
+        "「見てもいい？」は Can I see ...? だピコ。",
+        "Can I see のあとに the box を続けるピコ。",
+        null,
+        "Can I see のあとに the box を続けるピコ。",
+        "Can I see the box?",
+        "Can I see the box?"
+      ],
+      "actual": [
+        null,
+        "「見てもいい？」は Can I see ...? だピコ。",
+        "Can I see のあとに the box を続けるピコ。",
+        null,
+        "Can I see のあとに the box を続けるピコ。",
+        "Can I see the box?",
+        "Can I see the box?"
+      ]
+    },
+    {
+      "id": "s006.communication.5",
+      "cap": true,
+      "reset": true,
+      "noText": true,
+      "retry": true,
+      "expected": [
+        null,
+        "「持っていますか？」は Do you have ...? だピコ。",
+        "Do you have のあとに the box を続けるピコ。",
+        null,
+        "Do you have のあとに the box を続けるピコ。",
+        "Do you have the box?",
+        "Do you have the box?"
+      ],
+      "actual": [
+        null,
+        "「持っていますか？」は Do you have ...? だピコ。",
+        "Do you have のあとに the box を続けるピコ。",
+        null,
+        "Do you have のあとに the box を続けるピコ。",
+        "Do you have the box?",
+        "Do you have the box?"
+      ]
+    },
+    {
+      "id": "s006.communication.6",
+      "cap": true,
+      "reset": true,
+      "noText": true,
+      "retry": true,
+      "expected": [
+        null,
+        "「見て」は Look at ...。「リボン」は ribbon だピコ。",
+        "Look at のあとに this ribbon を続けるピコ。",
+        null,
+        "Look at のあとに this ribbon を続けるピコ。",
+        "Look at this ribbon.",
+        "Look at this ribbon."
+      ],
+      "actual": [
+        null,
+        "「見て」は Look at ...。「リボン」は ribbon だピコ。",
+        "Look at のあとに this ribbon を続けるピコ。",
+        null,
+        "Look at のあとに this ribbon を続けるピコ。",
+        "Look at this ribbon.",
+        "Look at this ribbon."
+      ]
+    },
+    {
+      "id": "s006.communication.7",
+      "cap": true,
+      "reset": true,
+      "noText": true,
+      "retry": true,
+      "expected": [
+        null,
+        "「見ましたか？」は Did you see ...? だピコ。",
+        "Did you see のあとに the box を続けるピコ。",
+        null,
+        "Did you see のあとに the box を続けるピコ。",
+        "Did you see the box?",
+        "Did you see the box?"
+      ],
+      "actual": [
+        null,
+        "「見ましたか？」は Did you see ...? だピコ。",
+        "Did you see のあとに the box を続けるピコ。",
+        null,
+        "Did you see のあとに the box を続けるピコ。",
+        "Did you see the box?",
+        "Did you see the box?"
+      ]
+    },
+    {
+      "id": "s006.communication.8",
+      "cap": true,
+      "reset": true,
+      "noText": true,
+      "retry": true,
+      "expected": [
+        null,
+        "「待って」は Wait。一言でも伝わるピコ。",
+        "Wait に please を添えると丁寧になるピコ。",
+        null,
+        "Wait に please を添えると丁寧になるピコ。",
+        "Wait, please!",
+        "Wait, please!"
+      ],
+      "actual": [
+        null,
+        "「待って」は Wait。一言でも伝わるピコ。",
+        "Wait に please を添えると丁寧になるピコ。",
+        null,
+        "Wait に please を添えると丁寧になるピコ。",
+        "Wait, please!",
+        "Wait, please!"
+      ]
+    },
+    {
+      "id": "s006.communication.9",
+      "cap": true,
+      "reset": true,
+      "noText": true,
+      "retry": true,
+      "expected": [
+        null,
+        "「探す」は look for。「箱」は box だピコ。",
+        "Please のあとに look for the box を続けるピコ。",
+        null,
+        "Please のあとに look for the box を続けるピコ。",
+        "Please look for the box.",
+        "Please look for the box."
+      ],
+      "actual": [
+        null,
+        "「探す」は look for。「箱」は box だピコ。",
+        "Please のあとに look for the box を続けるピコ。",
+        null,
+        "Please のあとに look for the box を続けるピコ。",
+        "Please look for the box.",
+        "Please look for the box."
+      ]
+    },
+    {
+      "id": "s006.communication.10",
+      "cap": true,
+      "reset": true,
+      "noText": true,
+      "retry": true,
+      "expected": [
+        null,
+        "「はい、どうぞ」は Here is ...。「あなたの箱」は your box だピコ。",
+        "Here is のあとに your box を続けるピコ。",
+        null,
+        "Here is のあとに your box を続けるピコ。",
+        "Here is your box!",
+        "Here is your box!"
+      ],
+      "actual": [
+        null,
+        "「はい、どうぞ」は Here is ...。「あなたの箱」は your box だピコ。",
+        "Here is のあとに your box を続けるピコ。",
+        null,
+        "Here is のあとに your box を続けるピコ。",
+        "Here is your box!",
+        "Here is your box!"
+      ]
+    },
+    {
+      "id": "s007.communication.1",
+      "cap": true,
+      "reset": true,
+      "noText": true,
+      "retry": true,
+      "expected": [
+        null,
+        "挨拶を返しましょう。短い一言で大丈夫です。",
+        "「こんにちは」はHelloです。Hiでも伝わります。",
+        null,
+        "「こんにちは」はHelloです。Hiでも伝わります。",
+        "例：Hello!（こんにちは！）",
+        "例：Hello!（こんにちは！）"
+      ],
+      "actual": [
+        null,
+        "挨拶を返しましょう。短い一言で大丈夫です。",
+        "「こんにちは」はHelloです。Hiでも伝わります。",
+        null,
+        "「こんにちは」はHelloです。Hiでも伝わります。",
+        "例：Hello!（こんにちは！）",
+        "例：Hello!（こんにちは！）"
+      ]
+    },
+    {
+      "id": "s007.communication.2",
+      "cap": true,
+      "reset": true,
+      "noText": true,
+      "retry": true,
+      "expected": [
+        null,
+        "鳥の写真を撮るか、メグに質問しよう。",
+        "「あなたは〜しますか？」はDo you ...?。「写真を撮る」はtake picturesです。",
+        null,
+        "「あなたは〜しますか？」はDo you ...?。「写真を撮る」はtake picturesです。",
+        "例：Do you take pictures of birds?（あなたは鳥の写真を撮りますか？）",
+        "例：Do you take pictures of birds?（あなたは鳥の写真を撮りますか？）"
+      ],
+      "actual": [
+        null,
+        "鳥の写真を撮るか、メグに質問しよう。",
+        "「あなたは〜しますか？」はDo you ...?。「写真を撮る」はtake picturesです。",
+        null,
+        "「あなたは〜しますか？」はDo you ...?。「写真を撮る」はtake picturesです。",
+        "例：Do you take pictures of birds?（あなたは鳥の写真を撮りますか？）",
+        "例：Do you take pictures of birds?（あなたは鳥の写真を撮りますか？）"
+      ]
+    },
+    {
+      "id": "s007.communication.3",
+      "cap": true,
+      "reset": true,
+      "noText": true,
+      "retry": true,
+      "expected": [
+        null,
+        "みんなに歩く速さをゆっくりにしようと提案しよう。",
+        "「〜しよう」はLet's。「歩く」はwalk。「ゆっくり」はslowlyです。",
+        null,
+        "「〜しよう」はLet's。「歩く」はwalk。「ゆっくり」はslowlyです。",
+        "例：Let's walk slowly.（ゆっくり歩こう。）",
+        "例：Let's walk slowly.（ゆっくり歩こう。）"
+      ],
+      "actual": [
+        null,
+        "みんなに歩く速さをゆっくりにしようと提案しよう。",
+        "「〜しよう」はLet's。「歩く」はwalk。「ゆっくり」はslowlyです。",
+        null,
+        "「〜しよう」はLet's。「歩く」はwalk。「ゆっくり」はslowlyです。",
+        "例：Let's walk slowly.（ゆっくり歩こう。）",
+        "例：Let's walk slowly.（ゆっくり歩こう。）"
+      ]
+    },
+    {
+      "id": "s007.communication.4",
+      "cap": true,
+      "reset": true,
+      "noText": true,
+      "retry": true,
+      "expected": [
+        null,
+        "メグに、ひな鳥を見るよう伝えよう。",
+        "「〜を見て」はLook at ...。「鳥」はbirdです。",
+        null,
+        "「〜を見て」はLook at ...。「鳥」はbirdです。",
+        "例：Look at the baby bird!（あのひな鳥を見て！）",
+        "例：Look at the baby bird!（あのひな鳥を見て！）"
+      ],
+      "actual": [
+        null,
+        "メグに、ひな鳥を見るよう伝えよう。",
+        "「〜を見て」はLook at ...。「鳥」はbirdです。",
+        null,
+        "「〜を見て」はLook at ...。「鳥」はbirdです。",
+        "例：Look at the baby bird!（あのひな鳥を見て！）",
+        "例：Look at the baby bird!（あのひな鳥を見て！）"
+      ]
+    },
+    {
+      "id": "s007.communication.5",
+      "cap": true,
+      "reset": true,
+      "noText": true,
+      "retry": true,
+      "expected": [
+        null,
+        "バーニーがひな鳥に近づこうとしているよ。まず止めよう。",
+        "「〜しないで」はDon't。「動く」はmoveです。",
+        null,
+        "「〜しないで」はDon't。「動く」はmoveです。",
+        "例：Don't move!（動かないで！）",
+        "例：Don't move!（動かないで！）"
+      ],
+      "actual": [
+        null,
+        "バーニーがひな鳥に近づこうとしているよ。まず止めよう。",
+        "「〜しないで」はDon't。「動く」はmoveです。",
+        null,
+        "「〜しないで」はDon't。「動く」はmoveです。",
+        "例：Don't move!（動かないで！）",
+        "例：Don't move!（動かないで！）"
+      ]
+    },
+    {
+      "id": "s007.communication.6",
+      "cap": true,
+      "reset": true,
+      "noText": true,
+      "retry": true,
+      "expected": [
+        null,
+        "心配しているメグを安心させよう。",
+        "「心配しないで」はDon't worry.。「大丈夫」はIt's OK.でも伝わります。",
+        null,
+        "「心配しないで」はDon't worry.。「大丈夫」はIt's OK.でも伝わります。",
+        "例：Don't worry.（心配しないで。）",
+        "例：Don't worry.（心配しないで。）"
+      ],
+      "actual": [
+        null,
+        "心配しているメグを安心させよう。",
+        "「心配しないで」はDon't worry.。「大丈夫」はIt's OK.でも伝わります。",
+        null,
+        "「心配しないで」はDon't worry.。「大丈夫」はIt's OK.でも伝わります。",
+        "例：Don't worry.（心配しないで。）",
+        "例：Don't worry.（心配しないで。）"
+      ]
+    },
+    {
+      "id": "s007.communication.7",
+      "cap": true,
+      "reset": true,
+      "noText": true,
+      "retry": true,
+      "expected": [
+        null,
+        "メグに、この場所で待ってもらおう。",
+        "「待つ」はwait。「ここで」はhere。「〜してください」はPleaseを使います。",
+        null,
+        "「待つ」はwait。「ここで」はhere。「〜してください」はPleaseを使います。",
+        "例：Please wait here.（ここで待ってください。）",
+        "例：Please wait here.（ここで待ってください。）"
+      ],
+      "actual": [
+        null,
+        "メグに、この場所で待ってもらおう。",
+        "「待つ」はwait。「ここで」はhere。「〜してください」はPleaseを使います。",
+        null,
+        "「待つ」はwait。「ここで」はhere。「〜してください」はPleaseを使います。",
+        "例：Please wait here.（ここで待ってください。）",
+        "例：Please wait here.（ここで待ってください。）"
+      ]
+    },
+    {
+      "id": "s007.communication.8",
+      "cap": true,
+      "reset": true,
+      "noText": true,
+      "retry": true,
+      "expected": [
+        null,
+        "コングが見に行こうとしているよ。少し待ってもらおう。",
+        "「ちょっと待って」は決まった表現Just a moment.です。Wait a minute.でも大丈夫。",
+        null,
+        "「ちょっと待って」は決まった表現Just a moment.です。Wait a minute.でも大丈夫。",
+        "例：Just a moment.（ちょっと待って。）",
+        "例：Just a moment.（ちょっと待って。）"
+      ],
+      "actual": [
+        null,
+        "コングが見に行こうとしているよ。少し待ってもらおう。",
+        "「ちょっと待って」は決まった表現Just a moment.です。Wait a minute.でも大丈夫。",
+        null,
+        "「ちょっと待って」は決まった表現Just a moment.です。Wait a minute.でも大丈夫。",
+        "例：Just a moment.（ちょっと待って。）",
+        "例：Just a moment.（ちょっと待って。）"
+      ]
+    },
+    {
+      "id": "s007.communication.9",
+      "cap": true,
+      "reset": true,
+      "noText": true,
+      "retry": true,
+      "expected": [
+        null,
+        "バーニーの大きな声を小さくしてもらおう。",
+        "「静かに」はBe quiet.。「お願いします」はpleaseです。",
+        null,
+        "「静かに」はBe quiet.。「お願いします」はpleaseです。",
+        "例：Be quiet, please.（静かにしてください。）",
+        "例：Be quiet, please.（静かにしてください。）"
+      ],
+      "actual": [
+        null,
+        "バーニーの大きな声を小さくしてもらおう。",
+        "「静かに」はBe quiet.。「お願いします」はpleaseです。",
+        null,
+        "「静かに」はBe quiet.。「お願いします」はpleaseです。",
+        "例：Be quiet, please.（静かにしてください。）",
+        "例：Be quiet, please.（静かにしてください。）"
+      ]
+    },
+    {
+      "id": "s007.communication.10",
+      "cap": true,
+      "reset": true,
+      "noText": true,
+      "retry": true,
+      "expected": [
+        null,
+        "メグの撮った写真をほめよう。",
+        "「すてきな写真」はnice pictureやgreat picture。What a ...! でも気持ちが伝わります。",
+        null,
+        "「すてきな写真」はnice pictureやgreat picture。What a ...! でも気持ちが伝わります。",
+        "例：Nice picture!（すてきな写真だね！）",
+        "例：Nice picture!（すてきな写真だね！）"
+      ],
+      "actual": [
+        null,
+        "メグの撮った写真をほめよう。",
+        "「すてきな写真」はnice pictureやgreat picture。What a ...! でも気持ちが伝わります。",
+        null,
+        "「すてきな写真」はnice pictureやgreat picture。What a ...! でも気持ちが伝わります。",
+        "例：Nice picture!（すてきな写真だね！）",
+        "例：Nice picture!（すてきな写真だね！）"
+      ]
+    }
+  ]
+}
