@@ -1,0 +1,29 @@
+name: Engine Guard V1
+on:
+  pull_request:
+  push:
+    branches: ['engine-guard-v1-*']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  node-contracts:
+    name: Node contracts and protected diff
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run current contracts and negative control
+        run: npm test
+      - name: Upload PASS/FAIL, JUnit and individual logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: engine-guard-v1-results
+          path: artifacts/engine-guard/
+          if-no-files-found: error
