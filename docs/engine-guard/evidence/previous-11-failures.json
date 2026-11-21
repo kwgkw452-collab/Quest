@@ -1,0 +1,112 @@
+[
+  {
+    "no": 1,
+    "source": "production",
+    "test": "formal-communicative-isolation-v1.test.js",
+    "oldStatus": "FAIL",
+    "cause": "過去HEADのdev.htmlと共通ファイル全体ハッシュを固定。以後の正式変更を誤検出",
+    "action": "旧版を保管。394件のProduction保護基準と読込順・実行契約へ交換",
+    "currentStatus": "REPLACED_BY_CURRENT_CONTRACT",
+    "note": "旧テストそのものをPASS扱いしない。現行検査の実行結果はresults.jsonに別記。"
+  },
+  {
+    "no": 2,
+    "source": "production",
+    "test": "s005-clean-rebuild-v1.test.js",
+    "oldStatus": "FAIL",
+    "cause": "cb391376の旧CSS/共通Engineハッシュと単一wrapperを要求",
+    "action": "S005 StoryのProduction全文一致、登録順、3ボタン、共通保護へ交換",
+    "currentStatus": "REPLACED_BY_CURRENT_CONTRACT",
+    "note": "旧テストそのものをPASS扱いしない。現行検査の実行結果はresults.jsonに別記。"
+  },
+  {
+    "no": 3,
+    "source": "production",
+    "test": "s006-communication-final-v1.test.js",
+    "oldStatus": "FAIL",
+    "cause": "旧Q7台車質問を正解に要求",
+    "action": "旧テストをhistoricalへ移動し、V2原本・判定テストへ交換",
+    "currentStatus": "REPLACED_BY_CURRENT_CONTRACT",
+    "note": "旧テストそのものをPASS扱いしない。現行検査の実行結果はresults.jsonに別記。"
+  },
+  {
+    "no": 4,
+    "source": "production",
+    "test": "s006-q7-final-correction-v1.test.js",
+    "oldStatus": "FAIL",
+    "cause": "旧Q7の日本語Goalを要求",
+    "action": "旧テストをhistoricalへ移動し、Did you see the box?と旧台車非ACCEPTへ交換",
+    "currentStatus": "REPLACED_BY_CURRENT_CONTRACT",
+    "note": "旧テストそのものをPASS扱いしない。現行検査の実行結果はresults.jsonに別記。"
+  },
+  {
+    "no": 5,
+    "source": "production",
+    "test": "s007-delta.test.js",
+    "oldStatus": "FAIL",
+    "cause": "setFlag未モック、11Scene/旧発話/外部asset-manifest前提",
+    "action": "setFlagモック、13Scene、現行modelの非矛盾、保護基準へ交換。旧代替文は未承認として現役へ再追加しない",
+    "currentStatus": "REPLACED_BY_CURRENT_CONTRACT",
+    "note": "旧テストそのものをPASS扱いしない。現行検査の実行結果はresults.jsonに別記。"
+  },
+  {
+    "no": 6,
+    "source": "pr6",
+    "test": "formal-communicative-isolation-v1.test.js",
+    "oldStatus": "FAIL",
+    "cause": "過去HEADのdev.htmlと共通ファイル全体ハッシュを固定。以後の正式変更を誤検出",
+    "action": "旧版を保管。394件のProduction保護基準と読込順・実行契約へ交換",
+    "currentStatus": "REPLACED_BY_CURRENT_CONTRACT",
+    "note": "旧テストそのものをPASS扱いしない。現行検査の実行結果はresults.jsonに別記。"
+  },
+  {
+    "no": 7,
+    "source": "pr6",
+    "test": "s005-support-controller-production.test.js",
+    "oldStatus": "FAIL",
+    "cause": "Retry直後に旧ヒントを要求し、新しい認識結果優先と矛盾",
+    "action": "最新結果→保持段階の再表示→次段階を実Controller/Presenterで検査",
+    "currentStatus": "REPLACED_BY_CURRENT_CONTRACT",
+    "note": "旧テストそのものをPASS扱いしない。現行検査の実行結果はresults.jsonに別記。"
+  },
+  {
+    "no": 8,
+    "source": "pr7",
+    "test": "formal-communicative-isolation-v1.test.js",
+    "oldStatus": "FAIL",
+    "cause": "過去HEADのdev.htmlと共通ファイル全体ハッシュを固定。以後の正式変更を誤検出",
+    "action": "旧版を保管。394件のProduction保護基準と読込順・実行契約へ交換",
+    "currentStatus": "REPLACED_BY_CURRENT_CONTRACT",
+    "note": "旧テストそのものをPASS扱いしない。現行検査の実行結果はresults.jsonに別記。"
+  },
+  {
+    "no": 9,
+    "source": "pr9",
+    "test": "formal-communicative-isolation-v1.test.js",
+    "oldStatus": "FAIL",
+    "cause": "過去HEADのdev.htmlと共通ファイル全体ハッシュを固定。以後の正式変更を誤検出",
+    "action": "旧版を保管。394件のProduction保護基準と読込順・実行契約へ交換",
+    "currentStatus": "REPLACED_BY_CURRENT_CONTRACT",
+    "note": "旧テストそのものをPASS扱いしない。現行検査の実行結果はresults.jsonに別記。"
+  },
+  {
+    "no": 10,
+    "source": "pr9",
+    "test": "s005-support-controller-production.test.js",
+    "oldStatus": "FAIL",
+    "cause": "Retry直後に旧ヒントを要求し、新しい認識結果優先と矛盾",
+    "action": "最新結果→保持段階の再表示→次段階を実Controller/Presenterで検査",
+    "currentStatus": "REPLACED_BY_CURRENT_CONTRACT",
+    "note": "旧テストそのものをPASS扱いしない。現行検査の実行結果はresults.jsonに別記。"
+  },
+  {
+    "no": 11,
+    "source": "pr10",
+    "test": "formal-communicative-isolation-v1.test.js",
+    "oldStatus": "FAIL",
+    "cause": "過去HEADのdev.htmlと共通ファイル全体ハッシュを固定。以後の正式変更を誤検出",
+    "action": "旧版を保管。394件のProduction保護基準と読込順・実行契約へ交換",
+    "currentStatus": "REPLACED_BY_CURRENT_CONTRACT",
+    "note": "旧テストそのものをPASS扱いしない。現行検査の実行結果はresults.jsonに別記。"
+  }
+]
