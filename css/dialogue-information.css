@@ -163,36 +163,18 @@
   white-space: normal;
 }
 
-/* Reserve space for the controls and a full feedback line when the Goal wraps. */
-#game-stage #game #scene > .communication-dialogue.communication-multiline-goal {
+/* Expanded panels reserve a message row without changing controls or backgrounds. */
+#game-stage #game #scene > .communication-dialogue:is(.communication-feedback, .communication-has-explanation) {
   gap: 1px;
   padding-block: 1px;
 }
-
-#game-stage .communication-multiline-goal > .dialogue-primary {
-  overflow: visible;
-}
-
-#game-stage .communication-multiline-goal .dialogue-primary-goal {
-  line-height: 27px;
-}
-
-#game-stage .communication-multiline-goal > .controls {
+#game-stage .communication-dialogue:is(.communication-feedback, .communication-has-explanation) > .controls {
   flex-basis: 43px;
 }
-
-#game-stage .communication-multiline-goal .control-button {
-  height: 43px;
-  min-height: 43px;
-  max-height: 43px;
-  padding-block: 0;
+#game-stage .communication-dialogue:is(.communication-feedback, .communication-has-explanation) .dialogue-primary-goal {
+  line-height: 27px;
 }
-
-#game-stage .communication-multiline-goal .dialogue-listening-status {
-  height: 43px;
-}
-
-#game-stage .communication-multiline-goal.communication-feedback > .dialogue-information {
+#game-stage .communication-dialogue.communication-has-explanation > .dialogue-information {
   min-height: 28px;
 }
 
@@ -242,7 +224,7 @@
 }
 
 /* Feedback panel only: do not change the S006 background variable or its state conditions. */
-#game-stage #scene > #dialogue-box.dialogue-wide-ui.communication-dialogue.communication-feedback {
+#game-stage #scene:has(#background[style*="images/006/S006-Scene-"]) > #dialogue-box.dialogue-wide-ui.communication-dialogue.communication-feedback {
   height: var(--compact-three-row-height);
   min-height: var(--compact-three-row-height);
   max-height: var(--compact-three-row-height);
