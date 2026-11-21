@@ -7,7 +7,7 @@
       "id": "engine-guard-unrelated-data",
       "status": "PASS",
       "exitCode": 0,
-      "seconds": 0.102,
+      "seconds": 0.159,
       "command": [
         "node",
         "tests/engine-guard-unrelated-data.test.cjs"
@@ -18,7 +18,7 @@
       "id": "engine-guard-layout-contract",
       "status": "PASS",
       "exitCode": 0,
-      "seconds": 0.077,
+      "seconds": 0.11,
       "command": [
         "node",
         "tests/engine-guard-layout-contract.test.cjs"
@@ -29,7 +29,7 @@
       "id": "dialogue-information-layout",
       "status": "PASS",
       "exitCode": 0,
-      "seconds": 0.129,
+      "seconds": 0.072,
       "command": [
         "node",
         "tests/dialogue-information-layout.test.js"
@@ -40,7 +40,7 @@
       "id": "formal-communicative-flow-v1",
       "status": "PASS",
       "exitCode": 0,
-      "seconds": 0.582,
+      "seconds": 0.592,
       "command": [
         "node",
         "tests/formal-communicative-flow-v1.test.js"
@@ -51,7 +51,7 @@
       "id": "formal-communicative-isolation-v1",
       "status": "PASS",
       "exitCode": 0,
-      "seconds": 0.11,
+      "seconds": 0.086,
       "command": [
         "node",
         "tests/formal-communicative-isolation-v1.test.js"
@@ -62,7 +62,7 @@
       "id": "s005-support-controller-production",
       "status": "PASS",
       "exitCode": 0,
-      "seconds": 0.133,
+      "seconds": 0.093,
       "command": [
         "node",
         "tests/s005-support-controller-production.test.js"
@@ -73,7 +73,7 @@
       "id": "s006-ending-v1",
       "status": "PASS",
       "exitCode": 0,
-      "seconds": 0.079,
+      "seconds": 0.085,
       "command": [
         "node",
         "tests/s006-ending-v1.test.js"
@@ -84,7 +84,7 @@
       "id": "s001-full-flow",
       "status": "PASS",
       "exitCode": 0,
-      "seconds": 0.133,
+      "seconds": 0.102,
       "command": [
         "node",
         "tests/s001-full-flow.test.js"
@@ -95,7 +95,7 @@
       "id": "s002-story",
       "status": "PASS",
       "exitCode": 0,
-      "seconds": 0.089,
+      "seconds": 0.135,
       "command": [
         "node",
         "tests/s002-story.test.js"
@@ -106,7 +106,7 @@
       "id": "s003-full-flow",
       "status": "PASS",
       "exitCode": 0,
-      "seconds": 0.12,
+      "seconds": 0.076,
       "command": [
         "node",
         "tests/s003-full-flow.test.js"
@@ -117,7 +117,7 @@
       "id": "s004-full-flow",
       "status": "PASS",
       "exitCode": 0,
-      "seconds": 0.137,
+      "seconds": 0.098,
       "command": [
         "node",
         "tests/s004-full-flow.test.js"
@@ -128,7 +128,7 @@
       "id": "s005-clean-rebuild-v1",
       "status": "PASS",
       "exitCode": 0,
-      "seconds": 0.082,
+      "seconds": 0.071,
       "command": [
         "node",
         "tests/s005-clean-rebuild-v1.test.js"
@@ -139,7 +139,7 @@
       "id": "s006-restored-all-ten-layout-v1",
       "status": "PASS",
       "exitCode": 0,
-      "seconds": 0.072,
+      "seconds": 0.068,
       "command": [
         "node",
         "tests/s006-restored-all-ten-layout-v1.test.js"
@@ -150,7 +150,7 @@
       "id": "s007-delta",
       "status": "PASS",
       "exitCode": 0,
-      "seconds": 0.079,
+      "seconds": 0.081,
       "command": [
         "node",
         "tests/s007-delta.test.js"
@@ -161,7 +161,7 @@
       "id": "player-name-save",
       "status": "PASS",
       "exitCode": 0,
-      "seconds": 0.069,
+      "seconds": 0.096,
       "command": [
         "node",
         "tests/player-name-save.test.js"
@@ -172,7 +172,7 @@
       "id": "communication-recovery-visible-v1",
       "status": "PASS",
       "exitCode": 0,
-      "seconds": 0.076,
+      "seconds": 0.1,
       "command": [
         "node",
         "tests/communication-recovery-visible-v1.test.js"
@@ -183,7 +183,7 @@
       "id": "communication-recovery-ui-v21",
       "status": "PASS",
       "exitCode": 0,
-      "seconds": 0.084,
+      "seconds": 0.093,
       "command": [
         "node",
         "tests/communication-recovery-ui-v21.test.js"
@@ -194,7 +194,7 @@
       "id": "pico-first-hint-english-v1",
       "status": "PASS",
       "exitCode": 0,
-      "seconds": 0.091,
+      "seconds": 0.073,
       "command": [
         "node",
         "tests/pico-first-hint-english-v1.test.js"
@@ -205,7 +205,7 @@
       "id": "s006-communication-v2",
       "status": "PASS",
       "exitCode": 0,
-      "seconds": 0.085,
+      "seconds": 0.091,
       "command": [
         "node",
         "tests/s006-communication-v2.test.js"
@@ -216,7 +216,7 @@
       "id": "s006-final-review",
       "status": "PASS",
       "exitCode": 0,
-      "seconds": 0.117,
+      "seconds": 0.113,
       "command": [
         "node",
         "tools/qc/check-s006-against-final-review.cjs",
@@ -229,7 +229,7 @@
       "id": "communication-controls",
       "status": "PASS",
       "exitCode": 0,
-      "seconds": 0.097,
+      "seconds": 0.131,
       "command": [
         "node",
         "tools/qc/check-communication-controls.cjs",
@@ -241,7 +241,7 @@
       "id": "support-flow",
       "status": "PASS",
       "exitCode": 0,
-      "seconds": 0.09,
+      "seconds": 0.103,
       "command": [
         "node",
         "tools/qc/check-support-flow.cjs",
@@ -253,7 +253,7 @@
       "id": "pr9-negative-control",
       "status": "PASS",
       "exitCode": 0,
-      "seconds": 0.569,
+      "seconds": 0.498,
       "command": [
         "node",
         "tools/qc/prove-negative-controls.cjs"
@@ -264,7 +264,7 @@
       "id": "pr7-overwrite-negative-control",
       "status": "PASS",
       "exitCode": 0,
-      "seconds": 0.203,
+      "seconds": 0.205,
       "command": [
         "node",
         "tools/qc/prove-pr7-v2-overwrite.cjs"
@@ -275,7 +275,7 @@
       "id": "protected-diff",
       "status": "PASS",
       "exitCode": 0,
-      "seconds": 0.783,
+      "seconds": 0.805,
       "command": [
         "node",
         "tools/qc/check-diff.cjs"
