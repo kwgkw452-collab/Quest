@@ -1,0 +1,2700 @@
+{
+  "source": "/workspace/scratch/0710805e3de2/quest-engine-guard",
+  "kind": "real Presenter + DialogManager, fake DOM; no CSS/geometry claims",
+  "pass": true,
+  "expected": [
+    "もう一度話す",
+    "ピコのサポート",
+    "冒険を続ける"
+  ],
+  "snapshots": [
+    {
+      "id": "s005.communication.1",
+      "status": "reject",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "いいえ、予約していません。",
+      "expectedGoal": "いいえ、予約していません。",
+      "message": "latest recognition と聞こえたよ。 ｜ もう一度考えてみようピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.1",
+      "status": "reject",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "いいえ、予約していません。",
+      "expectedGoal": "いいえ、予約していません。",
+      "message": "「いいえ」だから……ピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.1",
+      "status": "unknown",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "いいえ、予約していません。",
+      "expectedGoal": "いいえ、予約していません。",
+      "message": "latest recognition と聞こえたよ。 ｜ うまく判断できなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.1",
+      "status": "unknown",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "いいえ、予約していません。",
+      "expectedGoal": "いいえ、予約していません。",
+      "message": "「いいえ」だから……ピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.1",
+      "status": "speech-failure",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "いいえ、予約していません。",
+      "expectedGoal": "いいえ、予約していません。",
+      "message": "うまく聞き取れなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.1",
+      "status": "speech-failure",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "いいえ、予約していません。",
+      "expectedGoal": "いいえ、予約していません。",
+      "message": "「いいえ」だから……ピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.2",
+      "status": "reject",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "4人です。",
+      "expectedGoal": "4人です。",
+      "message": "latest recognition と聞こえたよ。 ｜ もう一度考えてみようピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.2",
+      "status": "reject",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "4人です。",
+      "expectedGoal": "4人です。",
+      "message": "4人だから……ピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.2",
+      "status": "unknown",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "4人です。",
+      "expectedGoal": "4人です。",
+      "message": "latest recognition と聞こえたよ。 ｜ うまく判断できなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.2",
+      "status": "unknown",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "4人です。",
+      "expectedGoal": "4人です。",
+      "message": "4人だから……ピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.2",
+      "status": "speech-failure",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "4人です。",
+      "expectedGoal": "4人です。",
+      "message": "うまく聞き取れなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.2",
+      "status": "speech-failure",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "4人です。",
+      "expectedGoal": "4人です。",
+      "message": "4人だから……ピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.3",
+      "status": "reject",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "キングサイズのベッドはありますか？",
+      "expectedGoal": "キングサイズのベッドはありますか？",
+      "message": "latest recognition と聞こえたよ。 ｜ もう一度考えてみようピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.3",
+      "status": "reject",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "キングサイズのベッドはありますか？",
+      "expectedGoal": "キングサイズのベッドはありますか？",
+      "message": "“Do you...” から始めてみるピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.3",
+      "status": "unknown",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "キングサイズのベッドはありますか？",
+      "expectedGoal": "キングサイズのベッドはありますか？",
+      "message": "latest recognition と聞こえたよ。 ｜ うまく判断できなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.3",
+      "status": "unknown",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "キングサイズのベッドはありますか？",
+      "expectedGoal": "キングサイズのベッドはありますか？",
+      "message": "“Do you...” から始めてみるピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.3",
+      "status": "speech-failure",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "キングサイズのベッドはありますか？",
+      "expectedGoal": "キングサイズのベッドはありますか？",
+      "message": "うまく聞き取れなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.3",
+      "status": "speech-failure",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "キングサイズのベッドはありますか？",
+      "expectedGoal": "キングサイズのベッドはありますか？",
+      "message": "“Do you...” から始めてみるピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.4",
+      "status": "reject",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "キングサイズのベッドを1つお願いします。",
+      "expectedGoal": "キングサイズのベッドを1つお願いします。",
+      "message": "latest recognition と聞こえたよ。 ｜ もう一度考えてみようピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.4",
+      "status": "reject",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "キングサイズのベッドを1つお願いします。",
+      "expectedGoal": "キングサイズのベッドを1つお願いします。",
+      "message": "1つお願いするピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.4",
+      "status": "unknown",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "キングサイズのベッドを1つお願いします。",
+      "expectedGoal": "キングサイズのベッドを1つお願いします。",
+      "message": "latest recognition と聞こえたよ。 ｜ うまく判断できなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.4",
+      "status": "unknown",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "キングサイズのベッドを1つお願いします。",
+      "expectedGoal": "キングサイズのベッドを1つお願いします。",
+      "message": "1つお願いするピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.4",
+      "status": "speech-failure",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "キングサイズのベッドを1つお願いします。",
+      "expectedGoal": "キングサイズのベッドを1つお願いします。",
+      "message": "うまく聞き取れなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.4",
+      "status": "speech-failure",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "キングサイズのベッドを1つお願いします。",
+      "expectedGoal": "キングサイズのベッドを1つお願いします。",
+      "message": "1つお願いするピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.5",
+      "status": "reject",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "2部屋お願いします。",
+      "expectedGoal": "2部屋お願いします。",
+      "message": "latest recognition と聞こえたよ。 ｜ もう一度考えてみようピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.5",
+      "status": "reject",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "2部屋お願いします。",
+      "expectedGoal": "2部屋お願いします。",
+      "message": "2だから……ピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.5",
+      "status": "unknown",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "2部屋お願いします。",
+      "expectedGoal": "2部屋お願いします。",
+      "message": "latest recognition と聞こえたよ。 ｜ うまく判断できなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.5",
+      "status": "unknown",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "2部屋お願いします。",
+      "expectedGoal": "2部屋お願いします。",
+      "message": "2だから……ピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.5",
+      "status": "speech-failure",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "2部屋お願いします。",
+      "expectedGoal": "2部屋お願いします。",
+      "message": "うまく聞き取れなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.5",
+      "status": "speech-failure",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "2部屋お願いします。",
+      "expectedGoal": "2部屋お願いします。",
+      "message": "2だから……ピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.6",
+      "status": "reject",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "はい、お願いします。",
+      "expectedGoal": "はい、お願いします。",
+      "message": "latest recognition と聞こえたよ。 ｜ もう一度考えてみようピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.6",
+      "status": "reject",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "はい、お願いします。",
+      "expectedGoal": "はい、お願いします。",
+      "message": "「はい」だから……ピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.6",
+      "status": "unknown",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "はい、お願いします。",
+      "expectedGoal": "はい、お願いします。",
+      "message": "latest recognition と聞こえたよ。 ｜ うまく判断できなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.6",
+      "status": "unknown",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "はい、お願いします。",
+      "expectedGoal": "はい、お願いします。",
+      "message": "「はい」だから……ピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.6",
+      "status": "speech-failure",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "はい、お願いします。",
+      "expectedGoal": "はい、お願いします。",
+      "message": "うまく聞き取れなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.6",
+      "status": "speech-failure",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "はい、お願いします。",
+      "expectedGoal": "はい、お願いします。",
+      "message": "「はい」だから……ピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.7",
+      "status": "reject",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "大丈夫ですか？",
+      "expectedGoal": "大丈夫ですか？",
+      "message": "latest recognition と聞こえたよ。 ｜ もう一度考えてみようピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.7",
+      "status": "reject",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "大丈夫ですか？",
+      "expectedGoal": "大丈夫ですか？",
+      "message": "“Are you...” から始めるピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.7",
+      "status": "unknown",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "大丈夫ですか？",
+      "expectedGoal": "大丈夫ですか？",
+      "message": "latest recognition と聞こえたよ。 ｜ うまく判断できなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.7",
+      "status": "unknown",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "大丈夫ですか？",
+      "expectedGoal": "大丈夫ですか？",
+      "message": "“Are you...” から始めるピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.7",
+      "status": "speech-failure",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "大丈夫ですか？",
+      "expectedGoal": "大丈夫ですか？",
+      "message": "うまく聞き取れなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.7",
+      "status": "speech-failure",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "大丈夫ですか？",
+      "expectedGoal": "大丈夫ですか？",
+      "message": "“Are you...” から始めるピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.8",
+      "status": "reject",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "（あなたの）名前は何ですか？",
+      "expectedGoal": "（あなたの）名前は何ですか？",
+      "message": "latest recognition と聞こえたよ。 ｜ もう一度考えてみようピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.8",
+      "status": "reject",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "（あなたの）名前は何ですか？",
+      "expectedGoal": "（あなたの）名前は何ですか？",
+      "message": "“What’s...” から始めてみるピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.8",
+      "status": "unknown",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "（あなたの）名前は何ですか？",
+      "expectedGoal": "（あなたの）名前は何ですか？",
+      "message": "latest recognition と聞こえたよ。 ｜ うまく判断できなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.8",
+      "status": "unknown",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "（あなたの）名前は何ですか？",
+      "expectedGoal": "（あなたの）名前は何ですか？",
+      "message": "“What’s...” から始めてみるピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.8",
+      "status": "speech-failure",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "（あなたの）名前は何ですか？",
+      "expectedGoal": "（あなたの）名前は何ですか？",
+      "message": "うまく聞き取れなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.8",
+      "status": "speech-failure",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "（あなたの）名前は何ですか？",
+      "expectedGoal": "（あなたの）名前は何ですか？",
+      "message": "“What’s...” から始めてみるピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.9",
+      "status": "reject",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "物を盗みましたか？",
+      "expectedGoal": "物を盗みましたか？",
+      "message": "latest recognition と聞こえたよ。 ｜ もう一度考えてみようピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.9",
+      "status": "reject",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "物を盗みましたか？",
+      "expectedGoal": "物を盗みましたか？",
+      "message": "“Did you...” または “Do you...” から始めるピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.9",
+      "status": "unknown",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "物を盗みましたか？",
+      "expectedGoal": "物を盗みましたか？",
+      "message": "latest recognition と聞こえたよ。 ｜ うまく判断できなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.9",
+      "status": "unknown",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "物を盗みましたか？",
+      "expectedGoal": "物を盗みましたか？",
+      "message": "“Did you...” または “Do you...” から始めるピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.9",
+      "status": "speech-failure",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "物を盗みましたか？",
+      "expectedGoal": "物を盗みましたか？",
+      "message": "うまく聞き取れなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.9",
+      "status": "speech-failure",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "物を盗みましたか？",
+      "expectedGoal": "物を盗みましたか？",
+      "message": "“Did you...” または “Do you...” から始めるピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.10",
+      "status": "reject",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "私たちと一緒に来て。",
+      "expectedGoal": "私たちと一緒に来て。",
+      "message": "latest recognition と聞こえたよ。 ｜ もう一度考えてみようピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.10",
+      "status": "reject",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "私たちと一緒に来て。",
+      "expectedGoal": "私たちと一緒に来て。",
+      "message": "“Come” または “Let’s” から始めるピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.10",
+      "status": "unknown",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "私たちと一緒に来て。",
+      "expectedGoal": "私たちと一緒に来て。",
+      "message": "latest recognition と聞こえたよ。 ｜ うまく判断できなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.10",
+      "status": "unknown",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "私たちと一緒に来て。",
+      "expectedGoal": "私たちと一緒に来て。",
+      "message": "“Come” または “Let’s” から始めるピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.10",
+      "status": "speech-failure",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "私たちと一緒に来て。",
+      "expectedGoal": "私たちと一緒に来て。",
+      "message": "うまく聞き取れなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.10",
+      "status": "speech-failure",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "私たちと一緒に来て。",
+      "expectedGoal": "私たちと一緒に来て。",
+      "message": "“Come” または “Let’s” から始めるピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.11",
+      "status": "reject",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "バッグを見ましたか？",
+      "expectedGoal": "バッグを見ましたか？",
+      "message": "latest recognition と聞こえたよ。 ｜ もう一度考えてみようピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.11",
+      "status": "reject",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "バッグを見ましたか？",
+      "expectedGoal": "バッグを見ましたか？",
+      "message": "“Did you...” から始めるピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.11",
+      "status": "unknown",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "バッグを見ましたか？",
+      "expectedGoal": "バッグを見ましたか？",
+      "message": "latest recognition と聞こえたよ。 ｜ うまく判断できなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.11",
+      "status": "unknown",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "バッグを見ましたか？",
+      "expectedGoal": "バッグを見ましたか？",
+      "message": "“Did you...” から始めるピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.11",
+      "status": "speech-failure",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "バッグを見ましたか？",
+      "expectedGoal": "バッグを見ましたか？",
+      "message": "うまく聞き取れなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.11",
+      "status": "speech-failure",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "バッグを見ましたか？",
+      "expectedGoal": "バッグを見ましたか？",
+      "message": "“Did you...” から始めるピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.12",
+      "status": "reject",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "彼の名前はBenです。",
+      "expectedGoal": "彼の名前はBenです。",
+      "message": "latest recognition と聞こえたよ。 ｜ もう一度考えてみようピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.12",
+      "status": "reject",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "彼の名前はBenです。",
+      "expectedGoal": "彼の名前はBenです。",
+      "message": "“His...” から始めるピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.12",
+      "status": "unknown",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "彼の名前はBenです。",
+      "expectedGoal": "彼の名前はBenです。",
+      "message": "latest recognition と聞こえたよ。 ｜ うまく判断できなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.12",
+      "status": "unknown",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "彼の名前はBenです。",
+      "expectedGoal": "彼の名前はBenです。",
+      "message": "“His...” から始めるピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.12",
+      "status": "speech-failure",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "彼の名前はBenです。",
+      "expectedGoal": "彼の名前はBenです。",
+      "message": "うまく聞き取れなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s005.communication.12",
+      "status": "speech-failure",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "彼の名前はBenです。",
+      "expectedGoal": "彼の名前はBenです。",
+      "message": "“His...” から始めるピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.1",
+      "status": "reject",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "お手伝いしましょうか？",
+      "expectedGoal": "お手伝いしましょうか？",
+      "message": "latest recognition と聞こえたよ。 ｜ もう一度考えてみようピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.1",
+      "status": "reject",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "お手伝いしましょうか？",
+      "expectedGoal": "お手伝いしましょうか？",
+      "message": "「手伝う」は help。Can I ...? で始めるピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.1",
+      "status": "unknown",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "お手伝いしましょうか？",
+      "expectedGoal": "お手伝いしましょうか？",
+      "message": "latest recognition と聞こえたよ。 ｜ うまく判断できなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.1",
+      "status": "unknown",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "お手伝いしましょうか？",
+      "expectedGoal": "お手伝いしましょうか？",
+      "message": "「手伝う」は help。Can I ...? で始めるピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.1",
+      "status": "speech-failure",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "お手伝いしましょうか？",
+      "expectedGoal": "お手伝いしましょうか？",
+      "message": "うまく聞き取れなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.1",
+      "status": "speech-failure",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "お手伝いしましょうか？",
+      "expectedGoal": "お手伝いしましょうか？",
+      "message": "「手伝う」は help。Can I ...? で始めるピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.2",
+      "status": "reject",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "あなたの箱は何色ですか？",
+      "expectedGoal": "あなたの箱は何色ですか？",
+      "message": "latest recognition と聞こえたよ。 ｜ もう一度考えてみようピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.2",
+      "status": "reject",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "あなたの箱は何色ですか？",
+      "expectedGoal": "あなたの箱は何色ですか？",
+      "message": "「何色」は What color。これで始めるピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.2",
+      "status": "unknown",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "あなたの箱は何色ですか？",
+      "expectedGoal": "あなたの箱は何色ですか？",
+      "message": "latest recognition と聞こえたよ。 ｜ うまく判断できなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.2",
+      "status": "unknown",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "あなたの箱は何色ですか？",
+      "expectedGoal": "あなたの箱は何色ですか？",
+      "message": "「何色」は What color。これで始めるピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.2",
+      "status": "speech-failure",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "あなたの箱は何色ですか？",
+      "expectedGoal": "あなたの箱は何色ですか？",
+      "message": "うまく聞き取れなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.2",
+      "status": "speech-failure",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "あなたの箱は何色ですか？",
+      "expectedGoal": "あなたの箱は何色ですか？",
+      "message": "「何色」は What color。これで始めるピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.3",
+      "status": "reject",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "ほかの箱はどこにありますか？",
+      "expectedGoal": "ほかの箱はどこにありますか？",
+      "message": "latest recognition と聞こえたよ。 ｜ もう一度考えてみようピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.3",
+      "status": "reject",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "ほかの箱はどこにありますか？",
+      "expectedGoal": "ほかの箱はどこにありますか？",
+      "message": "「どこ」は Where。「ほかの箱」は the other boxes だピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.3",
+      "status": "unknown",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "ほかの箱はどこにありますか？",
+      "expectedGoal": "ほかの箱はどこにありますか？",
+      "message": "latest recognition と聞こえたよ。 ｜ うまく判断できなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.3",
+      "status": "unknown",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "ほかの箱はどこにありますか？",
+      "expectedGoal": "ほかの箱はどこにありますか？",
+      "message": "「どこ」は Where。「ほかの箱」は the other boxes だピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.3",
+      "status": "speech-failure",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "ほかの箱はどこにありますか？",
+      "expectedGoal": "ほかの箱はどこにありますか？",
+      "message": "うまく聞き取れなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.3",
+      "status": "speech-failure",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "ほかの箱はどこにありますか？",
+      "expectedGoal": "ほかの箱はどこにありますか？",
+      "message": "「どこ」は Where。「ほかの箱」は the other boxes だピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.4",
+      "status": "reject",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "その箱を見せてもらえますか？",
+      "expectedGoal": "その箱を見せてもらえますか？",
+      "message": "latest recognition と聞こえたよ。 ｜ もう一度考えてみようピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.4",
+      "status": "reject",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "その箱を見せてもらえますか？",
+      "expectedGoal": "その箱を見せてもらえますか？",
+      "message": "「見てもいい？」は Can I see ...? だピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.4",
+      "status": "unknown",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "その箱を見せてもらえますか？",
+      "expectedGoal": "その箱を見せてもらえますか？",
+      "message": "latest recognition と聞こえたよ。 ｜ うまく判断できなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.4",
+      "status": "unknown",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "その箱を見せてもらえますか？",
+      "expectedGoal": "その箱を見せてもらえますか？",
+      "message": "「見てもいい？」は Can I see ...? だピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.4",
+      "status": "speech-failure",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "その箱を見せてもらえますか？",
+      "expectedGoal": "その箱を見せてもらえますか？",
+      "message": "うまく聞き取れなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.4",
+      "status": "speech-failure",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "その箱を見せてもらえますか？",
+      "expectedGoal": "その箱を見せてもらえますか？",
+      "message": "「見てもいい？」は Can I see ...? だピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.5",
+      "status": "reject",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "その箱を持っていますか？",
+      "expectedGoal": "その箱を持っていますか？",
+      "message": "latest recognition と聞こえたよ。 ｜ もう一度考えてみようピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.5",
+      "status": "reject",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "その箱を持っていますか？",
+      "expectedGoal": "その箱を持っていますか？",
+      "message": "「持っていますか？」は Do you have ...? だピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.5",
+      "status": "unknown",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "その箱を持っていますか？",
+      "expectedGoal": "その箱を持っていますか？",
+      "message": "latest recognition と聞こえたよ。 ｜ うまく判断できなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.5",
+      "status": "unknown",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "その箱を持っていますか？",
+      "expectedGoal": "その箱を持っていますか？",
+      "message": "「持っていますか？」は Do you have ...? だピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.5",
+      "status": "speech-failure",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "その箱を持っていますか？",
+      "expectedGoal": "その箱を持っていますか？",
+      "message": "うまく聞き取れなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.5",
+      "status": "speech-failure",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "その箱を持っていますか？",
+      "expectedGoal": "その箱を持っていますか？",
+      "message": "「持っていますか？」は Do you have ...? だピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.6",
+      "status": "reject",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "このリボンを見てください。",
+      "expectedGoal": "このリボンを見てください。",
+      "message": "latest recognition と聞こえたよ。 ｜ もう一度考えてみようピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.6",
+      "status": "reject",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "このリボンを見てください。",
+      "expectedGoal": "このリボンを見てください。",
+      "message": "「見て」は Look at ...。「リボン」は ribbon だピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.6",
+      "status": "unknown",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "このリボンを見てください。",
+      "expectedGoal": "このリボンを見てください。",
+      "message": "latest recognition と聞こえたよ。 ｜ うまく判断できなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.6",
+      "status": "unknown",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "このリボンを見てください。",
+      "expectedGoal": "このリボンを見てください。",
+      "message": "「見て」は Look at ...。「リボン」は ribbon だピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.6",
+      "status": "speech-failure",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "このリボンを見てください。",
+      "expectedGoal": "このリボンを見てください。",
+      "message": "うまく聞き取れなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.6",
+      "status": "speech-failure",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "このリボンを見てください。",
+      "expectedGoal": "このリボンを見てください。",
+      "message": "「見て」は Look at ...。「リボン」は ribbon だピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.7",
+      "status": "reject",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "探している箱を見ましたか？",
+      "expectedGoal": "探している箱を見ましたか？",
+      "message": "latest recognition と聞こえたよ。 ｜ もう一度考えてみようピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.7",
+      "status": "reject",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "探している箱を見ましたか？",
+      "expectedGoal": "探している箱を見ましたか？",
+      "message": "「見ましたか？」は Did you see ...? だピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.7",
+      "status": "unknown",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "探している箱を見ましたか？",
+      "expectedGoal": "探している箱を見ましたか？",
+      "message": "latest recognition と聞こえたよ。 ｜ うまく判断できなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.7",
+      "status": "unknown",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "探している箱を見ましたか？",
+      "expectedGoal": "探している箱を見ましたか？",
+      "message": "「見ましたか？」は Did you see ...? だピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.7",
+      "status": "speech-failure",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "探している箱を見ましたか？",
+      "expectedGoal": "探している箱を見ましたか？",
+      "message": "うまく聞き取れなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.7",
+      "status": "speech-failure",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "探している箱を見ましたか？",
+      "expectedGoal": "探している箱を見ましたか？",
+      "message": "「見ましたか？」は Did you see ...? だピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.8",
+      "status": "reject",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "ちょっと待ってください！",
+      "expectedGoal": "ちょっと待ってください！",
+      "message": "latest recognition と聞こえたよ。 ｜ もう一度考えてみようピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.8",
+      "status": "reject",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "ちょっと待ってください！",
+      "expectedGoal": "ちょっと待ってください！",
+      "message": "「待って」は Wait。一言でも伝わるピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.8",
+      "status": "unknown",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "ちょっと待ってください！",
+      "expectedGoal": "ちょっと待ってください！",
+      "message": "latest recognition と聞こえたよ。 ｜ うまく判断できなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.8",
+      "status": "unknown",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "ちょっと待ってください！",
+      "expectedGoal": "ちょっと待ってください！",
+      "message": "「待って」は Wait。一言でも伝わるピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.8",
+      "status": "speech-failure",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "ちょっと待ってください！",
+      "expectedGoal": "ちょっと待ってください！",
+      "message": "うまく聞き取れなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.8",
+      "status": "speech-failure",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "ちょっと待ってください！",
+      "expectedGoal": "ちょっと待ってください！",
+      "message": "「待って」は Wait。一言でも伝わるピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.9",
+      "status": "reject",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "その箱を探してください。",
+      "expectedGoal": "その箱を探してください。",
+      "message": "latest recognition と聞こえたよ。 ｜ もう一度考えてみようピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.9",
+      "status": "reject",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "その箱を探してください。",
+      "expectedGoal": "その箱を探してください。",
+      "message": "「探す」は look for。「箱」は box だピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.9",
+      "status": "unknown",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "その箱を探してください。",
+      "expectedGoal": "その箱を探してください。",
+      "message": "latest recognition と聞こえたよ。 ｜ うまく判断できなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.9",
+      "status": "unknown",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "その箱を探してください。",
+      "expectedGoal": "その箱を探してください。",
+      "message": "「探す」は look for。「箱」は box だピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.9",
+      "status": "speech-failure",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "その箱を探してください。",
+      "expectedGoal": "その箱を探してください。",
+      "message": "うまく聞き取れなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.9",
+      "status": "speech-failure",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "その箱を探してください。",
+      "expectedGoal": "その箱を探してください。",
+      "message": "「探す」は look for。「箱」は box だピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.10",
+      "status": "reject",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "はい、あなたの箱です！",
+      "expectedGoal": "はい、あなたの箱です！",
+      "message": "latest recognition と聞こえたよ。 ｜ もう一度考えてみようピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.10",
+      "status": "reject",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "はい、あなたの箱です！",
+      "expectedGoal": "はい、あなたの箱です！",
+      "message": "「はい、どうぞ」は Here is ...。「あなたの箱」は your box だピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.10",
+      "status": "unknown",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "はい、あなたの箱です！",
+      "expectedGoal": "はい、あなたの箱です！",
+      "message": "latest recognition と聞こえたよ。 ｜ うまく判断できなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.10",
+      "status": "unknown",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "はい、あなたの箱です！",
+      "expectedGoal": "はい、あなたの箱です！",
+      "message": "「はい、どうぞ」は Here is ...。「あなたの箱」は your box だピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.10",
+      "status": "speech-failure",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "はい、あなたの箱です！",
+      "expectedGoal": "はい、あなたの箱です！",
+      "message": "うまく聞き取れなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s006.communication.10",
+      "status": "speech-failure",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "はい、あなたの箱です！",
+      "expectedGoal": "はい、あなたの箱です！",
+      "message": "「はい、どうぞ」は Here is ...。「あなたの箱」は your box だピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.1",
+      "status": "reject",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "メグに「こんにちは」と英語で挨拶を返す。",
+      "expectedGoal": "メグに「こんにちは」と英語で挨拶を返す。",
+      "message": "latest recognition と聞こえたよ。 ｜ もう一度考えてみようピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.1",
+      "status": "reject",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "メグに「こんにちは」と英語で挨拶を返す。",
+      "expectedGoal": "メグに「こんにちは」と英語で挨拶を返す。",
+      "message": "挨拶を返しましょう。短い一言で大丈夫です。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.1",
+      "status": "unknown",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "メグに「こんにちは」と英語で挨拶を返す。",
+      "expectedGoal": "メグに「こんにちは」と英語で挨拶を返す。",
+      "message": "latest recognition と聞こえたよ。 ｜ うまく判断できなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.1",
+      "status": "unknown",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "メグに「こんにちは」と英語で挨拶を返す。",
+      "expectedGoal": "メグに「こんにちは」と英語で挨拶を返す。",
+      "message": "挨拶を返しましょう。短い一言で大丈夫です。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.1",
+      "status": "speech-failure",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "メグに「こんにちは」と英語で挨拶を返す。",
+      "expectedGoal": "メグに「こんにちは」と英語で挨拶を返す。",
+      "message": "うまく聞き取れなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.1",
+      "status": "speech-failure",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "メグに「こんにちは」と英語で挨拶を返す。",
+      "expectedGoal": "メグに「こんにちは」と英語で挨拶を返す。",
+      "message": "挨拶を返しましょう。短い一言で大丈夫です。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.2",
+      "status": "reject",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "メグに「あなたは鳥の写真を撮りますか？」と尋ねよう。",
+      "expectedGoal": "メグに「あなたは鳥の写真を撮りますか？」と尋ねよう。",
+      "message": "latest recognition と聞こえたよ。 ｜ もう一度考えてみようピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.2",
+      "status": "reject",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "メグに「あなたは鳥の写真を撮りますか？」と尋ねよう。",
+      "expectedGoal": "メグに「あなたは鳥の写真を撮りますか？」と尋ねよう。",
+      "message": "鳥の写真を撮るか、メグに質問しよう。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.2",
+      "status": "unknown",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "メグに「あなたは鳥の写真を撮りますか？」と尋ねよう。",
+      "expectedGoal": "メグに「あなたは鳥の写真を撮りますか？」と尋ねよう。",
+      "message": "latest recognition と聞こえたよ。 ｜ うまく判断できなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.2",
+      "status": "unknown",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "メグに「あなたは鳥の写真を撮りますか？」と尋ねよう。",
+      "expectedGoal": "メグに「あなたは鳥の写真を撮りますか？」と尋ねよう。",
+      "message": "鳥の写真を撮るか、メグに質問しよう。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.2",
+      "status": "speech-failure",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "メグに「あなたは鳥の写真を撮りますか？」と尋ねよう。",
+      "expectedGoal": "メグに「あなたは鳥の写真を撮りますか？」と尋ねよう。",
+      "message": "うまく聞き取れなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.2",
+      "status": "speech-failure",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "メグに「あなたは鳥の写真を撮りますか？」と尋ねよう。",
+      "expectedGoal": "メグに「あなたは鳥の写真を撮りますか？」と尋ねよう。",
+      "message": "鳥の写真を撮るか、メグに質問しよう。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.3",
+      "status": "reject",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "みんなに「ゆっくり歩こう」と提案しよう。",
+      "expectedGoal": "みんなに「ゆっくり歩こう」と提案しよう。",
+      "message": "latest recognition と聞こえたよ。 ｜ もう一度考えてみようピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.3",
+      "status": "reject",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "みんなに「ゆっくり歩こう」と提案しよう。",
+      "expectedGoal": "みんなに「ゆっくり歩こう」と提案しよう。",
+      "message": "みんなに歩く速さをゆっくりにしようと提案しよう。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.3",
+      "status": "unknown",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "みんなに「ゆっくり歩こう」と提案しよう。",
+      "expectedGoal": "みんなに「ゆっくり歩こう」と提案しよう。",
+      "message": "latest recognition と聞こえたよ。 ｜ うまく判断できなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.3",
+      "status": "unknown",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "みんなに「ゆっくり歩こう」と提案しよう。",
+      "expectedGoal": "みんなに「ゆっくり歩こう」と提案しよう。",
+      "message": "みんなに歩く速さをゆっくりにしようと提案しよう。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.3",
+      "status": "speech-failure",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "みんなに「ゆっくり歩こう」と提案しよう。",
+      "expectedGoal": "みんなに「ゆっくり歩こう」と提案しよう。",
+      "message": "うまく聞き取れなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.3",
+      "status": "speech-failure",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "みんなに「ゆっくり歩こう」と提案しよう。",
+      "expectedGoal": "みんなに「ゆっくり歩こう」と提案しよう。",
+      "message": "みんなに歩く速さをゆっくりにしようと提案しよう。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.4",
+      "status": "reject",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "メグに「あのひな鳥を見て！」と言おう。",
+      "expectedGoal": "メグに「あのひな鳥を見て！」と言おう。",
+      "message": "latest recognition と聞こえたよ。 ｜ もう一度考えてみようピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.4",
+      "status": "reject",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "メグに「あのひな鳥を見て！」と言おう。",
+      "expectedGoal": "メグに「あのひな鳥を見て！」と言おう。",
+      "message": "メグに、ひな鳥を見るよう伝えよう。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.4",
+      "status": "unknown",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "メグに「あのひな鳥を見て！」と言おう。",
+      "expectedGoal": "メグに「あのひな鳥を見て！」と言おう。",
+      "message": "latest recognition と聞こえたよ。 ｜ うまく判断できなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.4",
+      "status": "unknown",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "メグに「あのひな鳥を見て！」と言おう。",
+      "expectedGoal": "メグに「あのひな鳥を見て！」と言おう。",
+      "message": "メグに、ひな鳥を見るよう伝えよう。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.4",
+      "status": "speech-failure",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "メグに「あのひな鳥を見て！」と言おう。",
+      "expectedGoal": "メグに「あのひな鳥を見て！」と言おう。",
+      "message": "うまく聞き取れなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.4",
+      "status": "speech-failure",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "メグに「あのひな鳥を見て！」と言おう。",
+      "expectedGoal": "メグに「あのひな鳥を見て！」と言おう。",
+      "message": "メグに、ひな鳥を見るよう伝えよう。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.5",
+      "status": "reject",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "ひな鳥に近づこうとするバーニーに「動かないで！」と言おう。",
+      "expectedGoal": "ひな鳥に近づこうとするバーニーに「動かないで！」と言おう。",
+      "message": "latest recognition と聞こえたよ。 ｜ もう一度考えてみようピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.5",
+      "status": "reject",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "ひな鳥に近づこうとするバーニーに「動かないで！」と言おう。",
+      "expectedGoal": "ひな鳥に近づこうとするバーニーに「動かないで！」と言おう。",
+      "message": "バーニーがひな鳥に近づこうとしているよ。まず止めよう。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.5",
+      "status": "unknown",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "ひな鳥に近づこうとするバーニーに「動かないで！」と言おう。",
+      "expectedGoal": "ひな鳥に近づこうとするバーニーに「動かないで！」と言おう。",
+      "message": "latest recognition と聞こえたよ。 ｜ うまく判断できなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.5",
+      "status": "unknown",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "ひな鳥に近づこうとするバーニーに「動かないで！」と言おう。",
+      "expectedGoal": "ひな鳥に近づこうとするバーニーに「動かないで！」と言おう。",
+      "message": "バーニーがひな鳥に近づこうとしているよ。まず止めよう。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.5",
+      "status": "speech-failure",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "ひな鳥に近づこうとするバーニーに「動かないで！」と言おう。",
+      "expectedGoal": "ひな鳥に近づこうとするバーニーに「動かないで！」と言おう。",
+      "message": "うまく聞き取れなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.5",
+      "status": "speech-failure",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "ひな鳥に近づこうとするバーニーに「動かないで！」と言おう。",
+      "expectedGoal": "ひな鳥に近づこうとするバーニーに「動かないで！」と言おう。",
+      "message": "バーニーがひな鳥に近づこうとしているよ。まず止めよう。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.6",
+      "status": "reject",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "心配そうなメグに「心配しないで」と声をかける。",
+      "expectedGoal": "心配そうなメグに「心配しないで」と声をかける。",
+      "message": "latest recognition と聞こえたよ。 ｜ もう一度考えてみようピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.6",
+      "status": "reject",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "心配そうなメグに「心配しないで」と声をかける。",
+      "expectedGoal": "心配そうなメグに「心配しないで」と声をかける。",
+      "message": "心配しているメグを安心させよう。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.6",
+      "status": "unknown",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "心配そうなメグに「心配しないで」と声をかける。",
+      "expectedGoal": "心配そうなメグに「心配しないで」と声をかける。",
+      "message": "latest recognition と聞こえたよ。 ｜ うまく判断できなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.6",
+      "status": "unknown",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "心配そうなメグに「心配しないで」と声をかける。",
+      "expectedGoal": "心配そうなメグに「心配しないで」と声をかける。",
+      "message": "心配しているメグを安心させよう。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.6",
+      "status": "speech-failure",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "心配そうなメグに「心配しないで」と声をかける。",
+      "expectedGoal": "心配そうなメグに「心配しないで」と声をかける。",
+      "message": "うまく聞き取れなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.6",
+      "status": "speech-failure",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "心配そうなメグに「心配しないで」と声をかける。",
+      "expectedGoal": "心配そうなメグに「心配しないで」と声をかける。",
+      "message": "心配しているメグを安心させよう。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.7",
+      "status": "reject",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "写真を撮ろうとするメグに「ここで待ってください」と頼もう。",
+      "expectedGoal": "写真を撮ろうとするメグに「ここで待ってください」と頼もう。",
+      "message": "latest recognition と聞こえたよ。 ｜ もう一度考えてみようピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.7",
+      "status": "reject",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "写真を撮ろうとするメグに「ここで待ってください」と頼もう。",
+      "expectedGoal": "写真を撮ろうとするメグに「ここで待ってください」と頼もう。",
+      "message": "メグに、この場所で待ってもらおう。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.7",
+      "status": "unknown",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "写真を撮ろうとするメグに「ここで待ってください」と頼もう。",
+      "expectedGoal": "写真を撮ろうとするメグに「ここで待ってください」と頼もう。",
+      "message": "latest recognition と聞こえたよ。 ｜ うまく判断できなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.7",
+      "status": "unknown",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "写真を撮ろうとするメグに「ここで待ってください」と頼もう。",
+      "expectedGoal": "写真を撮ろうとするメグに「ここで待ってください」と頼もう。",
+      "message": "メグに、この場所で待ってもらおう。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.7",
+      "status": "speech-failure",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "写真を撮ろうとするメグに「ここで待ってください」と頼もう。",
+      "expectedGoal": "写真を撮ろうとするメグに「ここで待ってください」と頼もう。",
+      "message": "うまく聞き取れなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.7",
+      "status": "speech-failure",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "写真を撮ろうとするメグに「ここで待ってください」と頼もう。",
+      "expectedGoal": "写真を撮ろうとするメグに「ここで待ってください」と頼もう。",
+      "message": "メグに、この場所で待ってもらおう。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.8",
+      "status": "reject",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "見に行こうとするコングに「ちょっと待って」と言おう。",
+      "expectedGoal": "見に行こうとするコングに「ちょっと待って」と言おう。",
+      "message": "latest recognition と聞こえたよ。 ｜ もう一度考えてみようピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.8",
+      "status": "reject",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "見に行こうとするコングに「ちょっと待って」と言おう。",
+      "expectedGoal": "見に行こうとするコングに「ちょっと待って」と言おう。",
+      "message": "コングが見に行こうとしているよ。少し待ってもらおう。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.8",
+      "status": "unknown",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "見に行こうとするコングに「ちょっと待って」と言おう。",
+      "expectedGoal": "見に行こうとするコングに「ちょっと待って」と言おう。",
+      "message": "latest recognition と聞こえたよ。 ｜ うまく判断できなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.8",
+      "status": "unknown",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "見に行こうとするコングに「ちょっと待って」と言おう。",
+      "expectedGoal": "見に行こうとするコングに「ちょっと待って」と言おう。",
+      "message": "コングが見に行こうとしているよ。少し待ってもらおう。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.8",
+      "status": "speech-failure",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "見に行こうとするコングに「ちょっと待って」と言おう。",
+      "expectedGoal": "見に行こうとするコングに「ちょっと待って」と言おう。",
+      "message": "うまく聞き取れなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.8",
+      "status": "speech-failure",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "見に行こうとするコングに「ちょっと待って」と言おう。",
+      "expectedGoal": "見に行こうとするコングに「ちょっと待って」と言おう。",
+      "message": "コングが見に行こうとしているよ。少し待ってもらおう。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.9",
+      "status": "reject",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "大声を出したバーニーに「静かにしてください」と言おう。",
+      "expectedGoal": "大声を出したバーニーに「静かにしてください」と言おう。",
+      "message": "latest recognition と聞こえたよ。 ｜ もう一度考えてみようピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.9",
+      "status": "reject",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "大声を出したバーニーに「静かにしてください」と言おう。",
+      "expectedGoal": "大声を出したバーニーに「静かにしてください」と言おう。",
+      "message": "バーニーの大きな声を小さくしてもらおう。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.9",
+      "status": "unknown",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "大声を出したバーニーに「静かにしてください」と言おう。",
+      "expectedGoal": "大声を出したバーニーに「静かにしてください」と言おう。",
+      "message": "latest recognition と聞こえたよ。 ｜ うまく判断できなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.9",
+      "status": "unknown",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "大声を出したバーニーに「静かにしてください」と言おう。",
+      "expectedGoal": "大声を出したバーニーに「静かにしてください」と言おう。",
+      "message": "バーニーの大きな声を小さくしてもらおう。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.9",
+      "status": "speech-failure",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "大声を出したバーニーに「静かにしてください」と言おう。",
+      "expectedGoal": "大声を出したバーニーに「静かにしてください」と言おう。",
+      "message": "うまく聞き取れなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.9",
+      "status": "speech-failure",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "大声を出したバーニーに「静かにしてください」と言おう。",
+      "expectedGoal": "大声を出したバーニーに「静かにしてください」と言おう。",
+      "message": "バーニーの大きな声を小さくしてもらおう。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.10",
+      "status": "reject",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "メグが撮った写真を見て「すてきな写真だね！」とほめよう。",
+      "expectedGoal": "メグが撮った写真を見て「すてきな写真だね！」とほめよう。",
+      "message": "latest recognition と聞こえたよ。 ｜ もう一度考えてみようピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.10",
+      "status": "reject",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "メグが撮った写真を見て「すてきな写真だね！」とほめよう。",
+      "expectedGoal": "メグが撮った写真を見て「すてきな写真だね！」とほめよう。",
+      "message": "メグの撮った写真をほめよう。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.10",
+      "status": "unknown",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "メグが撮った写真を見て「すてきな写真だね！」とほめよう。",
+      "expectedGoal": "メグが撮った写真を見て「すてきな写真だね！」とほめよう。",
+      "message": "latest recognition と聞こえたよ。 ｜ うまく判断できなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.10",
+      "status": "unknown",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "メグが撮った写真を見て「すてきな写真だね！」とほめよう。",
+      "expectedGoal": "メグが撮った写真を見て「すてきな写真だね！」とほめよう。",
+      "message": "メグの撮った写真をほめよう。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.10",
+      "status": "speech-failure",
+      "support": false,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "メグが撮った写真を見て「すてきな写真だね！」とほめよう。",
+      "expectedGoal": "メグが撮った写真を見て「すてきな写真だね！」とほめよう。",
+      "message": "うまく聞き取れなかったピコ。",
+      "informationVisible": true
+    },
+    {
+      "id": "s007.communication.10",
+      "status": "speech-failure",
+      "support": true,
+      "buttons": [
+        "もう一度話す",
+        "ピコのサポート",
+        "冒険を続ける"
+      ],
+      "goal": "メグが撮った写真を見て「すてきな写真だね！」とほめよう。",
+      "expectedGoal": "メグが撮った写真を見て「すてきな写真だね！」とほめよう。",
+      "message": "メグの撮った写真をほめよう。",
+      "informationVisible": true
+    }
+  ]
+}
