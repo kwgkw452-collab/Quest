@@ -1,0 +1,10 @@
+{
+  "version": "SYNTHETIC_EXAMPLE_NOT_PRODUCT_SPEC",
+  "rules": [
+    {"id":"retired-line","file":"story.js","kind":"forbidden","literals":["retired fictional dialogue"]},
+    {"id":"old-graphic","file":"story.js","kind":"forbidden","literals":["images/fictional-old.png"]},
+    {"id":"accept","file":"story.js","kind":"required","literals":["fictional approved accept"]},
+    {"id":"old-new","file":"engine.js","kind":"coexistence","literals":["oldFictionalJudge()","newFictionalJudge()"]},
+    {"id":"semantics","file":"engine.js","kind":"review","description":"Independent semantic review required"}
+  ]
+}

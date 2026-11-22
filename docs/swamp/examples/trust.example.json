@@ -1,0 +1,7 @@
+{
+  "repository": "/absolute/independently-managed/QA-repository",
+  "commit": "REPLACE_WITH_INDEPENDENTLY_APPROVED_40_CHARACTER_SHA",
+  "specPath": "specs/swamp/approved.json",
+  "qaReviewed": false,
+  "userApproved": false
+}

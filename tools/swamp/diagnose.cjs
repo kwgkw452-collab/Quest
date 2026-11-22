@@ -1,0 +1,63 @@
+#!/usr/bin/env node
+'use strict';
+// Manual, read-only Git analysis. Never loads or executes candidate JavaScript.
+const fs=require('node:fs'),path=require('node:path'),cp=require('node:child_process'),crypto=require('node:crypto');
+const VERSION='swamp-v1';
+function git(root,...args){const result=cp.execFileSync('git',['-C',root,...args],{encoding:'utf8',maxBuffer:32*1024*1024,env:{...process.env,GIT_NO_LAZY_FETCH:'1',GIT_TERMINAL_PROMPT:'0'}});return args[0]==='show'&&args[1]?.includes(':')?result:result.trimEnd();}
+function sha(root,ref){return git(root,'rev-parse','--verify',ref+'^{commit}');}
+function safe(p){if(typeof p!=='string'||!p||p.startsWith('-')||path.posix.isAbsolute(p)||p.split('/').some(x=>['..','.',''].includes(x)))throw Error('Unsafe repository path: '+p);return p;}
+function common(root){return fs.realpathSync(path.resolve(root,git(root,'rev-parse','--git-common-dir')));}
+function baseline(root,config){
+ if(!config)return {state:'BASELINE_UNKNOWN',reason:'No externally pinned specification configured'};
+ const c=JSON.parse(fs.readFileSync(config,'utf8')),repo=fs.realpathSync(c.repository);
+ if(!path.isAbsolute(config)||common(repo)===common(root))throw Error('Trust configuration must point to a separate QA-managed Git repository');
+ const real=fs.realpathSync(config),r=fs.realpathSync(root);if(real===r||real.startsWith(r+path.sep))throw Error('Candidate-local trust configuration is forbidden');
+ if(c.qaReviewed!==true||c.userApproved!==true)return {state:'TRUST_NOT_ESTABLISHED',reason:'Independent QA and user approval are both required'};
+ if(!/^[a-f0-9]{40}$/.test(c.commit))throw Error('Trust commit must be a full immutable SHA');
+ const specPath=safe(c.specPath),raw=git(repo,'show',c.commit+':'+specPath),spec=JSON.parse(raw);
+ if(!spec.version||!Array.isArray(spec.rules)||!spec.rules.length)throw Error('Specification version and nonempty rules required');
+ const ids=new Set();for(const x of spec.rules){safe(x.file);if(!x.id||ids.has(x.id)||!['required','forbidden','coexistence','review'].includes(x.kind))throw Error('Invalid/duplicate specification rule');ids.add(x.id);if(x.kind!=='review'&&(!Array.isArray(x.literals)||!x.literals.length||x.literals.some(s=>typeof s!=='string'||!s)))throw Error('Nonempty literal expectations required');}
+ return {state:'ESTABLISHED',repository:repo,commit:c.commit,path:specPath,version:spec.version,sha256:crypto.createHash('sha256').update(raw).digest('hex'),spec};
+}
+function diagnose(o){
+ const root=fs.realpathSync(o.root),target=sha(root,o.target||'HEAD'),production=sha(root,o.production||'origin/s005-fixed-195-stage-clean-test');
+ const mode=o.mode||'FOCUSED';if(!['FOCUSED','FULL'].includes(mode)||mode==='FULL'&&!o.confirmFull)throw Error('FULL requires --confirm-full');
+ let files=(o.files||[]).map(safe);if(mode==='FULL')files=git(root,'ls-tree','-r','--name-only',target).split('\n').filter(x=>/\.(?:[cm]?js|json|html|css|md)$/.test(x));
+ files=[...new Set(files)];if(!files.length)throw Error('FOCUSED requires explicit --files');
+ const limit=o.limit===undefined?40:Number(o.limit);if(!Number.isInteger(limit)||limit<2||limit>200)throw Error('History limit must be 2..200');
+ const trust=baseline(root,o.trust),findings=[],history=[],unknowns=[],contents=new Map();
+ if(trust.state!=='ESTABLISHED')unknowns.push(trust.state+': '+trust.reason);
+ let repository=root;
+ try{
+  const origin=git(root,'config','--get','remote.origin.url');
+  if(origin)repository=origin;
+  else unknowns.push('REPOSITORY_UNKNOWN: remote.origin.url is empty; using local repository path');
+ }catch{
+  unknowns.push('REPOSITORY_UNKNOWN: remote.origin.url is unavailable; using local repository path');
+ }
+ function finding(category,code,file,line,message,extra={}){findings.push({category,code,file,line,commit:target,message,...extra});}
+ for(const file of files){
+  let text;try{const entry=git(root,'ls-tree',target,'--',file);if(!entry.startsWith('100644 blob ')&&!entry.startsWith('100755 blob '))throw Error('not a regular blob');text=git(root,'show',target+':'+file);contents.set(file,text);}catch(e){unknowns.push(file+': unavailable regular file at target commit');continue;}
+  const rules=trust.spec?.rules.filter(r=>r.file===file)||[];if(!rules.length)unknowns.push(file+': BASELINE_UNKNOWN (no approved expectations covering this file)');
+  for(const r of rules){const present=r.literals?.map(s=>text.includes(s));let bad=r.kind==='required'?present.some(x=>!x):r.kind==='forbidden'?present.some(Boolean):r.kind==='coexistence'?present.every(Boolean):true;if(bad){const lit=r.literals?.find(s=>text.includes(s));const line=lit?text.slice(0,text.indexOf(lit)).split('\n').length:1;finding('spec',r.kind==='review'?'REVIEW_REQUIRED':'SPEC_MISMATCH',file,line,r.description||r.id,{rule:r.id,expectation:r.kind,missing:r.kind==='required'?r.literals.filter((s,i)=>!present[i]):[],evidence:r.kind==='required'?'Required literal absent from entire committed file':r.literals});}}
+  const commits=git(root,'log','--format=%H',`--max-count=${limit+1}`,target,'--',file).split('\n').filter(Boolean),truncated=commits.length>limit,selected=commits.slice(0,limit),seen=new Map(),states=[],hunks=new Map(),volumes=[];
+  for(const commit of selected){let blob;try{blob=git(root,'rev-parse',commit+':'+file);}catch{blob='ABSENT';}states.push({commit,blob});const diff=git(root,'show','--format=','--unified=0',commit,'--',file);for(const m of diff.matchAll(/^@@ .*?\+(\d+)/gm)){const bucket=Math.floor(Number(m[1])/20)*20;hunks.set(bucket,(hunks.get(bucket)||0)+1);}volumes.push({commit,lines:diff.split('\n').filter(l=>/^[+-]/.test(l)&&!/^([+]{3}|-{3})/.test(l)).length});}
+  const recurrence=[];for(let i=0;i<states.length;i++){const s=states[i];if(seen.has(s.blob)&&i-seen.get(s.blob)>1&&states.slice(seen.get(s.blob)+1,i).some(x=>x.blob!==s.blob))recurrence.push([states[seen.get(s.blob)].commit,s.commit]);seen.set(s.blob,i);}
+  const repeatedAreas=[...hunks].filter(([,n])=>n>=3).map(([line,count])=>({approximateLine:line+1,count}));
+  history.push({file,changesInWindow:selected.length,truncated,commits:selected,recurrence,repeatedAreas,changeVolumes:volumes,growing:volumes.length>=4&&volumes[0].lines>2*Math.max(1,volumes.at(-1).lines)});
+  if(truncated)unknowns.push(file+': history truncated; only latest '+limit+' changes inspected');
+  if(volumes.length>=4&&volumes[0].lines>2*Math.max(1,volumes.at(-1).lines))finding('history','REVIEW_REQUIRED',file,1,'Recent patch larger than oldest patch in window; growth signal only',{changeVolumes:volumes});
+  if(recurrence.length||repeatedAreas.length)finding('history','REVIEW_REQUIRED',file,repeatedAreas[0]?.approximateLine||1,'Repeated edits / content-state recurrence; signal only, not a proven defect',{recurrence,repeatedAreas});
+  if(o.structure&&/\.[cm]?js$/.test(file)){
+   const lines=text.split('\n'),blocks=new Map();for(let i=0;i+5<=lines.length;i++){const b=lines.slice(i,i+5).map(s=>s.trim()).join('\n');if(b.length<120||b.split('\n').filter(s=>/[A-Za-z]/.test(s)).length<4)continue;const previous=blocks.get(b);if(previous!==undefined&&i-previous>=5){finding('structure','REVIEW_REQUIRED',file,i+1,'Repeated five-line block; inspect duplicated behavior',{relatedLine:previous+1});break;}blocks.set(b,i);}
+  }
+ }
+ const dependencies=[];if(o.structure)for(const [file,text]of contents){const imports=[...text.matchAll(/(?:require\(\s*|from\s+|import\s*)['"]([^'"]+)['"]/g)].map(m=>({module:m[1],line:text.slice(0,m.index).split('\n').length}));dependencies.push({file,imports});if(imports.length>=10)finding('structure','REVIEW_REQUIRED',file,imports[0].line,'High static import count (>=10); dependency complexity signal only',{imports});}
+ if(o.structure){const controls=new Map();for(const [file,text]of contents)for(const m of text.matchAll(/\b([A-Za-z_$][\w$]*\.[A-Za-z_$][\w$]*)\s*=(?!=)/g)){const key=m[1],loc={file,line:text.slice(0,m.index).split('\n').length};controls.set(key,[...(controls.get(key)||[]),loc]);}for(const [key,sites]of controls)if(new Set(sites.map(x=>x.file)).size>1)finding('structure','REVIEW_REQUIRED',sites[0].file,sites[0].line,'Multiple assignment sites for '+key+'; possible competing control, not proven',{sites});}
+ const mismatch=findings.some(f=>f.code==='SPEC_MISMATCH'),status=unknowns.length?'INSUFFICIENT_EVIDENCE':mismatch?'REWORK_RECOMMENDED':findings.length?'INVESTIGATE':'CLEAR';
+ const recommendations=[['限定修正','違反した期待値の対象箇所のみ','低〜中。隣接条件への回帰を確認'],['複雑な部分の整理','重複・複数制御の疑いがある範囲','中。挙動の同一性確認が必要'],['該当機能の新規制作','対象機能の境界内','高。仕様確定と独立した比較検証が先'],['独立解析による再評価','不足仕様と指摘箇所','低。追加確認の時間が必要'],['改修の一時停止','証拠不足の対象のみ','進行が止まる。基準確定までの暫定措置']].map(([option,scope,risk],i)=>({option,scope,risk,recommended:unknowns.length?i===3:mismatch?i===0:findings.length?i===3:false,evidence:unknowns.length?unknowns:findings.map(f=>`${f.file}:${f.line}@${f.commit} ${f.code}`),note:'Decision support only; no automatic repair or redesign approval'}));
+ return {version:VERSION,verifierSha256:crypto.createHash('sha256').update(fs.readFileSync(__filename)).digest('hex'),timestamp:new Date().toISOString(),repository,productionBranch:'s005-fixed-195-stage-clean-test',production,target,targetBranch:o.target||'HEAD',mode,files,historyLimit:limit,structureRequested:!!o.structure,trust:{...trust,spec:undefined},status,findings,history,dependencies,unknowns,recommendations,limitations:['CLEAR is scoped, not Production quality assurance','No formal independent QA PASS','QA-11-02 remains TRUST_NOT_ESTABLISHED until independently approved','Literal rules do not establish semantic equivalence; uncovered behavior requires review','Static structure heuristics cannot establish dead code, runtime conflict or dependency safety','Rename-following and merge-parent cancellation are not exhaustively analyzed']};
+}
+function render(r){return `# SWAMP-DIAGNOSIS-REPORT\n\nStatus: **${r.status}**\n\n${['timestamp','repository','productionBranch','production','targetBranch','target','version','verifierSha256','mode'].map(k=>`- ${k}: ${r[k]}`).join('\n')}\n\n## Specification / trust\n\n\`\`\`json\n${JSON.stringify(r.trust,null,2)}\n\`\`\`\n\n## Scope\n\n${r.files.map(f=>'- '+f).join('\n')}\n\n## Findings (specification / history / structure)\n\n${r.findings.map(f=>`- ${f.category} ${f.code}: ${f.file}:${f.line}@${f.commit} — ${f.message}\n  Evidence: ${JSON.stringify(f)}`).join('\n')||'No findings in inspected scope.'}\n\n## History\n\n\`\`\`json\n${JSON.stringify(r.history,null,2)}\n\`\`\`\n\n## Static dependencies (when requested)\n\n\`\`\`json\n${JSON.stringify(r.dependencies,null,2)}\n\`\`\`\n\n## Unknowns\n\n${r.unknowns.map(x=>'- '+x).join('\n')||'None for the configured literal checks.'}\n\n## Resolution options\n\n${r.recommendations.map(x=>`- ${x.recommended?'Recommended: ':''}${x.option}: ${x.scope}; risk: ${x.risk}; evidence: ${JSON.stringify(x.evidence)}`).join('\n')}\n\n## Limits\n\n${r.limitations.map(x=>'- '+x).join('\n')}\n`;}
+if(require.main===module){try{const a=process.argv.slice(2),o={};for(let i=0;i<a.length;i++){const key=a[i];if(['--confirm-full','--structure'].includes(key)){o[key==='--confirm-full'?'confirmFull':'structure']=true;continue;}const names={'--repo':'root','--target':'target','--production':'production','--mode':'mode','--files':'files','--trust':'trust','--out':'out','--history-limit':'limit'};if(!names[key]||!a[i+1]||a[i+1].startsWith('--'))throw Error('Unknown/missing option '+key);o[names[key]]=key==='--files'?a[++i].split(','):a[++i];}if(!o.root||!o.out)throw Error('--repo and --out required');const out=path.resolve(o.out),root=fs.realpathSync(o.root);if(out===root||out.startsWith(root+path.sep))throw Error('Report output must be outside candidate repository');let ancestor=out;while(!fs.existsSync(ancestor))ancestor=path.dirname(ancestor);const resolved=fs.realpathSync(ancestor);if(resolved===root||resolved.startsWith(root+path.sep))throw Error('Report output resolves inside candidate repository');const r=diagnose(o);fs.mkdirSync(out,{recursive:true});fs.writeFileSync(path.join(out,'SWAMP-DIAGNOSIS-REPORT.md'),render(r));fs.writeFileSync(path.join(out,'diagnosis.json'),JSON.stringify(r,null,2)+'\n');console.log(r.status);process.exitCode=r.status==='CLEAR'?0:r.status==='INSUFFICIENT_EVIDENCE'?2:1;}catch(e){console.error(e.message);process.exitCode=2;}}
+module.exports={diagnose,render,baseline};

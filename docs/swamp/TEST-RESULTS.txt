@@ -1,0 +1,24 @@
+PASS retired dialogue reintroduction
+PASS old Graphic reference
+PASS removed approved accept condition
+PASS repeat addition/removal and recurrence
+PASS missing baseline never CLEAR
+PASS normal change and unused historical file are not mixed specs
+PASS candidate-local ledger cannot override external pin
+PASS candidate-local trust config refused
+PASS separate worktree in same object store refused
+PASS unapproved baseline cannot authorize CLEAR
+PASS FULL requires explicit opt-in and FOCUSED requires scope
+PASS target tree wins over dirty working tree
+PASS unknown/missing file fails closed
+PASS old/new implementations coexist only by explicit rule
+PASS manual review rule blocks CLEAR
+PASS structure heuristic supplies locations without proven-defect claim
+PASS CLI emits reports outside repository; no implicit trigger
+PASS output symlink into candidate is refused
+PASS static dependencies are evidence, not a runtime defect assertion
+PASS malformed specification is refused
+PASS origin absent emits both reports with explicit commits (approved spec: false)
+PASS origin absent emits both reports with explicit commits (approved spec: true)
+PASS origin present preserves repository URL and CLEAR with approved expectations
+23 tests passed; synthetic fixtures only; NOT independent QA PASS
