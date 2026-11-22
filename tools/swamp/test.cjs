@@ -31,5 +31,22 @@ test('CLI emits reports outside repository; no implicit trigger',()=>{const out=
 test('output symlink into candidate is refused',()=>{const link=path.join(temp,'output-link');fs.symlinkSync(root,link);const r=cp.spawnSync(process.execPath,[path.join(__dirname,'diagnose.cjs'),'--repo',root,'--production',production,'--files','story.js','--out',path.join(link,'forbidden-output')],{encoding:'utf8'});assert.equal(r.status,2);assert(!fs.existsSync(path.join(root,'forbidden-output')));});
 test('static dependencies are evidence, not a runtime defect assertion',()=>{const target=commit(root,{'story.js':good+'\n'+Array.from({length:10},(_,i)=>`const dep${i}=require("module${i}");`).join('\n')});const r=diagnose({...base,target,structure:true});assert.equal(r.dependencies[0].imports.length,10);assert(r.findings.some(f=>f.message.includes('dependency complexity signal')));});
 test('malformed specification is refused',()=>{const pin=commit(qa,{'spec.json':JSON.stringify({version:'bad',rules:[{id:'bad',file:'story.js',kind:'forbidden',literals:[]}]})});const c=path.join(temp,'bad.json');fs.writeFileSync(c,JSON.stringify({repository:qa,commit:pin,specPath:'spec.json',qaReviewed:true,userApproved:true}));assert.throws(()=>diagnose({...base,trust:c}),/literal/);});
+// Regression for PR #12 QA HOLD: absent origin must still produce both reports.
+for(const approved of [false,true])test(`origin absent emits both reports with explicit commits (approved spec: ${approved})`,()=>{
+ const repo=init('no-origin-'+approved);git(repo,'remote','remove','origin');
+ const reference=commit(repo,{'story.js':good});const target=commit(repo,{'story.js':good+'// harmless change'});
+ const out=path.join(temp,'no-origin-report-'+approved),args=[path.join(__dirname,'diagnose.cjs'),'--repo',repo,'--production',reference,'--target',target,'--files','story.js','--out',out];
+ if(approved)args.push('--trust',config);
+ const result=cp.spawnSync(process.execPath,args,{encoding:'utf8'});
+ assert.equal(result.error,undefined);assert.equal(result.signal,null);assert.equal(result.status,2);assert.equal(result.stderr,'');assert.equal(result.stdout.trim(),'INSUFFICIENT_EVIDENCE');
+ const markdown=fs.readFileSync(path.join(out,'SWAMP-DIAGNOSIS-REPORT.md'),'utf8'),report=JSON.parse(fs.readFileSync(path.join(out,'diagnosis.json'),'utf8'));
+ assert.equal(report.status,'INSUFFICIENT_EVIDENCE');assert.equal(report.repository,fs.realpathSync(repo));assert.equal(report.production,reference);assert.equal(report.target,target);assert(report.unknowns.some(x=>x.startsWith('REPOSITORY_UNKNOWN:')));assert(markdown.includes('INSUFFICIENT_EVIDENCE'));assert(markdown.includes(report.repository));
+ if(approved){assert.equal(report.trust.state,'ESTABLISHED');assert.equal(report.unknowns.length,1);}
+});
+test('origin present preserves repository URL and CLEAR with approved expectations',()=>{
+ const repo=init('origin-preserved'),reference=commit(repo,{'story.js':good}),target=commit(repo,{'story.js':good+'// harmless change'}),out=path.join(temp,'origin-report');
+ const result=cp.spawnSync(process.execPath,[path.join(__dirname,'diagnose.cjs'),'--repo',repo,'--production',reference,'--target',target,'--files','story.js','--trust',config,'--out',out],{encoding:'utf8'});
+ assert.equal(result.status,0);assert.equal(result.stderr,'');const report=JSON.parse(fs.readFileSync(path.join(out,'diagnosis.json'),'utf8'));assert.equal(report.repository,'https://example.invalid/synthetic');assert.equal(report.status,'CLEAR');assert.equal(report.unknowns.length,0);assert(fs.readFileSync(path.join(out,'SWAMP-DIAGNOSIS-REPORT.md'),'utf8').includes('**CLEAR**'));
+});
 if(process.env.SWAMP_SAMPLE_OUT){fs.mkdirSync(process.env.SWAMP_SAMPLE_OUT,{recursive:true});const r=run(good+'// old dialogue');r.repository='https://example.invalid/synthetic';r.trust.repository='SYNTHETIC_QA_REPOSITORY';fs.writeFileSync(path.join(process.env.SWAMP_SAMPLE_OUT,'SWAMP-DIAGNOSIS-REPORT.md'),render(r));}
 fs.rmSync(temp,{recursive:true,force:true});console.log(`${count} tests passed; synthetic fixtures only; NOT independent QA PASS`);

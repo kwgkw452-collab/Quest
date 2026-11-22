@@ -18,4 +18,7 @@ PASS CLI emits reports outside repository; no implicit trigger
 PASS output symlink into candidate is refused
 PASS static dependencies are evidence, not a runtime defect assertion
 PASS malformed specification is refused
-20 tests passed; synthetic fixtures only; NOT independent QA PASS
+PASS origin absent emits both reports with explicit commits (approved spec: false)
+PASS origin absent emits both reports with explicit commits (approved spec: true)
+PASS origin present preserves repository URL and CLEAR with approved expectations
+23 tests passed; synthetic fixtures only; NOT independent QA PASS
