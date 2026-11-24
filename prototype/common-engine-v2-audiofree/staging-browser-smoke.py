@@ -28,7 +28,9 @@ with sync_playwright() as pw:
  """)
  url=base+'play.html?story=S006'
  page.goto(url,wait_until='load',timeout=55000)
- page.get_by_role('button',name='次へ').wait_for(timeout=25000)
+ page.wait_for_timeout(2500)
+ print('REMOTE_DIAGNOSTIC',{'url':page.url,'title':page.title(),'body':page.locator('body').inner_text()[:1000],'errors':errors,'questApi':page.evaluate('typeof window.QuestV2'),'status':page.locator('#status').inner_text() if page.locator('#status').count() else '(missing)'},flush=True)
+ page.get_by_role('button',name='次へ').wait_for(timeout=12000)
  assert page.locator('#status').inner_text().startswith('Scene: scene01'),page.locator('#status').inner_text()
  assert 'S006' in page.locator('#story-select').input_value()
  assert 'S006-Scene-01.png' in page.locator('#backdrop').get_attribute('style')
