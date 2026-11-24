@@ -22,7 +22,7 @@ function legacyQuestions(){
  const questions=[],context={window:null,QuestionDatabase:{register(q){questions.push(q);}},CommunicativeJudgeRuleData:[],LotteryPoolData:[],LotteryEngine:{init(){}}};
  context.window=context;
  vm.runInNewContext(load('data/s007-communication.js'),context,{filename:'s007-communication.js'});
- return {questions:JSON.parse(JSON.stringify(questions)),metadata:JSON.parse(JSON.stringify(context.S007DraftCommunicationMetadata))};
+ return {questions:JSON.parse(JSON.stringify(questions)),metadata:JSON.parse(JSON.stringify(context.S007DraftCommunicationMetadata)),legacyRules:context.CommunicativeJudgeRuleData};
 }
 function flat(){return pack.sceneOrder.flatMap(id=>pack.scenes[id].steps);}
 test('converted S007 validates without runtime Story-specific branches',()=>assert.deepEqual(validate(pack),[]));
@@ -97,5 +97,17 @@ test('all 146 enumerated S007 variants are accepted by the new declarative judge
  const {questions}=legacyQuestions();
  for(const q of questions)for(const answer of q.answers){
   assert.equal(judge(pack.challenges[q.id].rule,answer).decision,'ACCEPT',q.id+' '+answer);
+ }
+});
+
+test('typed generic rules agree with source predicates on representative open-ended and negative utterances',()=>{
+ const {legacyRules}=legacyQuestions();
+ const cases={
+  2:['Do you take beautiful pictures?','take pictures for you','you took photos','Did you take some bird photos?','You never take pictures','Do not take photos','Do you take','pictures for you'],
+  4:['Look at the colorful birds!','Birds! Look at them!','Look at bird','Look at the baby birds','Do not look at the bird','Never look at the birds','Please look down','The birds are beautiful']
+ };
+ for(const [number,phrases] of Object.entries(cases)){
+  const index=Number(number)-1,q=pack.challenges['s007.communication.'+number];
+  for(const utterance of phrases)assert.equal(judge(q.rule,utterance).decision==='ACCEPT',legacyRules[index].accept(utterance),number+': '+utterance);
  }
 });
