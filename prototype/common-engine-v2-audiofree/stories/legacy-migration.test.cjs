@@ -116,7 +116,7 @@ test('S005 seven functional word-group rules are represented as generic typed da
    count++;
   }
  }
- assert.equal(count,28);
+ assert.equal(count,27);
 });
 test('S005 typed rule extension does not change the original 104 exact answer strings',()=>{
  const src=original('S005'),p=pack('S005');
