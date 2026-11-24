@@ -9,7 +9,7 @@ const STEP_FIELDS={
  challenge:['type','id'],document:['type','id'],battle:['type','id'],
  setFlag:['type','key','value'],goto:['type','to'],end:['type','result'],hideDialogue:['type']
 };
-const RULE_FIELDS=new Set(['accept','exclude','excludeExact','fullPatterns','patternNormalization','stripPlease','requireAll','orderedGroups','requireAnyWords','requirePhrases']);
+const RULE_FIELDS=new Set(['accept','exclude','excludeExact','fullPatterns','patternNormalization','stripPlease','wordAliases','requireAll','orderedGroups','requireAnyWords','requirePhrases']);
 function ruleErrors(rule,id,add){
  if(!rule||typeof rule!=='object'||Array.isArray(rule)){add('RULE_TYPE:'+id);return;}
  for(const k of Object.keys(rule))if(!RULE_FIELDS.has(k))add('UNSUPPORTED_RULE_OPERATOR:'+id+':'+k);
@@ -17,6 +17,7 @@ function ruleErrors(rule,id,add){
  if('fullPatterns' in rule&&(!Array.isArray(rule.fullPatterns)||!rule.fullPatterns.length||!rule.fullPatterns.every(x=>typeof x==='string'&&x.length<=1800&&x.startsWith('(?:')&&x.endsWith(')'))))add('INVALID_FULL_PATTERNS:'+id);
  if('patternNormalization' in rule&&!['basic','contractions'].includes(rule.patternNormalization))add('INVALID_NORMALIZE_PROFILE:'+id);
  if('stripPlease' in rule&&typeof rule.stripPlease!=='boolean')add('INVALID_STRIP_POLITE:'+id);
+ if('wordAliases' in rule&&(!rule.wordAliases||typeof rule.wordAliases!=='object'||Array.isArray(rule.wordAliases)||Object.entries(rule.wordAliases).some(([a,b])=>!/^[a-z]+$/.test(a)||typeof b!=='string'||!/^[a-z]+$/.test(b))))add('INVALID_WORD_ALIASES:'+id);
  for(const key of ['accept','exclude','excludeExact','requireAll','requirePhrases'])if(key in rule&&!strList(rule[key]))add('RULE_STRING_LIST:'+id+':'+key);
  for(const key of ['orderedGroups','requireAnyWords'])if(key in rule&&(!Array.isArray(rule[key])||!rule[key].length||!rule[key].every(group=>strList(group)&&group.length)))add('RULE_GROUP_LIST:'+id+':'+key);
 }
