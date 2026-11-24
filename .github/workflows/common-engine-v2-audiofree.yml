@@ -21,8 +21,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Run common engine no-audio tests
-        run: node --test prototype/common-engine-v2-audiofree/runtime.test.cjs
+      - name: Run common engine tests and S007 source parity checks
+        run: node --test prototype/common-engine-v2-audiofree/runtime.test.cjs prototype/common-engine-v2-audiofree/stories/S007/s007-migration.test.cjs
       - name: Rebuild browser bundle
         run: node prototype/common-engine-v2-audiofree/build-browser.cjs
       - name: Check committed bundle is reproducible
