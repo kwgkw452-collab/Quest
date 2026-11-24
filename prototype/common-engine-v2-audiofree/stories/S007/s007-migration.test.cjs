@@ -83,11 +83,19 @@ test('complete actual S007 dataset using mock microphone and exact model phrases
  }
  assert.fail('S007 did not finish');
 });
-test('legacy judge has non-enumerated accept branches for questions 2 and 4; judge parity remains HOLD',()=>{
+test('legacy open-ended question 2 and 4 rules now have typed declarative counterparts; QA parity remains HOLD',()=>{
  const {metadata}=legacyQuestions();
  assert.equal(metadata.status,'DRAFT_NOT_APPROVED');
  const probe2='Do you take beautiful pictures?';
  const probe4='Look at the colorful birds!';
- assert.equal(judge(pack.challenges['s007.communication.2'].rule,probe2).decision,'REJECT');
- assert.equal(judge(pack.challenges['s007.communication.4'].rule,probe4).decision,'REJECT');
+ assert.equal(judge(pack.challenges['s007.communication.2'].rule,probe2).decision,'ACCEPT');
+ assert.equal(judge(pack.challenges['s007.communication.4'].rule,probe4).decision,'ACCEPT');
+ assert.equal(judge(pack.challenges['s007.communication.2'].rule,'Do not take pictures of birds.').decision,'REJECT');
+ assert.equal(judge(pack.challenges['s007.communication.4'].rule,"Don't look at the birds.").decision,'REJECT');
+});
+test('all 146 enumerated S007 variants are accepted by the new declarative judge',()=>{
+ const {questions}=legacyQuestions();
+ for(const q of questions)for(const answer of q.answers){
+  assert.equal(judge(pack.challenges[q.id].rule,answer).decision,'ACCEPT',q.id+' '+answer);
+ }
 });
