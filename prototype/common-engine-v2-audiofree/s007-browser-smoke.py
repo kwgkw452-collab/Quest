@@ -56,7 +56,7 @@ window.SpeechRecognition=class {{
                 target="次へ"
             elif "話す" in options:
                 if not hints:
-                    count=len(page.locator("#log").inner_text().splitlines())
+                    count=len(page.locator("#log").text_content().splitlines())
                     page.get_by_role("button", name="ピコサポート").click()
                     page.wait_for_function("(count)=>document.querySelector('#log').textContent.split('\\n').filter(Boolean).length>count", count)
                     assert "ピコ：" in page.locator("#support").inner_text()
@@ -64,14 +64,14 @@ window.SpeechRecognition=class {{
                 target="話す"
             else:
                 raise AssertionError("UNEXPECTED_CONTROLS: " + str(options))
-            count=len(page.locator("#log").inner_text().splitlines())
+            count=len(page.locator("#log").text_content().splitlines())
             page.get_by_role("button", name=target).click()
             page.wait_for_function("(count)=>document.querySelector('#log').textContent.split('\\n').filter(Boolean).length>count", count, timeout=12000)
         else:
             raise AssertionError("STEP_LIMIT_EXCEEDED")
         assert "このStoryをクリアしました" in page.locator("#text").inner_text(), "S007_NOT_COMPLETED"
         assert "S007-Scene-13.png" in page.locator("#backdrop").get_attribute("style"), "LAST_BACKGROUND_WRONG"
-        events=[json.loads(line) for line in page.locator("#log").inner_text().splitlines() if line.strip()]
+        events=[json.loads(line) for line in page.locator("#log").text_content().splitlines() if line.strip()]
         line_count=sum(e.get("type")=="line" for e in events)
         challenge_count=sum(e.get("type")=="challenge" for e in events)
         accepted_count=sum(e.get("type")=="accepted" for e in events)
