@@ -36,7 +36,14 @@ for(const id of ['S005','S006']){
  test(id+' all question IDs, Japanese goals, 3 hints and variants preserve source',()=>{
   const src=original(id),p=pack(id);
   assert.equal(Object.keys(p.challenges).length,src.questions.length);
-  for(const q of src.questions){const migrated=p.challenges[q.id];assert(migrated,q.id);assert.equal(migrated.goalJa,q.prompt);assert.equal(migrated.modelEn,q.communicative.expectedUtterance);assert.deepEqual(migrated.hints,q.picoSupport);assert.deepEqual(migrated.rule.accept,q.answers);}
+  for(const q of src.questions){const migrated=p.challenges[q.id];assert(migrated,q.id);
+   const revisedQ10=id==='S006'&&q.id==='s006.communication.10';
+   const q6Recognition=id==='S006'&&q.id==='s006.communication.6';
+   assert.equal(migrated.goalJa,revisedQ10?'これはあなたの箱です。':q.prompt);
+   assert.equal(migrated.modelEn,revisedQ10?'This is your box!':q.communicative.expectedUtterance);
+   assert.deepEqual(migrated.hints,q.picoSupport);
+   assert.deepEqual(migrated.rule.accept,q6Recognition?[...q.answers,'Look at the','Look at that','Please look at the','Please look at that']:q.answers);
+  }
   assert.deepEqual(flatNew(p).filter(s=>s.type==='challenge').map(s=>s.id),src.steps.filter(s=>s.type==='question').map(s=>s.questionId));
  });
  test(id+' complete Story runtime executes all lines and questions using mock microphone',async()=>{
@@ -139,7 +146,7 @@ test('S005 all 14 legacy contrary-goal phrases are explicit exact-reject data',(
  assert.equal(checked,14);
 });
 
-test('S006 ten anchored grammar rules agree with original legacy accept predicates on 60 sentence probes',()=>{
+test('S006 grammar parity with legacy predicates plus explicitly approved ASR exception on 60 probes',()=>{
  const old=original('S006'),p=pack('S006');
  const matrix=[
  ['Could we help you?','I can help you','Do you need some help?','You need help','I cannot help you','Could we help you and steal it?'],
@@ -160,8 +167,10 @@ test('S006 ten anchored grammar rules agree with original legacy accept predicat
   assert.equal(rule.fullPatterns.length,1);
   for(const phrase of matrix[i]){
    const sourceAccept=Boolean(legacy.accept(phrase));
+   const approvedAsrExtension=({2:['Where is the book?'],3:['Can you show me a book?'],4:['Do you have a book?'],8:['Please find a book'],9:['I found the book']}[i]||[]).includes(phrase);
+   const expected=sourceAccept||approvedAsrExtension;
    const actual=judge(rule,phrase).decision==='ACCEPT';
-   assert.equal(actual,sourceAccept,id+' source parity: '+phrase);
+   assert.equal(actual,expected,id+' source plus approved ASR: '+phrase);
    count++;
   }
  }
@@ -196,4 +205,38 @@ test('S006 current Q7 saw-box spec is not replaced by obsolete cart-centered QA 
  assert.equal(judge(current.rule,'Is the box on the cart?').decision,'REJECT');
  assert(obsolete.required.includes('Is the box on the cart?'));
  assert(!current.rule.accept.includes('Is the box on the cart?'));
+});
+
+test('S006 previously approved ASR fallbacks are local to the correct question',()=>{
+ const p=pack('S006');
+ const by=n=>p.challenges['s006.communication.'+n].rule;
+ for(const n of [2,3,4,5,7,9,10]){
+  assert.deepEqual(by(n).wordAliases,{book:'box',books:'boxes'});
+ }
+ assert.equal(judge(by(2),'What color is the book?').decision,'ACCEPT');
+ assert.equal(judge(by(3),'Where are the other books?').decision,'ACCEPT');
+ assert.equal(judge(by(4),'Could you show me the books?').decision,'ACCEPT');
+ assert.equal(judge(by(5),'Do you have the books?').decision,'ACCEPT');
+ assert.equal(judge(by(7),'Did you see the books?').decision,'ACCEPT');
+ assert.equal(judge(by(9),'Can you find the books?').decision,'ACCEPT');
+ assert.equal(judge(by(10),'This is your book!').decision,'ACCEPT');
+ for(const n of [2,3,4,5,7,9,10]){
+  assert.equal(judge(by(n),'I have a book about birds.').decision,'REJECT',
+   'ASR replacement must not accept unrelated utterances at Q'+n);
+ }
+ for(const phrase of ['Look at the','Look at that','Please look at the','Please look at that']){
+  assert.equal(judge(by(6),phrase).decision,'ACCEPT',phrase);
+ }
+ for(const phrase of ['Look at the bus','Do not look at the','Look at that cart']){
+  assert.equal(judge(by(6),phrase).decision,'REJECT',phrase);
+ }
+ assert.equal(p.challenges['s006.communication.10'].goalJa,'これはあなたの箱です。');
+ assert.equal(p.challenges['s006.communication.10'].modelEn,'This is your box!');
+});
+test('generic ASR token alias only applies on the question where configured',()=>{
+ const p=pack('S006');
+ const q2={...p.challenges['s006.communication.2'].rule};
+ delete q2.wordAliases;
+ assert.equal(judge(q2,'What color is the book?').decision,'REJECT');
+ assert.equal(judge(q2,'What color is the box?').decision,'ACCEPT');
 });

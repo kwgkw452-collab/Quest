@@ -19,7 +19,9 @@ function judge(rule,utterance){
   if(normList(rule.accept).includes(u))return {decision:'ACCEPT',reason:'EXACT_VARIANT'};
   if(Array.isArray(rule.fullPatterns)&&rule.fullPatterns.length){
    const normalized=rule.patternNormalization==='contractions'?normalizeContractions(utterance):normalize(utterance);
-   const checked=rule.stripPlease===true?normalized.replace(/\bplease\b/g,' ').replace(/\s+/g,' ').trim():normalized;
+   const aliases=rule.wordAliases||{};
+   const canonical=normalized.split(' ').map(word=>Object.prototype.hasOwnProperty.call(aliases,word)?aliases[word]:word).join(' ');
+   const checked=rule.stripPlease===true?canonical.replace(/\bplease\b/g,' ').replace(/\s+/g,' ').trim():canonical;
    for(const pattern of rule.fullPatterns){
     if(typeof pattern!=='string'||pattern.length>1800||!pattern.startsWith('(?:')||!pattern.endsWith(')'))throw Error('INVALID_FULL_PATTERN');
     if(new RegExp('^'+pattern+String.fromCharCode(36)).test(checked))return {decision:'ACCEPT',reason:'FULL_UTTERANCE_PATTERN'};

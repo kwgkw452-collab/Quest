@@ -75,7 +75,11 @@
           "(?:what colou?r (?:is|are) (?:(?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)?|it)|what (?:is|are) the colou?r of (?:(?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)?|it)|what (?:does|do) (?:(?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)?|it) look like|what (?:kind|type) of box is it|what is (?:(?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)?|it) like|(?:can|could|would) you describe (?:(?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)?|it)|describe (?:(?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)?|it))"
         ],
         "patternNormalization": "contractions",
-        "stripPlease": true
+        "stripPlease": true,
+        "wordAliases": {
+          "book": "box",
+          "books": "boxes"
+        }
       }
     },
     "s006.communication.3": {
@@ -101,7 +105,11 @@
           "(?:where (?:is|are) (?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)?|where (?:can|could) (?:i|we) find (?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)?|where did (?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)? go|(?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)? where)"
         ],
         "patternNormalization": "contractions",
-        "stripPlease": true
+        "stripPlease": true,
+        "wordAliases": {
+          "book": "box",
+          "books": "boxes"
+        }
       }
     },
     "s006.communication.4": {
@@ -129,7 +137,11 @@
           "(?:(?:can|could|may|shall) (?:i|we) (?:see|check|look at|have a look at) (?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)?|(?:(?:can|could|would|will) you )?show (?:me|us) (?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)?|let (?:me|us) (?:see|check|look at) (?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)?)"
         ],
         "patternNormalization": "contractions",
-        "stripPlease": true
+        "stripPlease": true,
+        "wordAliases": {
+          "book": "box",
+          "books": "boxes"
+        }
       }
     },
     "s006.communication.5": {
@@ -157,7 +169,11 @@
           "(?:(?:(?:do|does) )?you have (?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)?|have you got (?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)?|(?:is|are) (?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)? here)"
         ],
         "patternNormalization": "contractions",
-        "stripPlease": true
+        "stripPlease": true,
+        "wordAliases": {
+          "book": "box",
+          "books": "boxes"
+        }
       }
     },
     "s006.communication.6": {
@@ -178,7 +194,11 @@
           "Can you look at the ribbon?",
           "Please look at the red ribbon.",
           "Look at my ribbon, please.",
-          "Could you look at these ribbons?"
+          "Could you look at these ribbons?",
+          "Look at the",
+          "Look at that",
+          "Please look at the",
+          "Please look at that"
         ],
         "fullPatterns": [
           "(?:(?:(?:can|could|would|will) you )?(?:look at|take a look at|check) (?:(?:the|that|this|these|those|your|my|a|red) )*ribbons?)"
@@ -222,7 +242,11 @@
           "(?:(?:did|do|does) you see (?:(?:the|that|this|my|your|our|a|any|some|those|these|another) )*(?:boxes|box|books|book|it)|(?:can|could) you see (?:(?:the|that|this|my|your|our|a|any|some|those|these|another) )*(?:boxes|box|books|book|it)|have you seen (?:(?:the|that|this|my|your|our|a|any|some|those|these|another) )*(?:boxes|box|books|book|it)|(?:did|do|does) you (?:see|saw) (?:(?:the|that|this|my|your|our|a|any|some|those|these|another) )*(?:boxes|box|books|book|it)|you (?:saw|see) (?:(?:the|that|this|my|your|our|a|any|some|those|these|another) )*(?:boxes|box|books|book|it)|(?:have you|did you) (?:ever )?seen (?:(?:the|that|this|my|your|our|a|any|some|those|these|another) )*(?:boxes|box|books|book|it))"
         ],
         "patternNormalization": "contractions",
-        "stripPlease": true
+        "stripPlease": true,
+        "wordAliases": {
+          "book": "box",
+          "books": "boxes"
+        }
       }
     },
     "s006.communication.8": {
@@ -294,12 +318,16 @@
           "(?:(?:(?:can|could|will|would) you )?(?:find|look for) (?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)?|(?:(?:can|could|will|would) you )?help (?:me|us) (?:to )?find (?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)?|help (?:me|us) find (?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)?)"
         ],
         "patternNormalization": "contractions",
-        "stripPlease": true
+        "stripPlease": true,
+        "wordAliases": {
+          "book": "box",
+          "books": "boxes"
+        }
       }
     },
     "s006.communication.10": {
-      "goalJa": "私は箱を見つけました！",
-      "modelEn": "I found the box!",
+      "goalJa": "これはあなたの箱です。",
+      "modelEn": "This is your box!",
       "hints": [
         "やっと箱が見つかったピコ！ そのことを伝えるピコ。",
         "『見つけた』は found。find の過去形だピコ。",
@@ -333,7 +361,11 @@
           "(?:(?:i|we) (?:found|find|got|get|have|have found|have got) (?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)?(?: (?:now|at last|finally))?|(?:here (?:is|are)|this is|these are) (?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)?|(?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)? (?:is|are) here)"
         ],
         "patternNormalization": "contractions",
-        "stripPlease": true
+        "stripPlease": true,
+        "wordAliases": {
+          "book": "box",
+          "books": "boxes"
+        }
       }
     }
   },

@@ -22,7 +22,9 @@ function judge(rule,utterance){
   if(normList(rule.accept).includes(u))return {decision:'ACCEPT',reason:'EXACT_VARIANT'};
   if(Array.isArray(rule.fullPatterns)&&rule.fullPatterns.length){
    const normalized=rule.patternNormalization==='contractions'?normalizeContractions(utterance):normalize(utterance);
-   const checked=rule.stripPlease===true?normalized.replace(/\bplease\b/g,' ').replace(/\s+/g,' ').trim():normalized;
+   const aliases=rule.wordAliases||{};
+   const canonical=normalized.split(' ').map(word=>Object.prototype.hasOwnProperty.call(aliases,word)?aliases[word]:word).join(' ');
+   const checked=rule.stripPlease===true?canonical.replace(/\bplease\b/g,' ').replace(/\s+/g,' ').trim():canonical;
    for(const pattern of rule.fullPatterns){
     if(typeof pattern!=='string'||pattern.length>1800||!pattern.startsWith('(?:')||!pattern.endsWith(')'))throw Error('INVALID_FULL_PATTERN');
     if(new RegExp('^'+pattern+String.fromCharCode(36)).test(checked))return {decision:'ACCEPT',reason:'FULL_UTTERANCE_PATTERN'};
@@ -96,7 +98,7 @@ const STEP_FIELDS={
  challenge:['type','id'],document:['type','id'],battle:['type','id'],
  setFlag:['type','key','value'],goto:['type','to'],end:['type','result'],hideDialogue:['type']
 };
-const RULE_FIELDS=new Set(['accept','exclude','excludeExact','fullPatterns','patternNormalization','stripPlease','requireAll','orderedGroups','requireAnyWords','requirePhrases']);
+const RULE_FIELDS=new Set(['accept','exclude','excludeExact','fullPatterns','patternNormalization','stripPlease','wordAliases','requireAll','orderedGroups','requireAnyWords','requirePhrases']);
 function ruleErrors(rule,id,add){
  if(!rule||typeof rule!=='object'||Array.isArray(rule)){add('RULE_TYPE:'+id);return;}
  for(const k of Object.keys(rule))if(!RULE_FIELDS.has(k))add('UNSUPPORTED_RULE_OPERATOR:'+id+':'+k);
@@ -104,6 +106,7 @@ function ruleErrors(rule,id,add){
  if('fullPatterns' in rule&&(!Array.isArray(rule.fullPatterns)||!rule.fullPatterns.length||!rule.fullPatterns.every(x=>typeof x==='string'&&x.length<=1800&&x.startsWith('(?:')&&x.endsWith(')'))))add('INVALID_FULL_PATTERNS:'+id);
  if('patternNormalization' in rule&&!['basic','contractions'].includes(rule.patternNormalization))add('INVALID_NORMALIZE_PROFILE:'+id);
  if('stripPlease' in rule&&typeof rule.stripPlease!=='boolean')add('INVALID_STRIP_POLITE:'+id);
+ if('wordAliases' in rule&&(!rule.wordAliases||typeof rule.wordAliases!=='object'||Array.isArray(rule.wordAliases)||Object.entries(rule.wordAliases).some(([a,b])=>!/^[a-z]+$/.test(a)||typeof b!=='string'||!/^[a-z]+$/.test(b))))add('INVALID_WORD_ALIASES:'+id);
  for(const key of ['accept','exclude','excludeExact','requireAll','requirePhrases'])if(key in rule&&!strList(rule[key]))add('RULE_STRING_LIST:'+id+':'+key);
  for(const key of ['orderedGroups','requireAnyWords'])if(key in rule&&(!Array.isArray(rule[key])||!rule[key].length||!rule[key].every(group=>strList(group)&&group.length)))add('RULE_GROUP_LIST:'+id+':'+key);
 }

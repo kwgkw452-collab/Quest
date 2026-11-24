@@ -82,10 +82,10 @@ window.SpeechRecognition=class {{
         persisted=page.evaluate("JSON.parse(localStorage.getItem('quest.v2.test.S007'))")
         assert persisted['storyId']=='S007'
         assert persisted['flags']['s007.megJoined'] is True
-        assert persisted['scene']=='scene12'
+        assert persisted['scene']=='scene13'
         page.reload(wait_until='load')
-        page.get_by_role("button",name="次へ").wait_for(timeout=15000)
-        assert 'scene13' in page.locator('#status').inner_text(),"SAVE_DID_NOT_ADVANCE_FROM_SCENE12_CHECKPOINT"
+        page.wait_for_function("()=>document.querySelector('#status')?.textContent.includes('scene13')",timeout=15000)
+        assert 'このStoryをクリアしました' in page.locator('#text').inner_text(),"SAVE_DID_NOT_RESUME_FINAL_READY_CHECKPOINT"
         assert 'S007-Scene-13.png' in page.locator('#backdrop').get_attribute('style'),"SAVE_RESTORED_WRONG_NEXT_SCENE"
         assert page.evaluate("JSON.parse(localStorage.getItem('quest.v2.test.S007')).flags['s007.megJoined']") is True
         page.evaluate("""() => {const key='quest.v2.test.S007';const snapshot=JSON.parse(localStorage.getItem(key));snapshot.scene='scene03';snapshot.index=1;snapshot.flags={};localStorage.setItem(key,JSON.stringify(snapshot));}""")
@@ -95,9 +95,24 @@ window.SpeechRecognition=class {{
         assert 'S007-Scene-03.png' in page.locator('#backdrop').get_attribute('style'),"MID_SCENE_BACKGROUND_NOT_RESTORED"
         page.get_by_role("button",name="最初から").click()
         page.wait_for_function("()=>document.querySelector('#status').textContent.includes('scene01')")
-        assert page.evaluate("localStorage.getItem('quest.v2.test.S007')") is None,"MANUAL_RESTART_DID_NOT_CLEAR_CHECKPOINT"
+        refreshed=page.evaluate("JSON.parse(localStorage.getItem('quest.v2.test.S007'))")
+        assert refreshed['scene']=='scene01' and refreshed['flags']=={},"MANUAL_RESTART_DID_NOT_CLEAR_PREVIOUS_PROGRESS"
+        for step in range(45):
+            options=page.locator('#actions button').all_text_contents()
+            if '話す' in options:
+                break
+            assert '次へ' in options,('UNEXPECTED_RETURN_TEST_SCREEN',options)
+            page.get_by_role('button',name='次へ').click()
+        else:
+            raise AssertionError('RETURN_TEST_REACHED_NO_QUESTION')
+        page.get_by_role('button',name='冒険に戻る').click()
+        page.get_by_role('button',name='冒険を再開').wait_for(timeout=10000)
+        page.get_by_role('button',name='冒険を再開').click()
+        page.wait_for_function("()=>document.querySelector('#actions')?.textContent.includes('話す')||document.querySelector('#actions')?.textContent.includes('次へ')",timeout=15000)
+        assert 'RETURNED' not in page.locator('#status').inner_text(),'RETURN_RESTART_CANNOT_CONTINUE'
         assert not errors, errors
-        print("S007 SAVE RELOAD PASS: checkpoint to scene13, mid-scene background restoration, explicit restart only")
+        print("S007 RETURN PASS: comeback from a question offers working Story restart")
+        print("S007 SAVE RELOAD PASS: auto checkpoint at scene13, mid-scene background restoration, explicit restart resets old progress")
         print("S007 BROWSER E2E PASS: 13 scenes, 112 dialogue lines, 10 spoken challenges, Meg Save flag, last background")
         browser.close()
 finally:
