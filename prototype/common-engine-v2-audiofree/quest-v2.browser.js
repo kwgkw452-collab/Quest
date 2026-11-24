@@ -4,6 +4,14 @@ const factories={"judge.cjs":function(module,exports,require){
 'use strict';
 // Declarative, deterministic local judge. Its acceptance corpus still requires independent approval.
 function normalize(x){return String(x??'').normalize('NFKC').toLowerCase().replace(/[’‘]/g,"'").replace(/[^a-z0-9'\s]/g,' ').replace(/\s+/g,' ').trim();}
+function normalizeContractions(x){
+ return String(x??'').normalize('NFKC').toLowerCase().replace(/[’‘]/g,"'")
+  .replace(/\b(can't|cant)\b/g,'cannot').replace(/\b(don't|dont)\b/g,'do not')
+  .replace(/\b(doesn't|doesnt)\b/g,'does not').replace(/\b(didn't|didnt)\b/g,'did not')
+  .replace(/\b(won't|wont)\b/g,'will not').replace(/\b(we've|weve)\b/g,'we have')
+  .replace(/\b(i've|ive)\b/g,'i have').replace(/\b(where's|wheres)\b/g,'where is')
+  .replace(/\b(it's|its)\b/g,'it is').replace(/[^a-z0-9]+/g,' ').trim().replace(/\s+/g,' ');
+}
 function judge(rule,utterance){
   if(!rule||typeof rule!=='object')throw new Error('INVALID_RULE');
   const u=normalize(utterance);
@@ -12,6 +20,14 @@ function judge(rule,utterance){
   if(normList(rule.excludeExact).includes(u))return {decision:'REJECT',reason:'EXCLUDED_EXACT'};
   if(normList(rule.exclude).some(x=>x&&u.includes(x)))return {decision:'REJECT',reason:'EXCLUDED'};
   if(normList(rule.accept).includes(u))return {decision:'ACCEPT',reason:'EXACT_VARIANT'};
+  if(Array.isArray(rule.fullPatterns)&&rule.fullPatterns.length){
+   const normalized=rule.patternNormalization==='contractions'?normalizeContractions(utterance):normalize(utterance);
+   const checked=rule.stripPlease===true?normalized.replace(/\bplease\b/g,' ').replace(/\s+/g,' ').trim():normalized;
+   for(const pattern of rule.fullPatterns){
+    if(typeof pattern!=='string'||pattern.length>1800||!pattern.startsWith('(?:')||!pattern.endsWith(')'))throw Error('INVALID_FULL_PATTERN');
+    if(new RegExp('^'+pattern+String.fromCharCode(36)).test(checked))return {decision:'ACCEPT',reason:'FULL_UTTERANCE_PATTERN'};
+   }
+  }
   if(Array.isArray(rule.requireAll)&&rule.requireAll.length&&rule.requireAll.every(x=>u.split(' ').includes(normalize(x))))return {decision:'ACCEPT',reason:'ALL_TERMS'};
   const tokens=u.split(' ');
   const requiredAny=Array.isArray(rule.requireAnyWords)&&rule.requireAnyWords.length;
@@ -39,7 +55,7 @@ function judge(rule,utterance){
   if(anyWordsOk&&phrasesOk&&(requiredAny||requiredPhrases)&&!hasOrdered)return {decision:'ACCEPT',reason:'TYPED_TERMS'};
   return {decision:'REJECT',reason:'NO_MATCH'};
 }
-module.exports={normalize,judge};
+module.exports={normalize,normalizeContractions,judge};
 
 
 },
@@ -80,11 +96,14 @@ const STEP_FIELDS={
  challenge:['type','id'],document:['type','id'],battle:['type','id'],
  setFlag:['type','key','value'],goto:['type','to'],end:['type','result'],hideDialogue:['type']
 };
-const RULE_FIELDS=new Set(['accept','exclude','excludeExact','requireAll','orderedGroups','requireAnyWords','requirePhrases']);
+const RULE_FIELDS=new Set(['accept','exclude','excludeExact','fullPatterns','patternNormalization','stripPlease','requireAll','orderedGroups','requireAnyWords','requirePhrases']);
 function ruleErrors(rule,id,add){
  if(!rule||typeof rule!=='object'||Array.isArray(rule)){add('RULE_TYPE:'+id);return;}
  for(const k of Object.keys(rule))if(!RULE_FIELDS.has(k))add('UNSUPPORTED_RULE_OPERATOR:'+id+':'+k);
  const strList=(v)=>Array.isArray(v)&&v.every(x=>typeof x==='string'&&x.trim());
+ if('fullPatterns' in rule&&(!Array.isArray(rule.fullPatterns)||!rule.fullPatterns.length||!rule.fullPatterns.every(x=>typeof x==='string'&&x.length<=1800&&x.startsWith('(?:')&&x.endsWith(')'))))add('INVALID_FULL_PATTERNS:'+id);
+ if('patternNormalization' in rule&&!['basic','contractions'].includes(rule.patternNormalization))add('INVALID_NORMALIZE_PROFILE:'+id);
+ if('stripPlease' in rule&&typeof rule.stripPlease!=='boolean')add('INVALID_STRIP_POLITE:'+id);
  for(const key of ['accept','exclude','excludeExact','requireAll','requirePhrases'])if(key in rule&&!strList(rule[key]))add('RULE_STRING_LIST:'+id+':'+key);
  for(const key of ['orderedGroups','requireAnyWords'])if(key in rule&&(!Array.isArray(rule[key])||!rule[key].length||!rule[key].every(group=>strList(group)&&group.length)))add('RULE_GROUP_LIST:'+id+':'+key);
 }
