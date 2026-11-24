@@ -1,5 +1,6 @@
 """Synthetic browser end-to-end test with a mocked microphone; no audio playback."""
 from pathlib import Path
+from shutil import which
 from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).resolve().parent
@@ -16,9 +17,10 @@ with sync_playwright() as playwright:
     try:
         browser = playwright.chromium.launch(headless=True)
     except Exception:
-        if not Path('/usr/bin/chromium').exists():
-            raise
-        browser = playwright.chromium.launch(headless=True, executable_path='/usr/bin/chromium', args=['--no-sandbox'])
+        chrome = next((which(name) for name in ('google-chrome', 'google-chrome-stable', 'chromium', 'chromium-browser') if which(name)), None)
+        if not chrome:
+            raise RuntimeError('Chromium / Google Chrome not found on test runner')
+        browser = playwright.chromium.launch(headless=True, executable_path=chrome, args=['--no-sandbox'])
     page = browser.new_page()
     errors = []
     page.on('pageerror', lambda err: errors.append(str(err)))
