@@ -28,6 +28,9 @@ with sync_playwright() as pw:
  """)
  url=base+'play.html?story=S006'
  page.goto(url,wait_until='load',timeout=55000)
+ if 'External Content Notice' in page.title():
+  page.get_by_text('Open the page',exact=True).click(timeout=15000)
+  page.wait_for_load_state('domcontentloaded',timeout=20000)
  page.wait_for_timeout(2500)
  print('REMOTE_DIAGNOSTIC',{'url':page.url,'title':page.title(),'body':page.locator('body').inner_text()[:1000],'errors':errors,'questApi':page.evaluate('typeof window.QuestV2'),'status':page.locator('#status').inner_text() if page.locator('#status').count() else '(missing)'},flush=True)
  page.get_by_role('button',name='次へ').wait_for(timeout=12000)
