@@ -74,6 +74,14 @@ window.SpeechRecognition=class {{
     assert checked_translation,'translation toggle untested'
    assert not page.evaluate('window.__questAnswers.length'),story_id+' incomplete recognition'
    assert not errors,(story_id,errors)
+   persisted=page.evaluate("(id)=>JSON.parse(localStorage.getItem('quest.v2.test.'+id))",story_id)
+   assert persisted and persisted['status']=='READY' and persisted['storyId']==story_id,story_id+' READY checkpoint missing'
+   assert persisted['scene']==pack['sceneOrder'][-1],story_id+' last scene was not checkpointed'
+   page.reload(wait_until='load')
+   page.wait_for_function("()=>document.querySelector('#status')?.textContent.includes('ENDED')",timeout=15000)
+   assert 'このStoryをクリアしました' in page.locator('#text').inner_text(),story_id+' checkpoint replay failed'
+   assert not errors,(story_id,errors)
+   print(f'{story_id} SAVE RELOAD PASS: automatic last-scene checkpoint restores completed Story')
    print(f'{story_id} BROWSER PASS: {lines} dialogues, {questions} spoken challenges, {documents} document(s), all scenes complete')
    context.close()
   browser.close()
