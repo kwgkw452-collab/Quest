@@ -79,6 +79,20 @@ window.SpeechRecognition=class {{
         assert events[-1]["flags"]["s007.megJoined"] is True
         assert page.evaluate("window.__questAnswers.length")==0, "NOT_ALL_10_QUESTIONS_SPOKEN"
         assert not errors, errors
+        persisted=page.evaluate("JSON.parse(localStorage.getItem('quest.v2.test.S007'))")
+        assert persisted['storyId']=='S007'
+        assert persisted['flags']['s007.megJoined'] is True
+        assert persisted['scene']=='scene12'
+        page.reload(wait_until='load')
+        page.get_by_role("button",name="次へ").wait_for(timeout=15000)
+        assert 'scene12' in page.locator('#status').inner_text(),"SAVE_DID_NOT_RESUME_AFTER_RELOAD"
+        assert 'S007-Scene-12.png' in page.locator('#backdrop').get_attribute('style'),"SAVE_RESTORE_BACKGROUND_BLANK"
+        assert page.evaluate("JSON.parse(localStorage.getItem('quest.v2.test.S007')).flags['s007.megJoined']") is True
+        page.get_by_role("button",name="最初から").click()
+        page.wait_for_function("()=>document.querySelector('#status').textContent.includes('scene01')")
+        assert page.evaluate("localStorage.getItem('quest.v2.test.S007')") is None,"MANUAL_RESTART_DID_NOT_CLEAR_CHECKPOINT"
+        assert not errors, errors
+        print("S007 SAVE RELOAD PASS: checkpoint, scene12 background, clear only on explicit restart")
         print("S007 BROWSER E2E PASS: 13 scenes, 112 dialogue lines, 10 spoken challenges, Meg Save flag, last background")
         browser.close()
 finally:
