@@ -39,6 +39,10 @@
           [
             "no"
           ]
+        ],
+        "excludeExact": [
+          "Yes, we do.",
+          "We have a reservation."
         ]
       }
     },
@@ -63,6 +67,10 @@
             "four",
             "4"
           ]
+        ],
+        "excludeExact": [
+          "Two.",
+          "Three."
         ]
       }
     },
@@ -101,6 +109,9 @@
             "size",
             "side"
           ]
+        ],
+        "excludeExact": [
+          "We don't need a bed."
         ]
       }
     },
@@ -123,6 +134,9 @@
             "one",
             "1"
           ]
+        ],
+        "excludeExact": [
+          "Two king-size beds, please."
         ]
       }
     },
@@ -152,6 +166,9 @@
             "truth",
             "ture"
           ]
+        ],
+        "excludeExact": [
+          "One room, please."
         ]
       }
     },
@@ -171,6 +188,9 @@
           "Sure.",
           "OK.",
           "Okay."
+        ],
+        "excludeExact": [
+          "No, thank you."
         ]
       }
     },
@@ -192,6 +212,9 @@
           "You okay?",
           "All right?",
           "Everything OK?"
+        ],
+        "excludeExact": [
+          "I don't care."
         ]
       }
     },
@@ -226,6 +249,9 @@
           [
             "name"
           ]
+        ],
+        "excludeExact": [
+          "I don't want to know your name."
         ]
       }
     },
@@ -257,6 +283,9 @@
           "Did you take the bag?",
           "Do you still?",
           "Did you still?"
+        ],
+        "excludeExact": [
+          "You are a thief."
         ]
       }
     },
@@ -278,6 +307,9 @@
           "Let’s go together.",
           "Let's go.",
           "Let's go together."
+        ],
+        "excludeExact": [
+          "Go away."
         ]
       }
     },
@@ -318,6 +350,9 @@
             "find",
             "found"
           ]
+        ],
+        "excludeExact": [
+          "I don't care about the bag."
         ]
       }
     },
@@ -340,6 +375,9 @@
           "His name, Ben.",
           "His name's Ben.",
           "He's Ben."
+        ],
+        "excludeExact": [
+          "He is a ghost."
         ]
       }
     }
