@@ -186,3 +186,14 @@ test('S006 ten official model answers cannot pass a different question',()=>{
    'cross-question false positive: Q'+(i+1)+' accepted Q'+(j+1)+' sentence '+answer);
  }
 });
+
+test('S006 current Q7 saw-box spec is not replaced by obsolete cart-centered QA fixture',()=>{
+ const current=pack('S006').challenges['s006.communication.7'];
+ const obsolete=JSON.parse(read('tests/s006-q7-final-cases.json'));
+ assert.equal(current.goalJa,'箱を見ましたか？');
+ assert.equal(current.modelEn,'Did you see the box?');
+ assert.equal(judge(current.rule,'Did you see the book?').decision,'ACCEPT');
+ assert.equal(judge(current.rule,'Is the box on the cart?').decision,'REJECT');
+ assert(obsolete.required.includes('Is the box on the cart?'));
+ assert(!current.rule.accept.includes('Is the box on the cart?'));
+});
