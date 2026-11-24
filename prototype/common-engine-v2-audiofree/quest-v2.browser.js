@@ -2,7 +2,7 @@
 'use strict';
 const factories={"judge.cjs":function(module,exports,require){
 'use strict';
-// Declarative, deterministic, local-only fixture judge. Not the approved S005-S007 corpus.
+// Declarative, deterministic local judge. Its acceptance corpus still requires independent approval.
 function normalize(x){return String(x??'').normalize('NFKC').toLowerCase().replace(/[’‘]/g,"'").replace(/[^a-z0-9'\s]/g,' ').replace(/\s+/g,' ').trim();}
 function judge(rule,utterance){
   if(!rule||typeof rule!=='object')throw new Error('INVALID_RULE');
@@ -12,6 +12,30 @@ function judge(rule,utterance){
   if(normList(rule.exclude).some(x=>x&&u.includes(x)))return {decision:'REJECT',reason:'EXCLUDED'};
   if(normList(rule.accept).includes(u))return {decision:'ACCEPT',reason:'EXACT_VARIANT'};
   if(Array.isArray(rule.requireAll)&&rule.requireAll.length&&rule.requireAll.every(x=>u.split(' ').includes(normalize(x))))return {decision:'ACCEPT',reason:'ALL_TERMS'};
+  const tokens=u.split(' ');
+  const requiredAny=Array.isArray(rule.requireAnyWords)&&rule.requireAnyWords.length;
+  const requiredPhrases=Array.isArray(rule.requirePhrases)&&rule.requirePhrases.length;
+  const hasOrdered=Array.isArray(rule.orderedGroups)&&rule.orderedGroups.length;
+  const anyWordsOk=!requiredAny||rule.requireAnyWords.every(group=>Array.isArray(group)&&group.length&&group.some(t=>tokens.includes(normalize(t))));
+  const phrasesOk=!requiredPhrases||rule.requirePhrases.every(phrase=>{const pieces=normalize(phrase).split(' ');return tokens.some((_,i)=>pieces.every((v,j)=>tokens[i+j]===v));});
+  if(anyWordsOk&&phrasesOk&&hasOrdered){
+    const words=tokens;let cursor=0,complete=true;
+    for(const group of rule.orderedGroups){
+      if(!Array.isArray(group)||!group.length||group.some(x=>typeof x!=='string'))throw Error('INVALID_ORDERED_GROUP');
+      let next=-1;
+      for(const alternative of group){
+        const phrase=normalize(alternative).split(' ');
+        for(let i=cursor;i<=words.length-phrase.length;i++){
+          if(phrase.every((v,j)=>words[i+j]===v)){next=i+phrase.length;break;}
+        }
+        if(next>=0)break;
+      }
+      if(next<0){complete=false;break;}
+      cursor=next;
+    }
+    if(complete)return {decision:'ACCEPT',reason:'TYPED_TERMS'};
+  }
+  if(anyWordsOk&&phrasesOk&&(requiredAny||requiredPhrases)&&!hasOrdered)return {decision:'ACCEPT',reason:'TYPED_TERMS'};
   return {decision:'REJECT',reason:'NO_MATCH'};
 }
 module.exports={normalize,judge};
@@ -49,13 +73,29 @@ const own=(o,k)=>Object.prototype.hasOwnProperty.call(o,k);
 const STEPS=new Set(['scene','clear','line','challenge','document','battle','setFlag','goto','end','hideDialogue']);
 const ROOT=new Set(['schemaVersion','id','title','entry','sceneOrder','scenes','challenges','saveKeys','assets','cast','documents','battles','rules','pools']);
 const BANNED=new Set(['js','javascript','html','css','callback','onEnter','onExit','eval','expression','script']);
+
+const STEP_FIELDS={
+ scene:['type','asset','frame'],clear:['type'],line:['type','text','speaker','voice','supportText'],
+ challenge:['type','id'],document:['type','id'],battle:['type','id'],
+ setFlag:['type','key','value'],goto:['type','to'],end:['type','result'],hideDialogue:['type']
+};
+const RULE_FIELDS=new Set(['accept','exclude','requireAll','orderedGroups','requireAnyWords','requirePhrases']);
+function ruleErrors(rule,id,add){
+ if(!rule||typeof rule!=='object'||Array.isArray(rule)){add('RULE_TYPE:'+id);return;}
+ for(const k of Object.keys(rule))if(!RULE_FIELDS.has(k))add('UNSUPPORTED_RULE_OPERATOR:'+id+':'+k);
+ const strList=(v)=>Array.isArray(v)&&v.every(x=>typeof x==='string'&&x.trim());
+ for(const key of ['accept','exclude','requireAll','requirePhrases'])if(key in rule&&!strList(rule[key]))add('RULE_STRING_LIST:'+id+':'+key);
+ for(const key of ['orderedGroups','requireAnyWords'])if(key in rule&&(!Array.isArray(rule[key])||!rule[key].length||!rule[key].every(group=>strList(group)&&group.length)))add('RULE_GROUP_LIST:'+id+':'+key);
+}
+
 function validate(p){const errors=[];const add=x=>errors.push(x);if(!p||typeof p!=='object'||Array.isArray(p))return ['INVALID_PACKAGE'];
  for(const k of Object.keys(p))if(!ROOT.has(k))add('UNKNOWN_FIELD:'+k);
  if(p.schemaVersion!==1)add('SCHEMA_VERSION');if(typeof p.id!=='string'||!/^S\d{3}$/.test(p.id))add('STORY_ID');
  if(typeof p.title!=='string'||!p.title.trim())add('TITLE');if(!p.scenes||typeof p.scenes!=='object'||Array.isArray(p.scenes))return [...errors,'SCENES'];
  if(!own(p.scenes,p.entry))add('ENTRY');if(!Array.isArray(p.sceneOrder)||p.sceneOrder.length!==Object.keys(p.scenes).length||new Set(p.sceneOrder).size!==p.sceneOrder.length||Object.keys(p.scenes).some(k=>!p.sceneOrder.includes(k)))add('SCENE_ORDER');
  for(const [id,c] of Object.entries(p.challenges||{})){if(typeof c?.goalJa!=='string'||typeof c.modelEn!=='string'||!Array.isArray(c.hints)||c.hints.length!==3||c.hints.some(x=>typeof x!=='string'))add('CHALLENGE:'+id);if(!Array.isArray(c?.rule?.accept||c?.accept)||!(c.rule?.accept||c.accept).length)add('ACCEPT_RULE:'+id);}
- for(const [id,scene] of Object.entries(p.scenes)){if(!Array.isArray(scene?.steps)||!scene.steps.length){add('STEPS:'+id);continue;}for(const [i,s] of scene.steps.entries()){const ref=id+':'+i;if(!STEPS.has(s?.type))add('STEP:'+ref);if(s?.type==='line'&&typeof s.text!=='string')add('LINE:'+ref);if(s?.type==='goto'&&!own(p.scenes,s.to))add('GOTO:'+ref);if(s?.type==='challenge'&&!own(p.challenges||{},s.id))add('CHALLENGE_REF:'+ref);if(s?.type==='setFlag'&&(!own(p.saveKeys||{},s.key)||typeof s.value!==p.saveKeys[s.key]))add('SAVE_KEY:'+ref);if(s?.type==='battle'&&!own(p.battles||{},s.id))add('BATTLE_REF:'+ref);if(s?.type==='document'&&!own(p.documents||{},s.id))add('DOCUMENT_REF:'+ref);}}
+ for(const [id,c] of Object.entries(p.challenges||{}))if(c?.rule)ruleErrors(c.rule,id,add);
+ for(const [id,scene] of Object.entries(p.scenes)){if(!Array.isArray(scene?.steps)||!scene.steps.length){add('STEPS:'+id);continue;}for(const [i,s] of scene.steps.entries()){const ref=id+':'+i;if(!STEPS.has(s?.type))add('STEP:'+ref);if(STEP_FIELDS[s?.type])for(const k of Object.keys(s))if(!STEP_FIELDS[s.type].includes(k))add('UNSUPPORTED_STEP_FIELD:'+ref+':'+k);if(s?.type==='line'&&typeof s.text!=='string')add('LINE:'+ref);if(s?.type==='goto'&&!own(p.scenes,s.to))add('GOTO:'+ref);if(s?.type==='challenge'&&!own(p.challenges||{},s.id))add('CHALLENGE_REF:'+ref);if(s?.type==='setFlag'&&(!own(p.saveKeys||{},s.key)||typeof s.value!==p.saveKeys[s.key]))add('SAVE_KEY:'+ref);if(s?.type==='battle'&&!own(p.battles||{},s.id))add('BATTLE_REF:'+ref);if(s?.type==='document'&&!own(p.documents||{},s.id))add('DOCUMENT_REF:'+ref);}}
  const visit=(o,path)=>{if(!o||typeof o!=='object')return;for(const [k,v]of Object.entries(o)){if(BANNED.has(k)||typeof v==='function')add('EXECUTABLE:'+path+'.'+k);if(v&&typeof v==='object')visit(v,path+'.'+k);}};visit(p,'$');return [...new Set(errors)];}
 module.exports={validate};
 
@@ -143,7 +183,7 @@ function createRunner(pack,{recognize,judge,cancelSpeech,storage,onEvent,initial
    const s=pack.scenes[scene]?.steps[index];if(!s)throw Error('RUN_OFF_SCENE');
    switch(s.type){
     case 'scene':case 'clear':case 'hideDialogue':index++;emit({type:s.type,asset:s.asset||null});break;
-    case 'line':index++;return emit({type:'line',speaker:s.speaker||null,text:s.text,voice:s.voice||null});
+    case 'line':index++;return emit({type:'line',speaker:s.speaker||null,text:s.text,supportText:s.supportText||null,voice:s.voice||null});
     case 'goto':scene=s.to;index=0;emit({type:'goto',scene});break;
     case 'setFlag':{const changed={...flags,[s.key]:s.value};const next={schemaVersion:1,storyId:pack.id,scene,index:index+1,status:'READY',flags:changed};if(storage)await storage.write(next);flags=changed;index++;emit({type:'flag',key:s.key,value:s.value});break;}
     case 'challenge':communication=createCommunication(pack.challenges[s.id],{recognize,judge,cancelSpeech});status='QUESTION';return emit({type:'challenge',id:s.id,view:communication.view()});

@@ -17,7 +17,7 @@ function createRunner(pack,{recognize,judge,cancelSpeech,storage,onEvent,initial
    const s=pack.scenes[scene]?.steps[index];if(!s)throw Error('RUN_OFF_SCENE');
    switch(s.type){
     case 'scene':case 'clear':case 'hideDialogue':index++;emit({type:s.type,asset:s.asset||null});break;
-    case 'line':index++;return emit({type:'line',speaker:s.speaker||null,text:s.text,voice:s.voice||null});
+    case 'line':index++;return emit({type:'line',speaker:s.speaker||null,text:s.text,supportText:s.supportText||null,voice:s.voice||null});
     case 'goto':scene=s.to;index=0;emit({type:'goto',scene});break;
     case 'setFlag':{const changed={...flags,[s.key]:s.value};const next={schemaVersion:1,storyId:pack.id,scene,index:index+1,status:'READY',flags:changed};if(storage)await storage.write(next);flags=changed;index++;emit({type:'flag',key:s.key,value:s.value});break;}
     case 'challenge':communication=createCommunication(pack.challenges[s.id],{recognize,judge,cancelSpeech});status='QUESTION';return emit({type:'challenge',id:s.id,view:communication.view()});
