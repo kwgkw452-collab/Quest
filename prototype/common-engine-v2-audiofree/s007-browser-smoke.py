@@ -96,7 +96,21 @@ window.SpeechRecognition=class {{
         page.get_by_role("button",name="最初から").click()
         page.wait_for_function("()=>document.querySelector('#status').textContent.includes('scene01')")
         assert page.evaluate("localStorage.getItem('quest.v2.test.S007')") is None,"MANUAL_RESTART_DID_NOT_CLEAR_CHECKPOINT"
+        for step in range(45):
+            options=page.locator('#actions button').all_text_contents()
+            if '話す' in options:
+                break
+            assert '次へ' in options,('UNEXPECTED_RETURN_TEST_SCREEN',options)
+            page.get_by_role('button',name='次へ').click()
+        else:
+            raise AssertionError('RETURN_TEST_REACHED_NO_QUESTION')
+        page.get_by_role('button',name='冒険に戻る').click()
+        page.get_by_role('button',name='冒険を再開').wait_for(timeout=10000)
+        page.get_by_role('button',name='冒険を再開').click()
+        page.get_by_role('button',name='次へ').wait_for(timeout=15000)
+        assert 'scene01' in page.locator('#status').inner_text(),'RETURN_RESTART_CANNOT_CONTINUE'
         assert not errors, errors
+        print("S007 RETURN PASS: comeback from a question offers working Story restart")
         print("S007 SAVE RELOAD PASS: checkpoint to scene13, mid-scene background restoration, explicit restart only")
         print("S007 BROWSER E2E PASS: 13 scenes, 112 dialogue lines, 10 spoken challenges, Meg Save flag, last background")
         browser.close()
