@@ -42,8 +42,14 @@ function showDocument(content){
  else addButton('読み終えた',()=>{runner.documentDone();documentCursor=0;documentLanguage='en';if(lastSceneAsset)setBackdrop(lastSceneAsset);void next();});
  addButton('冒険に戻る',()=>paint(runner.returnToAdventure()));
 }
+function checkpoint(event){
+ if(!runner||!store||!['line','accepted','complete','document-complete'].includes(event.type))return;
+ const snapshot=runner.snapshot();
+ if(snapshot.status!=='READY')return;
+ try{store.write(snapshot);}catch(e){report({warning:'CHECKPOINT_FAILED',reason:String(e?.message||e)});}
+}
 function paint(event){
- report(event);view.dialogue.className='';
+ report(event);checkpoint(event);view.dialogue.className='';
  const state=runner.state();
  showStatus('Scene: '+state.scene+' / '+state.status+' / マイク: '+(recognizer.isSupported()?'対応':'非対応')+' / 音楽・Voice: OFF');
  clearButtons();
