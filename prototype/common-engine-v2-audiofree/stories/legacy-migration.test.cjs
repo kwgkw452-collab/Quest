@@ -175,3 +175,14 @@ test('S006 anchored rules do not confuse another box with an unrelated question'
  assert.equal(judge(p.challenges['s006.communication.3'].rule,'Where is another box?').decision,'ACCEPT');
  assert.equal(judge(p.challenges['s006.communication.7'].rule,'Did you see the book?').decision,'ACCEPT');
 });
+
+test('S006 ten official model answers cannot pass a different question',()=>{
+ const p=pack('S006');
+ const ids=Array.from({length:10},(_,i)=>'s006.communication.'+(i+1));
+ for(let i=0;i<10;i++)for(let j=0;j<10;j++){
+  if(i===j)continue;
+  const answer=p.challenges[ids[j]].modelEn;
+  assert.equal(judge(p.challenges[ids[i]].rule,answer).decision,'REJECT',
+   'cross-question false positive: Q'+(i+1)+' accepted Q'+(j+1)+' sentence '+answer);
+ }
+});
