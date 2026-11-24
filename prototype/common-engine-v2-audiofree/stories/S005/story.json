@@ -34,6 +34,11 @@
           "No, we do not.",
           "No reservation.",
           "We have no reservation."
+        ],
+        "requireAnyWords": [
+          [
+            "no"
+          ]
         ]
       }
     },
@@ -52,6 +57,12 @@
           "Four people.",
           "4 people.",
           "We are four."
+        ],
+        "requireAnyWords": [
+          [
+            "four",
+            "4"
+          ]
         ]
       }
     },
@@ -77,6 +88,19 @@
           "King-size bed, please.",
           "A king-size bed, please.",
           "King-size beds, please."
+        ],
+        "requireAnyWords": [
+          [
+            "bed",
+            "beds",
+            "bet",
+            "bets"
+          ],
+          [
+            "king",
+            "size",
+            "side"
+          ]
         ]
       }
     },
@@ -93,6 +117,12 @@
           "One king-size bed, please.",
           "One king size bed please",
           "A king-size bed, please."
+        ],
+        "requireAnyWords": [
+          [
+            "one",
+            "1"
+          ]
         ]
       }
     },
@@ -111,6 +141,17 @@
           "2 rooms",
           "two room",
           "2 room"
+        ],
+        "requireAnyWords": [
+          [
+            "to",
+            "two",
+            "2",
+            "true",
+            "tulum",
+            "truth",
+            "ture"
+          ]
         ]
       }
     },
@@ -180,6 +221,11 @@
           "Please tell me your name.",
           "What's your name?",
           "I'd like to know your name."
+        ],
+        "requireAnyWords": [
+          [
+            "name"
+          ]
         ]
       }
     },
@@ -253,6 +299,25 @@
           "Have you found a bag?",
           "See a bag?",
           "Find a bag?"
+        ],
+        "requireAnyWords": [
+          [
+            "bag",
+            "bad",
+            "bug",
+            "back",
+            "pig",
+            "park",
+            "pack",
+            "bed",
+            "bet"
+          ],
+          [
+            "see",
+            "seen",
+            "find",
+            "found"
+          ]
         ]
       }
     },
