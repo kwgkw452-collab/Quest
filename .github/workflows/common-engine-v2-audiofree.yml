@@ -1,0 +1,29 @@
+name: Common Engine V2 Audio-Free Prototype
+on:
+  pull_request:
+    paths:
+      - 'prototype/common-engine-v2-audiofree/**'
+      - '.github/workflows/common-engine-v2-audiofree.yml'
+  push:
+    branches:
+      - common-engine-v2-audiofree-integration-20261125
+    paths:
+      - 'prototype/common-engine-v2-audiofree/**'
+      - '.github/workflows/common-engine-v2-audiofree.yml'
+permissions:
+  contents: read
+jobs:
+  node-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run common engine no-audio tests
+        run: node --test prototype/common-engine-v2-audiofree/runtime.test.cjs
+      - name: Rebuild browser bundle
+        run: node prototype/common-engine-v2-audiofree/build-browser.cjs
+      - name: Check committed bundle is reproducible
+        run: git diff --exit-code -- prototype/common-engine-v2-audiofree/quest-v2.browser.js
