@@ -1,5 +1,5 @@
 'use strict';
-// Declarative, deterministic, local-only fixture judge. Not the approved S005-S007 corpus.
+// Declarative, deterministic local judge. Its acceptance corpus still requires independent approval.
 function normalize(x){return String(x??'').normalize('NFKC').toLowerCase().replace(/[’‘]/g,"'").replace(/[^a-z0-9'\s]/g,' ').replace(/\s+/g,' ').trim();}
 function judge(rule,utterance){
   if(!rule||typeof rule!=='object')throw new Error('INVALID_RULE');
