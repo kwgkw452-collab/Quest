@@ -36,9 +36,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Install Chromium browser test dependencies
-        run: |
-          python -m pip install playwright==1.56.0
-          python -m playwright install --with-deps chromium
+      - name: Install Python browser testing library (use runner preinstalled Chrome)
+        run: python -m pip install playwright==1.56.0
       - name: Test complete synthetic story in real Chromium with mock SpeechRecognition
         run: python prototype/common-engine-v2-audiofree/browser-smoke.py
