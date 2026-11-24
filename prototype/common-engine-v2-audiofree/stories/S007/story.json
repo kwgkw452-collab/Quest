@@ -955,9 +955,6 @@
         ],
         "orderedGroups": [
           [
-            "you"
-          ],
-          [
             "take",
             "takes",
             "took"
@@ -974,6 +971,11 @@
           "don't",
           "dont",
           "never"
+        ],
+        "requireAnyWords": [
+          [
+            "you"
+          ]
         ]
       }
     },
@@ -1029,20 +1031,20 @@
           "A baby bird!",
           "There is a baby bird!"
         ],
-        "orderedGroups": [
-          [
-            "look at"
-          ],
-          [
-            "bird",
-            "birds"
-          ]
-        ],
         "exclude": [
           "do not",
           "don't",
           "dont",
           "never"
+        ],
+        "requirePhrases": [
+          "look at"
+        ],
+        "requireAnyWords": [
+          [
+            "bird",
+            "birds"
+          ]
         ]
       }
     },
