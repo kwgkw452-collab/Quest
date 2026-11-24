@@ -1,0 +1,10 @@
+{
+  "catalogVersion": 1,
+  "stories": [
+    {
+      "id": "S007",
+      "path": "./S007/story.json",
+      "status": "EXPERIMENTAL_NOT_APPROVED"
+    }
+  ]
+}
