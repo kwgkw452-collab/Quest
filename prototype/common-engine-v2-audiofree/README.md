@@ -4,9 +4,9 @@ This is **not** the production engine and **not** an approved S001–S007 migrat
 
 ## Run
 
-- Unit tests: `node --test runtime.test.cjs` (29 passed with Node 22 on 2026-11-25).
+- Unit tests: `node --test runtime.test.cjs` (34 passed with Node 22 on 2026-11-25).
 - Browser build: `node build-browser.cjs`.
-- Browser smoke: `python check-browser.py` (headless Chromium, renders initial dialogue and first Pico hint with no JS errors).
+- Browser E2E: `python browser-smoke.py` (requires Playwright/Chromium; runs full synthetic Story with fake microphone speech, two vocabulary words, document, Save, and ending).
 - Browser demonstration: serve this folder over a local development HTTP server, then open `demo.html`. `file:` URLs may be blocked by browser security policy. The demo shows a **synthetic** Story, not any published Story. On browsers with SpeechRecognition support and permission, the Talk buttons use a real microphone. No text answer fallback.
 
 ## Included
@@ -20,8 +20,8 @@ This is **not** the production engine and **not** an approved S001–S007 migrat
 - `runner.cjs`: Story progression, challenge, battle, document, scene transition, typed flag and atomic async save checkpoint.
 - `build-browser.cjs` and `quest-v2.browser.js`: source bundle for standalone browser validation; no external package dependencies.
 - `demo.html` / `demo.js`: browser-visible smoke interface with no audio playback.
-- `runtime.test.cjs`: 29 Node tests; including 100 synthetic IDs, concurrent speech, stale result, invalid schema, Save error, end-to-end synthetic adventure.
-- `check-browser.py`: headless Chromium smoke test (requires installed Playwright and Chromium).
+- `runtime.test.cjs`: 34 Node tests; including 100 synthetic IDs, concurrent speech, stale result, invalid schema, Save error, end-to-end synthetic adventure.
+- `browser-smoke.py`: complete Chromium E2E test with mock SpeechRecognition (requires installed Playwright and Chromium). GitHub Actions also runs this browser job.
 
 ## Still missing (do not claim PASS)
 
@@ -31,3 +31,7 @@ Audio Playback BGM/SE/Voice/duck/restore is intentionally **deferred** per direc
 
 When submitting: source SHA and build artifacts must be checked separately; neither testing a sandbox zip nor creating a Draft PR constitutes independent QA PASS or Production authorization.
 
+
+## Regression hardening
+
+Multi-word vocabulary battles must not exit after the first accepted word. Save writes are serialized through the Story progression lock; a Return attempted while a Save write is pending is reported as ignored, and must be retried. Snapshot restoration rejects undeclared or mistyped Save flags. These safeguards have regression tests, but do not imply real-device microphone QA or Production Save compatibility.

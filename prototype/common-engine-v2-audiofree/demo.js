@@ -12,8 +12,8 @@
  async function trySpeech(){try{const result=await runner.talk();render(result);}catch(e){error(e);}}
  function render(event){appendLog(event);const state=runner.state();stat.textContent='Scene: '+state.scene+' / Status: '+state.status+' / Speech: '+(speech.isSupported()?'ブラウザ対応':'ブラウザ非対応');actions.replaceChildren();target.replaceChildren();
   if(event.type==='line'){plain((event.speaker?event.speaker+': ':'')+event.text);button('次へ',next);}
-  else if(event.type==='challenge'||event.type==='hint'||['no-speech','rejected','unknown'].includes(event.type)){showView(event.view);button('話す',trySpeech);button('ピコサポート',()=>{try{render(runner.support());}catch(e){error(e);}});button('冒険に戻る',()=>render(runner.returnToAdventure()));}
-  else if(event.type==='battle'){plain(event.view.prompt);button('英単語を話す',trySpeech);button('冒険に戻る',()=>render(runner.returnToAdventure()));}
+  else if(event.type==='challenge'||event.type==='hint'||(state.status==='QUESTION'&&['no-speech','rejected','unknown'].includes(event.type))){showView(event.view);button('話す',trySpeech);button('ピコサポート',()=>{try{render(runner.support());}catch(e){error(e);}});button('冒険に戻る',()=>render(runner.returnToAdventure()));}
+  else if(state.status==='BATTLE'&&['battle','accepted','rejected','no-speech'].includes(event.type)){const v=event.view||state.battle;plain(v.prompt||'次の単語を答えよう');if(v.feedback)plain(v.feedback);plain('問題 '+(v.index+1)+' / '+v.total);button('英単語を話す',trySpeech);button('冒険に戻る',()=>render(runner.returnToAdventure()));}
   else if(event.type==='document'){plain(event.content.title);for(const line of event.content.body)plain(line);button('読み終わった',()=>{runner.documentDone();next();});}
   else if(event.type==='end'){plain('テスト冒険クリア！');plain(JSON.stringify(event.flags));}
   else if(event.type==='return'){plain('冒険を中断しました（テスト用）。');}
