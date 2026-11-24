@@ -75,3 +75,18 @@ test('S006 letter preserves all 16 English/Japanese/voice records and image path
 test('S005/S006 unenumerated legacy rule predicates need independent parity certification',()=>{
  for(const id of ['S005','S006']){const {rules}=original(id);assert.equal(rules.length,pack(id).sceneOrder.flatMap(scene=>pack(id).scenes[scene].steps).filter(x=>x.type==='challenge').length);assert(rules.some(x=>typeof x.accept==='function'),'expected functional legacy accept rules');}
 });
+
+test('all S005/S006 background files and S006 letter graphic/voice assets exist',()=>{
+ for(const id of ['S005','S006']){
+  for(const scene of pack(id).sceneOrder)for(const step of pack(id).scenes[scene].steps){
+   if(step.type==='scene')assert(fs.existsSync(path.join(root,step.asset.split('?')[0])),id+' missing '+step.asset);
+  }
+ }
+ const doc=pack('S006').documents.endingLetter;
+ assert(fs.existsSync(path.join(root,doc.card)),'letter graphic missing');
+ doc.lines.forEach((line,i)=>{
+  assert(line.voiceKey,'voice metadata missing at '+i);
+  const pathname='audio/voice/s006/letter-'+String(i+1).padStart(2,'0')+'.mp3';
+  assert(fs.existsSync(path.join(root,pathname)),pathname+' missing');
+ });
+});
