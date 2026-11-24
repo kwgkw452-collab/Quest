@@ -129,7 +129,7 @@ test('S005 all 14 legacy contrary-goal phrases are explicit exact-reject data',(
  let checked=0;
  src.rules.forEach((sourceRule,i)=>{
   const id='s005.communication.'+(i+1),rule=p.challenges[id].rule;
-  const rejected=sourceRule.rejects?.flatMap(x=>x.variants)||[];
+  const rejected=JSON.parse(JSON.stringify(sourceRule.rejects?.flatMap(x=>x.variants)||[]));
   assert.deepEqual(rule.excludeExact,rejected,'negative examples differ at '+id);
   for(const phrase of rejected){
    assert.equal(judge(rule,phrase).decision,'REJECT',id+' contradictory '+phrase);
