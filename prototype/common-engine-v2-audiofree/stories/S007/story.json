@@ -952,6 +952,28 @@
           "Do you take pictures of bird?",
           "Did you take pictures of bird?",
           "Do you take photos of a bird?"
+        ],
+        "orderedGroups": [
+          [
+            "you"
+          ],
+          [
+            "take",
+            "takes",
+            "took"
+          ],
+          [
+            "picture",
+            "pictures",
+            "photo",
+            "photos"
+          ]
+        ],
+        "exclude": [
+          "do not",
+          "don't",
+          "dont",
+          "never"
         ]
       }
     },
@@ -1006,6 +1028,21 @@
           "Look! A baby bird!",
           "A baby bird!",
           "There is a baby bird!"
+        ],
+        "orderedGroups": [
+          [
+            "look at"
+          ],
+          [
+            "bird",
+            "birds"
+          ]
+        ],
+        "exclude": [
+          "do not",
+          "don't",
+          "dont",
+          "never"
         ]
       }
     },
