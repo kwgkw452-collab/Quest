@@ -44,3 +44,5 @@ jobs:
         run: python prototype/common-engine-v2-audiofree/browser-smoke.py
       - name: Run full real S007 migration in shared browser player with mocked SpeechRecognition
         run: python prototype/common-engine-v2-audiofree/s007-browser-smoke.py
+      - name: Run actual S005 and S006 in shared browser player with mock SpeechRecognition
+        run: python prototype/common-engine-v2-audiofree/legacy-browser-smoke.py
