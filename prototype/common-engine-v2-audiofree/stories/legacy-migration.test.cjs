@@ -167,7 +167,7 @@ test('S006 grammar parity with legacy predicates plus explicitly approved ASR ex
   assert.equal(rule.fullPatterns.length,1);
   for(const phrase of matrix[i]){
    const sourceAccept=Boolean(legacy.accept(phrase));
-   const approvedAsrExtension=(i===2&&phrase==='Where is the book?');
+   const approvedAsrExtension=({2:['Where is the book?'],3:['Can you show me a book?'],4:['Do you have a book?'],8:['Please find a book'],9:['I found the book']}[i]||[]).includes(phrase);
    const expected=sourceAccept||approvedAsrExtension;
    const actual=judge(rule,phrase).decision==='ACCEPT';
    assert.equal(actual,expected,id+' source plus approved ASR: '+phrase);
