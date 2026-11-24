@@ -13,6 +13,18 @@ function setBackdrop(asset){
  view.backdrop.style.backgroundImage='url("'+new URL('../../../'+asset,location.href).href+'")';
  view.backdrop.setAttribute('aria-label',asset);
 }
+function lastBackdropBeforeCursor(pack,snapshot){
+ if(!snapshot||!Array.isArray(pack.sceneOrder))return null;
+ const last=pack.sceneOrder.indexOf(snapshot.scene);
+ if(last<0)return null;
+ let backdrop=null;
+ for(let n=0;n<=last;n++){
+  const name=pack.sceneOrder[n],steps=pack.scenes[name]?.steps||[];
+  const limit=n===last?Math.min(snapshot.index,steps.length):steps.length;
+  for(let i=0;i<limit;i++)if(steps[i]?.type==='scene')backdrop=steps[i].asset;
+ }
+ return backdrop;
+}
 function paintQuestion(v){
  view.dialogue.className=v.layoutMode==='threeRow'?'threeRow':'twoRow';
  setText(v.goalJa,[v.recognizedText?'認識：'+v.recognizedText:'',v.feedbackJa||'',v.supportText?'ピコ：'+v.supportText:''].filter(Boolean).join('　'));
@@ -59,8 +71,11 @@ async function reset(resume){
   if(!resume)store.clear();
   recognizer?.cancel();
   recognizer=api.createBrowserSpeech({env:window});
-  runner=api.createRunner(data,{recognize:recognizer.recognize,cancelSpeech:recognizer.cancel,storage:store,onEvent:(event)=>{if(event.type==='scene'&&event.asset){lastSceneAsset=event.asset;setBackdrop(event.asset);}},initialSnapshot:resume?(store.read()||undefined):undefined});
+  const savedSnapshot=resume?(store.read()||undefined):undefined;
+  runner=api.createRunner(data,{recognize:recognizer.recognize,cancelSpeech:recognizer.cancel,storage:store,onEvent:(event)=>{if(event.type==='scene'&&event.asset){lastSceneAsset=event.asset;setBackdrop(event.asset);}},initialSnapshot:savedSnapshot});
   view.log.textContent='';view.backdrop.style.backgroundImage='';lastSceneAsset=null;documentCursor=0;documentLanguage='en';
+  const restored=lastBackdropBeforeCursor(data,savedSnapshot);
+  if(restored){lastSceneAsset=restored;setBackdrop(restored);}
   await next();
  }catch(e){error(e);}
 }
@@ -73,10 +88,10 @@ async function start(){
   for(const entry of catalog){const option=document.createElement('option');option.value=entry.id;option.textContent=entry.id+' — '+entry.status;view.select.append(option);}
   const requested=new URLSearchParams(location.search).get('story');
   if(catalog.some(x=>x.id===requested))view.select.value=requested;
-  view.select.addEventListener('change',()=>void reset(false));
+  view.select.addEventListener('change',()=>void reset(true));
   document.getElementById('restart').onclick=()=>void reset(false);
   document.getElementById('resume').onclick=()=>void reset(true);
-  await reset(false);
+  await reset(true);
  }catch(e){error(e);}
 }
 void start();
