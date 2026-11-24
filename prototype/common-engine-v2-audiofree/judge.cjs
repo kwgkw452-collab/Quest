@@ -6,6 +6,7 @@ function judge(rule,utterance){
   const u=normalize(utterance);
   if(!u)return {decision:'UNKNOWN',reason:'EMPTY'};
   const normList=(a)=>Array.isArray(a)?a.map(normalize):[];
+  if(normList(rule.excludeExact).includes(u))return {decision:'REJECT',reason:'EXCLUDED_EXACT'};
   if(normList(rule.exclude).some(x=>x&&u.includes(x)))return {decision:'REJECT',reason:'EXCLUDED'};
   if(normList(rule.accept).includes(u))return {decision:'ACCEPT',reason:'EXACT_VARIANT'};
   if(Array.isArray(rule.requireAll)&&rule.requireAll.length&&rule.requireAll.every(x=>u.split(' ').includes(normalize(x))))return {decision:'ACCEPT',reason:'ALL_TERMS'};

@@ -90,3 +90,51 @@ test('all S005/S006 background files and S006 letter graphic/voice assets exist'
   assert(fs.existsSync(path.join(root,pathname)),pathname+' missing');
  });
 });
+
+test('S005 seven functional word-group rules are represented as generic typed data and agree on probes',()=>{
+ const src=original('S005'),p=pack('S005');
+ const probes={
+  1:['No, thanks.','No way.','We have a reservation.','Not yet.'],
+  2:['Four friends.','There are 4 of us.','Three people.','Fourteen people.'],
+  3:['Do you have a king bed?','King sized beds please.','Can I get a bed?','Is this a king?'],
+  4:['One room, please.','Just 1 please.','Two beds please.'],
+  5:['Two rooms, please.','to rooms please','one room please','true rooms'],
+  8:['Could you tell me your name?','Name please.','Who are you?','What is your age?'],
+  11:['Did you see a bag?','Have you found the bag?','Please find my pack.','Have you seen that book?']
+ };
+ let count=0;
+ for(const [number,phrases]of Object.entries(probes)){
+  const id='s005.communication.'+number,rule=p.challenges[id].rule,legacy=src.rules[Number(number)-1];
+  assert(Array.isArray(rule.requireAnyWords),id+' missing typed operator');
+  assert.equal(typeof legacy.accept,'function',id+' legacy function missing');
+  for(const phrase of phrases){
+   const expected=Boolean(legacy.accept(phrase));
+   // Some explicit accepted variants have precedence over the original broad accept fn.
+   const observed=judge(rule,phrase).decision==='ACCEPT';
+   const explicit=rule.accept.some(x=>require('../judge.cjs').normalize(x)===require('../judge.cjs').normalize(phrase));
+   if(!explicit)assert.equal(observed,expected,id+' '+phrase);
+   count++;
+  }
+ }
+ assert.equal(count,27);
+});
+test('S005 typed rule extension does not change the original 104 exact answer strings',()=>{
+ const src=original('S005'),p=pack('S005');
+ assert.equal(src.questions.reduce((sum,q)=>sum+q.answers.length,0),104);
+ for(const q of src.questions)assert.deepEqual(p.challenges[q.id].rule.accept,q.answers);
+});
+
+test('S005 all 14 legacy contrary-goal phrases are explicit exact-reject data',()=>{
+ const src=original('S005'),p=pack('S005');
+ let checked=0;
+ src.rules.forEach((sourceRule,i)=>{
+  const id='s005.communication.'+(i+1),rule=p.challenges[id].rule;
+  const rejected=JSON.parse(JSON.stringify(sourceRule.rejects?.flatMap(x=>x.variants)||[]));
+  assert.deepEqual(rule.excludeExact,rejected,'negative examples differ at '+id);
+  for(const phrase of rejected){
+   assert.equal(judge(rule,phrase).decision,'REJECT',id+' contradictory '+phrase);
+   checked++;
+  }
+ });
+ assert.equal(checked,14);
+});

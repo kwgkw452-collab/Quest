@@ -9,6 +9,7 @@ function judge(rule,utterance){
   const u=normalize(utterance);
   if(!u)return {decision:'UNKNOWN',reason:'EMPTY'};
   const normList=(a)=>Array.isArray(a)?a.map(normalize):[];
+  if(normList(rule.excludeExact).includes(u))return {decision:'REJECT',reason:'EXCLUDED_EXACT'};
   if(normList(rule.exclude).some(x=>x&&u.includes(x)))return {decision:'REJECT',reason:'EXCLUDED'};
   if(normList(rule.accept).includes(u))return {decision:'ACCEPT',reason:'EXACT_VARIANT'};
   if(Array.isArray(rule.requireAll)&&rule.requireAll.length&&rule.requireAll.every(x=>u.split(' ').includes(normalize(x))))return {decision:'ACCEPT',reason:'ALL_TERMS'};
@@ -54,7 +55,7 @@ function createCommunication(q,{recognize,judge=localJudge,cancelSpeech}={}){
   state='LISTENING';feedback=null;const token=++attempt;active=token;let r;
   try{r=await recognize({attemptId:token});}catch(e){r={status:'error',reason:String(e)};}
   if(active!==token||state==='CANCELLED')return {type:'stale',view:view()};
-  if(r?.status!=='final'||!r.text){state='READY';feedback={feedbackJa:r?.status==='permission-denied'?'マイクの許可を確認してください。':'うまく聞き取れなかったピコ。'};return {type:'no-speech',view:view()};}
+  if(r?.status!=='final'||!r.text){state='READY';feedback={feedbackJa:r?.status==='permission-denied'?'マイクの許可を確認してください。':r?.status==='unsupported'?'このブラウザは音声認識に対応していません。':r?.status==='timeout'?'聞き取り時間を超えたピコ。もう一度話してみよう。':'うまく聞き取れなかったピコ。'};return {type:'no-speech',view:view()};}
   let answer;try{answer=await judge(q.rule||{accept:q.accept||[]},r.text);}catch(e){state='READY';throw e;}
   if(active!==token||state==='CANCELLED')return {type:'stale',view:view()};
   const decision=typeof answer==='string'?answer:answer?.decision;
@@ -79,12 +80,12 @@ const STEP_FIELDS={
  challenge:['type','id'],document:['type','id'],battle:['type','id'],
  setFlag:['type','key','value'],goto:['type','to'],end:['type','result'],hideDialogue:['type']
 };
-const RULE_FIELDS=new Set(['accept','exclude','requireAll','orderedGroups','requireAnyWords','requirePhrases']);
+const RULE_FIELDS=new Set(['accept','exclude','excludeExact','requireAll','orderedGroups','requireAnyWords','requirePhrases']);
 function ruleErrors(rule,id,add){
  if(!rule||typeof rule!=='object'||Array.isArray(rule)){add('RULE_TYPE:'+id);return;}
  for(const k of Object.keys(rule))if(!RULE_FIELDS.has(k))add('UNSUPPORTED_RULE_OPERATOR:'+id+':'+k);
  const strList=(v)=>Array.isArray(v)&&v.every(x=>typeof x==='string'&&x.trim());
- for(const key of ['accept','exclude','requireAll','requirePhrases'])if(key in rule&&!strList(rule[key]))add('RULE_STRING_LIST:'+id+':'+key);
+ for(const key of ['accept','exclude','excludeExact','requireAll','requirePhrases'])if(key in rule&&!strList(rule[key]))add('RULE_STRING_LIST:'+id+':'+key);
  for(const key of ['orderedGroups','requireAnyWords'])if(key in rule&&(!Array.isArray(rule[key])||!rule[key].length||!rule[key].every(group=>strList(group)&&group.length)))add('RULE_GROUP_LIST:'+id+':'+key);
 }
 
@@ -104,7 +105,7 @@ module.exports={validate};
 "speech-browser.cjs":function(module,exports,require){
 'use strict';
 // No dependency on AudioManager; only browser SpeechRecognition. No implicit text fallback.
-function createBrowserSpeech({env=(typeof window==='undefined'?{}:window),language='en-US'}={}){
+function createBrowserSpeech({env=(typeof window==='undefined'?{}:window),language='en-US',timeoutMs=12000}={}){
  let seq=0,live=null;
  function cancel(){if(!live)return;const x=live;live=null;x.finish({status:'cancelled'});try{x.instance.abort();}catch{}}
  function recognize({attemptId,lang=language}={}){
@@ -113,13 +114,13 @@ function createBrowserSpeech({env=(typeof window==='undefined'?{}:window),langua
   cancel();
   const id=++seq;
   return new Promise(resolve=>{
-   const instance=new Cls();let ended=false,choice=null;
-   const finish=value=>{if(ended)return;ended=true;if(live?.id===id)live=null;instance.onresult=null;instance.onerror=null;instance.onend=null;resolve({...value,attemptId});};
+   const instance=new Cls();let ended=false,choice=null,timer=null;
+   const finish=value=>{if(ended)return;ended=true;if(timer!==null)clearTimeout(timer);if(live?.id===id)live=null;instance.onresult=null;instance.onerror=null;instance.onend=null;resolve({...value,attemptId});};
    live={id,instance,finish};instance.lang=lang;instance.interimResults=false;instance.continuous=false;instance.maxAlternatives=3;
    instance.onresult=event=>{const a=event.results?.[event.resultIndex??0];const texts=[];for(let k=0;k<(a?.length||0);k++){const s=a[k]?.transcript;if(typeof s==='string'&&s.trim())texts.push(s.trim());}if(texts.length)choice={status:'final',text:texts[0],alternatives:texts};};
    instance.onerror=event=>{const code=event?.error;choice={status:code==='not-allowed'||code==='service-not-allowed'?'permission-denied':code==='no-speech'?'no-speech':'error',reason:code||'unknown'};};
    instance.onend=()=>finish(choice||{status:'no-speech'});
-   try{instance.start();}catch(e){finish({status:'error',reason:String(e?.message||e)});}
+   try{instance.start();if(!ended&&Number.isFinite(timeoutMs)&&timeoutMs>0)timer=setTimeout(()=>{finish({status:'timeout'});try{instance.abort();}catch{}},timeoutMs);}catch(e){finish({status:'error',reason:String(e?.message||e)});}
   });
  }
  return {recognize,cancel,isSupported:()=>Boolean(env.SpeechRecognition||env.webkitSpeechRecognition)};

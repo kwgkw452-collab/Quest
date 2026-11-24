@@ -34,6 +34,15 @@
           "No, we do not.",
           "No reservation.",
           "We have no reservation."
+        ],
+        "requireAnyWords": [
+          [
+            "no"
+          ]
+        ],
+        "excludeExact": [
+          "Yes, we do.",
+          "We have a reservation."
         ]
       }
     },
@@ -52,6 +61,16 @@
           "Four people.",
           "4 people.",
           "We are four."
+        ],
+        "requireAnyWords": [
+          [
+            "four",
+            "4"
+          ]
+        ],
+        "excludeExact": [
+          "Two.",
+          "Three."
         ]
       }
     },
@@ -77,6 +96,22 @@
           "King-size bed, please.",
           "A king-size bed, please.",
           "King-size beds, please."
+        ],
+        "requireAnyWords": [
+          [
+            "bed",
+            "beds",
+            "bet",
+            "bets"
+          ],
+          [
+            "king",
+            "size",
+            "side"
+          ]
+        ],
+        "excludeExact": [
+          "We don't need a bed."
         ]
       }
     },
@@ -93,6 +128,15 @@
           "One king-size bed, please.",
           "One king size bed please",
           "A king-size bed, please."
+        ],
+        "requireAnyWords": [
+          [
+            "one",
+            "1"
+          ]
+        ],
+        "excludeExact": [
+          "Two king-size beds, please."
         ]
       }
     },
@@ -111,6 +155,20 @@
           "2 rooms",
           "two room",
           "2 room"
+        ],
+        "requireAnyWords": [
+          [
+            "to",
+            "two",
+            "2",
+            "true",
+            "tulum",
+            "truth",
+            "ture"
+          ]
+        ],
+        "excludeExact": [
+          "One room, please."
         ]
       }
     },
@@ -130,6 +188,9 @@
           "Sure.",
           "OK.",
           "Okay."
+        ],
+        "excludeExact": [
+          "No, thank you."
         ]
       }
     },
@@ -151,6 +212,9 @@
           "You okay?",
           "All right?",
           "Everything OK?"
+        ],
+        "excludeExact": [
+          "I don't care."
         ]
       }
     },
@@ -180,6 +244,14 @@
           "Please tell me your name.",
           "What's your name?",
           "I'd like to know your name."
+        ],
+        "requireAnyWords": [
+          [
+            "name"
+          ]
+        ],
+        "excludeExact": [
+          "I don't want to know your name."
         ]
       }
     },
@@ -211,6 +283,9 @@
           "Did you take the bag?",
           "Do you still?",
           "Did you still?"
+        ],
+        "excludeExact": [
+          "You are a thief."
         ]
       }
     },
@@ -232,6 +307,9 @@
           "Let’s go together.",
           "Let's go.",
           "Let's go together."
+        ],
+        "excludeExact": [
+          "Go away."
         ]
       }
     },
@@ -253,6 +331,28 @@
           "Have you found a bag?",
           "See a bag?",
           "Find a bag?"
+        ],
+        "requireAnyWords": [
+          [
+            "bag",
+            "bad",
+            "bug",
+            "back",
+            "pig",
+            "park",
+            "pack",
+            "bed",
+            "bet"
+          ],
+          [
+            "see",
+            "seen",
+            "find",
+            "found"
+          ]
+        ],
+        "excludeExact": [
+          "I don't care about the bag."
         ]
       }
     },
@@ -275,6 +375,9 @@
           "His name, Ben.",
           "His name's Ben.",
           "He's Ben."
+        ],
+        "excludeExact": [
+          "He is a ghost."
         ]
       }
     }
