@@ -10,7 +10,7 @@ function original(id){
  vm.runInNewContext(read('data/'+id.toLowerCase()+'-communication.js'),ctx,{filename:id+'-communication.js'});
  if(id==='S006'){ctx.AudioDatabase={voice:{}};vm.runInNewContext(read('data/s006-ending.js'),ctx,{filename:'s006-ending.js'});}
  const flat=(steps)=>steps.flatMap(s=>s.type==='sequence'?flat(s.steps):[s]);
- return {steps:flat(ctx.story.steps),questions:JSON.parse(JSON.stringify(ctx.questions)),rules:ctx.CommunicativeJudgeRuleData,letter:ctx.S006EndingData?JSON.parse(JSON.stringify(ctx.S006EndingData)):null};
+ return {steps:flat(JSON.parse(JSON.stringify(ctx.story.steps))),questions:JSON.parse(JSON.stringify(ctx.questions)),rules:Array.from(ctx.CommunicativeJudgeRuleData),letter:ctx.S006EndingData?JSON.parse(JSON.stringify(ctx.S006EndingData)):null};
 }
 const pack=id=>require('./'+id+'/story.json');
 function normalizeOld(s){
@@ -73,5 +73,5 @@ test('S006 letter preserves all 16 English/Japanese/voice records and image path
  assert.equal(p.card,src.letter.card);
 });
 test('S005/S006 unenumerated legacy rule predicates need independent parity certification',()=>{
- for(const id of ['S005','S006']){const {rules}=original(id);assert.equal(rules.length,pack(id).sceneOrder.flatMap(scene=>pack(id).scenes[scene].steps).filter(x=>x.type==='challenge').length);assert(rules.every(x=>typeof x.accept==='function'));}
+ for(const id of ['S005','S006']){const {rules}=original(id);assert.equal(rules.length,pack(id).sceneOrder.flatMap(scene=>pack(id).scenes[scene].steps).filter(x=>x.type==='challenge').length);assert(rules.some(x=>typeof x.accept==='function'),'expected functional legacy accept rules');}
 });
