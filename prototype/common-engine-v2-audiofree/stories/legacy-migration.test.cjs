@@ -123,3 +123,18 @@ test('S005 typed rule extension does not change the original 104 exact answer st
  assert.equal(src.questions.reduce((sum,q)=>sum+q.answers.length,0),104);
  for(const q of src.questions)assert.deepEqual(p.challenges[q.id].rule.accept,q.answers);
 });
+
+test('S005 all 14 legacy contrary-goal phrases are explicit exact-reject data',()=>{
+ const src=original('S005'),p=pack('S005');
+ let checked=0;
+ src.rules.forEach((sourceRule,i)=>{
+  const id='s005.communication.'+(i+1),rule=p.challenges[id].rule;
+  const rejected=sourceRule.rejects?.flatMap(x=>x.variants)||[];
+  assert.deepEqual(rule.excludeExact,rejected,'negative examples differ at '+id);
+  for(const phrase of rejected){
+   assert.equal(judge(rule,phrase).decision,'REJECT',id+' contradictory '+phrase);
+   checked++;
+  }
+ });
+ assert.equal(checked,14);
+});
