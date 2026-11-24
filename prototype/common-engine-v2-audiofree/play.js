@@ -53,7 +53,7 @@ function paint(event){
  else if(event.type==='document'){documentCursor=0;documentLanguage='en';if(event.content.card)setBackdrop(event.content.card);showDocument(event.content);}
  else if(event.type==='accepted'||event.type==='complete'||event.type==='document-complete'){setText('成功しました！');addButton('次へ',()=>void next());}
  else if(event.type==='end'){setText('このStoryをクリアしました。',JSON.stringify(event.flags));}
- else if(event.type==='return'){setText('冒険に戻りました。');}
+ else if(event.type==='return'){setText('冒険に戻りました。','再開するStoryを選択できます。保存地点がある場合は、そこから再開します。');addButton('冒険を再開',()=>void reset(true));addButton('最初からやり直す',()=>void reset(false));}
  else if(event.type==='stale'){setText('古い音声認識結果を無視しました。');}
  else {setText('処理状態：'+event.type);if(state.status==='READY')addButton('次へ',()=>void next());}
 }
