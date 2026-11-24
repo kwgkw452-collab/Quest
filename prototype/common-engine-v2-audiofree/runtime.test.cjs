@@ -44,3 +44,39 @@ test('restoring unknown and mistyped flags is refused',()=>{for(const flags of [
 test('reject undeclared Story-specific step properties',()=>{const p=fresh();p.scenes.intro.steps[0].specialSceneOverride='local';assert(validate(p).some(e=>e.startsWith('UNSUPPORTED_STEP_FIELD')));});
 test('reject unregistered Judge operator in Story data',()=>{const p=fresh();p.challenges.hello.rule.storyOnlyCondition={};assert(validate(p).some(e=>e.startsWith('UNSUPPORTED_RULE_OPERATOR')));});
 test('reject malformed generic ordered-group rule',()=>{const p=fresh();p.challenges.hello.rule.orderedGroups=[['say'],[]];assert(validate(p).some(e=>e.startsWith('RULE_GROUP_LIST')));});
+
+test('SpeechRecognition times out when a browser never emits onend',async()=>{
+ let fake;
+ class Hangs{constructor(){fake=this;}start(){}abort(){this.aborted=true;}}
+ const speech=createBrowserSpeech({env:{SpeechRecognition:Hangs},timeoutMs:15});
+ const result=await speech.recognize({attemptId:44});
+ assert.deepEqual(result,{status:'timeout',attemptId:44});
+ assert.equal(fake.aborted,true);
+});
+test('timed-out SpeechRecognition cannot deliver a late accepted phrase',async()=>{
+ let fake;
+ class Hangs{constructor(){fake=this;}start(){}abort(){this.aborted=true;}}
+ const speech=createBrowserSpeech({env:{SpeechRecognition:Hangs},timeoutMs:15});
+ const c=createCommunication(pack.challenges.hello,{recognize:speech.recognize,cancelSpeech:speech.cancel});
+ const result=await c.speak();
+ assert.equal(result.type,'no-speech');
+ assert.equal(result.view.recognizedText,null);
+ assert.match(result.view.feedbackJa,/時間/);
+ assert.equal(c.view().state,'READY');
+ assert.equal(fake.onresult,null);
+});
+test('unsupported microphone explicitly explains no SpeechRecognition and preserves retry',async()=>{
+ const speech=createBrowserSpeech({env:{}});
+ const c=createCommunication(pack.challenges.hello,{recognize:speech.recognize});
+ const result=await c.speak();
+ assert.equal(result.type,'no-speech');
+ assert.match(result.view.feedbackJa,/対応していません/);
+ assert.equal(c.view().state,'READY');
+});
+test('Pico support is capped at stage 3 and each new question starts at stage 0',()=>{
+ const a=createCommunication(pack.challenges.hello);
+ a.support();a.support();a.support();a.support();
+ assert.equal(a.view().supportStage,3);
+ const b=createCommunication(pack.challenges.hello);
+ assert.equal(b.view().supportStage,0);
+});
