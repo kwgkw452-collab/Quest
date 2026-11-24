@@ -46,6 +46,10 @@ jobs:
         run: python prototype/common-engine-v2-audiofree/s007-browser-smoke.py
       - name: Run actual S005 and S006 in shared browser player with mock SpeechRecognition
         run: python prototype/common-engine-v2-audiofree/legacy-browser-smoke.py
+      - name: Open immutable HTTPS preview with a mobile Chromium viewport and mock mic
+        env:
+          PREVIEW_SHA: ${{ github.event.pull_request.head.sha }}
+        run: python prototype/common-engine-v2-audiofree/staging-browser-smoke.py
 
   staging-https-preview:
     runs-on: ubuntu-latest
