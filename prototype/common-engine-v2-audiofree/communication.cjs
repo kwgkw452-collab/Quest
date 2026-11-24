@@ -9,7 +9,7 @@ function createCommunication(q,{recognize,judge=localJudge,cancelSpeech}={}){
   state='LISTENING';feedback=null;const token=++attempt;active=token;let r;
   try{r=await recognize({attemptId:token});}catch(e){r={status:'error',reason:String(e)};}
   if(active!==token||state==='CANCELLED')return {type:'stale',view:view()};
-  if(r?.status!=='final'||!r.text){state='READY';feedback={feedbackJa:r?.status==='permission-denied'?'マイクの許可を確認してください。':'うまく聞き取れなかったピコ。'};return {type:'no-speech',view:view()};}
+  if(r?.status!=='final'||!r.text){state='READY';feedback={feedbackJa:r?.status==='permission-denied'?'マイクの許可を確認してください。':r?.status==='unsupported'?'このブラウザは音声認識に対応していません。':r?.status==='timeout'?'聞き取り時間を超えたピコ。もう一度話してみよう。':'うまく聞き取れなかったピコ。'};return {type:'no-speech',view:view()};}
   let answer;try{answer=await judge(q.rule||{accept:q.accept||[]},r.text);}catch(e){state='READY';throw e;}
   if(active!==token||state==='CANCELLED')return {type:'stale',view:view()};
   const decision=typeof answer==='string'?answer:answer?.decision;
