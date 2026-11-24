@@ -138,3 +138,40 @@ test('S005 all 14 legacy contrary-goal phrases are explicit exact-reject data',(
  });
  assert.equal(checked,14);
 });
+
+test('S006 ten anchored grammar rules agree with original legacy accept predicates on 60 sentence probes',()=>{
+ const old=original('S006'),p=pack('S006');
+ const matrix=[
+ ['Could we help you?','I can help you','Do you need some help?','You need help','I cannot help you','Could we help you and steal it?'],
+ ['What color is another box?','What colour is it?','Can you describe another box?','Where is another box?','What is the color?','What color is that box and where is it?'],
+ ['Where are the other boxes?','Where is another box?','Where can we find the boxes?','Did you see another box?','Where is the book?','Where are the other boxes and carts?'],
+ ['Show me another box','Could you show us the boxes?','Can I check the box?','Can you show me a book?','Can I see the bag?','Show me another box and take it away'],
+ ['You have a box?','Have you got those boxes?','Is another box here?','Do you see the box?','You do not have the box?','Do you have a book?'],
+ ['Please look at the ribbon','Look at those red ribbons','Could you check your ribbon?','Look at the cart','Please do not look at the ribbon','Look at the ribbons and the box'],
+ ['Did you see the book?','Have you seen another box?','You saw the books?','Did you see the cart?','Did you see the box and book?','I did see another box'],
+ ['Wait a minute','Please wait for us','Just one moment','Wait for the bus tomorrow','Please do not wait','Wait a minute and then go'],
+ ['Please find another box','Can you help me find the box?','Could you look for those boxes?','Please find a book','I found the box','Find the box and keep it'],
+ ['This is your box','We have found the boxes now','Your box is here','We have lost your box','I found the book','Here is your box and the ribbon']
+ ];
+ assert.equal(matrix.length,10);let count=0;
+ for(let i=0;i<10;i++){
+  const id='s006.communication.'+(i+1),rule=p.challenges[id].rule,legacy=old.rules[i];
+  assert.equal(typeof legacy.accept,'function');
+  assert.equal(rule.fullPatterns.length,1);
+  for(const phrase of matrix[i]){
+   const sourceAccept=Boolean(legacy.accept(phrase));
+   const actual=judge(rule,phrase).decision==='ACCEPT';
+   assert.equal(actual,sourceAccept,id+' source parity: '+phrase);
+   count++;
+  }
+ }
+ assert.equal(count,60);
+});
+test('S006 anchored rules do not confuse another box with an unrelated question',()=>{
+ const p=pack('S006');
+ for(const phrase of ['Where is another box?','I found another box','Did you see another box?']){
+  assert.equal(judge(p.challenges['s006.communication.2'].rule,phrase).decision,'REJECT','Q2 must not accept '+phrase);
+ }
+ assert.equal(judge(p.challenges['s006.communication.3'].rule,'Where is another box?').decision,'ACCEPT');
+ assert.equal(judge(p.challenges['s006.communication.7'].rule,'Did you see the book?').decision,'ACCEPT');
+});
