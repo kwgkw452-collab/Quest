@@ -1,12 +1,14 @@
 'use strict';
 // Declarative, deterministic local judge. Its acceptance corpus still requires independent approval.
 function normalize(x){return String(x??'').normalize('NFKC').toLowerCase().replace(/[’‘]/g,"'").replace(/[^a-z0-9'\s]/g,' ').replace(/\s+/g,' ').trim();}
-function normalizeContractions(x){return String(x??'').normalize('NFKC').toLowerCase().replace(/[’‘]/g,"'")
- .replace(/\\b(can't|cant)\\b/g,'cannot').replace(/\\b(don't|dont)\\b/g,'do not')
- .replace(/\\b(doesn't|doesnt)\\b/g,'does not').replace(/\\b(didn't|didnt)\\b/g,'did not')
- .replace(/\\b(won't|wont)\\b/g,'will not').replace(/\\b(we've|weve)\\b/g,'we have')
- .replace(/\\b(i've|ive)\\b/g,'i have').replace(/\\b(where's|wheres)\\b/g,'where is')
- .replace(/\\b(it's|its)\\b/g,'it is').replace(/[^a-z0-9]+/g,' ').trim().replace(/\\s+/g,' ');}
+function normalizeContractions(x){
+ return String(x??'').normalize('NFKC').toLowerCase().replace(/[’‘]/g,"'")
+  .replace(/\b(can't|cant)\b/g,'cannot').replace(/\b(don't|dont)\b/g,'do not')
+  .replace(/\b(doesn't|doesnt)\b/g,'does not').replace(/\b(didn't|didnt)\b/g,'did not')
+  .replace(/\b(won't|wont)\b/g,'will not').replace(/\b(we've|weve)\b/g,'we have')
+  .replace(/\b(i've|ive)\b/g,'i have').replace(/\b(where's|wheres)\b/g,'where is')
+  .replace(/\b(it's|its)\b/g,'it is').replace(/[^a-z0-9]+/g,' ').trim().replace(/\s+/g,' ');
+}
 function judge(rule,utterance){
   if(!rule||typeof rule!=='object')throw new Error('INVALID_RULE');
   const u=normalize(utterance);
@@ -16,13 +18,11 @@ function judge(rule,utterance){
   if(normList(rule.exclude).some(x=>x&&u.includes(x)))return {decision:'REJECT',reason:'EXCLUDED'};
   if(normList(rule.accept).includes(u))return {decision:'ACCEPT',reason:'EXACT_VARIANT'};
   if(Array.isArray(rule.fullPatterns)&&rule.fullPatterns.length){
-    const profile=rule.patternNormalization||'basic';
-    const normalized=profile==='contractions' ? normalizeContractions(utterance) : normalize(utterance);
-    const checked=rule.stripPlease===true?normalized.replace(/\\bplease\\b/g,' ').replace(/\\s+/g,' ').trim():normalized;
-    for(const src of rule.fullPatterns){
-      if(typeof src!=='string'||src.length>1800||!src.startsWith('(?:')||!src.endsWith(')'))throw Error('INVALID_FULL_PATTERN');
-      const pattern=new RegExp('^(?:'+src+')
-  if(Array.isArray(rule.requireAll)&&rule.requireAll.length&&rule.requireAll.every(x=>u.split(' ').includes(normalize(x))))return {decision:'ACCEPT',reason:'ALL_TERMS'};
+   const normalized=rule.patternNormalization==='contractions'?normalizeContractions(utterance):normalize(utterance);
+   const checked=rule.stripPlease===true?normalized.replace(/\bplease\b/g,' ').replace(/\s+/g,' ').trim():normalized;
+   for(const pattern of rule.fullPatterns){
+    if(typeof pattern!=='string'||pattern.length>1800||!pattern.startsWith('(?:')||!pattern.endsWith(')'))throw Error('INVALID_FULL_PATTERN');
+    if(new RegExp('^'+pattern+'&&rule.requireAll.length&&rule.requireAll.every(x=>u.split(' ').includes(normalize(x))))return {decision:'ACCEPT',reason:'ALL_TERMS'};
   const tokens=u.split(' ');
   const requiredAny=Array.isArray(rule.requireAnyWords)&&rule.requireAnyWords.length;
   const requiredPhrases=Array.isArray(rule.requirePhrases)&&rule.requirePhrases.length;
@@ -51,9 +51,8 @@ function judge(rule,utterance){
 }
 module.exports={normalize,normalizeContractions,judge};
 
-);
-      if(pattern.test(checked))return {decision:'ACCEPT',reason:'FULL_UTTERANCE_PATTERN'};
-    }
+).test(checked))return {decision:'ACCEPT',reason:'FULL_UTTERANCE_PATTERN'};
+   }
   }
   if(Array.isArray(rule.requireAll)&&rule.requireAll.length&&rule.requireAll.every(x=>u.split(' ').includes(normalize(x))))return {decision:'ACCEPT',reason:'ALL_TERMS'};
   const tokens=u.split(' ');
