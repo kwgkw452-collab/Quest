@@ -22,7 +22,7 @@ jobs:
         with:
           node-version: '22'
       - name: Run common engine tests and S007 source parity checks
-        run: node --test prototype/common-engine-v2-audiofree/runtime.test.cjs prototype/common-engine-v2-audiofree/stories/S007/s007-migration.test.cjs
+        run: node --test prototype/common-engine-v2-audiofree/runtime.test.cjs prototype/common-engine-v2-audiofree/stories/S007/s007-migration.test.cjs prototype/common-engine-v2-audiofree/stories/legacy-migration.test.cjs
       - name: Reject Story-specific code in common runtime
         run: node prototype/common-engine-v2-audiofree/check-runtime-isolation.cjs
       - name: Rebuild browser bundle
