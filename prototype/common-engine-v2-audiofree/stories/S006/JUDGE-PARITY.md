@@ -16,6 +16,12 @@ Production branch `s005-fixed-195-stage-clean-test`, immutable baseline `70706cf
 - The Q2/Q3/Q7 `another box` case and Q7 `book/books` speech-recognition ambiguity have explicit regression assertions.
 - Shared Chromium E2E still checks actual S005/S006/S007 paths using a synthetic SpeechRecognition, **not a real microphone**.
 
+## Legacy fixture drift discovered
+
+Production also contains `tests/s006-communication-final-cases.json` and `tests/s006-q7-final-cases.json`. **Those historical test fixtures still describe a cart-position Q7** (`Is the box on the cart?`), whereas the actual current S006 Communication source at the immutable baseline defines Q7 as `箱を見ましたか？` / `Did you see the box?`. The new engine preserves the latter. A regression test explicitly checks that the stale cart-centered corpus does not overwrite current Q7.
+
+The tests are evidence of historical changes, **not a substitute for the latest source and director-approved expected behavior**.
+
 ## Items that must NOT be silently treated as confirmed
 
 The formal Production source is not necessarily the complete director-approved acceptance specification. Earlier acceptance instructions also mention a Q4 broader `show me` + `box` fallback, Q6 partial `Look at the …` / `Look at that …` recognition when `ribbon` is misrecognized, and a Q10 Japanese Goal of `これはあなたの箱です。`. In the inspected Production source, Q6 still requires a ribbon expression in its grammar and Q10 still says `私は箱を見つけました！`. These differences are **documented and HOLD**, rather than silently overwriting the GitHub source or claiming complete director-approval parity.
