@@ -9,7 +9,7 @@ const addButton=(label,action)=>{const b=document.createElement('button');b.text
 const report=e=>{view.log.textContent+=JSON.stringify(e)+'\n';view.log.scrollTop=view.log.scrollHeight;};
 const error=e=>{report({error:String(e)});setText('エラー：'+String(e?.message||e));clearButtons();addButton('再試行',()=>void reset(false));};
 function setBackdrop(asset){
- if(typeof asset!=='string'||!/^images\/\d{3}\/[\w./-]+\.png$/.test(asset)||asset.split('/').includes('..')){report({warning:'INVALID_ASSET',asset});return;}
+ if(typeof asset!=='string'||!/^images\/\d{3}\/[\w./-]+\.png(?:\?v=[\w.-]+)?$/.test(asset)||asset.split('?')[0].split('/').includes('..')){report({warning:'INVALID_ASSET',asset});return;}
  view.backdrop.style.backgroundImage='url("'+new URL('../../../'+asset,location.href).href+'")';
  view.backdrop.setAttribute('aria-label',asset);
 }
