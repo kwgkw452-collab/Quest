@@ -41,10 +41,18 @@ window.SpeechRecognition=class {{
    page.on('pageerror',lambda e:errors.append(str(e)))
    page.goto(f'http://127.0.0.1:{server.server_port}/prototype/common-engine-v2-audiofree/play.html?story={story_id}',wait_until='load')
    page.get_by_role('button',name='次へ').wait_for(timeout=15000)
+   checked_translation=False
    for _ in range(400):
     if 'このStoryをクリアしました' in page.locator('#text').inner_text():break
     if 'エラー：' in page.locator('#text').inner_text():raise AssertionError(story_id+' '+page.locator('#text').inner_text())
     buttons=page.locator('#actions button').all_text_contents()
+    if story_id=='S006' and not checked_translation and '日本語' in buttons:
+     page.get_by_role('button',name='日本語').click()
+     assert 'おじいちゃんへ' in page.locator('#support').inner_text(),'Japanese line of letter missing'
+     page.get_by_role('button',name='English').click()
+     assert 'Dear Grandpa' in page.locator('#support').inner_text(),'English line not restored'
+     checked_translation=True
+     buttons=page.locator('#actions button').all_text_contents()
     if '次へ' in buttons:action='次へ'
     elif '話す' in buttons:action='話す'
     elif '次の文' in buttons:action='次の文'
@@ -63,6 +71,7 @@ window.SpeechRecognition=class {{
    assert documents==(1 if story_id=='S006' else 0),(story_id,'documents',documents)
    if story_id=='S006':
     assert sum(e.get('type')=='document-page' for e in events)==15,'letter must present all 16 lines'
+    assert checked_translation,'translation toggle untested'
    assert not page.evaluate('window.__questAnswers.length'),story_id+' incomplete recognition'
    assert not errors,(story_id,errors)
    print(f'{story_id} BROWSER PASS: {lines} dialogues, {questions} spoken challenges, {documents} document(s), all scenes complete')
