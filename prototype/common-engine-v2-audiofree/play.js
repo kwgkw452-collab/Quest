@@ -47,7 +47,7 @@ async function reset(resume){
   if(!resume)store.clear();
   recognizer?.cancel();
   recognizer=api.createBrowserSpeech({env:window});
-  runner=api.createRunner(data,{recognize:recognizer.recognize,cancelSpeech:recognizer.cancel,storage:store,initialSnapshot:resume?(store.read()||undefined):undefined});
+  runner=api.createRunner(data,{recognize:recognizer.recognize,cancelSpeech:recognizer.cancel,storage:store,onEvent:(event)=>{if(event.type==='scene'&&event.asset)setBackdrop(event.asset);},initialSnapshot:resume?(store.read()||undefined):undefined});
   view.log.textContent='';view.backdrop.style.backgroundImage='';
   await next();
  }catch(e){error(e);}
