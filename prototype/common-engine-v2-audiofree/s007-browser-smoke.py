@@ -58,7 +58,7 @@ window.SpeechRecognition=class {{
                 if not hints:
                     count=len(page.locator("#log").text_content().splitlines())
                     page.get_by_role("button", name="ピコサポート").click()
-                    page.wait_for_function("(count)=>document.querySelector('#log').textContent.split('\\n').filter(Boolean).length>count", count)
+                    page.wait_for_function("(count)=>document.querySelector('#log').textContent.split('\\n').filter(Boolean).length>count", arg=count)
                     assert "ピコ：" in page.locator("#support").inner_text()
                     hints+=1
                 target="話す"
@@ -66,7 +66,7 @@ window.SpeechRecognition=class {{
                 raise AssertionError("UNEXPECTED_CONTROLS: " + str(options))
             count=len(page.locator("#log").text_content().splitlines())
             page.get_by_role("button", name=target).click()
-            page.wait_for_function("(count)=>document.querySelector('#log').textContent.split('\\n').filter(Boolean).length>count", count, timeout=12000)
+            page.wait_for_function("(count)=>document.querySelector('#log').textContent.split('\\n').filter(Boolean).length>count", arg=count, timeout=12000)
         else:
             raise AssertionError("STEP_LIMIT_EXCEEDED")
         assert "このStoryをクリアしました" in page.locator("#text").inner_text(), "S007_NOT_COMPLETED"
