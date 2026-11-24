@@ -2,6 +2,16 @@
   "catalogVersion": 1,
   "stories": [
     {
+      "id": "S005",
+      "path": "./S005/story.json",
+      "status": "EXPERIMENTAL_JUDGE_HOLD"
+    },
+    {
+      "id": "S006",
+      "path": "./S006/story.json",
+      "status": "EXPERIMENTAL_JUDGE_HOLD"
+    },
+    {
       "id": "S007",
       "path": "./S007/story.json",
       "status": "EXPERIMENTAL_NOT_APPROVED"
