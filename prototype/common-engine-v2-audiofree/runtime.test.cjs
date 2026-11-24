@@ -80,3 +80,14 @@ test('Pico support is capped at stage 3 and each new question starts at stage 0'
  const b=createCommunication(pack.challenges.hello);
  assert.equal(b.view().supportStage,0);
 });
+
+test('exact contrary-goal rejection does not accidentally reject longer unrelated sentences',()=>{
+ const rule={accept:['no','no you may go'],excludeExact:['no']};
+ assert.equal(judge(rule,'No!').decision,'REJECT');
+ assert.equal(judge(rule,'No, you may go.').decision,'ACCEPT');
+});
+test('schema rejects a malformed exact-rejection rule',()=>{
+ const p=fresh();
+ p.challenges.hello.rule.excludeExact='not a list';
+ assert(validate(p).some(x=>x.startsWith('RULE_STRING_LIST')));
+});
