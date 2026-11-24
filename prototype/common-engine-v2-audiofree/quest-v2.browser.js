@@ -12,8 +12,14 @@ function judge(rule,utterance){
   if(normList(rule.exclude).some(x=>x&&u.includes(x)))return {decision:'REJECT',reason:'EXCLUDED'};
   if(normList(rule.accept).includes(u))return {decision:'ACCEPT',reason:'EXACT_VARIANT'};
   if(Array.isArray(rule.requireAll)&&rule.requireAll.length&&rule.requireAll.every(x=>u.split(' ').includes(normalize(x))))return {decision:'ACCEPT',reason:'ALL_TERMS'};
-  if(Array.isArray(rule.orderedGroups)&&rule.orderedGroups.length){
-    const words=u.split(' ');let cursor=0,complete=true;
+  const tokens=u.split(' ');
+  const requiredAny=Array.isArray(rule.requireAnyWords)&&rule.requireAnyWords.length;
+  const requiredPhrases=Array.isArray(rule.requirePhrases)&&rule.requirePhrases.length;
+  const hasOrdered=Array.isArray(rule.orderedGroups)&&rule.orderedGroups.length;
+  const anyWordsOk=!requiredAny||rule.requireAnyWords.every(group=>Array.isArray(group)&&group.length&&group.some(t=>tokens.includes(normalize(t))));
+  const phrasesOk=!requiredPhrases||rule.requirePhrases.every(phrase=>{const pieces=normalize(phrase).split(' ');return tokens.some((_,i)=>pieces.every((v,j)=>tokens[i+j]===v));});
+  if(anyWordsOk&&phrasesOk&&hasOrdered){
+    const words=tokens;let cursor=0,complete=true;
     for(const group of rule.orderedGroups){
       if(!Array.isArray(group)||!group.length||group.some(x=>typeof x!=='string'))throw Error('INVALID_ORDERED_GROUP');
       let next=-1;
@@ -27,8 +33,9 @@ function judge(rule,utterance){
       if(next<0){complete=false;break;}
       cursor=next;
     }
-    if(complete)return {decision:'ACCEPT',reason:'ORDERED_GROUPS'};
+    if(complete)return {decision:'ACCEPT',reason:'TYPED_TERMS'};
   }
+  if(anyWordsOk&&phrasesOk&&(requiredAny||requiredPhrases)&&!hasOrdered)return {decision:'ACCEPT',reason:'TYPED_TERMS'};
   return {decision:'REJECT',reason:'NO_MATCH'};
 }
 module.exports={normalize,judge};
