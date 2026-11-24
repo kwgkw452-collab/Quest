@@ -79,6 +79,25 @@ window.SpeechRecognition=class {{
         assert events[-1]["flags"]["s007.megJoined"] is True
         assert page.evaluate("window.__questAnswers.length")==0, "NOT_ALL_10_QUESTIONS_SPOKEN"
         assert not errors, errors
+        persisted=page.evaluate("JSON.parse(localStorage.getItem('quest.v2.test.S007'))")
+        assert persisted['storyId']=='S007'
+        assert persisted['flags']['s007.megJoined'] is True
+        assert persisted['scene']=='scene12'
+        page.reload(wait_until='load')
+        page.get_by_role("button",name="次へ").wait_for(timeout=15000)
+        assert 'scene13' in page.locator('#status').inner_text(),"SAVE_DID_NOT_ADVANCE_FROM_SCENE12_CHECKPOINT"
+        assert 'S007-Scene-13.png' in page.locator('#backdrop').get_attribute('style'),"SAVE_RESTORED_WRONG_NEXT_SCENE"
+        assert page.evaluate("JSON.parse(localStorage.getItem('quest.v2.test.S007')).flags['s007.megJoined']") is True
+        page.evaluate("""() => {const key='quest.v2.test.S007';const snapshot=JSON.parse(localStorage.getItem(key));snapshot.scene='scene03';snapshot.index=1;snapshot.flags={};localStorage.setItem(key,JSON.stringify(snapshot));}""")
+        page.reload(wait_until='load')
+        page.get_by_role("button",name="次へ").wait_for(timeout=15000)
+        assert 'scene03' in page.locator('#status').inner_text(),"MID_SCENE_RESUME_CURSOR_BAD"
+        assert 'S007-Scene-03.png' in page.locator('#backdrop').get_attribute('style'),"MID_SCENE_BACKGROUND_NOT_RESTORED"
+        page.get_by_role("button",name="最初から").click()
+        page.wait_for_function("()=>document.querySelector('#status').textContent.includes('scene01')")
+        assert page.evaluate("localStorage.getItem('quest.v2.test.S007')") is None,"MANUAL_RESTART_DID_NOT_CLEAR_CHECKPOINT"
+        assert not errors, errors
+        print("S007 SAVE RELOAD PASS: checkpoint to scene13, mid-scene background restoration, explicit restart only")
         print("S007 BROWSER E2E PASS: 13 scenes, 112 dialogue lines, 10 spoken challenges, Meg Save flag, last background")
         browser.close()
 finally:

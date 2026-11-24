@@ -111,3 +111,69 @@ test('typed generic rules agree with source predicates on representative open-en
   for(const utterance of phrases)assert.equal(judge(q.rule,utterance).decision==='ACCEPT',legacyRules[index].accept(utterance),number+': '+utterance);
  }
 });
+
+test('S007 cross-question judge parity against Production for every official model answer (100 pairs)',()=>{
+ const {questions,legacyRules}=legacyQuestions();
+ let checks=0,shared=[];
+ for(let i=0;i<10;i++)for(let j=0;j<10;j++){
+  const phrase=questions[j].communicative.expectedUtterance;
+  const actual=judge(pack.challenges[questions[i].id].rule,phrase).decision==='ACCEPT';
+  const expected=Boolean(legacyRules[i].accept(phrase));
+  assert.equal(actual,expected,questions[i].id+' incorrectly classified '+phrase+' from Q'+(j+1));
+  if(i!==j && expected)shared.push([i+1,j+1,phrase]);
+  checks++;
+ }
+ assert.equal(checks,100);
+ // A deliberate shared phrase is not necessarily a false positive: it is present in the old registered corpus.
+ assert(Array.isArray(shared));
+});
+test('S007 every official alternate accepted expression matches legacy intent, not just its own question',()=>{
+ const {questions,legacyRules}=legacyQuestions();let checks=0;
+ for(let i=0;i<10;i++)for(let j=0;j<10;j++)for(const phrase of questions[j].answers){
+  const expected=Boolean(legacyRules[i].accept(phrase));
+  const actual=judge(pack.challenges[questions[i].id].rule,phrase).decision==='ACCEPT';
+  assert.equal(actual,expected,'Q'+(i+1)+' vs Q'+(j+1)+' variant '+phrase);
+  checks++;
+ }
+ assert.equal(checks,1460);
+});
+test('S007 open-ended photo and bird predicates match legacy for 60 positive/negative probes',()=>{
+ const {legacyRules}=legacyQuestions();
+ const cases={
+  2:[
+   'Do you take many pictures?','Can you take beautiful pictures?','You took lots of photos.',
+   'Would you take photos?','How do you take pictures?','Take a photo for you?',
+   'Do you take pictures of birds?','Are you taking pictures?','You will take photos later.',
+   'Do you never take pictures?','You do not take pictures.','Dont you take photos?',
+   'Never do you take photographs?','You did not take pictures.','Do not take pictures!',
+   'He takes pictures of birds.','Does Meg take beautiful pictures?','Do you watch birds?',
+   'Do you take photos and pictures?','Did you take pictures yesterday?',
+   'I think you took lovely photos.','Where did you take pictures?',
+   'Take pictures of the bird please','You took pictures but not of birds.',
+   'You never take photos of birds.','Do you enjoy taking photos?','Can you take photo?',
+   'You take photographs?','You take a picture.','Do you take a video?'
+  ],
+  4:[
+   'Look at the beautiful baby birds.','Look at this bird.','Look at those birds.',
+   'Please look at the colorful birds!','Can you look at a bird?','Look at bird',
+   'Look at the bird and fly.','Look at the baby bird!','Look at bird feathers.',
+   'Look at the tree.','Please look for a bird.','Look for the birds.',
+   'Do not look at the birds!','Dont look at the bird.','Never look at a bird.',
+   "Don't look at the bird!",'Look at the bird but never touch it.',
+   'Look at the nest, not birds.','We are looking at birds.','I look at birds.',
+   'Birds look at me.','A baby bird is here!','The birds are beautiful.',
+   'Look at the butterfly.','I looked at the bird.','Please look at the birds.',
+   'Look at the baby birds from here.','Look at birds and nests.',
+   'I will not look at the birds.','Look at a blue bird.'
+  ]
+ };
+ let count=0;
+ for(const [num,utterances] of Object.entries(cases)){
+  const id='s007.communication.'+num,fn=legacyRules[Number(num)-1].accept;
+  for(const phrase of utterances){
+   assert.equal(judge(pack.challenges[id].rule,phrase).decision==='ACCEPT',Boolean(fn(phrase)),id+': '+phrase);
+   count++;
+  }
+ }
+ assert.equal(count,60);
+});
