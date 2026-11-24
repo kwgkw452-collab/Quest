@@ -131,3 +131,120 @@ V1ローダーは未知のフィールド/ステップ、重複ID、参照切れ
 | 新話追加の最終試験 | 独立QAが先に未登録だったStoryパッケージを作成し、許可する差分をStoryデータ・素材・データカタログと追加話用テストに限定。機能カタログや実行コード・CSSのGit blobが一致することを確認し、通常入口から台詞→Communication→戻る/完了→次の進行→Save再読込を実行。既存ケースも再実行する |
 
 Phase 1では上の試験や実機確認は未実施。100話への対応は、実装後の追加Story試験、全既存体験の回帰試験、登録規模の試験結果を揃えて判断する。
+
+
+---
+
+## 7. Phase 1改訂：共通機能の変更管理（BLOCKER-01）
+
+**規範**：ゲーム内容の変更とエンジン機能の追加を別案件にする。各Storyの `story.json` は承認済み「共通機能カタログ」の `step.type`、許可されたレイアウト・状態・遷移・演出パラメータしか参照できない。任意の実行コード、Story固有CSS、隠れたStory番号/素材パス判定、未登録フラグは拒否する。
+
+### 共通機能カタログ改訂手順
+
+1. 新しいStoryで表現不能な要件を発見した制作担当は、Story実装を止めて「共通機能提案」を提出する。提案にはStoryを離れて説明できる一般機能名、目的、入力/出力、状態遷移、許可されるデータ設定、既存機能による代替可否、既存Storyへの影響を含める。
+2. 設計担当はカタログとバージョン付きschemaへの追加案を作る。少なくとも対象Story以外の再利用例または汎用性の理由を提示する。Story名でしか説明できない専用機能は拒否またはStoryデータへ差し戻す。
+3. 独立設計レビューで「現行の共通機能で表現可能か」「別のモジュールへの漏出がないか」「旧コードへの継ぎ足しとならないか」を審査する。
+4. ディレクター承認後に、**独立したエンジン変更PR**としてschema/ランタイム/自動テストを更新する。Storyパッケージの追加はエンジン変更の承認後、別PRで実施する。
+5. Story単独PRに実行コード・共通CSS変更が混入していればFAIL。例外は追跡Issue、理由、所有者、撤去条件・期限、ディレクター承認を明記して独立審査する。例外は既定で不許可。
+
+**LOCK**：作品・教材・承認済み動作を保護するもので、旧ソースファイル、旧関数、ローカル分岐を永続保護しない。ローカル実装を動作保証として正当化しない。QAのPASSとディレクター承認なしにProductionへ反映しない。
+
+## 8. Phase 1改訂：Communication / Dialogue / Picoの状態契約（BLOCKER-02）
+
+以下は**実装のための設計候補**であり、従前の全Storyの承認済み画面遷移の代用品ではない。正式採用には独立QAとディレクターの確認が必要。各状態はStory IDに依存しない。表示モデルは `goalJa`, `recognizedText?`, `feedbackJa?`, `supportText?`, `actions[]`, `layoutMode`, `attemptId`, `supportStage` の型付きデータ。表示はモデルのみを描画し、ブラウザイベントによって直接CSSを切り替えない。
+
+| 現状態 / イベント | 次状態 | 画面データ・操作 | レイアウト候補 |
+|---|---|---|---|
+| NEW / 課題開始 | READY | Goal常時表示、話す/ピコサポート/冒険に戻る（承認済みの操作のみ） | twoRow |
+| READY/RETRY/HINT / 話す | PREPARING → LISTENING | Goal常時表示、準備中/聞き取り中。新Attempt ID発行、旧結果破棄 | twoRow、ただし長文はUI側の明示layout値 |
+| LISTENING / interim | LISTENING | interimは採点確定とみなさず一時表示のみ | twoRowまたは明示layout値 |
+| LISTENING / final + ACCEPT | ACCEPTED | Goal + 成功フィードバック、課題完了イベントを一度だけ発行 | UI規約に準拠 |
+| LISTENING / final + REJECT/UNKNOWN | FEEDBACK | Goal + 実認識文「…と聞こえたよ。」+ 日本語の再挑戦案内。Retry/Support/戻る | threeRow（表示内容3領域） |
+| LISTENING / no-speech or recognition-error | FEEDBACK | Goal + 「聞き取れなかった」案内。実在しない認識文は表示禁止。Retry/Support/戻る | twoRow/threeRowは明示の内容領域数で決定 |
+| READY/FEEDBACK/HINT / ピコサポート | HINT | `supportStage = min(3, supportStage+1)`。Goal + 選択中のヒント。再挑戦可 | hintExpanded（3行相当） |
+| HINT/FEEDBACK / Retry | READY | 同じ出題を保ち、ヒント段階も維持する。新しい音声試行を開始するまではマイク未使用 | 内容に応じてUIが決定 |
+| ACCEPTED / 次問 | NEW | 問題セッションを新規にし、`supportStage=0`。前問の認識結果/ヒント表示を解放 | twoRow |
+| いずれか / 冒険に戻る・取消 | CANCELLED/RETURNED | 未確定Save更新なし、音声試行を取消しUIを破棄 | アプリ共通 |
+| いずれか / 旧Attemptの遅延通知 | 変化なし | ID不一致を破棄。画面・音響・Saveを巻き戻さない | 変化なし |
+
+**3行切替の最小決定契約**：`layoutMode` は `twoRow | threeRow | document` の列挙値で、共通Presenterが `contentSlots`（goal, recognized, feedback, hint）の表示内容と承認済み優先順位から決める。表示のDOM構造と高さ（twoRow約100.2px、threeRow 140px）は共通UIの責任。S006の背景パスを見て表示モードにすることを禁止。背景の見切れ補正はSceneの型付き `frame` 値と同一レンダラーで扱う。長文/小型端末の文字溢れ、button配置、各Slotの排他・優先順序は画像比較と独立QAで確定する。
+
+**Pico Support内容契約**：3段すべて日本語テキストを基本とし、必要に応じて英文ヒントや模範表現を含められる。段階1で英文ヒントをどの程度表示するかは既存データから推測して一律に変えず、正式な承認原本と実機検収結果から**項目別の期待値**を確定する。ヒント表示で自動的に正答扱いしない。テキスト入力へのFallbackを追加しない。
+
+**未裁定**：認識失敗の2/3行切替の正確な閾値、Listening中の長文配置、Stage1英文の表記、失敗時ボタンの具体配置、通常画面以外の許容操作は正式な受入期待値が必要。これらが未裁定の間は実装開始不可。
+
+## 9. Phase 1改訂：Speech / Audioセッション契約（BLOCKER-04）
+
+**所有権**：Story EngineはStoryセッションを一つ、Communication/Battleは課題とAttempt IDを、Speechアダプターは実マイクを、Audioは再生/ダック/復帰をそれぞれ排他的に所有する。Speechは表示更新やStory進行を直接行わない。
+
+| 入力 | Speech状態 / 音響状態 | 所有者が行うこと | 不変条件とテスト |
+|---|---|---|---|
+| 利用者の発話開始タップ | IDLE→PREPARING | 課題が新しいAttempt IDを発行しSpeechへ要求。Audioへ発話利用権を申請 | 1タップにつき有効Attemptは一つ |
+| Audio利用権確保後 | PREPARING→LISTENING | Audioが承認済みDuckを適用しSpeechがマイクを開始 | Duck 0.25/300ms等は承認済みMix profileから取得 |
+| Interim/final | LISTENING→FINALIZING | Speechは結果をAttemptに紐付けて配送。アダプターがマイク終了・解放を完了 | 結果は有効IDに一度のみ配送、旧IDイベントは無視 |
+| no-speech/error/permission-denied | LISTENING/PREPARING→FINALIZING | 明示状態を報告し、所有リソースを解放 | 結果がない場合に認識文を捏造しない |
+| Retry/取消/Story離脱 | 状態にかかわらずCANCELLING→IDLE | 前IDを無効化しSpeech終了・解放要求。遅延結果を破棄 | 取消が重複しても副作用は一度だけ |
+| マイク解放の確認 | FINALIZING/CANCELLING→IDLE | SpeechがAudioへ利用権を返す。Audioが復帰を所有 | 1利用権に高々1回の復帰。新Attempt利用権の音量を旧処理が上書きしない |
+| 復帰完了/次のVoice | AUDIO RESTORING→READY | AudioだけがMix/再生可否を管理 | 既存正常Referenceで最初のVoice/BGM/SEと音量を比較 |
+
+- タイムアウトはマイク解放確認の代替証拠にしない。ブラウザが解放完了を通知しない場合の上限待機、状態変換、次Attemptの開始可否はプラットフォーム別契約として定義し、QAの異常系に含める。旧iPhoneの不安定経路を「修正済み」と称さない。
+- Device差分をブラウザAdapterに閉じ込め、StoryデータやStory IDからAudio復帰パスを切り替えない。
+- 正常ReferenceはStory S002〜S004とm004。ここから抽出した比較テストを定義し、iPhone原因調査の再開をPhase 1要件にしない。
+
+## 10. Phase 1改訂：旧経路の撤去と移行証拠（BLOCKER-03）
+
+旧コードの行数削減ではなく、**役割が重複する到達可能な経路を本番からなくすこと**を完了条件にする。
+
+| 旧経路/対象 | 新しい担当（設計案） | 完了証拠 | 削除対象・注意 |
+|---|---|---|---|
+| `story-engine.js` + `story-compiler.js` + Story JS | 宣言型Story Engine/Loader | index/devの呼出しグラフ、スキーマ拒否・既存Story完走 | 旧Compiler/Story登録; 代替実行入口の二重登録禁止 |
+| `question-manager.js` + Flow controllers | 共通Communication + Judge | 全質問IDの比較コーパス、1つのAttempt owner | S006専用Status分岐/重複Flow |
+| `dialog-manager.js` + presenters + S006 Ending | 共通Dialogue UI + Document renderer | 2/3行・手紙・Voice・戻る操作の画面比較 | 旧PresenterとS006専用Ending命令 |
+| `audio-manager.js` + Trace系 | Audio Output / Mix / Speech Session port | BGM・SE・Voice/duck/restoreの比較、Traceが再生に依存していないことを証明 | 観測専用Trace/Panel/Hook; 真の機能依存は分離して移す |
+| 旧Battle managerとStory側特例 | 共通Monster Battle + Vocabulary judge | m001〜m004の語彙/画面/終端テスト | 重複イベント発行・旧経路 |
+| `save-manager.js`/互換キー | Save adapter | 旧Save再読込・完了フラグの一度だけ更新 | 必要な互換Readerは例外的に保持可能 |
+
+各移行PRに `oldEntry`、`newEntry`、`oldCallersBefore`、`oldCallersAfter`、`deletedArtifacts`、`runtimeEntryScan`、`regressionEvidence` を付ける。新旧比較は固定SHAの**別ビルド**で実施。本番に二系統を搭載して切り替えるのは禁止。互換Readerには所有者/利用範囲/撤去条件を記録する。音響Traceは機能依存調査なしに一括削除しない。
+
+## 11. Phase 1改訂：CIとマージゲート（BLOCKER-05）
+
+| Gate | 範囲 | FAIL条件 / エビデンス |
+|---|---|---|
+| Story Schema | `stories/**/story.json` 等の新パッケージ | 未登録type、任意JS/HTML/CSS/式/コールバック、重複ID、参照切れ、未宣言Save変更、外部URL/不正素材参照 |
+| Common Engine Isolation | **新ランタイム/共通CSS**とStoryパッケージとの差分 | Story ID/素材名のハードコード、Storyパッケージ内のランタイム実装/個別CSS、許可外機能の起動。静的パターン検査に加え独立コードレビュー |
+| Single Runtime | entrypoint、loader、script登録、ランタイム参照 | 旧新両エンジンの二重ロード、重複処理登録、削除対象旧APIへの本番到達参照 |
+| State Contract | 通信UI/Audio/Speechの自動試験 | 未定義遷移、重複結果、旧AttemptによるUI/音量上書き、ヒント不正段階、認識文捏造 |
+| Data-only New Story | 合成の未登録Storyを追加する専用試験PR | Storyデータ/素材/カタログ/当該テスト以外の差分。共通エンジン/CSSのGit blobが固定baselineから変化 |
+| Regression | S001〜S007, st004, Morning/Camp, m001〜m004, Save | 既存の承認済み挙動違反、未承認の受理/拒否変更、素材ハッシュ/Voiceの無断変更 |
+
+**移行期注意**：現ProductionにはS006専用分岐がある。旧ディレクトリを一律grepして即FAILにするのではなく、新ランタイムと差分を対象に適用し、移行完了で旧ランタイムを削除する。baselineと移行段階をcommit SHAで固定し、例外を明示する。現行のbranch protection/required statusが未確認のため、CIでエラーを検出できても**GitHub側がマージを強制阻止するとは宣言しない**。実装前に管理権限/required status設定を別途確認し、未設定ならQA HOLDとディレクター承認運用で代替する。
+
+## 12. Phase 1改訂：移行網羅・独立認定（BLOCKER-06）
+
+| 移行対象 | 最低限の照合点 | 証拠 |
+|---|---|---|
+| S001〜S004 | 初回導線、Pico/Kong/Saki/Bernie、BGM/Voice、Morning、Camp、Battle接続 | 通常入口・dev・再起動での比較 |
+| st004 | Saki離脱、Bazaar/MAP/KEY/Farewell | Scene/Save/Voice照合 |
+| S005 | Ben/ホテル・全Communication・画像/Voice | 旧呼出し12箇所と承認11問の裁定書、正答/誤答コーパス |
+| S006 | 13 Scene、10課題、手紙、バス等の移動、2/3行・frame | 実画面比較、PR #11承認修正の追跡 |
+| S007 | 13 Scene、10課題、Meg加入・Save `s007.megJoined` | 加入前後・再読込比較 |
+| m001〜m004 | Vocabulary、演出、BGM/SE/Voice、勝利/失敗復帰 | m004正常音声基準と既知未解決の区別 |
+| Save/Audio共通 | 旧Saveの読み書き互換、マイク解放、Speech再開、duck/restore | 互換スナップショット/試行ID/実機比較 |
+
+- S005 Production固定SHA `engine/stories/S005.js` で12か所の `C.question` 呼出しを確認。11問との相違は**未裁定**であり、11への変更も12の追認も自動的には行わない。
+- 「100登録パッケージのロード試験」は規模・ID依存がないことの試験であり、将来の100話すべての未知演出に対応できるという証明ではない。
+- PM技術レビューはIndependent QA PASSを代替しない。Phase 1の設計文書を改訂したことだけで実機PASS/100話対応/Phase 2開始可を宣言しない。
+- 承認済み仕様と実際のソースが衝突する際は独立した根拠と差分を記録し、ディレクターが裁定。独立QAは候補実装から独立に期待値を定義し、`PASS/FAIL/HOLD` を残す。
+
+## 13. 改訂差分・未決一覧
+
+| PM指摘 | 追加設計 | 未決・承認要否 |
+|---|---|---|
+| BLOCKER-01 | §7 機能カタログ変更フロー | 機能カタログの実際の許可type一覧・例外承認権限 |
+| BLOCKER-02 | §8 UI状態遷移表・layoutMode | Stage1英文ヒント、3行表示の境界、ボタン/長文配置を承認原本と照合 |
+| BLOCKER-03 | §10 旧→新入口と撤去証拠 | 実コード依存閉包と除去対象の確定はPhase 2前に検証 |
+| BLOCKER-04 | §9 Speech/Audio試行ライフサイクル | ブラウザ終了通知欠落時の上限待機を実機Referenceと照合 |
+| BLOCKER-05 | §11 CI gate/FAIL条件 | GitHub required status設定の可否、移行期例外 |
+| BLOCKER-06 | §12 移行網羅表 | S005 11/12件、S006承認修正の適用原本 |
+
+**設計改訂後も独立QA審査・ディレクター承認までPhase 2はHOLD。Productionと旧Story/Graphic/Audio資産には一切変更を加えない。**
