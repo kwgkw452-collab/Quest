@@ -47,6 +47,7 @@ window.SpeechRecognition=class {{
     buttons=page.locator('#actions button').all_text_contents()
     if '次へ' in buttons:action='次へ'
     elif '話す' in buttons:action='話す'
+    elif '次の文' in buttons:action='次の文'
     elif '読み終えた' in buttons:action='読み終えた'
     else:raise AssertionError(story_id+' Unexpected buttons '+str(buttons))
     before=len([x for x in page.locator('#log').text_content().splitlines() if x])
@@ -60,6 +61,8 @@ window.SpeechRecognition=class {{
    assert lines==sum(s['type']=='line' for s in steps),(story_id,'lines',lines)
    assert questions==len(ids),(story_id,'questions',questions)
    assert documents==(1 if story_id=='S006' else 0),(story_id,'documents',documents)
+   if story_id=='S006':
+    assert sum(e.get('type')=='document-page' for e in events)==15,'letter must present all 16 lines'
    assert not page.evaluate('window.__questAnswers.length'),story_id+' incomplete recognition'
    assert not errors,(story_id,errors)
    print(f'{story_id} BROWSER PASS: {lines} dialogues, {questions} spoken challenges, {documents} document(s), all scenes complete')
