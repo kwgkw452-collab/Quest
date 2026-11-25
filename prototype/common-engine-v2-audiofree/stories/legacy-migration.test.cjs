@@ -41,7 +41,7 @@ for(const id of ['S005','S006']){
    const q6Recognition=id==='S006'&&q.id==='s006.communication.6';
    assert.equal(migrated.goalJa,revisedQ10?'これはあなたの箱です。':q.prompt);
    assert.equal(migrated.modelEn,revisedQ10?'This is your box!':q.communicative.expectedUtterance);
-   assert.deepEqual(migrated.hints,q.picoSupport);
+   assert.deepEqual(migrated.hints,revisedQ10?['見つけた箱を持ち主に渡すピコ。『これはあなたの箱です。』と伝えるピコ。','『これは』は This is、『あなたの箱』は your box だピコ。','This is your box! と言うピコ。']:q.picoSupport);
    assert.deepEqual(migrated.rule.accept,q6Recognition?[...q.answers,'Look at the','Look at that','Please look at the','Please look at that']:q.answers);
   }
   assert.deepEqual(flatNew(p).filter(s=>s.type==='challenge').map(s=>s.id),src.steps.filter(s=>s.type==='question').map(s=>s.questionId));
@@ -239,4 +239,17 @@ test('generic ASR token alias only applies on the question where configured',()=
  delete q2.wordAliases;
  assert.equal(judge(q2,'What color is the book?').decision,'REJECT');
  assert.equal(judge(q2,'What color is the box?').decision,'ACCEPT');
+});
+
+
+test('S006 Q10 Pico three hints follow the director-approved box-return Goal, not the obsolete found-box answer',()=>{
+ const q=pack('S006').challenges['s006.communication.10'];
+ assert.equal(q.goalJa,'これはあなたの箱です。');
+ assert.equal(q.modelEn,'This is your box!');
+ assert.equal(q.hints.length,3);
+ assert(q.hints[0].includes('あなたの箱'));
+ assert(q.hints[1].includes('This is')&&q.hints[1].includes('your box'));
+ assert(q.hints[2].includes('This is your box!'));
+ assert(!q.hints.some(h=>h.includes('I found the box!')||h.includes('find の過去形')));
+ assert.equal(judge(q.rule,q.modelEn).decision,'ACCEPT');
 });
