@@ -2,7 +2,19 @@
 const {judge:localJudge}=require('./judge.cjs');
 function createCommunication(q,{recognize,judge=localJudge,cancelSpeech}={}){
  let stage=0,state='READY',attempt=0,active=0,feedback=null;
- const view=()=>({state,goalJa:q.goalJa,supportStage:stage,supportText:stage?q.hints[stage-1]:null,recognizedText:feedback?.recognizedText??null,feedbackJa:feedback?.feedbackJa??null,layoutMode:stage||feedback?.recognizedText?'threeRow':'twoRow',actions:state==='READY'?['talk','support','return']:[]});
+ const view=()=>{
+  const supportText=stage?q.hints[stage-1]:null;
+  return {
+   state,
+   goalJa:q.goalJa,
+   supportStage:stage,
+   supportText,
+   recognizedText:feedback?.recognizedText??null,
+   feedbackJa:feedback?.feedbackJa??null,
+   layoutMode:supportText?'threeRow':'twoRow',
+   actions:state==='READY'?['talk','support','return']:[],
+  };
+ };
  function support(){if(state!=='READY')throw Error('NOT_READY');stage=Math.min(stage+1,3);return view();}
  function cancel(){active=++attempt;state='CANCELLED';cancelSpeech?.();return view();}
  async function speak(){if(state!=='READY')throw Error('NOT_READY');if(typeof recognize!=='function')throw Error('NO_RECOGNIZER');

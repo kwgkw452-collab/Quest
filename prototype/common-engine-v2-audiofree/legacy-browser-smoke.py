@@ -4,6 +4,7 @@ No actual microphone, Voice, Audio playback or Production integration.
 import functools
 import http.server
 import json
+import os
 import threading
 from pathlib import Path
 from shutil import which
@@ -297,6 +298,122 @@ window.finishRecognition=(text)=>{
   assert '成功しました' in goal_page.locator('#support').inner_text()
   print('QA35-02 PASS: Goal persists through listening, rejection, timeout, retry and acceptance')
   goal_context.close()
+  # QA36: measure the real player with the actual S006 package and a controllable microphone.
+  dialogue_context=browser.new_context(viewport={'width':1280,'height':800})
+  dialogue_context.add_init_script(script="""
+window.SpeechRecognition=class {
+ start(){window.activeRecognition=this;}
+ abort(){}
+};
+window.finishRecognition=(text)=>{
+ const recognition=window.activeRecognition;
+ recognition.onresult?.({results:[[{transcript:text}]],resultIndex:0});
+ recognition.onend?.();
+};
+""")
+  s006=json.loads((HERE/'stories/S006/story.json').read_text(encoding='utf8'))
+  q1=s006['challenges']['s006.communication.1']
+  q2=s006['challenges']['s006.communication.2']
+  evidence=os.environ.get('DIALOGUE_SCREENSHOTS')
+  if evidence:
+   evidence=Path(evidence)
+   evidence.mkdir(parents=True,exist_ok=True)
+  for width,height in ((1280,800),(844,390),(390,844),(320,568)):
+   page=dialogue_context.new_page()
+   page.set_viewport_size({'width':width,'height':height})
+   page.goto(f'http://127.0.0.1:{server.server_port}/prototype/common-engine-v2-audiofree/play.html?story=S006')
+
+   def button(label):
+    return page.get_by_role('button',name=label,exact=True)
+
+   def reach_question():
+    for _ in range(80):
+     if button('話す').count():
+      return
+     button('次へ').click()
+    raise AssertionError('S006 question not reached')
+
+   def measure(label,expected,goal,detail='',listening=False):
+    assert page.locator('#text').inner_text()==goal
+    assert detail in page.locator('#support').inner_text()
+    actions=[] if listening else ['話す','ピコサポート','冒険に戻る']
+    assert page.locator('#actions button').all_text_contents()==actions
+    result=page.locator('#dialogue').evaluate("""async (dialogue, detail) => {
+     const bounds = node => node.getBoundingClientRect().toJSON();
+     const panel = bounds(dialogue);
+     const game = bounds(dialogue.parentElement);
+     const backdrop = document.querySelector('#backdrop');
+     const background = bounds(backdrop);
+     const style = getComputedStyle(dialogue);
+     const backgroundStyle = getComputedStyle(backdrop);
+     const image = new Image();
+     image.src = JSON.parse(backgroundStyle.backgroundImage.slice(4, -1));
+     await image.decode();
+     const scale = Math.max(background.width / image.naturalWidth, background.height / image.naturalHeight);
+     const crop = Math.max(0, (image.naturalWidth - background.width / scale) / 2);
+     const goal = bounds(document.querySelector('#text'));
+     const buttons = [...dialogue.querySelectorAll('button')].map(bounds);
+     const support = document.querySelector('#support');
+     const panelContains = rect => rect.top >= panel.top && rect.bottom <= panel.bottom
+       && rect.left >= panel.left && rect.right <= panel.right;
+     let detailVisible = true;
+     if (detail) {
+       const start = support.textContent.indexOf(detail);
+       const range = document.createRange();
+       range.setStart(support.firstChild, start);
+       range.setEnd(support.firstChild, start + detail.length);
+       const rect = bounds(support);
+       detailVisible = [...range.getClientRects()].every(part => part.top >= rect.top - 1
+         && part.bottom <= rect.bottom + 1 && part.left >= rect.left && part.right <= rect.right + 1);
+     }
+     return {
+       height: panel.height, css: style.height, min: style.minHeight, max: style.maxHeight,
+       goalAndButtonsInside: [goal, ...buttons].every(panelContains),
+       detailVisible, bottomInset: game.bottom - panel.bottom,
+       background: [background.width, background.height], asset: backdrop.getAttribute('aria-label'),
+       image: [image.naturalWidth, image.naturalHeight], horizontalCropEachSide: Math.round(crop),
+       verticalFit: background.height <= image.naturalHeight * scale + 0.01,
+       visibleAbovePanel: panel.top - background.top,
+       backdropFillsStage: background.bottom === panel.bottom && background.top === game.top + 1,
+       backgroundSize: backgroundStyle.backgroundSize, backgroundPosition: backgroundStyle.backgroundPosition,
+     };
+    }""",detail)
+    assert abs(result['height']-expected)<=1/64,result
+    assert abs(float(result['css'].removesuffix('px'))-expected)<=1/64,result
+    assert result['min']==result['max']==f'{expected:g}px',result
+    assert result['bottomInset']==1 and result['goalAndButtonsInside'] and result['detailVisible'],result
+    assert result['backdropFillsStage'] and result['visibleAbovePanel']>0 and result['verticalFit'],result
+    assert result['backgroundSize']=='cover' and result['backgroundPosition']=='50% 50%',result
+    print(f'QA36 S006 {width}x{height} {label}: {json.dumps(result)}',flush=True)
+    if evidence and label in ('rejected','pico-press-2'):
+     page.locator('.game').screenshot(path=evidence/f's006-{width}x{height}-{label}.png')
+
+   reach_question()
+   measure('initial',100.2,q1['goalJa'])
+   button('話す').click()
+   measure('listening',100.2,q1['goalJa'],'聞き取り中…',listening=True)
+   page.evaluate("window.finishRecognition('purple bananas')")
+   button('話す').wait_for()
+   assert json.loads(page.locator('#log').inner_text().splitlines()[-1])['type']=='rejected'
+   measure('rejected',100.2,q1['goalJa'],'認識：purple bananas')
+   for press,stage in enumerate((1,2,3,3),start=1):
+    button('ピコサポート').click()
+    event=json.loads(page.locator('#log').inner_text().splitlines()[-1])
+    assert event['view']['supportStage']==stage,event
+    measure(f'pico-press-{press}',140,q1['goalJa'],q1['hints'][stage-1])
+   button('話す').click()
+   measure('listening-with-pico',140,q1['goalJa'],q1['hints'][2],listening=True)
+   page.evaluate('window.finishRecognition',q1['modelEn'])
+   button('次へ').wait_for()
+   assert page.locator('#support').inner_text()=='成功しました！'
+   reach_question()
+   measure('next-question',100.2,q2['goalJa'])
+   assert not page.locator('#support').inner_text()
+   button('冒険に戻る').click()
+   assert page.locator('#text').inner_text()=='冒険に戻りました。'
+   page.evaluate('localStorage.removeItem("quest.v2.test.S006")')
+   page.close()
+  dialogue_context.close()
   browser.close()
 finally:
  server.shutdown()

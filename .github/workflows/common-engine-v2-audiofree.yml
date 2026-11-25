@@ -18,6 +18,8 @@ jobs:
     timeout-minutes: 8
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
@@ -37,6 +39,8 @@ jobs:
     timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -47,7 +51,15 @@ jobs:
       - name: Run full real S007 migration in shared browser player with mocked SpeechRecognition
         run: python prototype/common-engine-v2-audiofree/s007-browser-smoke.py
       - name: Run actual S005 and S006 in shared browser player with mock SpeechRecognition
+        env:
+          DIALOGUE_SCREENSHOTS: ${{ runner.temp }}/qa36-dialogue
         run: python prototype/common-engine-v2-audiofree/legacy-browser-smoke.py
+      - name: Upload S006 Dialogue screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: qa36-s006-dialogue-screenshots
+          path: ${{ runner.temp }}/qa36-dialogue/*.png
       - name: Open immutable HTTPS preview with a mobile Chromium viewport and mock mic
         env:
           PREVIEW_SHA: ${{ github.event.pull_request.head.sha }}
@@ -58,6 +70,8 @@ jobs:
     timeout-minutes: 4
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - name: Verify browser-deliverable immutable HTTPS preview files
         env:
           PREVIEW_SHA: ${{ github.event.pull_request.head.sha }}
