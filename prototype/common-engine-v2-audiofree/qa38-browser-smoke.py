@@ -60,7 +60,7 @@ window.SpeechRecognition=class {
     button('話す').wait_for(timeout=10000)
     assert goal==page.locator('#text').inner_text()
     assert 'もう一度' in page.locator('#support').inner_text()
-    log=page.locator('#log').inner_text()
+    log=page.locator('#log').text_content() or ''
     assert '"type":"'+expected+'"' in log,log[-700:]
    assert not errors,errors
   speech('Can we','unknown')
