@@ -69,3 +69,25 @@ test('QA38 UNKNOWN prevents progression, retains Japanese Goal and Pico support 
  const fresh=createCommunication(q(3),{recognize:async()=>({status:'final',text:'Where are the other boxes?'})});
  assert.equal(fresh.view().supportStage,0);
 });
+
+test('Independent QA PR39: all six reported mismatches are corrected without broadening other questions',()=>{
+ const checks=[
+  [2,'What color is the suitcase?','REJECT'],
+  [2,'How big is the box?','REJECT'],
+  [4,'Show me that small box, please.','ACCEPT'],
+  [6,'Look at the watch.','REJECT'],
+  [10,'This is my box.','REJECT'],
+  [10,"This is someone else’s box.",'REJECT']
+ ];
+ for(const [n,utterance,decision] of checks){
+  assert.equal(judge(q(n).rule,utterance).decision,decision,'QA39 Q'+n+' '+utterance);
+ }
+ assert.equal(judge(q(2).rule,'What color is it?').decision,'ACCEPT');
+ assert.equal(judge(q(3).rule,'Where is another box?').decision,'ACCEPT');
+ assert.equal(judge(q(4).rule,'Show us that little box, please.').decision,'ACCEPT');
+ assert.equal(judge(q(6).rule,'Look at the').decision,'ACCEPT'); // preserve existing ASR HOLD boundary
+ assert.equal(judge(q(10).rule,'This is your box.').decision,'ACCEPT');
+ assert.equal(judge(q(10).rule,'I found the box.').decision,'ACCEPT'); // legacy HOLD
+ assert.equal(judge(q(10).rule,'This is another box.').decision,'REJECT');
+ assert.equal(judge(q(10).rule,'This is').decision,'UNKNOWN');
+});
