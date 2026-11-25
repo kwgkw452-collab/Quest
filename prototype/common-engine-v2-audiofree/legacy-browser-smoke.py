@@ -116,6 +116,8 @@ window.SpeechRecognition=class {
   # Scene callbacks can also arrive from an abandoned runner, independently of talk()/advance().
   # Capture an old onEvent callback while creating a new S005 runner, then invoke it after switching to S006.
   race.evaluate("""() => {
+    // This scenario needs the opening scene; the previous scenario saved S005 mid-story.
+    localStorage.removeItem('quest.v2.test.S005');
     window.__oldStoryCallbacks=[];
     const original=window.QuestV2.createRunner;
     window.QuestV2.createRunner=function(data,options){
@@ -227,6 +229,22 @@ window.SpeechRecognition=class {
   assert after['index']>=checkpoint['index'],'retry rolled checkpoint backward'
   assert not mic_errors,mic_errors
   print('RETRY SAVE PASS: temporary fetch error preserves and resumes prior Story checkpoint')
+  # A malformed package is a failed restart, so keep its prior save.
+  mic.evaluate("""() => {
+    const original=window.fetch.bind(window);
+    window.fetch=(url,...args)=>{
+      if(String(url).includes('/stories/S005/story.json')){
+        window.fetch=original;
+        return Promise.resolve(Response.json({id:'S005',schemaVersion:1}));
+      }
+      return original(url,...args);
+    };
+  }""")
+  mic.locator('#restart').click()
+  mic.get_by_role('button',name='保存地点から再試行').wait_for(timeout=15000)
+  assert mic.evaluate("()=>JSON.parse(localStorage.getItem('quest.v2.test.S005'))")==after,'invalid restart erased checkpoint'
+  assert not mic_errors,mic_errors
+  print('RESTART SAVE PASS: invalid replacement package preserves prior checkpoint')
   mic_context.close()
   browser.close()
 finally:

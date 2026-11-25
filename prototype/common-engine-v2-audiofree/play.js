@@ -87,10 +87,10 @@ async function reset(resume){
   if(data.id!==entry.id)throw Error('CATALOG_ID_MISMATCH');
   const storage=(()=>{try{return window.localStorage;}catch{return null;}})();
   store=api.createSaveStore({storage,key:'quest.v2.test.'+entry.id});
-  if(!resume)store.clear();
   recognizer=api.createBrowserSpeech({env:window});
   const savedSnapshot=resume?(store.read()||undefined):undefined;
   runner=api.createRunner(data,{recognize:recognizer.recognize,cancelSpeech:recognizer.cancel,storage:store,onEvent:(event)=>{if(epoch!==sessionEpoch)return;if(event.type==='scene'&&event.asset){lastSceneAsset=event.asset;setBackdrop(event.asset);}},initialSnapshot:savedSnapshot});
+  if(!resume)store.clear();
   view.log.textContent='';view.backdrop.style.backgroundImage='';lastSceneAsset=null;documentCursor=0;documentLanguage='en';
   const restored=lastBackdropBeforeCursor(data,savedSnapshot);
   if(restored){lastSceneAsset=restored;setBackdrop(restored);}
