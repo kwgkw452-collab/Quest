@@ -7,7 +7,7 @@ const setText=(main,secondary='')=>{view.text.textContent=main;view.support.text
 const clearButtons=()=>view.actions.replaceChildren();
 const addButton=(label,action)=>{const b=document.createElement('button');b.textContent=label;b.addEventListener('click',action);view.actions.append(b);return b;};
 const report=e=>{view.log.textContent+=JSON.stringify(e)+'\n';view.log.scrollTop=view.log.scrollHeight;};
-const error=e=>{report({error:String(e)});setText('エラー：'+String(e?.message||e));clearButtons();addButton('再試行',()=>void reset(false));};
+const error=e=>{report({error:String(e)});setText('エラー：'+String(e?.message||e));clearButtons();addButton('保存地点から再試行',()=>void reset(true));};
 function setBackdrop(asset){
  if(typeof asset!=='string'||!/^images\/\d{3}\/[\w./-]+\.png(?:\?v=[\w.-]+)?$/.test(asset)||asset.split('?')[0].split('/').includes('..')){report({warning:'INVALID_ASSET',asset});return;}
  view.backdrop.style.backgroundImage='url("'+new URL('../../../'+asset,location.href).href+'")';
