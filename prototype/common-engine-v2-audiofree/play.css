@@ -35,3 +35,30 @@
 #dialogue:is(.twoRow, .threeRow) > :empty {
   display: none;
 }
+
+/* Portrait artwork gets its own full-width row above the dialogue. */
+@media (max-width: 640px) and (orientation: portrait) {
+  main {
+    padding-bottom: max(6px, env(safe-area-inset-bottom));
+  }
+
+  select {
+    max-width: 100%;
+  }
+
+  .game {
+    aspect-ratio: auto;
+  }
+
+  #backdrop {
+    position: static;
+    aspect-ratio: 13 / 6;
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+  #dialogue {
+    position: static;
+    min-width: 0;
+  }
+}

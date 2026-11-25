@@ -56,14 +56,14 @@ jobs:
         run: python prototype/common-engine-v2-audiofree/s007-browser-smoke.py
       - name: Run actual S005 and S006 in shared browser player with mock SpeechRecognition
         env:
-          DIALOGUE_SCREENSHOTS: ${{ runner.temp }}/qa36-dialogue
+          DIALOGUE_SCREENSHOTS: ${{ runner.temp }}/qa37-graphic
         run: python prototype/common-engine-v2-audiofree/legacy-browser-smoke.py
-      - name: Upload S006 Dialogue screenshots
+      - name: Upload portrait Graphic and Dialogue screenshots
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: qa36-s006-dialogue-screenshots
-          path: ${{ runner.temp }}/qa36-dialogue/*.png
+          name: qa37-s006-graphic-screenshots
+          path: ${{ runner.temp }}/qa37-graphic/*.png
       - name: Open immutable HTTPS preview with a mobile Chromium viewport and mock mic
         env:
           PREVIEW_SHA: ${{ github.event.pull_request.head.sha }}

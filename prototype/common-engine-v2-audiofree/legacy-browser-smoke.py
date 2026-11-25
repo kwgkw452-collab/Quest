@@ -349,10 +349,12 @@ window.finishRecognition=(text)=>{
      const image = new Image();
      image.src = JSON.parse(backgroundStyle.backgroundImage.slice(4, -1));
      await image.decode();
-     const scale = Math.max(background.width / image.naturalWidth, background.height / image.naturalHeight);
+     const fit = backgroundStyle.backgroundSize === 'contain' ? Math.min : Math.max;
+     const scale = fit(background.width / image.naturalWidth, background.height / image.naturalHeight);
      const crop = Math.max(0, (image.naturalWidth - background.width / scale) / 2);
      const goal = bounds(document.querySelector('#text'));
-     const buttons = [...dialogue.querySelectorAll('button')].map(bounds);
+     const controls = [...dialogue.querySelectorAll('button')];
+     const buttons = controls.map(bounds);
      const support = document.querySelector('#support');
      const panelContains = rect => rect.top >= panel.top && rect.bottom <= panel.bottom
        && rect.left >= panel.left && rect.right <= panel.right;
@@ -367,12 +369,21 @@ window.finishRecognition=(text)=>{
          && part.bottom <= rect.bottom + 1 && part.left >= rect.left && part.right <= rect.right + 1);
      }
      return {
+       gameHeight: game.height,
        height: panel.height, css: style.height, min: style.minHeight, max: style.maxHeight,
        goalAndButtonsInside: [goal, ...buttons].every(panelContains),
        detailVisible, bottomInset: game.bottom - panel.bottom,
        background: [background.width, background.height], asset: backdrop.getAttribute('aria-label'),
        image: [image.naturalWidth, image.naturalHeight], horizontalCropEachSide: Math.round(crop),
-       verticalFit: background.height <= image.naturalHeight * scale + 0.01,
+       artworkHeight: image.naturalHeight * scale,
+       verticalCrop: Math.max(0, image.naturalHeight - background.height / scale),
+       backgroundEndsAtPanel: Math.abs(background.bottom - panel.top) < 0.02,
+       documentFitsWidth: document.documentElement.scrollWidth <= window.innerWidth,
+       canReachControls: buttons.every((rect, index) => {
+         const hit = document.elementFromPoint(rect.x + rect.width / 2, rect.y + rect.height / 2);
+         return rect.bottom <= window.innerHeight + 0.02 && rect.top >= 0 && controls[index].contains(hit);
+       }),
+       pageHeight: document.documentElement.scrollHeight,
        visibleAbovePanel: panel.top - background.top,
        backdropFillsStage: background.bottom === panel.bottom && background.top === game.top + 1,
        backgroundSize: backgroundStyle.backgroundSize, backgroundPosition: backgroundStyle.backgroundPosition,
@@ -382,10 +393,16 @@ window.finishRecognition=(text)=>{
     assert abs(float(result['css'].removesuffix('px'))-expected)<=1/64,result
     assert result['min']==result['max']==f'{expected:g}px',result
     assert result['bottomInset']==1 and result['goalAndButtonsInside'] and result['detailVisible'],result
-    assert result['backdropFillsStage'] and result['visibleAbovePanel']>0 and result['verticalFit'],result
-    assert result['backgroundSize']=='cover' and result['backgroundPosition']=='50% 50%',result
-    print(f'QA36 S006 {width}x{height} {label}: {json.dumps(result)}',flush=True)
-    if evidence and label in ('rejected','pico-press-2'):
+    assert result['documentFitsWidth'] and result['visibleAbovePanel']>0,result
+    if width < height:
+     assert result['backgroundSize']=='contain' and result['backgroundEndsAtPanel'],result
+     assert result['horizontalCropEachSide']==0 and result['verticalCrop']<0.01,result
+     assert result['artworkHeight'] >= 140 and result['canReachControls'],result
+    else:
+     assert result['backgroundSize']=='cover' and result['backdropFillsStage'],result
+    assert result['backgroundPosition']=='50% 50%',result
+    print(f'QA37-01 S006 {width}x{height} {label}: {json.dumps(result)}',flush=True)
+    if evidence and label in ('initial','rejected','pico-press-2'):
      page.locator('.game').screenshot(path=evidence/f's006-{width}x{height}-{label}.png')
 
    reach_question()
@@ -412,6 +429,31 @@ window.finishRecognition=(text)=>{
    button('冒険に戻る').click()
    assert page.locator('#text').inner_text()=='冒険に戻りました。'
    page.evaluate('localStorage.removeItem("quest.v2.test.S006")')
+   page.close()
+  for story_id in ('S005', 'S007'):
+   page=dialogue_context.new_page()
+   page.set_viewport_size({'width':320,'height':568})
+   page.goto(f'http://127.0.0.1:{server.server_port}/prototype/common-engine-v2-audiofree/play.html?story={story_id}')
+   for _ in range(120):
+    if page.get_by_role('button',name='話す',exact=True).count():
+     break
+    page.get_by_role('button',name='次へ',exact=True).click()
+   else:
+    raise AssertionError(f'{story_id} first question not reached')
+   page.get_by_role('button',name='ピコサポート',exact=True).click()
+   assert page.locator('#text').inner_text()
+   assert 'ピコ：' in page.locator('#support').inner_text()
+   assert page.locator('#backdrop').evaluate("""backdrop => {
+     const panel = document.querySelector('#dialogue');
+     return getComputedStyle(backdrop).backgroundSize === 'contain'
+       && Math.abs(backdrop.getBoundingClientRect().bottom - panel.getBoundingClientRect().top) < .02
+       && panel.getBoundingClientRect().height === 140
+       && document.documentElement.scrollWidth <= innerWidth;
+   }""")
+   if evidence:
+    page.locator('.game').screenshot(path=evidence/f'{story_id.lower()}-320x568-pico.png')
+   page.get_by_role('button',name='冒険に戻る',exact=True).click()
+   print(f'{story_id} portrait Graphic and Pico controls PASS',flush=True)
    page.close()
   dialogue_context.close()
   browser.close()
