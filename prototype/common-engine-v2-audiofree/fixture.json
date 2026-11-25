@@ -1,0 +1,9 @@
+{
+ "schemaVersion":1,"id":"S888","title":"Independent Test Adventure","entry":"intro","sceneOrder":["intro","end"],
+ "saveKeys":{"found":"boolean"},
+ "challenges":{"hello":{"goalJa":"あいさつをしよう","modelEn":"Hello","hints":["あいさつをしてね","最初の文字はH","Hello"],"rule":{"accept":["hello","hi"]}}},
+ "battles":{"vocab":{"words":[{"prompt":"天気を表す英単語を言おう","answers":["sunny","clear"]}]}},
+ "documents":{"letter":{"title":"手紙","body":["Thank you!"]}},
+ "scenes":{"intro":{"steps":[{"type":"line","speaker":"Pico","text":"Welcome!"},{"type":"challenge","id":"hello"},{"type":"battle","id":"vocab"},{"type":"document","id":"letter"},{"type":"goto","to":"end"}]},"end":{"steps":[{"type":"setFlag","key":"found","value":true},{"type":"line","text":"The End"},{"type":"end"}]}}
+}
+

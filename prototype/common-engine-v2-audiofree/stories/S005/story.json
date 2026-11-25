@@ -1,0 +1,1418 @@
+{
+  "schemaVersion": 1,
+  "id": "S005",
+  "title": "S005 Ben ― 見えない夜",
+  "entry": "scene01",
+  "sceneOrder": [
+    "scene01",
+    "scene02",
+    "scene03",
+    "scene04",
+    "scene05",
+    "scene06",
+    "scene07",
+    "scene08",
+    "scene09",
+    "scene10",
+    "scene11"
+  ],
+  "saveKeys": {},
+  "challenges": {
+    "s005.communication.1": {
+      "goalJa": "いいえ、予約していません。",
+      "modelEn": "No, we don’t.",
+      "hints": [
+        "「いいえ」だから……ピコ。",
+        "“No” を使って答えるピコ。",
+        "No, we don’t."
+      ],
+      "rule": {
+        "accept": [
+          "No, we don’t.",
+          "No.",
+          "No, we don't.",
+          "No, we do not.",
+          "No reservation.",
+          "We have no reservation."
+        ],
+        "requireAnyWords": [
+          [
+            "no"
+          ]
+        ],
+        "excludeExact": [
+          "Yes, we do.",
+          "We have a reservation."
+        ]
+      }
+    },
+    "s005.communication.2": {
+      "goalJa": "4人です。",
+      "modelEn": "Four.",
+      "hints": [
+        "4人だから……ピコ。",
+        "“Four” を使って答えるピコ。",
+        "Four."
+      ],
+      "rule": {
+        "accept": [
+          "Four.",
+          "4.",
+          "Four people.",
+          "4 people.",
+          "We are four."
+        ],
+        "requireAnyWords": [
+          [
+            "four",
+            "4"
+          ]
+        ],
+        "excludeExact": [
+          "Two.",
+          "Three."
+        ]
+      }
+    },
+    "s005.communication.3": {
+      "goalJa": "キングサイズのベッドはありますか？",
+      "modelEn": "Do you have a king-size bed?",
+      "hints": [
+        "“Do you...” から始めてみるピコ。",
+        "“king-size bed” を使うピコ。",
+        "Do you have a king-size bed?"
+      ],
+      "rule": {
+        "accept": [
+          "Do you have a king-size bed?",
+          "Do you have king-size beds?",
+          "Does this hotel have a king-size bed?",
+          "Does this hotel have king-size beds?",
+          "Does the hotel have a king-size bed?",
+          "Is there a king-size bed?",
+          "Are there any king-size beds?",
+          "Do you have any king-size beds?",
+          "Is a king-size bed available?",
+          "King-size bed, please.",
+          "A king-size bed, please.",
+          "King-size beds, please."
+        ],
+        "requireAnyWords": [
+          [
+            "bed",
+            "beds",
+            "bet",
+            "bets"
+          ],
+          [
+            "king",
+            "size",
+            "side"
+          ]
+        ],
+        "excludeExact": [
+          "We don't need a bed."
+        ]
+      }
+    },
+    "s005.communication.4": {
+      "goalJa": "キングサイズのベッドを1つお願いします。",
+      "modelEn": "One king-size bed, please.",
+      "hints": [
+        "1つお願いするピコ。",
+        "“One king-size bed” を使うピコ。",
+        "One king-size bed, please."
+      ],
+      "rule": {
+        "accept": [
+          "One king-size bed, please.",
+          "One king size bed please",
+          "A king-size bed, please."
+        ],
+        "requireAnyWords": [
+          [
+            "one",
+            "1"
+          ]
+        ],
+        "excludeExact": [
+          "Two king-size beds, please."
+        ]
+      }
+    },
+    "s005.communication.5": {
+      "goalJa": "2部屋お願いします。",
+      "modelEn": "Two rooms, please.",
+      "hints": [
+        "2だから……ピコ。",
+        "“Two” から始めるピコ。",
+        "Two rooms, please."
+      ],
+      "rule": {
+        "accept": [
+          "Two rooms, please.",
+          "two rooms",
+          "2 rooms",
+          "two room",
+          "2 room"
+        ],
+        "requireAnyWords": [
+          [
+            "to",
+            "two",
+            "2",
+            "true",
+            "tulum",
+            "truth",
+            "ture"
+          ]
+        ],
+        "excludeExact": [
+          "One room, please."
+        ]
+      }
+    },
+    "s005.communication.6": {
+      "goalJa": "はい、お願いします。",
+      "modelEn": "Yes, please.",
+      "hints": [
+        "「はい」だから……ピコ。",
+        "“Yes” を使って答えるピコ。",
+        "Yes, please."
+      ],
+      "rule": {
+        "accept": [
+          "Yes, please.",
+          "Yes.",
+          "Please.",
+          "Sure.",
+          "OK.",
+          "Okay."
+        ],
+        "excludeExact": [
+          "No, thank you."
+        ]
+      }
+    },
+    "s005.communication.7": {
+      "goalJa": "大丈夫ですか？",
+      "modelEn": "Are you OK?",
+      "hints": [
+        "“Are you...” から始めるピコ。",
+        "“OK” を使うピコ。",
+        "Are you OK?"
+      ],
+      "rule": {
+        "accept": [
+          "Are you OK?",
+          "Are you okay?",
+          "Are you all right?",
+          "Are you alright?",
+          "You OK?",
+          "You okay?",
+          "All right?",
+          "Everything OK?"
+        ],
+        "excludeExact": [
+          "I don't care."
+        ]
+      }
+    },
+    "s005.communication.8": {
+      "goalJa": "（あなたの）名前は何ですか？",
+      "modelEn": "What’s your name?",
+      "hints": [
+        "“What’s...” から始めてみるピコ。",
+        "“your name” を使うピコ。",
+        "What’s your name?"
+      ],
+      "rule": {
+        "accept": [
+          "What’s your name?",
+          "What is your name?",
+          "Your name, please?",
+          "Name, please?",
+          "May I have your name?",
+          "Can I have your name?",
+          "Could I have your name?",
+          "May I know your name?",
+          "Can I know your name?",
+          "I want to know your name.",
+          "I’d like to know your name.",
+          "I would like to know your name.",
+          "Tell me your name, please.",
+          "Please tell me your name.",
+          "What's your name?",
+          "I'd like to know your name."
+        ],
+        "requireAnyWords": [
+          [
+            "name"
+          ]
+        ],
+        "excludeExact": [
+          "I don't want to know your name."
+        ]
+      }
+    },
+    "s005.communication.9": {
+      "goalJa": "物を盗みましたか？",
+      "modelEn": "Do you steal things?",
+      "hints": [
+        "“Did you...” または “Do you...” から始めるピコ。",
+        "“steal” を使うピコ。",
+        "Did you steal something?"
+      ],
+      "rule": {
+        "accept": [
+          "Do you steal things?",
+          "Did you steal?",
+          "Do you steal?",
+          "Did you steal something?",
+          "Did you steal anything?",
+          "Do you steal something?",
+          "Do you steal anything?",
+          "Steal something?",
+          "Steal anything?",
+          "Stole something?",
+          "Stole anything?",
+          "Steal things?",
+          "Stole things?",
+          "Did you take something?",
+          "Did you take anything?",
+          "Did you take the bag?",
+          "Do you still?",
+          "Did you still?"
+        ],
+        "excludeExact": [
+          "You are a thief."
+        ]
+      }
+    },
+    "s005.communication.10": {
+      "goalJa": "私たちと一緒に来て。",
+      "modelEn": "Come with us.",
+      "hints": [
+        "“Come” または “Let’s” から始めるピコ。",
+        "“with us” または “go” を使うピコ。",
+        "Come with us.\nLet’s go."
+      ],
+      "rule": {
+        "accept": [
+          "Come with us.",
+          "Come with me.",
+          "Let’s go.",
+          "Please come with us.",
+          "Come with me, please.",
+          "Let’s go together.",
+          "Let's go.",
+          "Let's go together."
+        ],
+        "excludeExact": [
+          "Go away."
+        ]
+      }
+    },
+    "s005.communication.11": {
+      "goalJa": "バッグを見ましたか？",
+      "modelEn": "Did you see a bag?",
+      "hints": [
+        "“Did you...” から始めるピコ。",
+        "“see” と “bag” を使うピコ。",
+        "Did you see a bag?"
+      ],
+      "rule": {
+        "accept": [
+          "Did you see a bag?",
+          "Do you see a bag?",
+          "Have you seen a bag?",
+          "Did you find a bag?",
+          "Do you find a bag?",
+          "Have you found a bag?",
+          "See a bag?",
+          "Find a bag?"
+        ],
+        "requireAnyWords": [
+          [
+            "bag",
+            "bad",
+            "bug",
+            "back",
+            "pig",
+            "park",
+            "pack",
+            "bed",
+            "bet"
+          ],
+          [
+            "see",
+            "seen",
+            "find",
+            "found"
+          ]
+        ],
+        "excludeExact": [
+          "I don't care about the bag."
+        ]
+      }
+    },
+    "s005.communication.12": {
+      "goalJa": "彼の名前はBenです。",
+      "modelEn": "His name is Ben.",
+      "hints": [
+        "“His...” から始めるピコ。",
+        "“name” と “Ben” を使うピコ。",
+        "His name is Ben."
+      ],
+      "rule": {
+        "accept": [
+          "His name is Ben.",
+          "His name’s Ben.",
+          "He is Ben.",
+          "He’s Ben.",
+          "This is Ben.",
+          "The monster is Ben.",
+          "His name, Ben.",
+          "His name's Ben.",
+          "He's Ben."
+        ],
+        "excludeExact": [
+          "He is a ghost."
+        ]
+      }
+    }
+  },
+  "scenes": {
+    "scene01": {
+      "steps": [
+        {
+          "type": "clear"
+        },
+        {
+          "type": "scene",
+          "asset": "images/005/reference-v1/Scene1.png"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "夕方、一行が新しい町に着く。"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "町は一見普通だが、店を早めに閉める人が多く、どこか落ち着かない。"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "突然――"
+        },
+        {
+          "type": "line",
+          "speaker": "Kong",
+          "text": "What was that?",
+          "supportText": "今のは何だ？"
+        },
+        {
+          "type": "scene",
+          "asset": "images/005/ben_town_night_anomaly.png"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "振り向く。"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "何も見えない。"
+        },
+        {
+          "type": "line",
+          "speaker": "Kong",
+          "text": "Nothing!",
+          "supportText": "何もない！"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "町の女性が言う。"
+        },
+        {
+          "type": "line",
+          "speaker": "Woman",
+          "text": "Be careful.",
+          "supportText": "気をつけて。"
+        },
+        {
+          "type": "line",
+          "speaker": "Kong",
+          "text": "Why?",
+          "supportText": "どうして？"
+        },
+        {
+          "type": "line",
+          "speaker": "Woman",
+          "text": "Strange things happen at night.",
+          "supportText": "夜になると変なことが起きるの。"
+        },
+        {
+          "type": "line",
+          "speaker": "Townsperson",
+          "text": "We hear footsteps.",
+          "supportText": "足音が聞こえるんだ。"
+        },
+        {
+          "type": "line",
+          "speaker": "Woman",
+          "text": "But we can’t see anything.",
+          "supportText": "でも、何も見えないの。"
+        },
+        {
+          "type": "line",
+          "speaker": "Townsperson",
+          "text": "Maybe a ghost.",
+          "supportText": "幽霊かもしれない。"
+        },
+        {
+          "type": "line",
+          "speaker": "Townsperson",
+          "text": "Or a thief.",
+          "supportText": "それとも泥棒かも。"
+        },
+        {
+          "type": "line",
+          "speaker": "Pico",
+          "text": "最近、この町では夜になると変なことが起きるみたいだピコ。"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "そこへ別の女性が慌てて走ってくる。"
+        },
+        {
+          "type": "scene",
+          "asset": "images/005/clean-v1/missing-bag-report.png"
+        },
+        {
+          "type": "line",
+          "speaker": "Woman 2",
+          "text": "My bag was gone!",
+          "supportText": "バッグがなくなったの！"
+        },
+        {
+          "type": "line",
+          "speaker": "Woman 2",
+          "text": "Someone stole it!",
+          "supportText": "誰かが盗んだのよ！"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "女性は交番へ向かう。"
+        },
+        {
+          "type": "line",
+          "speaker": "Pico",
+          "text": "なんだか物騒な町だピコ……。"
+        },
+        {
+          "type": "goto",
+          "to": "scene02"
+        }
+      ]
+    },
+    "scene02": {
+      "steps": [
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "いつものようにキャンプしようとする一行。"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "しかしPicoが止める。"
+        },
+        {
+          "type": "scene",
+          "asset": "images/005/reference-v1/Scene2.1.png"
+        },
+        {
+          "type": "line",
+          "speaker": "Pico",
+          "text": "今日はキャンプはやめるピコ。"
+        },
+        {
+          "type": "line",
+          "speaker": "Kong",
+          "text": "Why?",
+          "supportText": "どうして？"
+        },
+        {
+          "type": "line",
+          "speaker": "Pico",
+          "text": "この町は夜がちょっと物騒ピコ。安全のためホテルにするピコ！"
+        },
+        {
+          "type": "goto",
+          "to": "scene03"
+        }
+      ]
+    },
+    "scene03": {
+      "steps": [
+        {
+          "type": "scene",
+          "asset": "images/005/reference-v1/Scene3.png"
+        },
+        {
+          "type": "line",
+          "speaker": "Hotel Clerk",
+          "text": "Welcome.",
+          "supportText": "いらっしゃいませ。"
+        },
+        {
+          "type": "line",
+          "speaker": "Hotel Clerk",
+          "text": "Do you have a reservation?",
+          "supportText": "ご予約はありますか？"
+        },
+        {
+          "type": "challenge",
+          "id": "s005.communication.1"
+        },
+        {
+          "type": "line",
+          "speaker": "Hotel Clerk",
+          "text": "How many people?",
+          "supportText": "何名様ですか？"
+        },
+        {
+          "type": "challenge",
+          "id": "s005.communication.2"
+        },
+        {
+          "type": "line",
+          "speaker": "Hotel Clerk",
+          "text": "We have rooms for four people.",
+          "supportText": "4人用のお部屋があります。"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "主人公がKongを見る。"
+        },
+        {
+          "type": "challenge",
+          "id": "s005.communication.3"
+        },
+        {
+          "type": "line",
+          "speaker": "Hotel Clerk",
+          "text": "Yes, we do.",
+          "supportText": "はい、ありますよ。"
+        },
+        {
+          "type": "challenge",
+          "id": "s005.communication.4"
+        },
+        {
+          "type": "challenge",
+          "id": "s005.communication.5"
+        },
+        {
+          "type": "line",
+          "speaker": "Pico",
+          "text": "The king-size bed is for Kong.",
+          "supportText": "キングサイズのベッドはコング用だピコ。"
+        },
+        {
+          "type": "line",
+          "speaker": "Kong",
+          "text": "Yes!",
+          "supportText": "うん！"
+        },
+        {
+          "type": "line",
+          "speaker": "Pico",
+          "text": "ピコは寝ないから、ベッドは必要ないピコ。"
+        },
+        {
+          "type": "line",
+          "speaker": "Hotel Clerk",
+          "text": "Do you want breakfast?",
+          "supportText": "朝食はいかがですか？"
+        },
+        {
+          "type": "challenge",
+          "id": "s005.communication.6"
+        },
+        {
+          "type": "line",
+          "speaker": "Hotel Clerk",
+          "text": "Breakfast is from seven to nine.",
+          "supportText": "朝食は7時から9時までです。"
+        },
+        {
+          "type": "line",
+          "speaker": "Hotel Clerk",
+          "text": "Here are your room keys.",
+          "supportText": "こちらがお部屋の鍵です。"
+        },
+        {
+          "type": "line",
+          "speaker": "Hotel Clerk",
+          "text": "The twin room is on the second floor.",
+          "supportText": "ツインルームは2階です。"
+        },
+        {
+          "type": "line",
+          "speaker": "Hotel Clerk",
+          "text": "The other room is next to it.",
+          "supportText": "もう一つのお部屋はその隣です。"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "時計を指す。"
+        },
+        {
+          "type": "line",
+          "speaker": "Hotel Clerk",
+          "text": "The front door closes at twelve.",
+          "supportText": "正面のドアは12時に閉まります。"
+        },
+        {
+          "type": "line",
+          "speaker": "Kong",
+          "text": "Twelve?",
+          "supportText": "12時？"
+        },
+        {
+          "type": "line",
+          "speaker": "Pico",
+          "text": "12時に入口が閉まるピコ！"
+        },
+        {
+          "type": "line",
+          "speaker": "Hotel Clerk",
+          "text": "Please come back before twelve.",
+          "supportText": "12時までにお戻りください。"
+        },
+        {
+          "type": "goto",
+          "to": "scene04"
+        }
+      ]
+    },
+    "scene04": {
+      "steps": [
+        {
+          "type": "scene",
+          "asset": "images/005/ben_town_shops_night.png"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "一行は夕食のため外へ出る。"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "誰もいないのに何かが動く。"
+        },
+        {
+          "type": "line",
+          "speaker": "Kong",
+          "text": "There!",
+          "supportText": "あそこ！"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "姿は見えない。"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "一行が追う。"
+        },
+        {
+          "type": "scene",
+          "asset": "images/005/ben_alley_dead_end.png"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "路地へ。"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "行き止まり。"
+        },
+        {
+          "type": "line",
+          "speaker": "Kong",
+          "text": "Stop!",
+          "supportText": "止まれ！"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "何も見えない。"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "しかし息遣いが聞こえる。"
+        },
+        {
+          "type": "line",
+          "speaker": "Kong",
+          "text": "A ghost?",
+          "supportText": "幽霊？"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "少しずつ輪郭が見える。"
+        },
+        {
+          "type": "line",
+          "speaker": "Pico",
+          "text": "幽霊じゃないピコ！"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "モンスターだった。"
+        },
+        {
+          "type": "scene",
+          "asset": "images/005/clean-v1/ben-introduction.png"
+        },
+        {
+          "type": "goto",
+          "to": "scene05"
+        }
+      ]
+    },
+    "scene05": {
+      "steps": [
+        {
+          "type": "clear"
+        },
+        {
+          "type": "scene",
+          "asset": "images/005/s005_regen_b_alley_v1.png"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "Kongが近づく。"
+        },
+        {
+          "type": "line",
+          "speaker": "Pico",
+          "text": "待つピコ！コングを怖がってるピコ！"
+        },
+        {
+          "type": "line",
+          "speaker": "Kong",
+          "text": "Me?",
+          "supportText": "僕が？"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "主人公が前へ出る。"
+        },
+        {
+          "type": "clear"
+        },
+        {
+          "type": "scene",
+          "asset": "images/005/clean-v1/ben-introduction.png"
+        },
+        {
+          "type": "challenge",
+          "id": "s005.communication.7"
+        },
+        {
+          "type": "line",
+          "speaker": "Ben",
+          "text": "No...",
+          "supportText": "いいえ……。"
+        },
+        {
+          "type": "challenge",
+          "id": "s005.communication.8"
+        },
+        {
+          "type": "line",
+          "speaker": "Ben",
+          "text": "Ben.",
+          "supportText": "ベン。"
+        },
+        {
+          "type": "line",
+          "speaker": "主人公",
+          "text": "Ben?",
+          "supportText": "ベン？"
+        },
+        {
+          "type": "line",
+          "speaker": "Ben",
+          "text": "Yes.",
+          "supportText": "はい。"
+        },
+        {
+          "type": "scene",
+          "asset": "images/005/clean-v1/ben-trust.png"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "主人公はバッグ事件を思い出す。"
+        },
+        {
+          "type": "challenge",
+          "id": "s005.communication.9"
+        },
+        {
+          "type": "line",
+          "speaker": "Ben",
+          "text": "No! I don’t!",
+          "supportText": "違う！僕はやってない！"
+        },
+        {
+          "type": "line",
+          "speaker": "Kong",
+          "text": "Really?",
+          "supportText": "本当に？"
+        },
+        {
+          "type": "line",
+          "speaker": "Ben",
+          "text": "Yes!",
+          "supportText": "うん！"
+        },
+        {
+          "type": "challenge",
+          "id": "s005.communication.10"
+        },
+        {
+          "type": "line",
+          "speaker": "Ben",
+          "text": "Where?",
+          "supportText": "どこ？"
+        },
+        {
+          "type": "line",
+          "speaker": "Kong",
+          "text": "The police station.",
+          "supportText": "交番だよ。"
+        },
+        {
+          "type": "goto",
+          "to": "scene06"
+        }
+      ]
+    },
+    "scene06": {
+      "steps": [
+        {
+          "type": "scene",
+          "asset": "images/005/clean-v1/police.png"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "交番にはバッグをなくした女性がいる。"
+        },
+        {
+          "type": "line",
+          "speaker": "Police Officer",
+          "text": "Where did you see your bag?",
+          "supportText": "バッグを最後に見たのはどこですか？"
+        },
+        {
+          "type": "line",
+          "speaker": "Woman",
+          "text": "Near the bakery.",
+          "supportText": "パン屋の近くです。"
+        },
+        {
+          "type": "line",
+          "speaker": "Woman",
+          "text": "I bought some bread.",
+          "supportText": "パンを買いました。"
+        },
+        {
+          "type": "line",
+          "speaker": "Woman",
+          "text": "I had my bag then.",
+          "supportText": "そのときはバッグを持っていました。"
+        },
+        {
+          "type": "line",
+          "speaker": "Woman",
+          "text": "Then I sat on the bench.",
+          "supportText": "それからベンチに座りました。"
+        },
+        {
+          "type": "line",
+          "speaker": "Woman",
+          "text": "I ate the bread.",
+          "supportText": "パンを食べました。"
+        },
+        {
+          "type": "line",
+          "speaker": "Woman",
+          "text": "Then I left.",
+          "supportText": "それからそこを離れました。"
+        },
+        {
+          "type": "line",
+          "speaker": "Police Officer",
+          "text": "The bench?",
+          "supportText": "ベンチですか？"
+        },
+        {
+          "type": "line",
+          "speaker": "Woman",
+          "text": "Yes.",
+          "supportText": "はい。"
+        },
+        {
+          "type": "line",
+          "speaker": "Kong",
+          "text": "Let’s go.",
+          "supportText": "行こう。"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "全員でパン屋へ。"
+        },
+        {
+          "type": "scene",
+          "asset": "images/005/clean-v1/bakery-question.png"
+        },
+        {
+          "type": "goto",
+          "to": "scene07"
+        }
+      ]
+    },
+    "scene07": {
+      "steps": [
+        {
+          "type": "challenge",
+          "id": "s005.communication.11"
+        },
+        {
+          "type": "line",
+          "speaker": "Bakery Clerk",
+          "text": "Yes.",
+          "supportText": "はい。"
+        },
+        {
+          "type": "scene",
+          "asset": "images/005/clean-v1/bag-recovered.png"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "店の奥からバッグを出す。"
+        },
+        {
+          "type": "line",
+          "speaker": "Bakery Clerk",
+          "text": "I found it on the bench.",
+          "supportText": "ベンチで見つけました。"
+        },
+        {
+          "type": "line",
+          "speaker": "Bakery Clerk",
+          "text": "I kept it inside.",
+          "supportText": "店の中で預かっていました。"
+        },
+        {
+          "type": "line",
+          "speaker": "Bakery Clerk",
+          "text": "It is not safe outside at night.",
+          "supportText": "夜、外に置いておくのは危険ですから。"
+        },
+        {
+          "type": "line",
+          "speaker": "Woman",
+          "text": "My bag!",
+          "supportText": "私のバッグ！"
+        },
+        {
+          "type": "line",
+          "speaker": "Woman",
+          "text": "先にパン屋さんで聞けばよかった……。"
+        },
+        {
+          "type": "line",
+          "speaker": "Kong",
+          "text": "Ben didn’t take it.",
+          "supportText": "ベンは盗んでいなかったんだ。"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "女性がBenを見る。"
+        },
+        {
+          "type": "line",
+          "speaker": "Woman",
+          "text": "I’m sorry, Ben.",
+          "supportText": "ごめんなさい、ベン。"
+        },
+        {
+          "type": "line",
+          "speaker": "Ben",
+          "text": "It’s OK.",
+          "supportText": "大丈夫だよ。"
+        },
+        {
+          "type": "goto",
+          "to": "scene08"
+        }
+      ]
+    },
+    "scene08": {
+      "steps": [
+        {
+          "type": "line",
+          "speaker": "Townsperson",
+          "text": "But... the footsteps?",
+          "supportText": "でも……足音は？"
+        },
+        {
+          "type": "line",
+          "speaker": "Ben",
+          "text": "When I am afraid, my color goes away.",
+          "supportText": "怖くなると、僕の色が消えるんだ。"
+        },
+        {
+          "type": "line",
+          "speaker": "Ben",
+          "text": "When I am very afraid, people can’t see me.",
+          "supportText": "すごく怖くなると、みんなに僕が見えなくなるんだ。"
+        },
+        {
+          "type": "line",
+          "speaker": "Pico",
+          "text": "ベンはすごく怖くなると、姿が見えなくなるみたいだピコ。"
+        },
+        {
+          "type": "line",
+          "speaker": "Townsperson",
+          "text": "It’s not a ghost.",
+          "supportText": "幽霊じゃなかったんだ。"
+        },
+        {
+          "type": "line",
+          "speaker": "Woman",
+          "text": "We heard footsteps.",
+          "supportText": "足音は聞こえたよね。"
+        },
+        {
+          "type": "line",
+          "speaker": "Townsperson",
+          "text": "We thought something moved.",
+          "supportText": "何かが動いたと思ったんだ。"
+        },
+        {
+          "type": "line",
+          "speaker": "Pico",
+          "text": "ベンが見えなかったから、足音だけ聞こえたり、何かが動いたと思ったピコ！"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "Benが少しずつ落ち着き、姿が見えてくる。"
+        },
+        {
+          "type": "goto",
+          "to": "scene09"
+        }
+      ]
+    },
+    "scene09": {
+      "steps": [
+        {
+          "type": "clear"
+        },
+        {
+          "type": "scene",
+          "asset": "images/005/reference-v1/Scene9.3.png"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "Benはまだ少し怖そう。"
+        },
+        {
+          "type": "line",
+          "speaker": "主人公",
+          "text": "Wait.",
+          "supportText": "待って。"
+        },
+        {
+          "type": "line",
+          "speaker": "町の人",
+          "text": "Ben?",
+          "supportText": "ベン？"
+        },
+        {
+          "type": "line",
+          "speaker": "Kong",
+          "text": "Yes. He is Ben.",
+          "supportText": "うん。彼はベンだよ。"
+        },
+        {
+          "type": "line",
+          "speaker": "Woman",
+          "text": "Good evening, Ben.",
+          "supportText": "こんばんは、ベン。"
+        },
+        {
+          "type": "line",
+          "speaker": "Ben",
+          "text": "Good evening.",
+          "supportText": "こんばんは。"
+        },
+        {
+          "type": "scene",
+          "asset": "images/005/reference-v1/Scene9.5.png"
+        },
+        {
+          "type": "line",
+          "speaker": "Townsperson",
+          "text": "It’s not a ghost.",
+          "supportText": "幽霊じゃなかったんだ。"
+        },
+        {
+          "type": "line",
+          "speaker": "Woman",
+          "text": "We can see Ben now.",
+          "supportText": "今はベンが見えるよ。"
+        },
+        {
+          "type": "line",
+          "speaker": "Townsperson",
+          "text": "We are happy now.",
+          "supportText": "もう安心だよ。"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "そして――"
+        },
+        {
+          "type": "scene",
+          "asset": "images/005/reference-v1/Scene9.7.png"
+        },
+        {
+          "type": "line",
+          "speaker": "Ben",
+          "text": "My color is back!",
+          "supportText": "色が戻った！"
+        },
+        {
+          "type": "line",
+          "speaker": "町の人",
+          "text": "How cute!",
+          "supportText": "かわいい！"
+        },
+        {
+          "type": "line",
+          "speaker": "Kong",
+          "text": "Ben is cool!",
+          "supportText": "ベン、かっこいい！"
+        },
+        {
+          "type": "challenge",
+          "id": "s005.communication.12"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "Benの色が戻り、街は幽霊の心配がなくなった。"
+        },
+        {
+          "type": "clear"
+        },
+        {
+          "type": "scene",
+          "asset": "images/005/reference-v1/Scene9.7.png"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "一行がホテルへ戻ろうとする。"
+        },
+        {
+          "type": "line",
+          "speaker": "Woman",
+          "text": "Good night, Ben.",
+          "supportText": "おやすみ、ベン。"
+        },
+        {
+          "type": "line",
+          "speaker": "Townsperson",
+          "text": "Good night, Ben.",
+          "supportText": "おやすみ、ベン。"
+        },
+        {
+          "type": "line",
+          "speaker": "Ben",
+          "text": "Good night.",
+          "supportText": "おやすみ。"
+        },
+        {
+          "type": "goto",
+          "to": "scene10"
+        }
+      ]
+    },
+    "scene10": {
+      "steps": [
+        {
+          "type": "scene",
+          "asset": "images/005/reference-v1/Scene10.5.png"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "時計を見る。"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "11:55"
+        },
+        {
+          "type": "line",
+          "speaker": "Kong",
+          "text": "Oh!",
+          "supportText": "あっ！"
+        },
+        {
+          "type": "line",
+          "speaker": "Pico",
+          "text": "ホテルが閉まるピコ！"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "一行が走る。"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "11:57"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "11:58"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "そしてホテルへ。"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "11:59"
+        },
+        {
+          "type": "line",
+          "speaker": "Hotel Clerk",
+          "text": "Before twelve.",
+          "supportText": "12時より前ですね。"
+        },
+        {
+          "type": "line",
+          "speaker": "Kong",
+          "text": "Yes!",
+          "supportText": "うん！"
+        },
+        {
+          "type": "line",
+          "speaker": "Pico",
+          "text": "間に合ったピコ！"
+        },
+        {
+          "type": "goto",
+          "to": "scene11"
+        }
+      ]
+    },
+    "scene11": {
+      "steps": [
+        {
+          "type": "clear"
+        },
+        {
+          "type": "scene",
+          "asset": "images/005/clean-v1/king-size-room.png"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "Kongの部屋。"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "大きなking-size bed。"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "Kongがベッドを見る。"
+        },
+        {
+          "type": "line",
+          "speaker": "Kong",
+          "text": "My bed!",
+          "supportText": "僕のベッド！"
+        },
+        {
+          "type": "scene",
+          "asset": "images/005/reference-v1/Scene11.1.png"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "Kongがベッドへ。"
+        },
+        {
+          "type": "line",
+          "speaker": "Kong",
+          "text": "Good night!",
+          "supportText": "おやすみ！"
+        },
+        {
+          "type": "hideDialogue"
+        },
+        {
+          "type": "clear"
+        },
+        {
+          "type": "end"
+        }
+      ]
+    }
+  }
+}
