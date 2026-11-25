@@ -110,7 +110,9 @@
         "rejectPatterns": [
           "(?:.*\\banother\\s+(?:box|boxes|book|books)\\b.*)",
           "(?:.*\\b(?:where|find|have|saw|see|steal|lost)\\b.*)",
-          "(?:.*\\bbooks?\\s+about\\b.*)"
+          "(?:.*\\bbooks?\\s+about\\b.*)",
+          "(?:.*\\b(?:suitcase|suitcases)\\b.*)",
+          "(?:.*\\bhow\\s+(?:big|large|small|heavy|long|tall)\\b.*)"
         ]
       }
     },
@@ -182,7 +184,7 @@
           "Could we have a look at that box?"
         ],
         "fullPatterns": [
-          "(?:(?:can|could|may|shall) (?:i|we) (?:see|check|look at|have a look at) (?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)?|(?:(?:can|could|would|will) you )?show (?:me|us) (?:(?:the|that|this|your|my|our|a|another|other|those|these) )*(?:(?:red|little) )*box(?:es)?|let (?:me|us) (?:see|check|look at) (?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)?)"
+          "(?:(?:can|could|may|shall) (?:i|we) (?:see|check|look at|have a look at) (?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)?|(?:(?:can|could|would|will) you )?show (?:me|us) (?:(?:the|that|this|your|my|our|a|another|other|those|these) )*(?:(?:red|little|small) )*box(?:es)?|let (?:me|us) (?:see|check|look at) (?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)?)"
         ],
         "patternNormalization": "contractions",
         "stripPlease": true,
@@ -300,7 +302,8 @@
         ],
         "rejectPatterns": [
           "(?:.*\\b(?:do not|not|cannot)\\s+(?:look|check)\\b.*)",
-          "(?:.*\\b(?:cart|bus|bag|bird|birds|box|boxes)\\b.*)"
+          "(?:.*\\b(?:cart|bus|bag|bird|birds|box|boxes)\\b.*)",
+          "(?:.*\\b(?:watch|watches)\\b.*)"
         ]
       }
     },
@@ -526,7 +529,9 @@
         "rejectPatterns": [
           "(?:.*\\banother\\s+(?:box|boxes|book|books)\\b.*)",
           "(?:.*\\b(?:lost|lose|not your|is not|are not|cannot)\\b.*)",
-          "(?:.*\\bbooks?\\s+about\\b.*)"
+          "(?:.*\\bbooks?\\s+about\\b.*)",
+          "(?:\\s*this is my (?:box|boxes|book|books)\\s*)",
+          "(?:.*\\bsomeone else(?: s)?\\s+(?:box|boxes|book|books)\\b.*)"
         ]
       }
     }
