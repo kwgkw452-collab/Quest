@@ -24,7 +24,7 @@ jobs:
         with:
           node-version: '22'
       - name: Run common engine tests and S007 source parity checks
-        run: node --test prototype/common-engine-v2-audiofree/runtime.test.cjs prototype/common-engine-v2-audiofree/stories/S007/s007-migration.test.cjs prototype/common-engine-v2-audiofree/stories/legacy-migration.test.cjs prototype/common-engine-v2-audiofree/stories/qa35-judge.test.cjs
+        run: node --test prototype/common-engine-v2-audiofree/runtime.test.cjs prototype/common-engine-v2-audiofree/stories/S007/s007-migration.test.cjs prototype/common-engine-v2-audiofree/stories/legacy-migration.test.cjs prototype/common-engine-v2-audiofree/stories/qa35-judge.test.cjs prototype/common-engine-v2-audiofree/stories/qa38-tristate.test.cjs
       - name: Run isolation and original prototype tests
         run: node --test prototype/common-engine-isolation/check-isolation.test.cjs prototype/common-engine-v2/story-runtime.test.cjs
       - name: Reject Story-specific code in common runtime
@@ -58,6 +58,8 @@ jobs:
         env:
           DIALOGUE_SCREENSHOTS: ${{ runner.temp }}/qa37-graphic
         run: python prototype/common-engine-v2-audiofree/legacy-browser-smoke.py
+      - name: QA38 tri-state Chromium interactions (ACCEPT / REJECT / UNKNOWN)
+        run: python prototype/common-engine-v2-audiofree/qa38-browser-smoke.py
       - name: Upload portrait Graphic and Dialogue screenshots
         if: always()
         uses: actions/upload-artifact@v4
