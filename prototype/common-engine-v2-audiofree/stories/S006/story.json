@@ -1,0 +1,1010 @@
+{
+  "schemaVersion": 1,
+  "id": "S006",
+  "title": "S006 消えた赤いリボンの木箱",
+  "entry": "scene01",
+  "sceneOrder": [
+    "scene01",
+    "scene02",
+    "scene03",
+    "scene04",
+    "scene05",
+    "scene06",
+    "scene07",
+    "scene08",
+    "scene09",
+    "scene10",
+    "scene11",
+    "scene12",
+    "scene13"
+  ],
+  "saveKeys": {},
+  "challenges": {
+    "s006.communication.1": {
+      "goalJa": "お手伝いしましょうか？",
+      "modelEn": "Can we help you?",
+      "hints": [
+        "駅員さんに、お手伝いを申し出るピコ。",
+        "『手伝う』は help。Can I ...? などを使うピコ。",
+        "Can we help you? と言うピコ。"
+      ],
+      "rule": {
+        "accept": [
+          "Can we help you?",
+          "Can I help you?",
+          "Shall I help you?",
+          "Shall we help you?",
+          "Could I help you?",
+          "Could we help you?",
+          "May I help you?",
+          "May we help you?",
+          "Do you need help?",
+          "Let me help you.",
+          "Let us help you.",
+          "Would you like some help?",
+          "Can I give you a hand?"
+        ],
+        "fullPatterns": [
+          "(?:(?:can|could|may|shall|should) (?:i|we) help(?: you)?|let (?:me|us) help(?: you)?|(?:do you )?need (?:some )?help|would you like (?:some )?help|(?:i|we) can help you|(?:can|could|may|shall) (?:i|we) give you a hand)"
+        ],
+        "patternNormalization": "contractions",
+        "stripPlease": true
+      }
+    },
+    "s006.communication.2": {
+      "goalJa": "その箱は何色ですか？",
+      "modelEn": "What color is the box?",
+      "hints": [
+        "箱の色を聞いてみるピコ。",
+        "『何色』は What color、『箱』は box だピコ。",
+        "What color is the box? と聞くピコ。"
+      ],
+      "rule": {
+        "accept": [
+          "What color is the box?",
+          "What color is it?",
+          "What color is that box?",
+          "What color is your box?",
+          "What is the color of the box?",
+          "What colour is your box?",
+          "What does it look like?",
+          "What does your box look like?",
+          "Can you describe your box?"
+        ],
+        "fullPatterns": [
+          "(?:what colou?r (?:is|are) (?:(?:(?:the|that|this|your|my|our|a|those|these) )*box(?:es)?|it)|what (?:is|are) the colou?r of (?:(?:(?:the|that|this|your|my|our|a|those|these) )*box(?:es)?|it)|what (?:does|do) (?:(?:(?:the|that|this|your|my|our|a|those|these) )*box(?:es)?|it) look like|what (?:kind|type) of box is it|what is (?:(?:(?:the|that|this|your|my|our|a|those|these) )*box(?:es)?|it) like|(?:can|could|would) you describe (?:(?:(?:the|that|this|your|my|our|a|those|these) )*box(?:es)?|it)|describe (?:(?:(?:the|that|this|your|my|our|a|those|these) )*box(?:es)?|it))"
+        ],
+        "patternNormalization": "contractions",
+        "stripPlease": true,
+        "wordAliases": {
+          "book": "box",
+          "books": "boxes"
+        }
+      }
+    },
+    "s006.communication.3": {
+      "goalJa": "ほかの箱はどこにありますか？",
+      "modelEn": "Where are the other boxes?",
+      "hints": [
+        "場所を尋ねるピコ。",
+        "“Where” と “boxes” を使ってみるピコ。",
+        "Where are the other boxes?"
+      ],
+      "rule": {
+        "accept": [
+          "Where are the other boxes?",
+          "Where is the other box?",
+          "Where is another box?",
+          "Where are the boxes?",
+          "Where can I find another box?",
+          "Where can we find the other boxes?",
+          "Where is box?",
+          "Where are the other box?"
+        ],
+        "fullPatterns": [
+          "(?:where (?:is|are) (?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)?|where (?:can|could) (?:i|we) find (?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)?|where did (?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)? go|(?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)? where)"
+        ],
+        "patternNormalization": "contractions",
+        "stripPlease": true,
+        "wordAliases": {
+          "book": "box",
+          "books": "boxes"
+        }
+      }
+    },
+    "s006.communication.4": {
+      "goalJa": "その箱を見せてもらえますか？",
+      "modelEn": "Can we see that box?",
+      "hints": [
+        "箱を見せてもらうようお願いするピコ。",
+        "“Can we see” と “box” を使うピコ。",
+        "Can we see that box?"
+      ],
+      "rule": {
+        "accept": [
+          "Can we see that box?",
+          "Can I see the box?",
+          "Can we see the box?",
+          "Can I see that box?",
+          "May I see the box?",
+          "Could you show me the box?",
+          "Please show me the box.",
+          "Can I look at the box?",
+          "Can we check the box?",
+          "Could we have a look at that box?"
+        ],
+        "fullPatterns": [
+          "(?:(?:can|could|may|shall) (?:i|we) (?:see|check|look at|have a look at) (?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)?|(?:(?:can|could|would|will) you )?show (?:me|us) (?:(?:the|that|this|your|my|our|a|another|other|those|these) )*(?:(?:red|little) )*box(?:es)?|let (?:me|us) (?:see|check|look at) (?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)?)"
+        ],
+        "patternNormalization": "contractions",
+        "stripPlease": true,
+        "wordAliases": {
+          "book": "box",
+          "books": "boxes"
+        }
+      }
+    },
+    "s006.communication.5": {
+      "goalJa": "その箱を持っていますか？",
+      "modelEn": "Do you have the box?",
+      "hints": [
+        "荷物係さんが、その箱を持っているか聞くピコ。",
+        "『持っていますか？』は Do you have ...? を使うピコ。",
+        "Do you have the box? と聞くピコ。"
+      ],
+      "rule": {
+        "accept": [
+          "Do you have the box?",
+          "Do you have that box?",
+          "Do you have my box?",
+          "Have you got the box?",
+          "Have you got that box?",
+          "Is the box here?",
+          "Is that box here?",
+          "Do you have a box?",
+          "Have you got my boxes?",
+          "You have the box?"
+        ],
+        "fullPatterns": [
+          "(?:(?:(?:do|does) )?you have (?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)?|have you got (?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)?|(?:is|are) (?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)? here)"
+        ],
+        "patternNormalization": "contractions",
+        "stripPlease": true,
+        "wordAliases": {
+          "book": "box",
+          "books": "boxes"
+        }
+      }
+    },
+    "s006.communication.6": {
+      "goalJa": "このリボンを見てください。",
+      "modelEn": "Please look at this ribbon.",
+      "hints": [
+        "赤い切れ端に注目してもらうピコ。",
+        "“Look at” と “ribbon” を使うピコ。",
+        "Please look at this ribbon."
+      ],
+      "rule": {
+        "accept": [
+          "Please look at this ribbon.",
+          "Look at this ribbon.",
+          "Look at the ribbon.",
+          "Look at ribbon.",
+          "Look at this red ribbon.",
+          "Can you look at the ribbon?",
+          "Please look at the red ribbon.",
+          "Look at my ribbon, please.",
+          "Could you look at these ribbons?",
+          "Look at the",
+          "Look at that",
+          "Please look at the",
+          "Please look at that"
+        ],
+        "fullPatterns": [
+          "(?:(?:(?:can|could|would|will) you )?(?:look at|take a look at|check) (?:(?:the|that|this|these|those|your|my|a|red) )*ribbons?)"
+        ],
+        "patternNormalization": "contractions",
+        "stripPlease": true
+      }
+    },
+    "s006.communication.7": {
+      "goalJa": "箱を見ましたか？",
+      "modelEn": "Did you see the box?",
+      "hints": [
+        "荷物係の人に「箱を見ましたか？」と尋ねるピコ。",
+        "「見ましたか？」は Did you see ...?。「箱」は box だピコ。",
+        "Did you see the box? と尋ねるピコ。"
+      ],
+      "rule": {
+        "accept": [
+          "Did you see the box?",
+          "Did you see a box?",
+          "Did you see my box?",
+          "Did you see that box?",
+          "Did you see any boxes?",
+          "Do you see the box?",
+          "Do you see a box?",
+          "Do you see the boxes?",
+          "Can you see the box?",
+          "Can you see any boxes?",
+          "Have you seen the box?",
+          "Have you seen my box?",
+          "Have you seen a box?",
+          "Have you seen the boxes?",
+          "You saw the box?",
+          "Did you see the book?",
+          "Did you see the books?",
+          "Do you see the book?",
+          "Can you see the books?",
+          "Have you seen the book?"
+        ],
+        "fullPatterns": [
+          "(?:(?:did|do|does) you see (?:(?:the|that|this|my|your|our|a|any|some|those|these|another) )*(?:boxes|box|books|book|it)|(?:can|could) you see (?:(?:the|that|this|my|your|our|a|any|some|those|these|another) )*(?:boxes|box|books|book|it)|have you seen (?:(?:the|that|this|my|your|our|a|any|some|those|these|another) )*(?:boxes|box|books|book|it)|(?:did|do|does) you (?:see|saw) (?:(?:the|that|this|my|your|our|a|any|some|those|these|another) )*(?:boxes|box|books|book|it)|you (?:saw|see) (?:(?:the|that|this|my|your|our|a|any|some|those|these|another) )*(?:boxes|box|books|book|it)|(?:have you|did you) (?:ever )?seen (?:(?:the|that|this|my|your|our|a|any|some|those|these|another) )*(?:boxes|box|books|book|it))"
+        ],
+        "patternNormalization": "contractions",
+        "stripPlease": true,
+        "wordAliases": {
+          "book": "box",
+          "books": "boxes"
+        }
+      }
+    },
+    "s006.communication.8": {
+      "goalJa": "ちょっと待ってください！",
+      "modelEn": "Please wait!",
+      "hints": [
+        "運転手さんに、ちょっと待ってもらうピコ！",
+        "『待つ』は wait。一言でもいいピコ！",
+        "Please wait! と言うピコ！"
+      ],
+      "rule": {
+        "accept": [
+          "Please wait!",
+          "Wait!",
+          "Wait, please!",
+          "Can you wait?",
+          "Could you wait?",
+          "Just a moment.",
+          "Just a minute.",
+          "Just one moment.",
+          "One moment, please.",
+          "One minute, please.",
+          "A moment, please.",
+          "A minute, please.",
+          "Hold on!",
+          "Hang on!",
+          "Wait a second!",
+          "Just a second!",
+          "Give me a second.",
+          "Please don't go yet!",
+          "Stop the bus, please!",
+          "Please wait for us.",
+          "WAIT!!!"
+        ],
+        "fullPatterns": [
+          "(?:(?:(?:can|could|would|will) you )?wait(?: (?:for (?:me|us)|here|a (?:second|minute|moment)))?|(?:just )?(?:a|one) (?:moment|minute|second)|(?:hold|hang) on|give (?:me|us) (?:a|one) (?:second|minute|moment)|do not (?:go|leave)(?: yet)?|stop(?: the bus)?)"
+        ],
+        "patternNormalization": "contractions",
+        "stripPlease": true
+      }
+    },
+    "s006.communication.9": {
+      "goalJa": "その箱を見つけてください。",
+      "modelEn": "Please find the box.",
+      "hints": [
+        "運転手さんに、その箱を見つけてくれるようお願いするピコ。",
+        "「見つける」は find。「〜してください」は Please ... だピコ。",
+        "Please find the box. とお願いするピコ。"
+      ],
+      "rule": {
+        "accept": [
+          "Please find the box.",
+          "Find the box, please.",
+          "Find the box.",
+          "Please find my box.",
+          "Please find that box.",
+          "Can you find the box?",
+          "Can you find my box?",
+          "Could you find the box?",
+          "Can you help me find the box?",
+          "Help me find the box, please.",
+          "Please look for the box.",
+          "Can you look for the box?",
+          "Please find a box.",
+          "Find my box, please.",
+          "Please find the boxes."
+        ],
+        "fullPatterns": [
+          "(?:(?:(?:can|could|will|would) you )?(?:find|look for) (?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)?|(?:(?:can|could|will|would) you )?help (?:me|us) (?:to )?find (?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)?|help (?:me|us) find (?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)?)"
+        ],
+        "patternNormalization": "contractions",
+        "stripPlease": true,
+        "wordAliases": {
+          "book": "box",
+          "books": "boxes"
+        }
+      }
+    },
+    "s006.communication.10": {
+      "goalJa": "これはあなたの箱です。",
+      "modelEn": "This is your box!",
+      "hints": [
+        "見つけた箱を持ち主に渡すピコ。『これはあなたの箱です。』と伝えるピコ。",
+        "『これは』は This is、『あなたの箱』は your box だピコ。",
+        "This is your box! と言うピコ。"
+      ],
+      "rule": {
+        "accept": [
+          "I found the box!",
+          "We found the box!",
+          "I found your box!",
+          "We found your box!",
+          "I find the box!",
+          "We find the box!",
+          "Here is your box!",
+          "This is your box!",
+          "I got the box!",
+          "We got the box!",
+          "I have the box!",
+          "We have the box!",
+          "I have your box!",
+          "We have your box!",
+          "I get the box!",
+          "We get the box!",
+          "I get your box!",
+          "We get your box!",
+          "We've found your box!",
+          "I've got the box!",
+          "Here are your boxes!"
+        ],
+        "fullPatterns": [
+          "(?:(?:i|we) (?:found|find|got|get|have|have found|have got) (?:(?:the|that|this|your|my|our|a|those|these) )*box(?:es)?(?: (?:now|at last|finally))?|(?:here (?:is|are)|this is|these are) (?:(?:the|that|this|your|my|our|a|those|these) )*box(?:es)?|(?:(?:the|that|this|your|my|our|a|those|these) )*box(?:es)? (?:is|are) here)"
+        ],
+        "patternNormalization": "contractions",
+        "stripPlease": true,
+        "wordAliases": {
+          "book": "box",
+          "books": "boxes"
+        }
+      }
+    }
+  },
+  "scenes": {
+    "scene01": {
+      "steps": [
+        {
+          "type": "clear"
+        },
+        {
+          "type": "scene",
+          "asset": "images/006/S006-Scene-01.png?v=s006-v22"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "祭りの翌日。電車、バス、馬車が集まる大ターミナル駅は大混雑。"
+        },
+        {
+          "type": "line",
+          "speaker": "Kong",
+          "text": "Wow! So many people!",
+          "supportText": "わあ！人がいっぱいだ！"
+        },
+        {
+          "type": "goto",
+          "to": "scene02"
+        }
+      ]
+    },
+    "scene02": {
+      "steps": [
+        {
+          "type": "scene",
+          "asset": "images/006/S006-Scene-02.png?v=s006-v22"
+        },
+        {
+          "type": "line",
+          "speaker": "Bernie",
+          "text": "Look at that line!",
+          "supportText": "あの行列を見て！"
+        },
+        {
+          "type": "line",
+          "speaker": "Pico",
+          "text": "切符を買うだけで日が暮れそうピコ！"
+        },
+        {
+          "type": "goto",
+          "to": "scene03"
+        }
+      ]
+    },
+    "scene03": {
+      "steps": [
+        {
+          "type": "scene",
+          "asset": "images/006/S006-Scene-03.png?v=s006-v22"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "荷物預かり所から、困った声が聞こえてくる。"
+        },
+        {
+          "type": "goto",
+          "to": "scene04"
+        }
+      ]
+    },
+    "scene04": {
+      "steps": [
+        {
+          "type": "scene",
+          "asset": "images/006/S006-Scene-04.png?v=s006-v22"
+        },
+        {
+          "type": "line",
+          "speaker": "Station Staff",
+          "text": "Here is your box.",
+          "supportText": "こちらがあなたの箱です。"
+        },
+        {
+          "type": "line",
+          "speaker": "Little Monster",
+          "text": "No! That's not my box!",
+          "supportText": "違う！それは僕の箱じゃない！"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "赤いリボンの木箱。しかし、カワウソの子は首を横に振る。"
+        },
+        {
+          "type": "line",
+          "speaker": "Station Staff",
+          "text": "But it has a red ribbon...",
+          "supportText": "でも、赤いリボンがついていますよ……。"
+        },
+        {
+          "type": "line",
+          "speaker": "Pico",
+          "text": "困っているみたいピコ！"
+        },
+        {
+          "type": "challenge",
+          "id": "s006.communication.1"
+        },
+        {
+          "type": "line",
+          "speaker": "Station Staff",
+          "text": "Oh, thank you!",
+          "supportText": "おお、ありがとうございます！"
+        },
+        {
+          "type": "goto",
+          "to": "scene05"
+        }
+      ]
+    },
+    "scene05": {
+      "steps": [
+        {
+          "type": "scene",
+          "asset": "images/006/S006-Scene-05.png?v=s006-v22"
+        },
+        {
+          "type": "line",
+          "speaker": "Little Monster",
+          "text": "It's a gift for my grandpa.",
+          "supportText": "おじいちゃんへのプレゼントなんだ。"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "食事の間になくさないよう、駅の預かり所に置いていたという。"
+        },
+        {
+          "type": "line",
+          "speaker": "Kong",
+          "text": "A gift?",
+          "supportText": "プレゼント？"
+        },
+        {
+          "type": "line",
+          "speaker": "Little Monster",
+          "text": "Yes. It's very special.",
+          "supportText": "うん。とても大切なものなんだ。"
+        },
+        {
+          "type": "challenge",
+          "id": "s006.communication.2"
+        },
+        {
+          "type": "line",
+          "speaker": "Little Monster",
+          "text": "It's brown. It's a wooden box with a red ribbon.",
+          "supportText": "茶色だよ。赤いリボンのついた木の箱なんだ。"
+        },
+        {
+          "type": "line",
+          "speaker": "Pico",
+          "text": "赤いリボンが目印ピコ！"
+        },
+        {
+          "type": "goto",
+          "to": "scene06"
+        }
+      ]
+    },
+    "scene06": {
+      "steps": [
+        {
+          "type": "scene",
+          "asset": "images/006/S006-Scene-06.png?v=s006-v22"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "駅員が今日の荷物の記録を調べる。"
+        },
+        {
+          "type": "line",
+          "speaker": "Station Staff",
+          "text": "Oh no! Three boxes!",
+          "supportText": "大変！箱が3つもある！"
+        },
+        {
+          "type": "line",
+          "speaker": "Bernie",
+          "text": "Three?",
+          "supportText": "3つ？"
+        },
+        {
+          "type": "line",
+          "speaker": "Station Staff",
+          "text": "They all have red ribbons.",
+          "supportText": "どれも赤いリボンがついています。"
+        },
+        {
+          "type": "line",
+          "speaker": "Pico",
+          "text": "似た木箱が3つあったピコ！"
+        },
+        {
+          "type": "challenge",
+          "id": "s006.communication.3"
+        },
+        {
+          "type": "line",
+          "speaker": "Station Staff",
+          "text": "One went to the train. I don't know about the other.",
+          "supportText": "一つは列車のほうへ行きました。もう一つは分かりません。"
+        },
+        {
+          "type": "goto",
+          "to": "scene07"
+        }
+      ]
+    },
+    "scene07": {
+      "steps": [
+        {
+          "type": "scene",
+          "asset": "images/006/S006-Scene-07.png?v=s006-v22"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "電車の荷物積み込み場。荷物係のそばに赤いリボンの木箱がある。"
+        },
+        {
+          "type": "line",
+          "speaker": "Kong",
+          "text": "There it is!",
+          "supportText": "あそこにある！"
+        },
+        {
+          "type": "challenge",
+          "id": "s006.communication.4"
+        },
+        {
+          "type": "line",
+          "speaker": "Worker",
+          "text": "Sure.",
+          "supportText": "もちろん。"
+        },
+        {
+          "type": "line",
+          "speaker": "Little Monster",
+          "text": "No. Not mine.",
+          "supportText": "違う。僕のじゃない。"
+        },
+        {
+          "type": "line",
+          "speaker": "Pico",
+          "text": "2つ目も違ったピコ……。"
+        },
+        {
+          "type": "goto",
+          "to": "scene08"
+        }
+      ]
+    },
+    "scene08": {
+      "steps": [
+        {
+          "type": "scene",
+          "asset": "images/006/S006-Scene-08.png?v=s006-v22"
+        },
+        {
+          "type": "line",
+          "speaker": "Worker",
+          "text": "We moved many boxes today.",
+          "supportText": "今日はたくさんの箱を運びました。"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "混雑で預かり荷物も発送荷物も、何台もの台車で運ばれたという。"
+        },
+        {
+          "type": "line",
+          "speaker": "Bernie",
+          "text": "Maybe the box is still here.",
+          "supportText": "箱はまだここにあるかもしれないね。"
+        },
+        {
+          "type": "challenge",
+          "id": "s006.communication.5"
+        },
+        {
+          "type": "line",
+          "speaker": "Worker",
+          "text": "No. It's over there.",
+          "supportText": "いいえ。あちらにあります。"
+        },
+        {
+          "type": "goto",
+          "to": "scene09"
+        }
+      ]
+    },
+    "scene09": {
+      "steps": [
+        {
+          "type": "scene",
+          "asset": "images/006/S006-Scene-09.png?v=s006-v22"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "仕分け場には空の台車が並んでいる。"
+        },
+        {
+          "type": "line",
+          "speaker": "Bernie",
+          "text": "Look!",
+          "supportText": "見て！"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "台車の金具に、赤いリボンの切れ端が引っかかっていた。"
+        },
+        {
+          "type": "line",
+          "speaker": "Kong",
+          "text": "A red ribbon!",
+          "supportText": "赤いリボンだ！"
+        },
+        {
+          "type": "line",
+          "speaker": "Pico",
+          "text": "これは手がかりかもしれないピコ！"
+        },
+        {
+          "type": "challenge",
+          "id": "s006.communication.6"
+        },
+        {
+          "type": "line",
+          "speaker": "Station Staff",
+          "text": "It may be from that box.",
+          "supportText": "あの箱についていたものかもしれません。"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "しかし、ここに木箱はない。"
+        },
+        {
+          "type": "goto",
+          "to": "scene10"
+        }
+      ]
+    },
+    "scene10": {
+      "steps": [
+        {
+          "type": "scene",
+          "asset": "images/006/S006-Scene-10.png?v=s006-v22"
+        },
+        {
+          "type": "line",
+          "speaker": "Pico",
+          "text": "荷物係の人に、探している箱を見たか聞いてみるピコ！"
+        },
+        {
+          "type": "challenge",
+          "id": "s006.communication.7"
+        },
+        {
+          "type": "line",
+          "speaker": "Worker",
+          "text": "Yes. I saw it. Someone took it to the bus terminal.",
+          "supportText": "はい、見ました。誰かがバス乗り場へ運んでいきました。"
+        },
+        {
+          "type": "line",
+          "speaker": "Kong",
+          "text": "The bus!",
+          "supportText": "バスだ！"
+        },
+        {
+          "type": "line",
+          "speaker": "Bernie",
+          "text": "Let's hurry!",
+          "supportText": "急ごう！"
+        },
+        {
+          "type": "goto",
+          "to": "scene11"
+        }
+      ]
+    },
+    "scene11": {
+      "steps": [
+        {
+          "type": "scene",
+          "asset": "images/006/S006-Scene-11.png?v=s006-v22"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "バス乗り場。運転手が荷物室を閉めようとしている。"
+        },
+        {
+          "type": "line",
+          "speaker": "Driver",
+          "text": "We're leaving!",
+          "supportText": "もう出発しますよ！"
+        },
+        {
+          "type": "line",
+          "speaker": "Pico",
+          "text": "バスが出ちゃうピコ！"
+        },
+        {
+          "type": "challenge",
+          "id": "s006.communication.8"
+        },
+        {
+          "type": "line",
+          "speaker": "Driver",
+          "text": "What's wrong?",
+          "supportText": "どうしましたか？"
+        },
+        {
+          "type": "challenge",
+          "id": "s006.communication.9"
+        },
+        {
+          "type": "line",
+          "speaker": "Driver",
+          "text": "Sure. Let me check.",
+          "supportText": "もちろん。確認してみますね。"
+        },
+        {
+          "type": "goto",
+          "to": "scene12"
+        }
+      ]
+    },
+    "scene12": {
+      "steps": [
+        {
+          "type": "scene",
+          "asset": "images/006/S006-Scene-12.png?v=s006-v22"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "運転手が荷物を動かすと、奥から小さな木箱が現れた。"
+        },
+        {
+          "type": "line",
+          "speaker": "Bernie",
+          "text": "The ribbon!",
+          "supportText": "リボンだ！"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "リボンの一部が切れている。台車で見つけた切れ端とぴったり合った。"
+        },
+        {
+          "type": "line",
+          "speaker": "Little Monster",
+          "text": "That's my box!",
+          "supportText": "それが僕の箱だ！"
+        },
+        {
+          "type": "challenge",
+          "id": "s006.communication.10"
+        },
+        {
+          "type": "line",
+          "speaker": "Little Monster",
+          "text": "Thank you! Thank you!",
+          "supportText": "ありがとう！本当にありがとう！"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "カワウソの子は、赤いリボンの木箱を抱えて出発するバスに乗り込んだ。"
+        },
+        {
+          "type": "goto",
+          "to": "scene13"
+        }
+      ]
+    },
+    "scene13": {
+      "steps": [
+        {
+          "type": "scene",
+          "asset": "images/006/S006-Scene-13.png?v=s006-v22"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "おじいちゃんのもとに、木箱が届く。"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "中には、修理したオルゴールと3人の写真、手紙。"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "おばあちゃんが大好きだった曲が、久しぶりに流れる。"
+        },
+        {
+          "type": "document",
+          "id": "endingLetter"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "おじいちゃんが写真を見て、静かに微笑む。"
+        },
+        {
+          "type": "line",
+          "speaker": "Grandpa",
+          "text": "Thank you.",
+          "supportText": "ありがとう。"
+        },
+        {
+          "type": "end"
+        }
+      ]
+    }
+  },
+  "documents": {
+    "endingLetter": {
+      "title": "手紙",
+      "card": "images/006/S006-Ending-Letter-V5.png",
+      "body": [
+        "Dear Grandpa,",
+        "This is your music box.",
+        "It was broken.",
+        "So you think you can't listen to it again.",
+        "But I fixed it!",
+        "Now you can listen to it again!",
+        "It's Grandma's favorite song.",
+        "Look at this picture.",
+        "It's you, Grandma, and me.",
+        "Grandma is not here now.",
+        "We can't see her again.",
+        "But Grandma is always in our hearts.",
+        "I want to see your smile.",
+        "I love you, Grandpa!",
+        "With love,",
+        "Your grandson"
+      ],
+      "lines": [
+        {
+          "english": "Dear Grandpa,",
+          "japanese": "おじいちゃんへ",
+          "voiceKey": "voice_c15_s006_001"
+        },
+        {
+          "english": "This is your music box.",
+          "japanese": "これは、おじいちゃんのオルゴールだよ。",
+          "voiceKey": "voice_c15_s006_002"
+        },
+        {
+          "english": "It was broken.",
+          "japanese": "壊れていたんだ。",
+          "voiceKey": "voice_c15_s006_003"
+        },
+        {
+          "english": "So you think you can't listen to it again.",
+          "japanese": "だから、もう聴けないと思っているよね。",
+          "voiceKey": "voice_c15_s006_004"
+        },
+        {
+          "english": "But I fixed it!",
+          "japanese": "でも、ぼくが直したよ！",
+          "voiceKey": "voice_c15_s006_005"
+        },
+        {
+          "english": "Now you can listen to it again!",
+          "japanese": "これで、また聴けるよ！",
+          "voiceKey": "voice_c15_s006_006"
+        },
+        {
+          "english": "It's Grandma's favorite song.",
+          "japanese": "おばあちゃんの大好きな曲だよ。",
+          "voiceKey": "voice_c15_s006_007"
+        },
+        {
+          "english": "Look at this picture.",
+          "japanese": "この写真を見て。",
+          "voiceKey": "voice_c15_s006_008"
+        },
+        {
+          "english": "It's you, Grandma, and me.",
+          "japanese": "おじいちゃんと、おばあちゃんと、ぼくだよ。",
+          "voiceKey": "voice_c15_s006_009"
+        },
+        {
+          "english": "Grandma is not here now.",
+          "japanese": "おばあちゃんは、今ここにはいないね。",
+          "voiceKey": "voice_c15_s006_010"
+        },
+        {
+          "english": "We can't see her again.",
+          "japanese": "もう会うことはできない。",
+          "voiceKey": "voice_c15_s006_011"
+        },
+        {
+          "english": "But Grandma is always in our hearts.",
+          "japanese": "でも、おばあちゃんはいつも、ぼくたちの心の中にいるよ。",
+          "voiceKey": "voice_c15_s006_012"
+        },
+        {
+          "english": "I want to see your smile.",
+          "japanese": "おじいちゃんの笑顔が見たいんだ。",
+          "voiceKey": "voice_c15_s006_013"
+        },
+        {
+          "english": "I love you, Grandpa!",
+          "japanese": "大好きだよ、おじいちゃん！",
+          "voiceKey": "voice_c15_s006_014"
+        },
+        {
+          "english": "With love,",
+          "japanese": "愛をこめて",
+          "voiceKey": "voice_c15_s006_015"
+        },
+        {
+          "english": "Your grandson",
+          "japanese": "おじいちゃんの孫より",
+          "voiceKey": "voice_c15_s006_016"
+        }
+      ]
+    }
+  }
+}

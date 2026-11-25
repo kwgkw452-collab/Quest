@@ -1,0 +1,28 @@
+name: Common Engine V2 Isolated Prototype
+
+on:
+  pull_request:
+    paths:
+      - 'prototype/common-engine-v2-modules/**'
+      - '.github/workflows/common-engine-v2-isolated.yml'
+  push:
+    branches:
+      - 'common-engine-v2-modules-20261125'
+    paths:
+      - 'prototype/common-engine-v2-modules/**'
+      - '.github/workflows/common-engine-v2-isolated.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Test isolated modular engine
+        run: node --test prototype/common-engine-v2-modules/runner.test.cjs
