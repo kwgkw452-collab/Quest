@@ -1,7 +1,7 @@
 (function(){'use strict';
 const api=window.QuestV2;
 const view={backdrop:document.getElementById('backdrop'),dialogue:document.getElementById('dialogue'),text:document.getElementById('text'),support:document.getElementById('support'),actions:document.getElementById('actions'),status:document.getElementById('status'),log:document.getElementById('log'),select:document.getElementById('story-select')};
-let catalog=[],runner=null,store=null,recognizer=null,documentCursor=0,documentLanguage='en',lastSceneAsset=null,sessionEpoch=0,advanceBusy=false;
+let catalog=[],runner=null,store=null,recognizer=null,documentCursor=0,documentLanguage='en',lastSceneAsset=null,sessionEpoch=0,advanceBusy=false,speechBusy=false;
 const showStatus=s=>{view.status.textContent=s;};
 const setText=(main,secondary='')=>{view.text.textContent=main;view.support.textContent=secondary;};
 const clearButtons=()=>view.actions.replaceChildren();
@@ -64,10 +64,10 @@ function paint(event){
  else {setText('処理状態：'+event.type);if(state.status==='READY')addButton('次へ',()=>void next());}
 }
 async function next(){const epoch=sessionEpoch,current=runner;if(!current||advanceBusy)return;advanceBusy=true;clearButtons();try{const event=await current.advance();if(epoch===sessionEpoch&&current===runner)paint(event);}catch(e){if(epoch===sessionEpoch&&current===runner)error(e);}finally{if(epoch===sessionEpoch&&current===runner)advanceBusy=false;}}
-async function speech(){const epoch=sessionEpoch,current=runner;try{clearButtons();setText('聞き取り中…');const event=await current.talk();if(epoch===sessionEpoch&&current===runner)paint(event);}catch(e){if(epoch===sessionEpoch&&current===runner)error(e);}}
+async function speech(){const epoch=sessionEpoch,current=runner;if(!current||speechBusy)return;speechBusy=true;try{clearButtons();setText('聞き取り中…');const event=await current.talk();if(epoch===sessionEpoch&&current===runner)paint(event);}catch(e){if(epoch===sessionEpoch&&current===runner)error(e);}finally{if(epoch===sessionEpoch&&current===runner)speechBusy=false;}}
 async function reset(resume){
  const epoch=++sessionEpoch;
- advanceBusy=false;
+ advanceBusy=false;speechBusy=false;
  const previousRecognizer=recognizer;
  // A Story change invalidates old controls before the new pack finishes loading.
  runner=null;store=null;recognizer=null;
