@@ -109,7 +109,8 @@
         ],
         "rejectPatterns": [
           "(?:.*\\banother\\s+(?:box|boxes|book|books)\\b.*)",
-          "(?:.*\\b(?:where|find|have|saw|see|steal|lost)\\b.*)"
+          "(?:.*\\b(?:where|find|have|saw|see|steal|lost)\\b.*)",
+          "(?:.*\\bbooks?\\s+about\\b.*)"
         ]
       }
     },
@@ -154,7 +155,8 @@
         ],
         "rejectPatterns": [
           "(?:.*\\b(?:saw|see|seen|color|colour|show|steal|lost)\\b.*)",
-          "(?:.*\\b(?:bag|cart|bus|ribbon)\\b.*)"
+          "(?:.*\\b(?:bag|cart|bus|ribbon)\\b.*)",
+          "(?:.*\\bbooks?\\s+about\\b.*)"
         ]
       }
     },
@@ -202,7 +204,8 @@
         "rejectPatterns": [
           "(?:.*\\b(?:do not|cannot|not)\\s+(?:show|see|look|check)\\b.*)",
           "(?:.*\\b(?:bag|cart|bus|bird|birds|ribbon|ribbons)\\b.*)",
-          "(?:.*\\b(?:and take|take it away|steal|lost)\\b.*)"
+          "(?:.*\\b(?:and take|take it away|steal|lost)\\b.*)",
+          "(?:.*\\bbooks?\\s+about\\b.*)"
         ]
       }
     },
@@ -250,7 +253,8 @@
         "rejectPatterns": [
           "(?:.*\\b(?:do not|does not|not|cannot)\\s+have\\b.*)",
           "(?:.*\\b(?:see|show|where|color|colour|steal|lost)\\b.*)",
-          "(?:.*\\b(?:bag|cart|bus|ribbon)\\b.*)"
+          "(?:.*\\b(?:bag|cart|bus|ribbon)\\b.*)",
+          "(?:.*\\bbooks?\\s+about\\b.*)"
         ]
       }
     },
@@ -353,7 +357,8 @@
         ],
         "rejectPatterns": [
           "(?:.*\\b(?:do not|did not|not|cannot)\\s+see\\b.*)",
-          "(?:.*\\b(?:cart|bus|bag|bird|birds|ribbon|ribbons)\\b.*)"
+          "(?:.*\\b(?:cart|bus|bag|bird|birds|ribbon|ribbons)\\b.*)",
+          "(?:.*\\bbooks?\\s+about\\b.*)"
         ]
       }
     },
@@ -461,7 +466,8 @@
         "rejectPatterns": [
           "(?:.*\\b(?:do not|not|cannot)\\s+(?:find|look)\\b.*)",
           "(?:.*\\b(?:found|lost|keep it|steal)\\b.*)",
-          "(?:.*\\b(?:bag|cart|bus|ribbon)\\b.*)"
+          "(?:.*\\b(?:bag|cart|bus|ribbon)\\b.*)",
+          "(?:.*\\bbooks?\\s+about\\b.*)"
         ]
       }
     },
@@ -519,7 +525,8 @@
         ],
         "rejectPatterns": [
           "(?:.*\\banother\\s+(?:box|boxes|book|books)\\b.*)",
-          "(?:.*\\b(?:lost|lose|not your|is not|are not|cannot)\\b.*)"
+          "(?:.*\\b(?:lost|lose|not your|is not|are not|cannot)\\b.*)",
+          "(?:.*\\bbooks?\\s+about\\b.*)"
         ]
       }
     }
