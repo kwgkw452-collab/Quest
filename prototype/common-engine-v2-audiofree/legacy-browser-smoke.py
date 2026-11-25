@@ -170,6 +170,40 @@ window.SpeechRecognition=class {
   assert not race_errors,race_errors
   print('NEXT SINGLE-FLIGHT PASS: double click processes one Story advance')
   race_context.close()
+  # Same control reference is programmatically activated twice before ASR resolves.
+  mic_context=browser.new_context()
+  mic_context.add_init_script(script="""
+window.__speechStarts=0;
+window.SpeechRecognition=class {
+ start(){
+  window.__speechStarts++;
+  setTimeout(()=>{this.onresult?.({results:[[{transcript:'No, we do not.'}]],resultIndex:0});this.onend?.();},600);
+ }
+ abort(){this.onend?.();}
+};
+""")
+  mic=mic_context.new_page()
+  mic_errors=[]
+  mic.on('pageerror',lambda e:mic_errors.append(str(e)))
+  mic.goto(f'http://127.0.0.1:{server.server_port}/prototype/common-engine-v2-audiofree/play.html?story=S005',wait_until='load')
+  mic.get_by_role('button',name='次へ').wait_for(timeout=15000)
+  for _ in range(80):
+   choices=mic.locator('#actions button').all_text_contents()
+   if '話す' in choices:break
+   assert '次へ' in choices,choices
+   mic.get_by_role('button',name='次へ').click()
+  else:raise AssertionError('S005 did not reach speech test challenge')
+  mic.evaluate("""() => {
+    const button=[...document.querySelectorAll('#actions button')].find(b=>b.textContent==='話す');
+    button.click();
+    button.click();
+  }""")
+  mic.wait_for_function("()=>window.__speechStarts===1")
+  mic.wait_for_timeout(900)
+  assert mic.evaluate('window.__speechStarts')==1,'duplicate microphone recognition started'
+  assert not mic_errors,mic_errors
+  print('SPEECH SINGLE-FLIGHT PASS: double activation starts one recognition')
+  mic_context.close()
   browser.close()
 finally:
  server.shutdown()
