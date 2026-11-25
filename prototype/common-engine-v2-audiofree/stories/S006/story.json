@@ -329,9 +329,9 @@
       "goalJa": "これはあなたの箱です。",
       "modelEn": "This is your box!",
       "hints": [
-        "やっと箱が見つかったピコ！ そのことを伝えるピコ。",
-        "『見つけた』は found。find の過去形だピコ。",
-        "I found the box! と言うピコ。"
+        "見つけた箱を持ち主に渡すピコ。『これはあなたの箱です。』と伝えるピコ。",
+        "『これは』は This is、『あなたの箱』は your box だピコ。",
+        "This is your box! と言うピコ。"
       ],
       "rule": {
         "accept": [
