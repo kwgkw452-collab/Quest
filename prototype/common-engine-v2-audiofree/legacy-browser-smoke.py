@@ -160,14 +160,14 @@ window.SpeechRecognition=class {
   print('LOADING GUARD PASS: Story controls are disabled while network request is pending')
   # A stale reference to the same "Next" button can be invoked twice in one JS turn.
   # Exactly one runner advance and UI event must result.
-  count_before=len([line for line in race.locator('#log').inner_text().splitlines() if line])
+  count_before=len([line for line in race.locator('#log').text_content().splitlines() if line])
   race.evaluate("""() => {
     const nextButton=[...document.querySelectorAll('#actions button')].find(b=>b.textContent==='次へ');
     nextButton.click();
     nextButton.click();
   }""")
   race.wait_for_function("(n)=>document.querySelector('#log').textContent.split('\\n').filter(Boolean).length>n",arg=count_before)
-  count_after=len([line for line in race.locator('#log').inner_text().splitlines() if line])
+  count_after=len([line for line in race.locator('#log').text_content().splitlines() if line])
   assert count_after==count_before+1,('double next advanced Story more than once',count_before,count_after)
   assert not race_errors,race_errors
   print('NEXT SINGLE-FLIGHT PASS: double click processes one Story advance')
