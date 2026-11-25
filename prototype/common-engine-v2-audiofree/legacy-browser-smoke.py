@@ -124,9 +124,9 @@ window.SpeechRecognition=class {
     };
   }""")
   race.locator('#story-select').select_option('S005')
-  race.wait_for_function("()=>document.querySelector('#status')?.textContent.includes('Scene: scene01 / READY')")
+  race.wait_for_function("()=>window.__oldStoryCallbacks.length===1 && document.querySelector('#status')?.textContent.includes('Scene: scene01 / READY')")
   race.locator('#story-select').select_option('S006')
-  race.wait_for_function("()=>document.querySelector('#status')?.textContent.includes('Scene: scene01 / READY')")
+  race.wait_for_function("()=>window.__oldStoryCallbacks.length===2 && document.querySelector('#status')?.textContent.includes('Scene: scene01 / READY')")
   before=race.locator('#backdrop').get_attribute('aria-label')
   race.evaluate("() => window.__oldStoryCallbacks[0]({type:'scene',asset:'images/005/stale.png'})")
   assert race.locator('#backdrop').get_attribute('aria-label')==before,'stale runner changed new Story backdrop'
