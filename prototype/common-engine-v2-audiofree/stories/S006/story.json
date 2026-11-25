@@ -48,7 +48,22 @@
           "(?:(?:can|could|may|shall|should) (?:i|we) help(?: you)?|let (?:me|us) help(?: you)?|(?:do you )?need (?:some )?help|would you like (?:some )?help|(?:i|we) can help you|(?:can|could|may|shall) (?:i|we) give you a hand)"
         ],
         "patternNormalization": "contractions",
-        "stripPlease": true
+        "stripPlease": true,
+        "excludeExact": [
+          "What color is the box?",
+          "Where are the other boxes?",
+          "Can we see that box?",
+          "Do you have the box?",
+          "Please look at this ribbon.",
+          "Did you see the box?",
+          "Please wait!",
+          "Please find the box.",
+          "This is your box!"
+        ],
+        "rejectPatterns": [
+          "(?:.*\\b(?:cannot|do not|not)\\s+help\\b.*)",
+          "(?:.*\\b(?:steal|hurt)\\b.*)"
+        ]
       }
     },
     "s006.communication.2": {
@@ -79,7 +94,22 @@
         "wordAliases": {
           "book": "box",
           "books": "boxes"
-        }
+        },
+        "excludeExact": [
+          "Can we help you?",
+          "Where are the other boxes?",
+          "Can we see that box?",
+          "Do you have the box?",
+          "Please look at this ribbon.",
+          "Did you see the box?",
+          "Please wait!",
+          "Please find the box.",
+          "This is your box!"
+        ],
+        "rejectPatterns": [
+          "(?:.*\\banother\\s+(?:box|boxes|book|books)\\b.*)",
+          "(?:.*\\b(?:where|find|have|saw|see|steal|lost)\\b.*)"
+        ]
       }
     },
     "s006.communication.3": {
@@ -109,7 +139,21 @@
         "wordAliases": {
           "book": "box",
           "books": "boxes"
-        }
+        },
+        "excludeExact": [
+          "Can we help you?",
+          "What color is the box?",
+          "Can we see that box?",
+          "Do you have the box?",
+          "Please look at this ribbon.",
+          "Did you see the box?",
+          "Please wait!",
+          "Please find the box.",
+          "This is your box!"
+        ],
+        "rejectPatterns": [
+          "(?:.*\\b(?:saw|see|seen|color|colour|show|steal|lost)\\b.*)"
+        ]
       }
     },
     "s006.communication.4": {
@@ -141,7 +185,23 @@
         "wordAliases": {
           "book": "box",
           "books": "boxes"
-        }
+        },
+        "excludeExact": [
+          "Can we help you?",
+          "What color is the box?",
+          "Where are the other boxes?",
+          "Do you have the box?",
+          "Please look at this ribbon.",
+          "Did you see the box?",
+          "Please wait!",
+          "Please find the box.",
+          "This is your box!"
+        ],
+        "rejectPatterns": [
+          "(?:.*\\b(?:do not|cannot|not)\\s+(?:show|see|look|check)\\b.*)",
+          "(?:.*\\b(?:bag|cart|bus|bird|birds|ribbon|ribbons)\\b.*)",
+          "(?:.*\\b(?:and take|take it away|steal|lost)\\b.*)"
+        ]
       }
     },
     "s006.communication.5": {
@@ -173,7 +233,22 @@
         "wordAliases": {
           "book": "box",
           "books": "boxes"
-        }
+        },
+        "excludeExact": [
+          "Can we help you?",
+          "What color is the box?",
+          "Where are the other boxes?",
+          "Can we see that box?",
+          "Please look at this ribbon.",
+          "Did you see the box?",
+          "Please wait!",
+          "Please find the box.",
+          "This is your box!"
+        ],
+        "rejectPatterns": [
+          "(?:.*\\b(?:do not|does not|not|cannot)\\s+have\\b.*)",
+          "(?:.*\\b(?:see|show|where|color|colour|steal|lost)\\b.*)"
+        ]
       }
     },
     "s006.communication.6": {
@@ -204,7 +279,22 @@
           "(?:(?:(?:can|could|would|will) you )?(?:look at|take a look at|check) (?:(?:the|that|this|these|those|your|my|a|red) )*ribbons?)"
         ],
         "patternNormalization": "contractions",
-        "stripPlease": true
+        "stripPlease": true,
+        "excludeExact": [
+          "Can we help you?",
+          "What color is the box?",
+          "Where are the other boxes?",
+          "Can we see that box?",
+          "Do you have the box?",
+          "Did you see the box?",
+          "Please wait!",
+          "Please find the box.",
+          "This is your box!"
+        ],
+        "rejectPatterns": [
+          "(?:.*\\b(?:do not|not|cannot)\\s+(?:look|check)\\b.*)",
+          "(?:.*\\b(?:cart|bus|bag|bird|birds|box|boxes)\\b.*)"
+        ]
       }
     },
     "s006.communication.7": {
@@ -246,7 +336,22 @@
         "wordAliases": {
           "book": "box",
           "books": "boxes"
-        }
+        },
+        "excludeExact": [
+          "Can we help you?",
+          "What color is the box?",
+          "Where are the other boxes?",
+          "Can we see that box?",
+          "Do you have the box?",
+          "Please look at this ribbon.",
+          "Please wait!",
+          "Please find the box.",
+          "This is your box!"
+        ],
+        "rejectPatterns": [
+          "(?:.*\\b(?:do not|did not|not|cannot)\\s+see\\b.*)",
+          "(?:.*\\b(?:cart|bus|bag|bird|birds|ribbon|ribbons)\\b.*)"
+        ]
       }
     },
     "s006.communication.8": {
@@ -285,7 +390,22 @@
           "(?:(?:(?:can|could|would|will) you )?wait(?: (?:for (?:me|us)|here|a (?:second|minute|moment)))?|(?:just )?(?:a|one) (?:moment|minute|second)|(?:hold|hang) on|give (?:me|us) (?:a|one) (?:second|minute|moment)|do not (?:go|leave)(?: yet)?|stop(?: the bus)?)"
         ],
         "patternNormalization": "contractions",
-        "stripPlease": true
+        "stripPlease": true,
+        "excludeExact": [
+          "Can we help you?",
+          "What color is the box?",
+          "Where are the other boxes?",
+          "Can we see that box?",
+          "Do you have the box?",
+          "Please look at this ribbon.",
+          "Did you see the box?",
+          "Please find the box.",
+          "This is your box!"
+        ],
+        "rejectPatterns": [
+          "(?:.*\\b(?:do not|not|cannot)\\s+wait\\b.*)",
+          "(?:.*\\b(?:tomorrow|yesterday|next week|never)\\b.*)"
+        ]
       }
     },
     "s006.communication.9": {
@@ -322,7 +442,22 @@
         "wordAliases": {
           "book": "box",
           "books": "boxes"
-        }
+        },
+        "excludeExact": [
+          "Can we help you?",
+          "What color is the box?",
+          "Where are the other boxes?",
+          "Can we see that box?",
+          "Do you have the box?",
+          "Please look at this ribbon.",
+          "Did you see the box?",
+          "Please wait!",
+          "This is your box!"
+        ],
+        "rejectPatterns": [
+          "(?:.*\\b(?:do not|not|cannot)\\s+(?:find|look)\\b.*)",
+          "(?:.*\\b(?:found|lost|keep it|steal)\\b.*)"
+        ]
       }
     },
     "s006.communication.10": {
@@ -365,7 +500,22 @@
         "wordAliases": {
           "book": "box",
           "books": "boxes"
-        }
+        },
+        "excludeExact": [
+          "Can we help you?",
+          "What color is the box?",
+          "Where are the other boxes?",
+          "Can we see that box?",
+          "Do you have the box?",
+          "Please look at this ribbon.",
+          "Did you see the box?",
+          "Please wait!",
+          "Please find the box."
+        ],
+        "rejectPatterns": [
+          "(?:.*\\banother\\s+(?:box|boxes|book|books)\\b.*)",
+          "(?:.*\\b(?:lost|lose|not your|is not|are not|cannot)\\b.*)"
+        ]
       }
     }
   },
