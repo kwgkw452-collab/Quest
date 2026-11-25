@@ -1,7 +1,7 @@
 (function(){'use strict';
 const api=window.QuestV2;
 const view={backdrop:document.getElementById('backdrop'),dialogue:document.getElementById('dialogue'),text:document.getElementById('text'),support:document.getElementById('support'),actions:document.getElementById('actions'),status:document.getElementById('status'),log:document.getElementById('log'),select:document.getElementById('story-select')};
-let catalog=[],runner=null,store=null,recognizer=null,documentCursor=0,documentLanguage='en',lastSceneAsset=null;
+let catalog=[],runner=null,store=null,recognizer=null,documentCursor=0,documentLanguage='en',lastSceneAsset=null,sessionEpoch=0;
 const showStatus=s=>{view.status.textContent=s;};
 const setText=(main,secondary='')=>{view.text.textContent=main;view.support.textContent=secondary;};
 const clearButtons=()=>view.actions.replaceChildren();
@@ -63,19 +63,21 @@ function paint(event){
  else if(event.type==='stale'){setText('古い音声認識結果を無視しました。');}
  else {setText('処理状態：'+event.type);if(state.status==='READY')addButton('次へ',()=>void next());}
 }
-async function next(){try{paint(await runner.advance());}catch(e){error(e);}}
-async function speech(){try{clearButtons();setText('聞き取り中…');paint(await runner.talk());}catch(e){error(e);}}
+async function next(){const epoch=sessionEpoch,current=runner;try{const event=await current.advance();if(epoch===sessionEpoch&&current===runner)paint(event);}catch(e){if(epoch===sessionEpoch&&current===runner)error(e);}}
+async function speech(){const epoch=sessionEpoch,current=runner;try{clearButtons();setText('聞き取り中…');const event=await current.talk();if(epoch===sessionEpoch&&current===runner)paint(event);}catch(e){if(epoch===sessionEpoch&&current===runner)error(e);}}
 async function reset(resume){
+ const epoch=++sessionEpoch;
+ recognizer?.cancel();
  try{
   const entry=catalog.find(x=>x.id===view.select.value);if(!entry)throw Error('STORY_NOT_REGISTERED');
   const response=await fetch(new URL('./stories/'+entry.path.replace(/^\.\//,''),location.href));
   if(!response.ok)throw Error('STORY_FETCH_FAILED:'+response.status);
   const data=await response.json();
+  if(epoch!==sessionEpoch)return;
   if(data.id!==entry.id)throw Error('CATALOG_ID_MISMATCH');
   const storage=(()=>{try{return window.localStorage;}catch{return null;}})();
   store=api.createSaveStore({storage,key:'quest.v2.test.'+entry.id});
   if(!resume)store.clear();
-  recognizer?.cancel();
   recognizer=api.createBrowserSpeech({env:window});
   const savedSnapshot=resume?(store.read()||undefined):undefined;
   runner=api.createRunner(data,{recognize:recognizer.recognize,cancelSpeech:recognizer.cancel,storage:store,onEvent:(event)=>{if(event.type==='scene'&&event.asset){lastSceneAsset=event.asset;setBackdrop(event.asset);}},initialSnapshot:savedSnapshot});
@@ -83,7 +85,7 @@ async function reset(resume){
   const restored=lastBackdropBeforeCursor(data,savedSnapshot);
   if(restored){lastSceneAsset=restored;setBackdrop(restored);}
   await next();
- }catch(e){error(e);}
+ }catch(e){if(epoch===sessionEpoch)error(e);}
 }
 async function start(){
  try{
