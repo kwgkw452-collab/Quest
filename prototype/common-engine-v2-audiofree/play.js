@@ -1,7 +1,7 @@
 (function(){'use strict';
 const api=window.QuestV2;
 const view={backdrop:document.getElementById('backdrop'),dialogue:document.getElementById('dialogue'),text:document.getElementById('text'),support:document.getElementById('support'),actions:document.getElementById('actions'),status:document.getElementById('status'),log:document.getElementById('log'),select:document.getElementById('story-select')};
-let catalog=[],runner=null,store=null,recognizer=null,documentCursor=0,documentLanguage='en',lastSceneAsset=null,sessionEpoch=0;
+let catalog=[],runner=null,store=null,recognizer=null,documentCursor=0,documentLanguage='en',lastSceneAsset=null,sessionEpoch=0,advanceBusy=false;
 const showStatus=s=>{view.status.textContent=s;};
 const setText=(main,secondary='')=>{view.text.textContent=main;view.support.textContent=secondary;};
 const clearButtons=()=>view.actions.replaceChildren();
@@ -63,10 +63,11 @@ function paint(event){
  else if(event.type==='stale'){setText('古い音声認識結果を無視しました。');}
  else {setText('処理状態：'+event.type);if(state.status==='READY')addButton('次へ',()=>void next());}
 }
-async function next(){const epoch=sessionEpoch,current=runner;try{const event=await current.advance();if(epoch===sessionEpoch&&current===runner)paint(event);}catch(e){if(epoch===sessionEpoch&&current===runner)error(e);}}
+async function next(){const epoch=sessionEpoch,current=runner;if(!current||advanceBusy)return;advanceBusy=true;clearButtons();try{const event=await current.advance();if(epoch===sessionEpoch&&current===runner)paint(event);}catch(e){if(epoch===sessionEpoch&&current===runner)error(e);}finally{if(epoch===sessionEpoch&&current===runner)advanceBusy=false;}}
 async function speech(){const epoch=sessionEpoch,current=runner;try{clearButtons();setText('聞き取り中…');const event=await current.talk();if(epoch===sessionEpoch&&current===runner)paint(event);}catch(e){if(epoch===sessionEpoch&&current===runner)error(e);}}
 async function reset(resume){
  const epoch=++sessionEpoch;
+ advanceBusy=false;
  const previousRecognizer=recognizer;
  // A Story change invalidates old controls before the new pack finishes loading.
  runner=null;store=null;recognizer=null;
