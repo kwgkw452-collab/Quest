@@ -146,7 +146,7 @@ test('S005 all 14 legacy contrary-goal phrases are explicit exact-reject data',(
  assert.equal(checked,14);
 });
 
-test('S006 grammar parity with legacy predicates plus explicitly approved ASR exception on 60 probes',()=>{
+test('S006 grammar parity with legacy predicates with approved corrections on 60 probes',()=>{
  const old=original('S006'),p=pack('S006');
  const matrix=[
  ['Could we help you?','I can help you','Do you need some help?','You need help','I cannot help you','Could we help you and steal it?'],
@@ -168,9 +168,10 @@ test('S006 grammar parity with legacy predicates plus explicitly approved ASR ex
   for(const phrase of matrix[i]){
    const sourceAccept=Boolean(legacy.accept(phrase));
    const approvedAsrExtension=({2:['Where is the book?'],3:['Can you show me a book?'],4:['Do you have a book?'],8:['Please find a book'],9:['I found the book']}[i]||[]).includes(phrase);
-   const expected=sourceAccept||approvedAsrExtension;
+   const differentBoxQ2=i===1&&['What color is another box?','Can you describe another box?'].includes(phrase);
+   const expected=!differentBoxQ2&&(sourceAccept||approvedAsrExtension);
    const actual=judge(rule,phrase).decision==='ACCEPT';
-   assert.equal(actual,expected,id+' source plus approved ASR: '+phrase);
+   assert.equal(actual,expected,id+' source with approved corrections: '+phrase);
    count++;
   }
  }

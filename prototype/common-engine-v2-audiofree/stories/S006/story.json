@@ -72,7 +72,7 @@
           "Can you describe your box?"
         ],
         "fullPatterns": [
-          "(?:what colou?r (?:is|are) (?:(?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)?|it)|what (?:is|are) the colou?r of (?:(?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)?|it)|what (?:does|do) (?:(?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)?|it) look like|what (?:kind|type) of box is it|what is (?:(?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)?|it) like|(?:can|could|would) you describe (?:(?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)?|it)|describe (?:(?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)?|it))"
+          "(?:what colou?r (?:is|are) (?:(?:(?:the|that|this|your|my|our|a|those|these) )*box(?:es)?|it)|what (?:is|are) the colou?r of (?:(?:(?:the|that|this|your|my|our|a|those|these) )*box(?:es)?|it)|what (?:does|do) (?:(?:(?:the|that|this|your|my|our|a|those|these) )*box(?:es)?|it) look like|what (?:kind|type) of box is it|what is (?:(?:(?:the|that|this|your|my|our|a|those|these) )*box(?:es)?|it) like|(?:can|could|would) you describe (?:(?:(?:the|that|this|your|my|our|a|those|these) )*box(?:es)?|it)|describe (?:(?:(?:the|that|this|your|my|our|a|those|these) )*box(?:es)?|it))"
         ],
         "patternNormalization": "contractions",
         "stripPlease": true,
@@ -134,7 +134,7 @@
           "Could we have a look at that box?"
         ],
         "fullPatterns": [
-          "(?:(?:can|could|may|shall) (?:i|we) (?:see|check|look at|have a look at) (?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)?|(?:(?:can|could|would|will) you )?show (?:me|us) (?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)?|let (?:me|us) (?:see|check|look at) (?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)?)"
+          "(?:(?:can|could|may|shall) (?:i|we) (?:see|check|look at|have a look at) (?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)?|(?:(?:can|could|would|will) you )?show (?:me|us) (?:(?:the|that|this|your|my|our|a|another|other|those|these) )*(?:(?:red|little) )*box(?:es)?|let (?:me|us) (?:see|check|look at) (?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)?)"
         ],
         "patternNormalization": "contractions",
         "stripPlease": true,
@@ -358,7 +358,7 @@
           "Here are your boxes!"
         ],
         "fullPatterns": [
-          "(?:(?:i|we) (?:found|find|got|get|have|have found|have got) (?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)?(?: (?:now|at last|finally))?|(?:here (?:is|are)|this is|these are) (?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)?|(?:(?:the|that|this|your|my|our|a|another|other|those|these) )*box(?:es)? (?:is|are) here)"
+          "(?:(?:i|we) (?:found|find|got|get|have|have found|have got) (?:(?:the|that|this|your|my|our|a|those|these) )*box(?:es)?(?: (?:now|at last|finally))?|(?:here (?:is|are)|this is|these are) (?:(?:the|that|this|your|my|our|a|those|these) )*box(?:es)?|(?:(?:the|that|this|your|my|our|a|those|these) )*box(?:es)? (?:is|are) here)"
         ],
         "patternNormalization": "contractions",
         "stripPlease": true,

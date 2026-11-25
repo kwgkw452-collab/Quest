@@ -7,7 +7,32 @@ from playwright.sync_api import sync_playwright
 
 sha=os.environ['PREVIEW_SHA']
 base=f"https://rawcdn.githack.com/kwgkw452-collab/Quest/{sha}/prototype/common-engine-v2-audiofree/"
-data=json.loads((Path(__file__).resolve().parent/'stories/S006/story.json').read_text())
+stories=Path(__file__).resolve().parent/'stories'
+data=json.loads((stories/'S006/story.json').read_text())
+s005=json.loads((stories/'S005/story.json').read_text())
+
+def checkpoint_before(pack, predicate):
+ for scene in pack['sceneOrder']:
+  for index, step in enumerate(pack['scenes'][scene]['steps']):
+   if predicate(step):
+    return dict(schemaVersion=1,storyId=pack['id'],scene=scene,index=index,status='READY',flags={})
+ raise AssertionError('Preview test command not found')
+
+def assert_image(page, asset):
+ page.wait_for_function("(asset) => document.querySelector('#backdrop').getAttribute('aria-label') === asset",arg=asset)
+ actual=page.locator('#backdrop').evaluate('node => node.style.backgroundImage.slice(5,-2)')
+ # Read the exact URL emitted by the player and verify the real image response.
+ response=page.request.get(actual,timeout=25000)
+ assert response.status==200,(actual,response.status)
+ assert response.headers.get('content-type','').startswith('image/png'),actual
+ assert response.body().startswith(b'\x89PNG\r\n\x1a\n'),actual
+ assert f'/{sha}/{asset}' in actual,actual
+ print('QA35-01 HTTP 200 PNG:',actual,flush=True)
+
+def resume_at(page, snapshot):
+ page.evaluate("(snap)=>localStorage.setItem('quest.v2.test.'+snap.storyId,JSON.stringify(snap))",snapshot)
+ page.locator('#resume').click()
+
 first_id=next(x['id'] for scene in data['sceneOrder'] for x in data['scenes'][scene]['steps'] if x['type']=='challenge')
 answer=data['challenges'][first_id]['modelEn']
 with sync_playwright() as pw:
@@ -50,7 +75,22 @@ with sync_playwright() as pw:
  assert rect_actions['y']+rect_actions['height']<=rect_game['y']+rect_game['height']+1,'MOBILE_ACTIONS_CLIPPED'
  page.get_by_role('button',name='話す').click()
  page.get_by_role('button',name='次へ').wait_for(timeout=15000)
- assert '成功' in page.locator('#text').inner_text(),page.locator('#text').inner_text()
+ assert page.locator('#text').inner_text()==data['challenges'][first_id]['goalJa']
+ assert '成功' in page.locator('#support').inner_text()
+
+ letter_checkpoint=checkpoint_before(data,lambda step:step['type']=='document')
+ letter_step=data['scenes'][letter_checkpoint['scene']]['steps'][letter_checkpoint['index']]
+ letter_card=data['documents'][letter_step['id']]['card']
+ resume_at(page,letter_checkpoint)
+ page.get_by_role('button',name='日本語',exact=True).wait_for()
+ assert_image(page,letter_card)
+
+ page.locator('#story-select').select_option('S005')
+ page.get_by_role('button',name='次へ',exact=True).wait_for()
+ scene3='images/005/reference-v1/Scene3.png'
+ resume_at(page,checkpoint_before(s005,lambda step:step.get('asset')==scene3))
+ assert_image(page,scene3)
+
  assert not errors,errors
  print('HTTPS PREVIEW CHROMIUM PASS:',url,'first question:',first_id,'mobile viewport 390x844, mock mic')
  browser.close()

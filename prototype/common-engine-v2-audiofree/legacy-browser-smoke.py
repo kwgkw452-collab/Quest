@@ -246,6 +246,57 @@ window.SpeechRecognition=class {
   assert not mic_errors,mic_errors
   print('RESTART SAVE PASS: invalid replacement package preserves prior checkpoint')
   mic_context.close()
+  # QA35-02: hold each recognition open, then resolve it or let its real timer expire.
+  goal_context=browser.new_context()
+  goal_context.add_init_script(script="""
+window.SpeechRecognition=class {
+ start(){window.activeRecognition=this;}
+ abort(){}
+};
+window.finishRecognition=(text)=>{
+ const recognition=window.activeRecognition;
+ recognition.onresult?.({results:[[{transcript:text}]],resultIndex:0});
+ recognition.onend?.();
+};
+""")
+  goal_page=goal_context.new_page()
+  goal_page.clock.install()
+  goal_page.goto(f'http://127.0.0.1:{server.server_port}/prototype/common-engine-v2-audiofree/play.html?story=S005')
+  goal_page.get_by_role('button',name='次へ',exact=True).wait_for()
+  # The same player must also resolve backgrounds with a plain local HTTP root.
+  image_url=goal_page.locator('#backdrop').evaluate('node => node.style.backgroundImage.slice(5,-2)')
+  image=goal_page.request.get(image_url)
+  assert image.status==200 and image.body().startswith(b'\x89PNG'),image_url
+  for _ in range(80):
+   if goal_page.get_by_role('button',name='話す',exact=True).count():break
+   goal_page.get_by_role('button',name='次へ',exact=True).click()
+  else:raise AssertionError('S005 first question not reached')
+  goal=goal_page.locator('#text').inner_text()
+  assert goal=='いいえ、予約していません。',goal
+
+  def begin_attempt():
+   goal_page.get_by_role('button',name='話す',exact=True).click()
+   assert goal_page.locator('#text').inner_text()==goal
+   assert '聞き取り中…' in goal_page.locator('#support').inner_text()
+   assert goal_page.locator('#actions input, #actions textarea').count()==0
+
+  begin_attempt()
+  goal_page.evaluate("window.finishRecognition('purple bananas')")
+  goal_page.get_by_role('button',name='話す',exact=True).wait_for()
+  assert goal_page.locator('#text').inner_text()==goal
+  assert 'もう一度' in goal_page.locator('#support').inner_text()
+  begin_attempt()
+  goal_page.clock.fast_forward(12500)
+  goal_page.get_by_role('button',name='話す',exact=True).wait_for()
+  assert goal_page.locator('#text').inner_text()==goal
+  assert '聞き取り時間' in goal_page.locator('#support').inner_text()
+  begin_attempt()
+  goal_page.evaluate("window.finishRecognition('No, we do not.')")
+  goal_page.get_by_role('button',name='次へ',exact=True).wait_for()
+  assert goal_page.locator('#text').inner_text()==goal
+  assert '成功しました' in goal_page.locator('#support').inner_text()
+  print('QA35-02 PASS: Goal persists through listening, rejection, timeout, retry and acceptance')
+  goal_context.close()
   browser.close()
 finally:
  server.shutdown()
