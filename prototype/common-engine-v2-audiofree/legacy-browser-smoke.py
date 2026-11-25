@@ -394,11 +394,11 @@ window.finishRecognition=(text)=>{
    measure('listening',100.2,q1['goalJa'],'聞き取り中…',listening=True)
    page.evaluate("window.finishRecognition('purple bananas')")
    button('話す').wait_for()
-   assert json.loads(page.locator('#log').inner_text().splitlines()[-1])['type']=='rejected'
+   assert json.loads(page.locator('#log').text_content().splitlines()[-1])['type']=='rejected'
    measure('rejected',100.2,q1['goalJa'],'認識：purple bananas')
    for press,stage in enumerate((1,2,3,3),start=1):
     button('ピコサポート').click()
-    event=json.loads(page.locator('#log').inner_text().splitlines()[-1])
+    event=json.loads(page.locator('#log').text_content().splitlines()[-1])
     assert event['view']['supportStage']==stage,event
     measure(f'pico-press-{press}',140,q1['goalJa'],q1['hints'][stage-1])
    button('話す').click()
