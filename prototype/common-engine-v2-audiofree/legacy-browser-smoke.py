@@ -113,6 +113,26 @@ window.SpeechRecognition=class {
   assert '成功しました' not in race.locator('#text').inner_text()
   assert not race_errors,race_errors
   print('SESSION SWITCH PASS: late old-Story microphone result cannot alter S006 screen')
+  # Scene callbacks can also arrive from an abandoned runner, independently of talk()/advance().
+  # Capture an old onEvent callback while creating a new S005 runner, then invoke it after switching to S006.
+  race.evaluate("""() => {
+    window.__oldStoryCallbacks=[];
+    const original=window.QuestV2.createRunner;
+    window.QuestV2.createRunner=function(data,options){
+      window.__oldStoryCallbacks.push(options.onEvent);
+      return original.call(this,data,options);
+    };
+  }""")
+  race.locator('#story-select').select_option('S005')
+  race.wait_for_function("()=>window.__oldStoryCallbacks.length===1 && document.querySelector('#status')?.textContent.includes('Scene: scene01 / READY')")
+  race.locator('#story-select').select_option('S006')
+  race.wait_for_function("()=>window.__oldStoryCallbacks.length===2 && document.querySelector('#status')?.textContent.includes('Scene: scene01 / READY')")
+  before=race.locator('#backdrop').get_attribute('aria-label')
+  race.evaluate("() => window.__oldStoryCallbacks[0]({type:'scene',asset:'images/005/stale.png'})")
+  assert race.locator('#backdrop').get_attribute('aria-label')==before,'stale runner changed new Story backdrop'
+  assert 'Scene: scene01 / READY' in race.locator('#status').inner_text()
+  assert not race_errors,race_errors
+  print('STALE SCENE CALLBACK PASS: old onEvent cannot overwrite current Story background')
   race_context.close()
   browser.close()
 finally:
