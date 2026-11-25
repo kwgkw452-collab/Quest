@@ -44,6 +44,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Install Japanese fonts for layout and screenshots
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y fonts-noto-cjk
       - name: Install Python browser testing library (use runner preinstalled Chrome)
         run: python -m pip install playwright==1.56.0
       - name: Test complete synthetic story in real Chromium with mock SpeechRecognition
