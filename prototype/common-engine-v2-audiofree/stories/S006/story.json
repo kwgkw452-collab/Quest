@@ -62,7 +62,8 @@
         ],
         "rejectPatterns": [
           "(?:.*\\b(?:cannot|do not|not)\\s+help\\b.*)",
-          "(?:.*\\b(?:steal|hurt)\\b.*)"
+          "(?:.*\\b(?:steal|hurt)\\b.*)",
+          "(?:.*\\bhelp\\s+(?:the|a)\\s+(?:box|bag|bus|bird)\\b.*)"
         ]
       }
     },
@@ -152,7 +153,8 @@
           "This is your box!"
         ],
         "rejectPatterns": [
-          "(?:.*\\b(?:saw|see|seen|color|colour|show|steal|lost)\\b.*)"
+          "(?:.*\\b(?:saw|see|seen|color|colour|show|steal|lost)\\b.*)",
+          "(?:.*\\b(?:bag|cart|bus|ribbon)\\b.*)"
         ]
       }
     },
@@ -247,7 +249,8 @@
         ],
         "rejectPatterns": [
           "(?:.*\\b(?:do not|does not|not|cannot)\\s+have\\b.*)",
-          "(?:.*\\b(?:see|show|where|color|colour|steal|lost)\\b.*)"
+          "(?:.*\\b(?:see|show|where|color|colour|steal|lost)\\b.*)",
+          "(?:.*\\b(?:bag|cart|bus|ribbon)\\b.*)"
         ]
       }
     },
@@ -404,7 +407,8 @@
         ],
         "rejectPatterns": [
           "(?:.*\\b(?:do not|not|cannot)\\s+wait\\b.*)",
-          "(?:.*\\b(?:tomorrow|yesterday|next week|never)\\b.*)"
+          "(?:.*\\b(?:tomorrow|yesterday|next week|never)\\b.*)",
+          "(?:.*\\b(?:stop|wait for)\\s+(?:the|a)\\s+(?:train|bird|box)\\b.*)"
         ]
       }
     },
@@ -456,7 +460,8 @@
         ],
         "rejectPatterns": [
           "(?:.*\\b(?:do not|not|cannot)\\s+(?:find|look)\\b.*)",
-          "(?:.*\\b(?:found|lost|keep it|steal)\\b.*)"
+          "(?:.*\\b(?:found|lost|keep it|steal)\\b.*)",
+          "(?:.*\\b(?:bag|cart|bus|ribbon)\\b.*)"
         ]
       }
     },
