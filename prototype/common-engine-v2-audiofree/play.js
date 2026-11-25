@@ -67,8 +67,17 @@ async function next(){const epoch=sessionEpoch,current=runner;try{const event=aw
 async function speech(){const epoch=sessionEpoch,current=runner;try{clearButtons();setText('聞き取り中…');const event=await current.talk();if(epoch===sessionEpoch&&current===runner)paint(event);}catch(e){if(epoch===sessionEpoch&&current===runner)error(e);}}
 async function reset(resume){
  const epoch=++sessionEpoch;
- recognizer?.cancel();
+ const previousRecognizer=recognizer;
+ // A Story change invalidates old controls before the new pack finishes loading.
+ runner=null;store=null;recognizer=null;
+ clearButtons();setText('Storyを読み込み中…');
+ showStatus('Story: LOADING / 音楽・Voice: OFF');
+ view.dialogue.className='';
+ view.backdrop.style.backgroundImage='';
+ view.backdrop.removeAttribute('aria-label');
+ lastSceneAsset=null;documentCursor=0;documentLanguage='en';
  try{
+  previousRecognizer?.cancel();
   const entry=catalog.find(x=>x.id===view.select.value);if(!entry)throw Error('STORY_NOT_REGISTERED');
   const response=await fetch(new URL('./stories/'+entry.path.replace(/^\.\//,''),location.href));
   if(!response.ok)throw Error('STORY_FETCH_FAILED:'+response.status);
