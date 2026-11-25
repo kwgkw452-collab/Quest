@@ -16,6 +16,11 @@ function judge(rule,utterance){
   const normList=(a)=>Array.isArray(a)?a.map(normalize):[];
   if(normList(rule.excludeExact).includes(u))return {decision:'REJECT',reason:'EXCLUDED_EXACT'};
   if(normList(rule.exclude).some(x=>x&&u.includes(x)))return {decision:'REJECT',reason:'EXCLUDED'};
+  // A declared conflict must take precedence over all positive matches.
+  if(Array.isArray(rule.rejectPatterns))for(const pattern of rule.rejectPatterns){
+   if(typeof pattern!=='string'||pattern.length>1800||!pattern.startsWith('(?:')||!pattern.endsWith(')'))throw Error('INVALID_REJECT_PATTERN');
+   if(new RegExp('^'+pattern+String.fromCharCode(36)).test(normalizeContractions(utterance)))return {decision:'REJECT',reason:'DECLARED_CONFLICT'};
+  }
   if(normList(rule.accept).includes(u))return {decision:'ACCEPT',reason:'EXACT_VARIANT'};
   if(Array.isArray(rule.fullPatterns)&&rule.fullPatterns.length){
    const normalized=rule.patternNormalization==='contractions'?normalizeContractions(utterance):normalize(utterance);
@@ -52,7 +57,7 @@ function judge(rule,utterance){
     if(complete)return {decision:'ACCEPT',reason:'TYPED_TERMS'};
   }
   if(anyWordsOk&&phrasesOk&&(requiredAny||requiredPhrases)&&!hasOrdered)return {decision:'ACCEPT',reason:'TYPED_TERMS'};
-  return {decision:'REJECT',reason:'NO_MATCH'};
+  return {decision:'UNKNOWN',reason:'INSUFFICIENT_EVIDENCE'};
 }
 module.exports={normalize,normalizeContractions,judge};
 

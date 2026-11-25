@@ -238,7 +238,7 @@ test('generic ASR token alias only applies on the question where configured',()=
  const p=pack('S006');
  const q2={...p.challenges['s006.communication.2'].rule};
  delete q2.wordAliases;
- assert.equal(judge(q2,'What color is the book?').decision,'REJECT');
+ assert.equal(judge(q2,'What color is the book?').decision,'UNKNOWN');
  assert.equal(judge(q2,'What color is the box?').decision,'ACCEPT');
 });
 
