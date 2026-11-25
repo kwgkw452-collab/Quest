@@ -12,9 +12,9 @@ test('reject broken transition',()=>{const p=fresh();p.scenes.intro.steps[4].to=
 test('reject unknown save key',()=>{const p=fresh();p.scenes.end.steps[0].key='oops';assert(validate(p).some(e=>e.startsWith('SAVE_KEY')));});
 test('all required question hints',()=>{const p=fresh();p.challenges.hello.hints.pop();assert(validate(p).some(e=>e.startsWith('CHALLENGE')));});
 test('accept exact approved fixture variant',()=>assert.equal(judge({accept:['hello','hi']},'Hi!').decision,'ACCEPT'));
-test('reject unrelated phrase',()=>assert.equal(judge({accept:['hello']},'goodbye').decision,'REJECT'));
+test('unrelated phrase without evidence is UNKNOWN',()=>assert.equal(judge({accept:['hello']},'goodbye').decision,'UNKNOWN'));
 test('reject excluded even if accepted',()=>assert.equal(judge({accept:['hello no'],exclude:['no']},'hello no').decision,'REJECT'));
-test('recognized mistake shows recognition',async()=>{const c=createCommunication(pack.challenges.hello,{recognize:async()=>({status:'final',text:'Good bye'})});const r=await c.speak();assert.equal(r.type,'rejected');assert.match(r.view.feedbackJa,/Good bye と聞こえたよ/);assert.equal(r.view.layoutMode,'twoRow');});
+test('recognized mistake shows recognition',async()=>{const c=createCommunication(pack.challenges.hello,{recognize:async()=>({status:'final',text:'Good bye'})});const r=await c.speak();assert.equal(r.type,'unknown');assert.match(r.view.feedbackJa,/Good bye と聞こえたよ/);assert.equal(r.view.layoutMode,'twoRow');});
 test('no-speech never fabricates heard text',async()=>{const c=createCommunication(pack.challenges.hello,{recognize:async()=>({status:'no-speech'})});const r=await c.speak();assert.equal(r.type,'no-speech');assert.equal(r.view.recognizedText,null);});
 test('support stage 1 2 3 3',()=>{const c=createCommunication(pack.challenges.hello);assert.deepEqual([c.support().supportStage,c.support().supportStage,c.support().supportStage,c.support().supportStage],[1,2,3,3]);});
 test('late microphone event ignored after cancel',async()=>{let done;const c=createCommunication(pack.challenges.hello,{recognize:()=>new Promise(r=>done=r)});const p=c.speak();c.cancel();done({status:'final',text:'hello'});assert.equal((await p).type,'stale');});
