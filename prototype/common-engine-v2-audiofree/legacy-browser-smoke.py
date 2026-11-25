@@ -203,6 +203,30 @@ window.SpeechRecognition=class {
   assert mic.evaluate('window.__speechStarts')==1,'duplicate microphone recognition started'
   assert not mic_errors,mic_errors
   print('SPEECH SINGLE-FLIGHT PASS: double activation starts one recognition')
+  # A temporary Story fetch error must not erase the already persisted checkpoint.
+  checkpoint=mic.evaluate("()=>JSON.parse(localStorage.getItem('quest.v2.test.S005'))")
+  assert checkpoint and checkpoint['storyId']=='S005','missing saved progress before retry'
+  mic.evaluate("""() => {
+    const original=window.fetch.bind(window);
+    window.fetch=(url,...args)=>{
+      if(String(url).includes('/stories/S005/story.json')){
+        window.fetch=original;
+        return Promise.resolve(new Response('',{status:503}));
+      }
+      return original(url,...args);
+    };
+  }""")
+  mic.locator('#resume').click()
+  mic.get_by_role('button',name='保存地点から再試行').wait_for(timeout=15000)
+  assert mic.evaluate("()=>JSON.parse(localStorage.getItem('quest.v2.test.S005'))")==checkpoint,'checkpoint cleared on failed fetch'
+  mic.get_by_role('button',name='保存地点から再試行').click()
+  mic.wait_for_function("()=>document.querySelector('#status')?.textContent.includes('Scene:') && !document.querySelector('#status')?.textContent.includes('LOADING')")
+  after=mic.evaluate("()=>JSON.parse(localStorage.getItem('quest.v2.test.S005'))")
+  assert after and after['storyId']=='S005','checkpoint lost after retry'
+  assert after['scene']==checkpoint['scene'],'retry unexpectedly restarted scene'
+  assert after['index']>=checkpoint['index'],'retry rolled checkpoint backward'
+  assert not mic_errors,mic_errors
+  print('RETRY SAVE PASS: temporary fetch error preserves and resumes prior Story checkpoint')
   mic_context.close()
   browser.close()
 finally:
