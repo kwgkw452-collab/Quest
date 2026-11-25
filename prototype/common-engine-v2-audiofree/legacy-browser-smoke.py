@@ -84,6 +84,36 @@ window.SpeechRecognition=class {{
    print(f'{story_id} SAVE RELOAD PASS: automatic last-scene checkpoint restores completed Story')
    print(f'{story_id} BROWSER PASS: {lines} dialogues, {questions} spoken challenges, {documents} document(s), all scenes complete')
    context.close()
+  # Repro: old Story microphone result arrives after user has switched Stories.
+  # The prior session must never paint into, or advance, the newly selected Story.
+  race_context=browser.new_context()
+  race_context.add_init_script(script="""
+window.SpeechRecognition=class {
+ start(){setTimeout(()=>{this.onresult?.({results:[[{transcript:'No, we do not.'}]],resultIndex:0});this.onend?.();},900);}
+ abort(){/* deliberately deliver a late result to stress session isolation */}
+};
+""")
+  race=race_context.new_page()
+  race_errors=[]
+  race.on('pageerror',lambda e:race_errors.append(str(e)))
+  race.goto(f'http://127.0.0.1:{server.server_port}/prototype/common-engine-v2-audiofree/play.html?story=S005',wait_until='load')
+  race.get_by_role('button',name='次へ').wait_for(timeout=15000)
+  for _ in range(80):
+   choices=race.locator('#actions button').all_text_contents()
+   if '話す' in choices:break
+   assert '次へ' in choices,choices
+   race.get_by_role('button',name='次へ').click()
+  else:raise AssertionError('S005 did not reach first microphone question')
+  race.get_by_role('button',name='話す').click()
+  race.locator('#story-select').select_option('S006')
+  race.wait_for_function("()=>document.querySelector('#status')?.textContent.includes('Scene: scene01 / READY')")
+  race.wait_for_timeout(1400)
+  assert race.locator('#story-select').input_value()=='S006'
+  assert 'Scene: scene01 / READY' in race.locator('#status').inner_text(),race.locator('#status').inner_text()
+  assert '成功しました' not in race.locator('#text').inner_text()
+  assert not race_errors,race_errors
+  print('SESSION SWITCH PASS: late old-Story microphone result cannot alter S006 screen')
+  race_context.close()
   browser.close()
 finally:
  server.shutdown()
