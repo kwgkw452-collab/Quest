@@ -133,6 +133,29 @@ window.SpeechRecognition=class {
   assert 'Scene: scene01 / READY' in race.locator('#status').inner_text()
   assert not race_errors,race_errors
   print('STALE SCENE CALLBACK PASS: old onEvent cannot overwrite current Story background')
+  # Slow network must not leave old Story's buttons interactive or backdrop visible.
+  # Hold the next S005 fetch without blocking browser UI, then release it.
+  race.evaluate("""() => {
+    const oldFetch=window.fetch.bind(window);
+    window.__releaseStoryLoad=null;
+    window.fetch=(url,...args)=>{
+      if(String(url).includes('/stories/S005/story.json')){
+        return new Promise(resolve=>{window.__releaseStoryLoad=()=>resolve(oldFetch(url,...args));});
+      }
+      return oldFetch(url,...args);
+    };
+  }""")
+  race.locator('#story-select').select_option('S005')
+  race.wait_for_function("()=>typeof window.__releaseStoryLoad==='function'")
+  assert race.locator('#actions button').count()==0,'old Story actions remain clickable during load'
+  assert 'Storyを読み込み中' in race.locator('#text').inner_text()
+  assert 'LOADING' in race.locator('#status').inner_text()
+  assert not race.locator('#backdrop').get_attribute('aria-label'),'old Story backdrop remains during load'
+  race.evaluate("() => window.__releaseStoryLoad()")
+  race.wait_for_function("()=>window.__oldStoryCallbacks.length===3 && document.querySelector('#status')?.textContent.includes('Scene: scene01 / READY')")
+  assert race.get_by_role('button',name='次へ').count()==1
+  assert not race_errors,race_errors
+  print('LOADING GUARD PASS: Story controls are disabled while network request is pending')
   race_context.close()
   browser.close()
 finally:
