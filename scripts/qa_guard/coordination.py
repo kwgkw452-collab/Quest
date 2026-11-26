@@ -24,28 +24,28 @@ def route(machine, qa=None):
         if not machine.get("violations"):
             raise ValueError("FAIL report missing violations")
         return {"gate": "DEVELOPER_REPAIR", "target_sha": machine["head_sha"],
-                "next_actor": "production_developer", "mergable": False}
+                "next_actor": "production_developer", "merge_authorized": False}
     if status != "PASS" or machine.get("violations"):
         raise ValueError("inconsistent PASS/FAIL guard report")
     if qa is None:
         return {"gate": "INDEPENDENT_QA_PENDING", "target_sha": machine["head_sha"],
-                "next_actor": "independent_qa", "mergable": False}
+                "next_actor": "independent_qa", "merge_authorized": False}
     if qa.get("schema") != "quest-independent-qa-verdict-v1":
         raise ValueError("invalid independent QA verdict schema")
     if qa.get("base_sha") != machine["base_sha"] or qa.get("head_sha") != machine["head_sha"]:
         return {"gate": "QA_SHA_STALE", "target_sha": machine["head_sha"],
-                "next_actor": "independent_qa", "mergable": False}
+                "next_actor": "independent_qa", "merge_authorized": False}
     verdict = qa.get("verdict")
     if verdict == "FAIL":
         return {"gate": "QA_REPAIR_REQUIRED", "target_sha": machine["head_sha"],
-                "next_actor": "production_developer", "mergable": False}
+                "next_actor": "production_developer", "merge_authorized": False}
     if verdict != "PASS":
         return {"gate": "INDEPENDENT_QA_PENDING", "target_sha": machine["head_sha"],
-                "next_actor": "independent_qa", "mergable": False}
+                "next_actor": "independent_qa", "merge_authorized": False}
     # Even a matching QA PASS is not independently authenticated by this script.
     # The Director must verify the actual source/identity of the QA decision.
     return {"gate": "DIRECTOR_REVIEW_PENDING", "target_sha": machine["head_sha"],
-            "next_actor": "director", "mergable": False}
+            "next_actor": "director", "merge_authorized": False}
 
 
 def main(argv=None):
@@ -56,8 +56,10 @@ def main(argv=None):
     try:
         with open(args.machine, encoding="utf-8") as fp:
             machine = json.load(fp)
-        with open(args.qa, encoding="utf-8") as fp:
-            qa = json.load(fp) if args.qa else None
+        qa = None
+        if args.qa:
+            with open(args.qa, encoding="utf-8") as fp:
+                qa = json.load(fp)
     except (OSError, ValueError, TypeError) as exc:
         print(f"::error title=Handoff unreadable::{exc}", file=sys.stderr)
         return 2
