@@ -1,0 +1,32 @@
+name: Quest cooperation evidence
+on:
+  pull_request:
+    branches: [s005-fixed-195-stage-clean-test]
+    types: [opened, synchronize, reopened, ready_for_review]
+permissions:
+  contents: read
+jobs:
+  evidence:
+    if: github.event.pull_request.number == 48 && github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.head.ref == 'automation/cooperation-v5-story-integration'
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Generate exact-head cooperation evidence
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          python3 scripts/cooperation/ci_evidence.py --repo "$GITHUB_WORKSPACE" --base "$BASE_SHA" --head "$HEAD_SHA" --out "$RUNNER_TEMP/quest-evidence"
+      - name: Preserve candidate evidence even when tests fail
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: quest-cooperation-evidence-${{ github.event.pull_request.head.sha }}
+          path: ${{ runner.temp }}/quest-evidence/
+          if-no-files-found: error
+          retention-days: 7
