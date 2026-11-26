@@ -60,3 +60,35 @@ class CIEntryTests(unittest.TestCase):
     def test_controller_hold_not_replaced_by_ci_retest(self):
         r,_=self.run_case({'gate':'HOLD','reason':'MAX_REPAIRS_REACHED','merge_authorized':False,'events':[{'stage':'repair'}]})
         self.assertEqual(r['gate'],'HOLD');self.assertEqual(r['reason'],'MAX_REPAIRS_REACHED')
+
+    def test_head_changes_during_ci_read_never_starts_repair(self):
+        calls=[]
+        def fetch(_):
+            self.head_mock.return_value=B
+            return [self.r]
+        result=advance('repo','policy','digest','state',fetch=fetch,
+                       execute=lambda *a,**kw:calls.append('execute'),
+                       fetch_tip=lambda _:A)
+        self.assertEqual(result['reason'],'BRANCH_OR_HEAD_CHANGED_BEFORE_EXECUTION')
+        self.assertEqual(calls,[])
+        self.assertFalse(result['merge_authorized'])
+
+    def test_remote_changes_during_ci_read_never_starts_repair(self):
+        calls=[]
+        tips=iter([A,B])
+        result=advance('repo','policy','digest','state',fetch=lambda _:[self.r],
+                       execute=lambda *a,**kw:calls.append('execute'),
+                       fetch_tip=lambda _:next(tips))
+        self.assertEqual(result['reason'],'REMOTE_HEAD_CHANGED_BEFORE_EXECUTION')
+        self.assertEqual(calls,[])
+        self.assertFalse(result['merge_authorized'])
+
+    def test_branch_changes_during_ci_read_never_starts_repair(self):
+        calls=[]
+        with patch('run_from_ci.branch',side_effect=['automation/test','automation/other']):
+            result=advance('repo','policy','digest','state',fetch=lambda _:[self.r],
+                           execute=lambda *a,**kw:calls.append('execute'),
+                           fetch_tip=lambda _:A)
+        self.assertEqual(result['reason'],'BRANCH_OR_HEAD_CHANGED_BEFORE_EXECUTION')
+        self.assertEqual(calls,[])
+        self.assertFalse(result['merge_authorized'])
