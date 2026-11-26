@@ -10,8 +10,8 @@ import re
 import subprocess
 import sys
 
-STORY_LOCK = re.compile(r"(?i)(?<![a-z0-9])s00[1-4](?![0-9])")
-AUDIO_LOCK = re.compile(r"(?i)(?:^|[/_.-])(?:audio(?![-_]?free(?:[/_.-]|$))|voice|bgm|sound|music)")
+STORY_LOCK = re.compile(r"(?i)(?<![a-z0-9])(?:s00[1-4]|st004)(?![0-9])")
+AUDIO_LOCK = re.compile(r"(?i)(?:^|[/_.-])(?:audio(?![-_]?free(?:[/_.-]|$))|voice|bgm|sound|music|sfx|tts)")
 AUDIO_FORMAT = re.compile(r"(?i)\.(?:mp3|wav|ogg|m4a|aac|flac|mid|midi)$")
 GUARD_LOCK = re.compile(r"^(?:scripts/qa_guard/|\.github/workflows/qa-guard-free\.yml$|docs/approved/)", re.I)
 EARLY_IMAGE = re.compile(r"(?i)^images/(?:00[1-4])/")
