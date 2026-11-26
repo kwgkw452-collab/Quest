@@ -4,7 +4,7 @@
 
 Enable repeatable, free automated PR checks without adding an AI API subscription or interrupting new Stories. Official Production is `s005-fixed-195-stage-clean-test`; Audio is frozen until after S015. Work drafts and independent QA remain separate. **This pilot neither alters Production nor merges any branch.**
 
-The pilot provides a `pull_request` GitHub Actions job, read-only `GITHUB_TOKEN`, Python standard-library policy, 10+ tests including real local Git fixtures, and an Actions step summary of the exact base/head SHA, PASS/FAIL, and changed-path count.
+The pilot provides a `pull_request` GitHub Actions job, read-only `GITHUB_TOKEN`, Python standard-library policy, 10+ tests including real local Git fixtures, an Actions step summary of the exact base/head SHA, PASS/FAIL, and changed-path count; and a machine-readable JSON repair handoff printed in the CI logs.
 
 ## What is checked automatically
 
@@ -26,8 +26,8 @@ The repository is **public**. GitHub Free supports branch rulesets for public re
 1. GitHub repository **Settings → Rules → Rulesets → New branch ruleset**; target only `s005-fixed-195-stage-clean-test`.
 2. Require pull requests before merging, block force pushes, and prohibit direct pushes/bypasses where available. Keep independent QA and Director approval separate.
 3. Require the status check `Protect S001-S004 and Audio (no paid API)` after this PR is installed and the check has run against a Production-targeting PR.
-4. Add **Restrict file paths** for critical policy files, at minimum `.github/workflows/qa-guard-free.yml`, `scripts/qa_guard/**/*`, and `docs/approved/**/*`. Extend server-side restrictions to specific frozen S001–S004/Audio paths in existing Production after inventory and test these against new Story file names; do not broadly block `prototype/common-engine-v2-audiofree/**`.
-5. Do not allow automated bypass. To update the guard or a formally approved specification, use a clearly recorded Director-authorized temporary exception and independent QA; restore protection afterward.
+4. **Only if the current GitHub plan/repository Settings offers the restriction without an upgrade**, add **Restrict file paths** for critical policy files, at minimum `.github/workflows/qa-guard-free.yml`, `scripts/qa_guard/**/*`, and `docs/approved/**/*`. Extend server-side restrictions to specific frozen S001–S004/Audio paths in existing Production after inventory and test these against new Story file names; do not broadly block `prototype/common-engine-v2-audiofree/**`.
+5. If **Restrict file paths** is not available on the free plan, do not buy a paid tier merely to enable it. The checks then remain best-effort rather than tamper-proof; enforce PR reviews and required checks, and explicitly record the residual bypass risk. Do not claim the policy is impossible to bypass.\n6. Do not allow automated bypass. To update the guard or a formally approved specification, use a clearly recorded Director-authorized temporary exception and independent QA; restore protection afterward.
 
 **No ruleset or Production setting has been changed.** The controls are not active as merge enforcement until a repository administrator configures them. Ruleset UI details and available features must be verified against the repository's live Settings.
 
@@ -54,3 +54,22 @@ https://docs.github.com/en/actions/reference/security/securely-using-pull_reques
 **Autonomous multi-AI execution and QA-to-Work repair handoff have NOT been installed.** GitHub Actions can trigger deterministic checks for free, but unattended AI execution requires a permitted agent runner and credentials/access, whose free availability has not been established. Existing connected QA automations, where operational, may help monitor PR events; this PR does not configure them.
 
 A successful pilot means **less manual inspection of scope**, not that the whole 1-Story-per-day development pipeline has been automated.
+
+## Machine-readable QA → developer handoff
+
+Each Production-targeting PR now produces a compact JSON payload in the workflow log (headed `QA handoff JSON (exact base/head):`). No separate storage or paid service is used. The object fields include:
+
+- `schema: quest-free-qa-handoff-v1`
+- `base_sha`, `head_sha`, `scope: filename-diff-only`, `changed_count`
+- `status: PASS|FAIL`, array `violations[{path,reasons,action}]`
+- `next_action` for the developer or independent QA
+- `independent_qa: NOT_ASSESSED`, `production_merge: NOT_AUTHORIZED` regardless of scope result
+
+**Design intent:** a separate authorized AI execution process could parse this exact-SHA JSON rather than asking the Director to carry the report manually. **Current status:** the payload generation and parsing tests run; the separate automatic AI task execution is still NOT connected. The existing independent PR monitoring automation may inspect GitHub CI but it does not automatically apply a fix.
+
+Never feed an unverified repository comment or an arbitrary filename into an automated shell command as instructions. The handoff is evidence, not a command execution grant.
+
+## Validation log
+
+- GitHub Actions run `45805073491`, candidate SHA `c94ab6bc6480ee634a8b2e225876d195b8eacb3d`: 15 offline tests passed, including a temporary Git repository checking that both PASS and FAIL reports are strict JSON and preserve independent-QA/Director authority.
+- Production remains unchanged. Independent QA and branch-rule deployment are still HOLD.
