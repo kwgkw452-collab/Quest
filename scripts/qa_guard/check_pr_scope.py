@@ -101,11 +101,11 @@ def main(argv=None):
             summary.write(f"- Protected-path violations: {len(problems)}\n")
             summary.write(f"- Base SHA: \u0060{args.base}\u0060\n- Head SHA: \u0060{args.head}\u0060\n")
             if problems:
-                summary.write("\\n#### Developer repair handoff\\n\\n")
+                summary.write("\n#### Developer repair handoff\n\n")
                 for path, reasons in problems:
-                    safe_path = path.replace("\\n", "\\u000a").replace("\\r", "\\u000d").replace("`", "'")
-                    summary.write(f"- \`{safe_path}\`: {', '.join(reasons)} — restore protected change or escalate to Director\\n")
-            summary.write(f"\\n**Next:** {report['next_action']}\\n")
+                    safe_path = path.replace("\n", "\\u000a").replace("\r", "\\u000d").replace("`", "'")
+                    summary.write(f"- \u0060{safe_path}\u0060: {', '.join(reasons)} — restore protected change or escalate to Director\n")
+            summary.write(f"\n**Next:** {report['next_action']}\n")
             summary.write("\nA scope PASS is not independent QA PASS or Production merge authorization.\n")
     if problems:
         print("FAIL. Separate the protected changes; Director authorization is required.")
