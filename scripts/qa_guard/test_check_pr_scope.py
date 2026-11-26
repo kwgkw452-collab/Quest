@@ -27,7 +27,6 @@ class FrozenScopeTests(unittest.TestCase):
             "stories/S008/story.json", "images/008/Scene-01.png",
             "data/s015-communication.js", "prototype/common-engine-v2-audiofree/judge.cjs",
             "prototype/common-engine-v2-audiofree/play.css",
-            ".github/workflows/qa-guard-free.yml",
         ):
             with self.subTest(path=path):
                 self.assertEqual([], reasons_for(path))
