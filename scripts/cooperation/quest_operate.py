@@ -34,6 +34,7 @@ def operate(repo,policy,digest,state,*,node=None,response=None,live=False,publis
             worker=propose,fetch=public_runs,fetch_tip=branch_tip):
     history=[]
     try:
+        if not all((policy,digest,state)):raise Hold('MISSING_OPERATE_ARGUMENTS')
         p=load_policy(policy,digest,repo)
         if p["approved_spec"].get("schema")!="quest-v5-story-spec-v1":raise Hold("V9_STORY_SPEC_REQUIRED")
         if any(k not in p["approved_spec"] for k in ("layout","saveContract")):raise Hold("V9_CONTRACT_REQUIRED")
@@ -95,7 +96,9 @@ def main():
     for k in ("source","policy","policy-sha256","state-dir","node","response","qa","trust-file","trust-digest","signers"):a.add_argument("--"+k)
     a.add_argument("--live",action="store_true");a.add_argument("--publish",action="store_true");a.add_argument("--offline",action="store_true")
     x=a.parse_args()
-    out=external(x.out,x.repo)
+    try:out=external(x.out,x.repo)
+    except Hold as exc:
+        a.error(str(exc))
     def read(p):return json.loads(external(p,x.repo).read_text()) if p else None
     try:
         if x.mode=="prepare":r=prepare(read(x.source))
