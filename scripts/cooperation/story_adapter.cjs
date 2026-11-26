@@ -31,7 +31,7 @@ async function check(pack,spec){
  for(let n=0;n<500;n++){
   const e=await runner.advance();
   if(e.type==='end'){
-   if(!same(seen,Object.keys(questions))||!same(scenes,spec.assets))errors.push('FLOW_COVERAGE');
+   if(!same(seen,Object.keys(questions))||!same(scenes,spec.sceneAssets||spec.assets))errors.push('FLOW_COVERAGE');
    return errors;
   }
   if(e.type==='challenge'){
