@@ -4,7 +4,8 @@ import json
 from pathlib import Path
 import subprocess
 import unittest
-from test_run_cycle import RunCycleTests, NODE
+import test_run_cycle as fixture
+NODE = fixture.NODE
 from run_cycle import machine, head
 from package_check import validate
 from qa_gate import canonical, NAMESPACE
@@ -13,7 +14,7 @@ from qa_return import qa_return
 class QAReturnTests(unittest.TestCase):
     # Reuse fixture construction without inheriting or duplicating its tests.
     def setUp(self):
-        self.f = RunCycleTests("test_dirty_tree_holds_without_ai")
+        self.f = fixture.RunCycleTests("test_dirty_tree_holds_without_ai")
         self.f.setUp()
         self.addCleanup(self.f.doCleanups)
         f=self.f
