@@ -1,6 +1,7 @@
 """End-to-end local Git fixture: allowed PR passes, frozen PR fails."""
 import contextlib
 import io
+import json
 import os
 from pathlib import Path
 import subprocess
@@ -67,6 +68,33 @@ class GitGuardIntegrationTests(unittest.TestCase):
             self.assertEqual(1, self.check(head2))
         self.assertIn("Result: **FAIL**", output.read_text(encoding="utf-8"))
 
+    def test_json_handoff_is_deterministic_and_not_a_qa_pass(self):
+        head = self.write("stories/S008/story.json", '{"id":"S008"}\\n')
+        filename = self.root / "qa-handoff.json"
+        with contextlib.redirect_stdout(io.StringIO()):
+            code = main([
+                "--base", self.base, "--head", head,
+                "--report-file", str(filename),
+            ])
+        self.assertEqual(0, code)
+        report = json.loads(filename.read_text(encoding="utf-8"))
+        self.assertEqual("quest-free-qa-handoff-v1", report["schema"])
+        self.assertEqual("PASS", report["status"])
+        self.assertEqual("NOT_ASSESSED", report["independent_qa"])
+        self.assertEqual("NOT_AUTHORIZED", report["production_merge"])
+        self.assertEqual(self.base, report["base_sha"])
+        self.assertEqual(head, report["head_sha"])
+        self.assertEqual([], report["violations"])
+        head2 = self.write("js/AudioManager.js", "unapproved source change\\n")
+        with contextlib.redirect_stdout(io.StringIO()):
+            code = main(["--base", self.base, "--head", head2, "--report-file", str(filename)])
+        self.assertEqual(1, code)
+        report = json.loads(filename.read_text(encoding="utf-8"))
+        self.assertEqual("FAIL", report["status"])
+        self.assertEqual(head2, report["head_sha"])
+        self.assertEqual("js/AudioManager.js", report["violations"][0]["path"])
+        self.assertIn("repair", report["next_action"])
+        
     def test_pre_s005_images_fail(self):
         head = self.write("images/004/Scene-01.png", "placeholder\n")
         self.assertEqual(1, self.check(head))
