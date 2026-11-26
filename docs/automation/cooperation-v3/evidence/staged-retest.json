@@ -1,0 +1,72 @@
+{
+  "schema": "quest-cooperation-execution-v1",
+  "fictional": true,
+  "merge_authorized": false,
+  "independent_qa": "NOT_ASSESSED",
+  "additional_paid_service": false,
+  "events": [
+    {
+      "stage": "validate",
+      "report": {
+        "schema": "quest-fictional-package-result-v1",
+        "head_sha": "6516e9af9f4ffe393ede699c14be0e13ea3296b9",
+        "status": "PASS",
+        "failures": [],
+        "holds": [],
+        "checked_paths": [
+          "tests/cooperation/fictional/package.json",
+          "tests/cooperation/fictional/scene1.js",
+          "tests/cooperation/fictional/assets/box.svg",
+          "tests/cooperation/fictional/helpers.js",
+          "tests/cooperation/fictional/scene2.js"
+        ],
+        "independent_qa": "NOT_ASSESSED",
+        "production_merge": "NOT_AUTHORIZED"
+      }
+    }
+  ],
+  "gate": "INDEPENDENT_QA_PENDING",
+  "target_sha": "6516e9af9f4ffe393ede699c14be0e13ea3296b9",
+  "head_sha": "6516e9af9f4ffe393ede699c14be0e13ea3296b9",
+  "ci_run_id": 45845095767,
+  "ci_url": "https://github.com/kwgkw452-collab/Quest/actions/runs/45845095767",
+  "ci_head_sha": "6516e9af9f4ffe393ede699c14be0e13ea3296b9",
+  "ci_conclusion": "success",
+  "poll_history": [
+    {
+      "schema": "quest-cooperation-execution-v1",
+      "fictional": true,
+      "merge_authorized": false,
+      "independent_qa": "NOT_ASSESSED",
+      "additional_paid_service": false,
+      "events": [
+        {
+          "stage": "validate",
+          "report": {
+            "schema": "quest-fictional-package-result-v1",
+            "head_sha": "6516e9af9f4ffe393ede699c14be0e13ea3296b9",
+            "status": "PASS",
+            "failures": [],
+            "holds": [],
+            "checked_paths": [
+              "tests/cooperation/fictional/package.json",
+              "tests/cooperation/fictional/scene1.js",
+              "tests/cooperation/fictional/assets/box.svg",
+              "tests/cooperation/fictional/helpers.js",
+              "tests/cooperation/fictional/scene2.js"
+            ],
+            "independent_qa": "NOT_ASSESSED",
+            "production_merge": "NOT_AUTHORIZED"
+          }
+        }
+      ],
+      "gate": "INDEPENDENT_QA_PENDING",
+      "target_sha": "6516e9af9f4ffe393ede699c14be0e13ea3296b9",
+      "head_sha": "6516e9af9f4ffe393ede699c14be0e13ea3296b9",
+      "ci_run_id": 45845095767,
+      "ci_url": "https://github.com/kwgkw452-collab/Quest/actions/runs/45845095767",
+      "ci_head_sha": "6516e9af9f4ffe393ede699c14be0e13ea3296b9",
+      "ci_conclusion": "success"
+    }
+  ]
+}

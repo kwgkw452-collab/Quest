@@ -1,0 +1,123 @@
+{
+  "schema": "quest-cooperation-execution-v1",
+  "fictional": true,
+  "merge_authorized": false,
+  "independent_qa": "NOT_ASSESSED",
+  "additional_paid_service": false,
+  "events": [
+    {
+      "stage": "validate",
+      "report": {
+        "schema": "quest-fictional-package-result-v1",
+        "head_sha": "4b8af7628b2ec0d64af9f045e90315929f7b672f",
+        "status": "FAIL",
+        "failures": [
+          {
+            "code": "SCENE_NUMBER",
+            "path": "tests/cooperation/fictional/package.json",
+            "message": "scene count/order differs from fixed numbered scenes"
+          },
+          {
+            "code": "COMMUNICATION_MISSING",
+            "path": "tests/cooperation/fictional/package.json",
+            "message": "scene 1 needs goal and accept conditions"
+          },
+          {
+            "code": "SPEC_MISMATCH",
+            "path": "tests/cooperation/fictional/package.json",
+            "message": "scene 1 communication differs from fixed criteria"
+          },
+          {
+            "code": "SPEC_MISMATCH",
+            "path": "tests/cooperation/fictional/package.json",
+            "message": "scene 1 graphic differs from fixed criteria"
+          },
+          {
+            "code": "SPEC_MISMATCH",
+            "path": "tests/cooperation/fictional/package.json",
+            "message": "scene 1 references differs from fixed criteria"
+          },
+          {
+            "code": "JS_SYNTAX",
+            "path": "tests/cooperation/fictional/scene1.js",
+            "message": "[stdin]:2\nexport const sceneNumber = ;\n                           ^\n\nSyntaxError: Unexpected token ';'\n    at checkSyntax (node:internal/main/check_syntax:84:5)\n    at node:internal/main/check_syntax:45:5\n    at Socket.<anonymous> (node:internal/process/execution:205:5)\n    at Socket.emit (node:events:526:24)\n    at endReadableNT (node:internal/streams/readable:1783:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)\n\nNode.js v24.22.3\n"
+          },
+          {
+            "code": "GRAPHIC_REFERENCE",
+            "path": "tests/cooperation/fictional/assets/missing.svg",
+            "message": "referenced file is absent from commit"
+          },
+          {
+            "code": "FILE_REFERENCE",
+            "path": "tests/cooperation/fictional/missing.js",
+            "message": "referenced file is absent from commit"
+          },
+          {
+            "code": "SPEC_MISMATCH",
+            "path": "tests/cooperation/fictional/scene1.js",
+            "message": "file content differs from fixed SHA-256"
+          }
+        ],
+        "holds": [],
+        "checked_paths": [
+          "tests/cooperation/fictional/package.json",
+          "tests/cooperation/fictional/scene1.js",
+          "tests/cooperation/fictional/scene2.js",
+          "tests/cooperation/fictional/assets/box.svg"
+        ],
+        "independent_qa": "NOT_ASSESSED",
+        "production_merge": "NOT_AUTHORIZED"
+      }
+    },
+    {
+      "stage": "authorize",
+      "decision": {
+        "gate": "REPAIR_RUNNING",
+        "merge_authorized": false,
+        "attempt": 1,
+        "allowed_paths": [
+          "tests/cooperation/fictional/package.json",
+          "tests/cooperation/fictional/scene1.js"
+        ]
+      }
+    },
+    {
+      "stage": "repair",
+      "before_sha": "4b8af7628b2ec0d64af9f045e90315929f7b672f",
+      "after_sha": "add7279a32aedb18ee4cd5a1e743b0e3a706bc78",
+      "proposal_sha256": "e2392ca3a764a5ccd957d7603f4275877d38b1fc25fbbde798add153307be869",
+      "summary": "Restored scene 1’s approved package metadata and repaired the script’s scene number. The fixed SHA-256 remains unverified."
+    },
+    {
+      "stage": "push",
+      "head_sha": "add7279a32aedb18ee4cd5a1e743b0e3a706bc78",
+      "branch": "automation/cooperation-v3-live-fixture"
+    },
+    {
+      "stage": "validate",
+      "report": {
+        "schema": "quest-fictional-package-result-v1",
+        "head_sha": "add7279a32aedb18ee4cd5a1e743b0e3a706bc78",
+        "status": "PASS",
+        "failures": [],
+        "holds": [],
+        "checked_paths": [
+          "tests/cooperation/fictional/package.json",
+          "tests/cooperation/fictional/scene1.js",
+          "tests/cooperation/fictional/assets/box.svg",
+          "tests/cooperation/fictional/helpers.js",
+          "tests/cooperation/fictional/scene2.js"
+        ],
+        "independent_qa": "NOT_ASSESSED",
+        "production_merge": "NOT_AUTHORIZED"
+      }
+    }
+  ],
+  "gate": "CI_RETEST_PENDING",
+  "target_sha": "add7279a32aedb18ee4cd5a1e743b0e3a706bc78",
+  "head_sha": "add7279a32aedb18ee4cd5a1e743b0e3a706bc78",
+  "ci_run_id": 45842932315,
+  "ci_url": "https://github.com/kwgkw452-collab/Quest/actions/runs/45842932315",
+  "ci_head_sha": "4b8af7628b2ec0d64af9f045e90315929f7b672f",
+  "ci_conclusion": "failure"
+}
