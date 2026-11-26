@@ -28,6 +28,14 @@ class WorkflowContractTests(unittest.TestCase):
             with self.subTest(path=protected):
                 self.assertTrue(reasons_for(protected))
 
+    def test_both_bootstrap_and_normal_mode_emit_handoff(self):
+        workflow = (ROOT / ".github/workflows/qa-guard-free.yml").read_text(encoding="utf-8")
+        self.assertEqual(2, workflow.count('--report-file "$REPORT_FILE"'))
+        self.assertIn('python3 scripts/qa_guard/coordination.py --machine "$REPORT_FILE"', workflow)
+        self.assertIn("if: always()", workflow)
+        self.assertIn("permissions:\n  contents: read", workflow)
+        self.assertNotIn("merge pull request", workflow.lower())
+
     def test_no_paid_ai_api_or_automation_token(self):
         workflow = (ROOT / ".github/workflows/qa-guard-free.yml").read_text(encoding="utf-8").lower()
         for forbidden in (
