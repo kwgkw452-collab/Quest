@@ -10,7 +10,9 @@ for(const [file,hash] of Object.entries(pins)){
 const {validate}=require(path.join(ref,'schema.cjs'));
 const {judge}=require(path.join(ref,'judge.cjs'));
 const {createRunner}=require(path.join(ref,'runner.cjs'));
-const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
+// JSON object member order is not semantic; arrays remain ordered.
+const canonical=v=>Array.isArray(v)?v.map(canonical):v!==null&&typeof v==='object'?Object.fromEntries(Object.keys(v).sort().map(k=>[k,canonical(v[k])])):v;
+const same=(a,b)=>JSON.stringify(canonical(a))===JSON.stringify(canonical(b));
 async function check(pack,spec){
  const errors=validate(pack);
  if(errors.length)return errors;
