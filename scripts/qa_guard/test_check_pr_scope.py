@@ -35,6 +35,7 @@ class FrozenScopeTests(unittest.TestCase):
         for path in (
             "scripts/qa_guard/check_pr_scope.py",
             ".github/workflows/qa-guard-free.yml",
+            ".github/workflows/qa-guard-trusted.yml",
             "docs/approved/story-specs/S008.json",
         ):
             with self.subTest(path=path):
