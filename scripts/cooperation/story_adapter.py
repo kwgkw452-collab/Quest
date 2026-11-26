@@ -9,6 +9,7 @@ import shutil
 from pathlib import Path
 from package_check import _read, PREFIX
 from package_check import validate as legacy_validate
+from story_contract import check as check_contract
 
 def validate(root, commit, package_path, spec, node_path=None):
     if spec.get("schema") != "quest-v5-story-spec-v1":
@@ -41,6 +42,8 @@ def validate(root, commit, package_path, spec, node_path=None):
                          env={k:v for k,v in os.environ.items() if k not in ("NODE_OPTIONS","NODE_PATH")})
         if p.returncode:raise ValueError("trusted reference runtime failed")
         errors=json.loads(p.stdout)
+        if not errors:
+            errors.extend(check_contract(pack,spec))
         for error in errors:fail("STORY_CONTRACT",package_path,error)
         for asset in assets:
             try:
