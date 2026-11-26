@@ -1,0 +1,57 @@
+{
+  "schema": "quest-cooperation-policy-v1",
+  "fictional": true,
+  "cost_mode": "chatgpt_subscription",
+  "task_id": "v3-staged-real-ai",
+  "branch": "automation/cooperation-v3-staged-fixture",
+  "base_sha": "70706cfa8dd7efd404b1fb45ef2ec9254e82ca4f",
+  "initial_head": "347a711e97338960f588291c220a61a32aec28c9",
+  "package_path": "tests/cooperation/fictional/package.json",
+  "allowed_paths": [
+    "tests/cooperation/fictional/package.json",
+    "tests/cooperation/fictional/helpers.js"
+  ],
+  "max_files_per_attempt": 1,
+  "approved_spec": {
+    "schema": "quest-fictional-approved-v1",
+    "fictional": true,
+    "story_id": "FICTIONAL-V3-NOT-A-PRODUCTION-STORY",
+    "scenes": [
+      {
+        "number": 1,
+        "script": "tests/cooperation/fictional/scene1.js",
+        "graphic": "tests/cooperation/fictional/assets/box.svg",
+        "references": [
+          "tests/cooperation/fictional/helpers.js"
+        ],
+        "communication": {
+          "goal": "Find the fictional box.",
+          "accept": [
+            "the fictional box"
+          ]
+        }
+      },
+      {
+        "number": 2,
+        "script": "tests/cooperation/fictional/scene2.js",
+        "graphic": "tests/cooperation/fictional/assets/box.svg",
+        "communication": {
+          "goal": "Return the fictional box.",
+          "accept": [
+            "your fictional box"
+          ]
+        }
+      }
+    ],
+    "file_sha256": {
+      "tests/cooperation/fictional/scene1.js": "d5811386012cc42097f0e1a84406f085c0b9b30f87c386370d036b6bab9362b7",
+      "tests/cooperation/fictional/scene2.js": "db3edd7c5c9e9146ddfba9f2b2226559719e0beb70a125c7bdc5d9d93861b52d",
+      "tests/cooperation/fictional/helpers.js": "8aebadfca7f48f86aa2ba84dd65a319b65ff0a5e4fcf59ecfdf4ab08eec9ba2f"
+    },
+    "approved_source_files": {
+      "tests/cooperation/fictional/scene1.js": "// Fictional cooperation fixture only. Never imported by the game.\nexport const sceneNumber = 1;\nexport const nextScene = 2;\n",
+      "tests/cooperation/fictional/scene2.js": "// Fictional cooperation fixture only. Never imported by the game.\nexport const sceneNumber = 2;\nexport const nextScene = null;\n",
+      "tests/cooperation/fictional/helpers.js": "// Fictional cooperation fixture only. Never imported by the game.\nexport const fixtureLabel = \"FICTIONAL V3\";\n"
+    }
+  }
+}
