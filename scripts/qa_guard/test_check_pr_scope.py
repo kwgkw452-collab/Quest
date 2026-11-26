@@ -9,7 +9,7 @@ class FrozenScopeTests(unittest.TestCase):
         for path in (
             "data/s001-story.js", "stories/S004/story.json",
             "images/001/opening.png", "images/004/camp.png",
-            "js/story-s003.js",
+            "js/story-s003.js", "js/st004-bazaar.js",
         ):
             with self.subTest(path=path):
                 self.assertTrue(reasons_for(path))
@@ -17,7 +17,7 @@ class FrozenScopeTests(unittest.TestCase):
     def test_locked_audio(self):
         for path in (
             "js/AudioManager.js", "assets/audio/bgm.mp3",
-            "js/voice-player.js", "sound/effects.js",
+            "js/voice-player.js", "sound/effects.js", "js/sfx.js", "tts/speech.js",
         ):
             with self.subTest(path=path):
                 self.assertIn("Audio/Voice freeze until S015", reasons_for(path))
