@@ -19,7 +19,7 @@ EARLY_DATA = re.compile(r"(?i)^(?:data|stories|story|scenes)/.*(?:s00[1-4]|00[1-
 
 def reasons_for(path, bootstrap=False):
     """Return reasons a modification needs explicit Director decision."""
-    path = path.replace("\\\\", "/").lstrip("./")
+    path = path.replace("\\\\", "/").removeprefix("./")
     reasons = []
     if STORY_LOCK.search(path) or EARLY_IMAGE.search(path) or EARLY_DATA.search(path):
         reasons.append("S001-S004 freeze")
