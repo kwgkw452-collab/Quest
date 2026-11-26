@@ -19,6 +19,11 @@ EARLY_IMAGE = re.compile(r"(?i)^images/(?:00[1-4])/")
 EARLY_DATA = re.compile(r"(?i)^(?:data|stories|story|scenes)/.*(?:s00[1-4]|00[1-4])(?:[/.\\_-]|$)")
 
 
+def escape_actions(value):
+    """GitHub Actions command-message escaping; reject newline injection."""
+    return value.replace("%", "%25").replace("\r", "%0D").replace("\n", "%0A")
+
+
 def reasons_for(path, bootstrap=False):
     """Return reasons a modification needs explicit Director decision."""
     path = path.replace("\\\\", "/").removeprefix("./")
@@ -84,7 +89,7 @@ def main(argv=None):
             handoff.write("\n")
     print(f"PR scope: {len(paths)} changed paths; {len(problems)} frozen-path violations")
     for path, reasons in problems:
-        print(f"::error title=Frozen production scope::{path}: {', '.join(reasons)}")
+        print(f"::error title=Frozen production scope::{escape_actions(path)}: {', '.join(reasons)}")
     # A deterministic, human-readable handoff in the PR's Actions summary.
     # This file is written by the trusted base guard when deployed.
     summary_path = os.environ.get("GITHUB_STEP_SUMMARY")
