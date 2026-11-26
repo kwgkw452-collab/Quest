@@ -46,7 +46,7 @@ class V5Tests(unittest.TestCase):
             calls.append(task)
             return f.response({self.path:json.dumps(self.pack)})
         r=run(f.root,f.policy_file,f.digest,f.state_dir,runner=proposal,node_path=fixture.NODE)
-        self.assertEqual(r["gate"],"INDEPENDENT_QA_PENDING")
+        self.assertEqual(r["gate"],"INDEPENDENT_QA_PENDING",repr(r))
         self.assertEqual(len(calls),1)
         self.assertEqual(f.git("diff","--name-only",f.initial,r["head_sha"]),self.path)
         self.assertEqual([e["report"]["status"] for e in r["events"] if e["stage"]=="validate"],["FAIL","PASS"])
@@ -63,3 +63,9 @@ class V5Tests(unittest.TestCase):
         self.pack["scenes"]["scene02"]["steps"][-1]={"type":"goto","to":"scene01"}
         f.put(self.path,json.dumps(self.pack));f.commit()
         self.assertEqual(self.check()["status"],"FAIL")
+
+    def test_policy_key_order_is_not_semantic(self):
+        f=self.f
+        spec=json.loads(json.dumps(self.spec,sort_keys=True))
+        result=validate(f.root,f.git("rev-parse","HEAD"),self.path,spec,fixture.NODE)
+        self.assertEqual(result["status"],"PASS",repr(result))
