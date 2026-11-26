@@ -37,7 +37,7 @@ jobs:
           else
             # Bootstrap exception applies ONLY if base lacks the guard.
             cp scripts/qa_guard/check_pr_scope.py /tmp/quest-qa-guard.py
-            python3 /tmp/quest-qa-guard.py --base "$BASE_SHA" --head "$HEAD_SHA" --bootstrap
+            python3 /tmp/quest-qa-guard.py --base "$BASE_SHA" --head "$HEAD_SHA" --bootstrap --report-file "$REPORT_FILE"
           fi
       - name: Route immutable QA handoff to the next role
         if: always()
