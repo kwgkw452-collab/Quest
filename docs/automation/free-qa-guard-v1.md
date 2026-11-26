@@ -1,63 +1,56 @@
-# Free QA Guard V1 — Eigo DE Quest
+# Eigo DE Quest — Zero-cost QA Guard V1
 
-**Goal:** start protecting the project without a new subscription, paid AI API, or repeated manual copying of test commands.
+## Goal and boundaries
 
-## Scope of this pilot
+Enable repeatable, free automated PR checks without adding an AI API subscription or interrupting new Stories. Official Production is `s005-fixed-195-stage-clean-test`; Audio is frozen until after S015. Work drafts and independent QA remain separate. **This pilot neither alters Production nor merges any branch.**
 
-On a pull request **targeting `s005-fixed-195-stage-clean-test`**, GitHub Actions checks the exact base and head commits, detects paths belonging to frozen S001–S004 Stories or Audio/Voice/BGM/Sound, and marks the check **FAIL** if those files changed. New Story paths such as S008 and S015 stay allowed. A small Python unittest suite exercises the gate. The guard uses only Python standard library and GitHub-hosted Actions.
+The pilot provides a `pull_request` GitHub Actions job, read-only `GITHUB_TOKEN`, Python standard-library policy, 10+ tests including real local Git fixtures, and an Actions step summary of the exact base/head SHA, PASS/FAIL, and changed-path count.
 
-This is the **first automated, deterministic check**, **not** automated multi-AI programming or independent QA certification. It does not certify accepted dialogue, images, speech behavior, save compatibility, or full Story completion. It does not invoke an AI API, change Production, or auto-merge. Failed checks are visible in PR Actions and do not require new manual comments.
+## What is checked automatically
 
-## Safety and activation
+- S001–S004 source and images, including files with those episode IDs
+- Audio/Voice/BGM/Sound sources and audio file formats
+- Approved specification folder `docs/approved/` and the guard's source/workflow files
+- Ordinary new Story files (e.g. S008 and later) remain allowed
+- Git comparisons use exact `pull_request.base.sha` and `pull_request.head.sha`, not a floating branch name
+- Findings are visible in GitHub Actions with error annotations and a readable step summary
 
-- This Draft PR **must not be merged without independent QA and Director authorization**.
-- An Actions failure is a warning, not a hard merge ban unless repository admins configure **branch protection or repository rulesets** to require the named check **Protect S001-S004 and Audio (no paid API)**. Direct pushes also require branch protection. GitHub may have plan-specific restrictions on rulesets, so verify current available controls instead of assuming enforcement.
-- During the very first installation PR, the proposed guard runs from the PR branch; **after installation**, the workflow deliberately runs the guard loaded from the *base SHA*, preventing a future PR from silently weakening only the Python guard. Admin-controlled protection of workflow/guard changes is still recommended because editing the workflow itself can bypass checks if not protected.
-- This guard is not a replacement for independent QA or Director sign-off.
-- Public repository GitHub-hosted standard Actions are generally provided at no charge; monitor GitHub billing and do not enable paid runners or external AI APIs. No secret tokens are requested.
+**This checks file-path scope, not Story correctness or semantic changes to generic engine files.** It does not provide independent QA PASS, automated AI coding or automatic repair. An Actions FAIL *by itself* does not enforce a merge ban.
 
-## No interruption of existing work
+## Critical hardening requirement: GitHub ruleset
 
-PR #40 remains an independent Draft development/QA candidate. This pilot branch starts from the official Production baseline, **does not touch PR #40**, and changes only this workflow, guard script, tests and documentation. It is not a new Engine V2 candidate and should not cause a redesign or delay S008 Story production.
+A `pull_request` check runs workflow code from the proposed merge result. Consequently, a malicious or mistaken PR could change the workflow itself. The checker reports changes to its own files, but **cannot reliably protect itself alone**.
 
-## Next phase, only if this pilot passes
+The repository is **public**. GitHub Free supports branch rulesets for public repositories, including **required status checks**, **require a pull request**, **prevent direct pushes**, and **restrict file paths**. Thus an administrator can apply a **server-enforced repository ruleset** to Production independently of the PR's submitted workflow:
 
-Add actual source-of-truth rules per Story (question IDs, explicit ACCEPT/REJECT/UNKNOWN examples, assets, expected ending flags), version them alongside approved Director decisions, and automatically generate focused per-Story CI tests. AI implementation and independent AI QA orchestration are **not installed by this PR**; permission and cost must be reviewed separately.
+1. GitHub repository **Settings → Rules → Rulesets → New branch ruleset**; target only `s005-fixed-195-stage-clean-test`.
+2. Require pull requests before merging, block force pushes, and prohibit direct pushes/bypasses where available. Keep independent QA and Director approval separate.
+3. Require the status check `Protect S001-S004 and Audio (no paid API)` after this PR is installed and the check has run against a Production-targeting PR.
+4. Add **Restrict file paths** for critical policy files, at minimum `.github/workflows/qa-guard-free.yml`, `scripts/qa_guard/**/*`, and `docs/approved/**/*`. Extend server-side restrictions to specific frozen S001–S004/Audio paths in existing Production after inventory and test these against new Story file names; do not broadly block `prototype/common-engine-v2-audiofree/**`.
+5. Do not allow automated bypass. To update the guard or a formally approved specification, use a clearly recorded Director-authorized temporary exception and independent QA; restore protection afterward.
 
-## Verified November 26, 2026
+**No ruleset or Production setting has been changed.** The controls are not active as merge enforcement until a repository administrator configures them. Ruleset UI details and available features must be verified against the repository's live Settings.
 
-- Repository metadata reports `visibility: public` and the official Production branch remains `s005-fixed-195-stage-clean-test`.
-- The original PR #41 Actions job `45799426272` completed successfully. Its log showed an exact PR-base/head diff of four files and four offline guard tests passing.
-- Following audit we extended the guard to protect future changes to the guard workflow, its source code and `docs/approved/`, while allowing the one-time installation using `--bootstrap` **only when the exact PR base has no guard**. Subsequent requests load the **base SHA's guard source**, not the contributor's modified checker.
-- Audio-free prototype paths are not incorrectly blocked just because they contain `audiofree` or `audio-free`; changing a real Audio source file or audio-format asset remains a freeze violation.
-- These checks are **file path protections**, not a semantic guarantee that generic code cannot affect Audio or previously published Stories.
+References:
+- https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/creating-rulesets-for-a-repository
+- https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/available-rules-for-rulesets
 
-## GitHub Free activation (admin operation, not done by this PR)
+## Why we do not use pull_request_target
 
-The repository is public, and standard GitHub-hosted GitHub Actions are free. A public GitHub Free repository can also use branch protection/rulesets. An administrator should inspect **Settings → Rules → Rulesets** (or Branches) and set a ruleset specifically targeting `s005-fixed-195-stage-clean-test`:
+GitHub announced an upcoming **December 2, 2026** default security policy enforcement for `pull_request_target` on affected public repositories. That event also runs in a more privileged trust context. The pilot therefore deliberately uses the ordinary read-only `pull_request` workflow plus GitHub's independent server-side ruleset rather than relying on a future-blocked privileged event. Relevant GitHub advisory:
+https://docs.github.com/en/actions/reference/security/securely-using-pull_request_target
 
-1. Require a pull request before merging; prohibit direct pushes; apply to admins where available.
-2. Require the status check `Protect S001-S004 and Audio (no paid API)` from the installed Free QA Guard workflow; make sure the check has first run on a PR targeting Production.
-3. Keep independent QA verification and Director approval as **separate explicit responsibilities**. A machine PASS does not certify Story quality. Human reviewers can be required where repository roles make that useful.
-4. Disable bypass allowances except for explicitly authorized incident recovery, and avoid making these changes until Director approval.
+## Cost and rollout
 
-**Important:** GitHub branch/ruleset configuration itself has NOT been changed. Without these settings, an Actions FAIL is observable but does not reliably block an administrator or direct push. Do not present the system as a fully automated multi-agent system.
+- Public repository; standard GitHub-hosted Actions are free, under GitHub's current public repository policies.
+- No new SaaS subscription, paid runner, LLM API, external secrets or agent execution token.
+- This PR remains **Draft**; independent QA and Director approval are required to install it on Production.
+- Do not enable a premium service or billing setting automatically.
+- Once installed, the guard will run on future PRs **targeting Production**. Stacked draft PRs that target other feature branches are outside the automatic check until a Production-targeting candidate is opened.
+- Existing PR #40 is untouched. New S008+ Story production can continue in parallel; no redesign or Audio work is authorized.
 
-**Zero-cost boundary:** no additional provider subscription, AI API, premium runner, paid marketplace app, or new secrets. GitHub Free standard runners for this PUBLIC repository; plan/repo visibility changes require reassessment. An AI that writes fixes automatically would need an independently authorized, budgeted execution route and is intentionally excluded from V1.
+## What remains unimplemented
 
-## Trusted-base CI security improvement (November 26, 2026)
+**Autonomous multi-AI execution and QA-to-Work repair handoff have NOT been installed.** GitHub Actions can trigger deterministic checks for free, but unattended AI execution requires a permitted agent runner and credentials/access, whose free availability has not been established. Existing connected QA automations, where operational, may help monitor PR events; this PR does not configure them.
 
-A second workflow `.github/workflows/qa-guard-trusted.yml` runs on **`pull_request_target`**. Once this PR is installed in Production, its workflow definition and checkout are resolved from **the trusted Production base**, not the submitted branch. It fetches the PR's GitHub read-only head ref for a name-only diff, validates the fetched SHA matches the event's expected SHA, and executes **only the guard and tests from the base checkout**, never an untrusted PR script.
-
-This avoids the central limitation of the initial `pull_request` workflow, where a PR can also edit its own CI workflow file. The initial `pull_request` job stays as an unprivileged bootstrap/fast check; the **trusted check must be the required branch rule** once this pilot is installed. The trusted workflow will not run on PR #41 itself because it is not yet present in the Production base; its static contract is regression-tested now, but its live activation must be checked after the Director authorizes installation.
-
-**Required GitHub rule check name:** `Trusted Production frozen-scope check`. Do not rely solely on `Protect S001-S004 and Audio (no paid API)`, the less-trusted bootstrap check. Both jobs use only GitHub-hosted Ubuntu, local Python, and `contents: read` permissions.
-
-Any change to either workflow, `scripts/qa_guard/`, or `docs/approved/` intentionally fails the guard after bootstrap. Thus updates to the guard itself require explicit administrative exception and independent review, not a silent PR edit. This is a security property, not a promise that routine updates will pass without maintenance.
-
-## Deliberate limits of V1
-
-- The path policy checks changed **filenames**, not semantically equivalent changes to generic files, runtime imports, browser behavior, or Story dialogue. Independent QA remains necessary.
-- The trusted check is not active until the workflow is installed on the Production branch and a GitHub admin makes it a required status check. **No branch/ruleset configuration is changed here.**
-- Rulesets and approval restrictions must be checked on the actual repository Settings screen; no automatic Production merge is requested.
-- No AI review/fix scheduler or agent-to-agent handoff is installed. Without an authorized agent runtime, claiming an autonomous AI relay would be inaccurate.
+A successful pilot means **less manual inspection of scope**, not that the whole 1-Story-per-day development pipeline has been automated.
