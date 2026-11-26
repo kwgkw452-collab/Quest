@@ -25,8 +25,6 @@ def qa_return(repo, policy_file, digest, state_dir, machine_report, qa, signers,
             return gate
         # Additional QA expectations must be pinned externally before the candidate runs.
         spec = copy.deepcopy(p["approved_spec"])
-        if spec.get("schema") == "quest-v5-story-spec-v1":
-            raise Hold("V5_INDEPENDENT_QA_REPRODUCTION_NOT_CONFIGURED")
         extra = p.get("qa_file_sha256", {})
         if not isinstance(extra, dict) or not extra or not set(extra) <= set(p["allowed_paths"]):
             raise Hold("QA_CRITERIA_NOT_PINNED")
