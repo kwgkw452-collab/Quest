@@ -72,11 +72,11 @@ def main(argv=None):
     summary_path = os.environ.get("GITHUB_STEP_SUMMARY")
     if summary_path:
         with open(summary_path, "a", encoding="utf-8") as fp:
-            fp.write("\\n### QA-to-developer routing (advisory only)\\n")
-            fp.write(f"- Next gate: **{decision['gate']}**\\n")
-            fp.write(f"- Next actor: {decision['next_actor']}\\n")
-            fp.write(f"- Exact head SHA: \`{decision['target_sha']}\`\\n")
-            fp.write("- Production merge authorization: **NOT GRANTED**\\n")
+            fp.write("\n### QA-to-developer routing (advisory only)\n")
+            fp.write(f"- Next gate: **{decision['gate']}**\n")
+            fp.write(f"- Next actor: {decision['next_actor']}\n")
+            fp.write(f"- Exact head SHA: \u0060{decision['target_sha']}\u0060\n")
+            fp.write("- Production merge authorization: **NOT GRANTED**\n")
     return 0
 
 
