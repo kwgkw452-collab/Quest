@@ -121,7 +121,10 @@ def run(repo, policy_file, policy_digest, state_dir, *, runner=propose, node_pat
     events = []
     result = {"schema": "quest-cooperation-execution-v1", "fictional": True,
               "merge_authorized": False, "independent_qa": "NOT_ASSESSED",
-              "additional_paid_service": False, "events": events}
+              "additional_paid_service": False, "events": events,
+              "policy_sha256": policy_digest,
+              "tool_sha256": {name: hashlib.sha256((Path(__file__).parent/name).read_bytes()).hexdigest()
+                              for name in ("run_cycle.py", "controller.py", "package_check.py", "repair_worker.py")}}
     try:
         with c.locked():
             while True:

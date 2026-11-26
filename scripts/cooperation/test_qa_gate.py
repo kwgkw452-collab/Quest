@@ -12,11 +12,18 @@ class PublicQAKeyTests(unittest.TestCase):
         self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup);self.top=Path(self.temp.name)
         self.repo=self.top/'candidate';self.repo.mkdir();self.key=self.top/'fake-qa-key'
         subprocess.run(['ssh-keygen','-q','-t','ed25519','-N','','-f',str(self.key)],check=True,capture_output=True)
+        def git(*args):
+            return subprocess.check_output(['git','-C',str(self.repo),*args],stderr=subprocess.DEVNULL,text=True).strip()
+        git('init','-q');git('config','user.name','QA fixture');git('config','user.email','qa@example.invalid')
+        git('commit','--allow-empty','-qm','base');base=git('rev-parse','HEAD')
+        git('commit','--allow-empty','-qm','target');target=git('rev-parse','HEAD')
+        git('branch','-M','automation/qa-fixture')
+        self.git=git
         self.signers=self.top/'allowed-signers';self.signers.write_text('independent-fixture '+self.key.with_suffix('.pub').read_text())
         self.digest=hashlib.sha256(self.signers.read_bytes()).hexdigest()
-        self.machine={'schema':'quest-cooperation-machine-v1','base_sha':'a'*40,'head_sha':'b'*40,'status':'PASS','violations':[],
+        self.machine={'schema':'quest-cooperation-machine-v1','base_sha':base,'head_sha':target,'status':'PASS','violations':[],
                       'production_merge':'NOT_AUTHORIZED','independent_qa':'NOT_ASSESSED'}
-        self.payload={'schema':'quest-independent-qa-verdict-v1','base_sha':'a'*40,'head_sha':'b'*40,'reviewer':'independent-fixture','verdict':'PASS'}
+        self.payload={'schema':'quest-independent-qa-verdict-v1','base_sha':base,'head_sha':target,'reviewer':'independent-fixture','verdict':'PASS'}
 
     def sign(self,payload=None):
         payload=payload or self.payload;file=self.top/'verdict';file.write_bytes(canonical(payload))
@@ -27,7 +34,7 @@ class PublicQAKeyTests(unittest.TestCase):
 
     def gate(self,qa=None,**kwargs):
         return verify_and_route(self.machine,qa or self.sign(),kwargs.get('signers',self.signers),kwargs.get('digest',self.digest),self.repo,
-                                producer=kwargs.get('producer','creator'),repair_actor='repair')
+                                producer=kwargs.get('producer','creator'),repair_actor='repair',fetch_tip=lambda _:self.git('rev-parse','HEAD'))
 
     def test_public_key_pass_waits_for_director_never_merge(self):
         r=self.gate();self.assertEqual(r['gate'],'DIRECTOR_REVIEW_PENDING');self.assertFalse(r['merge_authorized'])

@@ -13,6 +13,7 @@ import sys
 import tempfile
 
 from controller import decision, route
+from public_github import branch_tip
 
 NAMESPACE = "quest-independent-qa-v1"
 
@@ -21,11 +22,15 @@ def canonical(payload):
     return json.dumps(payload, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode()
 
 
-def verify_and_route(machine, qa, signers, signers_digest, candidate_repo, *, producer, repair_actor):
+def verify_and_route(machine, qa, signers, signers_digest, candidate_repo, *, producer, repair_actor, fetch_tip=branch_tip):
     machine_gate = route(machine)
     if machine_gate["gate"] != "INDEPENDENT_QA_PENDING":
         return machine_gate
     try:
+        current_head = subprocess.check_output(["git", "-C", str(candidate_repo), "rev-parse", "HEAD"], timeout=10).decode().strip()
+        current_branch = subprocess.check_output(["git", "-C", str(candidate_repo), "symbolic-ref", "--short", "HEAD"], timeout=10).decode().strip()
+        if current_head != machine["head_sha"]:
+            return decision("HOLD", "QA_SHA_STALE")
         source = Path(signers).resolve()
         root = Path(candidate_repo).resolve()
         if source == root or root in source.parents:
@@ -55,6 +60,11 @@ def verify_and_route(machine, qa, signers, signers_digest, candidate_repo, *, pr
             return decision("HOLD", "UNKNOWN_QA_SCHEMA")
         if payload.get("base_sha") != machine["base_sha"] or payload.get("head_sha") != machine["head_sha"]:
             return decision("HOLD", "QA_SHA_STALE")
+        if (subprocess.check_output(["git", "-C", str(candidate_repo), "rev-parse", "HEAD"], timeout=10).decode().strip() != current_head
+                or subprocess.check_output(["git", "-C", str(candidate_repo), "symbolic-ref", "--short", "HEAD"], timeout=10).decode().strip() != current_branch):
+            return decision("HOLD", "BRANCH_OR_HEAD_CHANGED_DURING_QA")
+        if fetch_tip(current_branch) != current_head:
+            return decision("HOLD", "REMOTE_HEAD_CHANGED")
         if payload.get("verdict") == "FAIL":
             return decision("QA_REPAIR_REQUIRED", target_sha=machine["head_sha"], reviewer=actor)
         if payload.get("verdict") != "PASS":

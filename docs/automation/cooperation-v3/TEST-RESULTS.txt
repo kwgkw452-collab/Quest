@@ -6,6 +6,13 @@ test_locked_audio (test_check_pr_scope.FrozenScopeTests.test_locked_audio) ... o
 test_locked_story_content (test_check_pr_scope.FrozenScopeTests.test_locked_story_content) ... ok
 test_protect_self_and_director_approved_rules (test_check_pr_scope.FrozenScopeTests.test_protect_self_and_director_approved_rules) ... ok
 test_story_additions_remain_allowed (test_check_pr_scope.FrozenScopeTests.test_story_additions_remain_allowed) ... ok
+test_branch_switch_during_ci_fetch_cannot_forward_old_pass (test_ci_qa_security.CIQAHeadFreshnessTests.test_branch_switch_during_ci_fetch_cannot_forward_old_pass) ... ok
+test_branch_switch_during_signature_verification_invalidates_handoff (test_ci_qa_security.CIQAHeadFreshnessTests.test_branch_switch_during_signature_verification_invalidates_handoff) ... ok
+test_candidate_advance_during_signature_verification_invalidates_handoff (test_ci_qa_security.CIQAHeadFreshnessTests.test_candidate_advance_during_signature_verification_invalidates_handoff) ... ok
+test_ci_success_old_report_is_held_if_live_head_changes_during_execution (test_ci_qa_security.CIQAHeadFreshnessTests.test_ci_success_old_report_is_held_if_live_head_changes_during_execution) ... ok
+test_matching_signed_old_reports_do_not_override_current_head (test_ci_qa_security.CIQAHeadFreshnessTests.test_matching_signed_old_reports_do_not_override_current_head) ... ok
+test_remote_branch_advance_blocks_matching_local_qa_pass (test_ci_qa_security.CIQAHeadFreshnessTests.test_remote_branch_advance_blocks_matching_local_qa_pass) ... ok
+test_remote_branch_advance_does_not_start_ci_repair (test_ci_qa_security.CIQAHeadFreshnessTests.test_remote_branch_advance_does_not_start_ci_repair) ... ok
 test_current_commit_package_against_fixed_fictional_criteria (test_committed_fixture.CommittedFixtureTests.test_current_commit_package_against_fixed_fictional_criteria) ... ok
 test_aborted_attempt_does_not_restart_silently (test_controller.ControllerTests.test_aborted_attempt_does_not_restart_silently) ... ok
 test_bad_state_safe_hold (test_controller.ControllerTests.test_bad_state_safe_hold) ... ok
@@ -110,6 +117,11 @@ test_pending_ci_does_not_start_ai (test_run_from_ci.CIEntryTests.test_pending_ci
 test_stale_ci_does_not_start_ai (test_run_from_ci.CIEntryTests.test_stale_ci_does_not_start_ai) ... ok
 test_success_current_sha_hands_to_qa (test_run_from_ci.CIEntryTests.test_success_current_sha_hands_to_qa) ... ok
 test_unknown_ci_outcome_hold (test_run_from_ci.CIEntryTests.test_unknown_ci_outcome_hold) ... ok
+test_authenticated_qa_fail_returns_to_repair_without_approval (test_wait_handoff.WaitTests.test_authenticated_qa_fail_returns_to_repair_without_approval) ... ok
+test_exhausted_wait_is_hold (test_wait_handoff.WaitTests.test_exhausted_wait_is_hold) ... ok
+test_invalid_limits_rejected (test_wait_handoff.WaitTests.test_invalid_limits_rejected) ... ok
+test_repairs_then_pending_ci_then_hands_to_qa_without_relaunch (test_wait_handoff.WaitTests.test_repairs_then_pending_ci_then_hands_to_qa_without_relaunch) ... ok
+test_unknown_hold_does_not_poll (test_wait_handoff.WaitTests.test_unknown_hold_does_not_poll) ... ok
 test_failed_machine_returns_to_developer (test_coordination.CoordinationTests.test_failed_machine_returns_to_developer) ... ok
 test_false_machine_claim_of_qa_pass_is_rejected (test_coordination.CoordinationTests.test_false_machine_claim_of_qa_pass_is_rejected) ... ok
 test_false_machine_merge_authorization_is_rejected (test_coordination.CoordinationTests.test_false_machine_merge_authorization_is_rejected) ... ok
@@ -132,6 +144,6 @@ test_guard_mutations_are_detected_by_path_rule (test_workflow_contract.WorkflowC
 test_no_paid_ai_api_or_automation_token (test_workflow_contract.WorkflowContractTests.test_no_paid_ai_api_or_automation_token) ... ok
 
 ----------------------------------------------------------------------
-Ran 132 tests in 52.912s
+Ran 144 tests in 58.265s
 
 OK

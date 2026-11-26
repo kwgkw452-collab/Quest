@@ -70,3 +70,13 @@ QA FAILが固定基準の検査で再現できる場合は、同じ修正CLIが�
 ## 費用根拠
 
 QuestはGitHub metadataでpublic確認。standard public runnerの無料条件は[GitHub公式](https://docs.github.com/en/actions/concepts/billing-and-usage)。契約内認証は[OpenAI公式認証案内](https://learn.chatgpt.com/docs/auth?surface=cli)。新規API課金、契約購入、larger/private runner、artifact storage uploadを追加していない。既存契約の使用枠は消費する。請求書を監査したという意味ではない。
+
+## 二段階の実AI修正（追加実証）
+
+[PR45](https://github.com/kwgkw452-collab/Quest/pull/45)の架空JSON閉じ括弧欠落とJS構文エラーを実際のChatGPT契約AIで修正した。固定Policyは1回1ファイル、最大3回。故障SHA347a711e97338960f588291c220a61a32aec28c9 → JSON修正88a0969af6228ed7fe3c80d162ebd52b9c0938de → JS修正6516e9af9f4ffe393ede699c14be0e13ea3296b9。ローカル判定はFAIL→FAIL→PASS。各commitは許可した1ファイルのみ。
+
+[修正前CI失敗](https://github.com/kwgkw452-collab/Quest/actions/runs/45844666530)→[修正後CI132/132成功](https://github.com/kwgkw452-collab/Quest/actions/runs/45845095767)。既存独立QAチャットでも限定実証PASSを確認した。証拠はevidence/staged-*.json。
+
+`--wait-for-ci`を指定すれば、同一process内でpush後のCIも最大10回・60秒間隔で待ってQA待ちまで継続する。新しい自動タスクや常駐サービスは作らない。待機上限、未知障害、無料APIの利用制限はHOLDとして終了し、別タスクを妨げない。
+
+その後の追加安全レビューで、検証中のHEAD/branch変更およびremoteだけが更新された場合をHOLDにした。QAゲートは現在のローカルHEADとGitHub公開branch先端も照合する。制作側ファイルの古いPASSだけでDirector待ちへ進めない。

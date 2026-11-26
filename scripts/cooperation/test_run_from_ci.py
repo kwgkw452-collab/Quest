@@ -13,13 +13,16 @@ class CIEntryTests(unittest.TestCase):
                 "html_url":"https://github.com/example/run/1"}
         self.patches=[patch('run_from_ci.head',return_value=A),patch('run_from_ci.branch',return_value='automation/test'),
                       patch('run_from_ci.load_policy',return_value={'branch':'automation/test'})]
-        for p in self.patches:p.start();self.addCleanup(p.stop)
+        self.head_mock=self.patches[0].start();self.addCleanup(self.patches[0].stop)
+        for p in self.patches[1:]:p.start();self.addCleanup(p.stop)
 
     def run_case(self, report=None, runs=None):
         calls=[]
         def execute(*args,**kwargs):
-            calls.append((args,kwargs));return report or {'gate':'INDEPENDENT_QA_PENDING','merge_authorized':False,'head_sha':A,'events':[]}
-        r=advance('repo','policy','digest','state',fetch=lambda _: [self.r] if runs is None else runs,execute=execute)
+            calls.append((args,kwargs))
+            if report and report.get('head_sha'):self.head_mock.return_value=report['head_sha']
+            return report or {'gate':'INDEPENDENT_QA_PENDING','merge_authorized':False,'head_sha':A,'events':[]}
+        r=advance('repo','policy','digest','state',fetch=lambda _: [self.r] if runs is None else runs,execute=execute,fetch_tip=lambda _:self.head_mock.return_value)
         return r,calls
 
     def test_ci_failure_triggers_execution_and_retest_gate_on_new_sha(self):
