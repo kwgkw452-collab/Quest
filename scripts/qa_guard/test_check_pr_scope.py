@@ -51,6 +51,8 @@ class FrozenScopeTests(unittest.TestCase):
                 self.assertFalse(reasons_for(path), path)
         self.assertTrue(reasons_for("js/AudioManager.js"))
         self.assertTrue(reasons_for("data/sound-effects.js"))
+        self.assertTrue(reasons_for("assets/intro.mp3"))
+        self.assertTrue(reasons_for("resources/signal.wav"))
 
     def test_fail_closed_multiple_paths(self):
         result = evaluate(["images/003/scene.png", "stories/S008/story.json", "js/AudioManager.js"])
