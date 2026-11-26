@@ -2,6 +2,7 @@
 import json
 import re
 import struct
+import zlib
 import subprocess
 import shutil
 from pathlib import Path
@@ -45,6 +46,20 @@ def validate(root, commit, package_path, spec, node_path=None):
                 data=_read(root,commit,asset)
                 if not data.startswith(b"\x89PNG\r\n\x1a\n") or len(data)<33 or data[12:16]!=b"IHDR" or struct.unpack(">II",data[16:24])!=(1560,720):
                     raise ValueError("PNG header must declare 1560x720")
+                offset=8; ended=False; count=0
+                while offset+12<=len(data):
+                    size=struct.unpack(">I",data[offset:offset+4])[0]
+                    end=offset+12+size
+                    if end>len(data):raise ValueError("truncated PNG chunk")
+                    kind=data[offset+4:offset+8]
+                    if zlib.crc32(data[offset+4:end-4])&0xffffffff != struct.unpack(">I",data[end-4:end])[0]:
+                        raise ValueError("invalid PNG CRC")
+                    count+=kind==b"IDAT"
+                    offset=end
+                    if kind==b"IEND":
+                        ended=size==0 and offset==len(data)
+                        break
+                if not ended or not count:raise ValueError("incomplete PNG")
                 checked.append(asset)
             except Exception as exc:fail("GRAPHIC_REFERENCE",asset,str(exc))
         # Safe area requires human visual inspection; dimensions alone are not approval.
