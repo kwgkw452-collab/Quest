@@ -953,7 +953,8 @@
           "never"
         ],
         "rejectPatterns": [
-          "(?:.*\\b(?:do not|never|not|videos?|movies?)\\b.*|.*\\b(?:pictures?|photos?|photographs?)(?: of)? (?:an? |the |some |your )?(?:cars?|trucks?|people|flowers?|dogs?|cats?|buildings?|trains?|trees?|nests?)\\b.*|.*\\b(?:cars?|trucks?|people|flowers?|dogs?|cats?|buildings?|trains?|trees?|nests?) (?:pictures?|photos?|photographs?)\\b.*)"
+          "(?:.*\\b(?:do not|never|not|videos?|movies?)\\b.*|.*\\b(?:pictures?|photos?|photographs?)(?: of)? (?:an? |the |some |your )?(?:cars?|trucks?|people|flowers?|dogs?|cats?|buildings?|trains?|trees?|nests?)\\b.*|.*\\b(?:cars?|trucks?|people|flowers?|dogs?|cats?|buildings?|trains?|trees?|nests?) (?:pictures?|photos?|photographs?)\\b.*)",
+          "(?:(?:do |did |can |could |would |will )?you (?:take|like taking|like to take) (?:[a-z]+ )*(?:pictures?|photos?|photographs?) of (?!(?:[a-z]+ )*birds?$)(?!(?:it|them|that|this|these|those|him|her|an?|the|some|my|your|his|their)$)(?!(?:an?|the|some|my|your|his|their) (?:one|ones|other)$)[a-z]+(?: [a-z]+)*)"
         ],
         "fullPatterns": [
           "(?:(?:(?:do|did) )?you (?:take|like taking|like to take) (?:(?:a|some|many|beautiful|lovely) )?(?:(?:pictures?|photos?|photographs?) of (?:(?:(?:a|the|this|that|these|those|some) )?birds?|them)|bird (?:pictures?|photos?|photographs?)))"
@@ -1022,7 +1023,8 @@
           "never"
         ],
         "rejectPatterns": [
-          "(?:.*\\b(?:do not|never)\\b.*|.*\\b(?:adult|grown up|fully grown|mature) birds?\\b.*|(?:please )?(?:(?:can|could|would|will) you )?look at (?:some |an? |the |this |that |those |these )?(?:trees?|nests?|butterfl(?:y|ies)|cars?|flowers?|(?:bird )?feathers?)(?: please)?|(?:please )?look for .*)"
+          "(?:.*\\b(?:do not|never)\\b.*|.*\\b(?:adult|grown up|fully grown|mature) birds?\\b.*|(?:please )?(?:(?:can|could|would|will) you )?look at (?:some |an? |the |this |that |those |these )?(?:trees?|nests?|butterfl(?:y|ies)|cars?|flowers?|(?:bird )?feathers?)(?: please)?|(?:please )?look for .*)",
+          "(?:(?:please )?(?:(?:can|could|would|will) you )?look at (?!(?:[a-z]+ )*(?:birds?|chicks?)(?: please)?$)(?!(?:it|them|that|this|these|those|him|her|me|an?|the|some)(?: please)?$)(?!(?:[a-z]+ )*(?:one|ones|other|little|baby|small|big|beautiful|blue|red)(?: please)?$)(?:(?:an?|the|this|that|these|those|some) )+[a-z]+(?: [a-z]+)*)"
         ],
         "fullPatterns": [
           "(?:(?:(?:can|could|would|will) you )?look at (?:(?:an?|the|this|that|these|those|some) )?(?:(?:beautiful |little |colorful |blue )?(?:baby birds?|chicks?|bird)|(?:baby |little |young )birds|it))"

@@ -97,11 +97,11 @@ test('Director LOCK: Q6 ribbon and four truncations, Q10 presentation and ASR',(
   [6,'Look at the ribbon.','ACCEPT'],[6,'Look at the','ACCEPT'],[6,'Look at that','ACCEPT'],
   [6,'Please look at the','ACCEPT'],[6,'Please look at that','ACCEPT'],
   [6,'Look at the window.','REJECT'],[6,'Look at the watch.','REJECT'],
-  [6,'Look at that table.','REJECT'],[6,'Look at','UNKNOWN'],[6,'Look at the rib on.','UNKNOWN'],
+  [6,'Look at that table.','REJECT'],[6,'Look at window.','REJECT'],[6,'Look at the other','UNKNOWN'],[6,'Look at','UNKNOWN'],[6,'Look at the rib on.','UNKNOWN'],
   [10,'Here is your box.','ACCEPT'],[10,'This is your book.','ACCEPT'],[10,'Here are your books.','ACCEPT'],
   [10,'I found the box.','REJECT'],[10,'We found your box.','REJECT'],
   [10,'I have the box.','REJECT'],[10,'We got the box.','REJECT'],[10,'I found the book.','REJECT'],
-  [10,'Here is my box.','REJECT'],[10,'Here is your bag.','REJECT'],[10,'I found','UNKNOWN'],
+  [10,'Here is my box.','REJECT'],[10,'Here is your bag.','REJECT'],[10,'I found it.','REJECT'],[10,'I found','UNKNOWN'],
   [10,'This is','UNKNOWN']
  ];
  for(const [n,phrase,expected] of cases)assert.equal(judge(q(n).rule,phrase).decision,expected,'Q'+n+' '+phrase);

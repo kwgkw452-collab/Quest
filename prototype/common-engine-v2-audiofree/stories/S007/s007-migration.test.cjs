@@ -139,12 +139,12 @@ test('all ten S007 Goals distinguish matching intent, contradictions and incompl
 test('S007 target and pronoun interpretations are tied to the current question',()=>{
  const cases={
   2:[['Do you take pictures of them?','ACCEPT'],['Do you take photos of it?','UNKNOWN'],
-     ['Do you take beautiful pictures?','UNKNOWN'],['Do you take pictures of cars?','REJECT'],
+     ['Do you take beautiful pictures?','UNKNOWN'],['Do you take pictures of cars?','REJECT'],['Do you take photos of mountains?','REJECT'],
      ['Do not take pictures of birds.','REJECT'],['Did you take some bird photos?','ACCEPT']],
   4:[['Look at it!','ACCEPT'],['Look at them!','UNKNOWN'],['Look at birds!','UNKNOWN'],
      ['Look at the birds!','ACCEPT'],['Look at the colorful birds!','UNKNOWN'],
      ['Look at the adult birds!','REJECT'],["Don't look at the birds.",'REJECT'],
-     ['Look at the tree.','REJECT'],['Look at the beautiful baby birds.','ACCEPT']]
+     ['Look at the tree.','REJECT'],['Look at the elephant.','REJECT'],['Look at the beautiful baby birds.','ACCEPT']]
  };
  for(const [n,phrases] of Object.entries(cases))for(const [phrase,expected] of phrases){
   assert.equal(judge(pack.challenges['s007.communication.'+n].rule,phrase).decision,expected,'Q'+n+' '+phrase);
