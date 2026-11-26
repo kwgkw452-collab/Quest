@@ -4,12 +4,18 @@
   "story_id": "FICTIONAL-V3-NOT-A-PRODUCTION-STORY",
   "scenes": [
     {
-      "number": 9,
+      "number": 1,
       "script": "tests/cooperation/fictional/scene1.js",
-      "graphic": "tests/cooperation/fictional/assets/missing.svg",
+      "graphic": "tests/cooperation/fictional/assets/box.svg",
       "references": [
-        "tests/cooperation/fictional/missing.js"
-      ]
+        "tests/cooperation/fictional/helpers.js"
+      ],
+      "communication": {
+        "goal": "Find the fictional box.",
+        "accept": [
+          "the fictional box"
+        ]
+      }
     },
     {
       "number": 2,
