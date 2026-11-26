@@ -4,17 +4,23 @@
   "story_id": "FICTIONAL-V3-NOT-A-PRODUCTION-STORY",
   "scenes": [
     {
-      "number": 1,
+      "number": 9,
       "script": "tests/cooperation/fictional/scene1.js",
-      "graphic": "tests/cooperation/fictional/assets/box.svg",
-      "references": ["tests/cooperation/fictional/helpers.js"],
-      "communication": {"goal": "Find the fictional box.", "accept": ["the fictional box"]}
+      "graphic": "tests/cooperation/fictional/assets/missing.svg",
+      "references": [
+        "tests/cooperation/fictional/missing.js"
+      ]
     },
     {
       "number": 2,
       "script": "tests/cooperation/fictional/scene2.js",
       "graphic": "tests/cooperation/fictional/assets/box.svg",
-      "communication": {"goal": "Return the fictional box.", "accept": ["your fictional box"]}
+      "communication": {
+        "goal": "Return the fictional box.",
+        "accept": [
+          "your fictional box"
+        ]
+      }
     }
   ]
 }
