@@ -90,7 +90,17 @@ async function reset(resume){
   const storage=(()=>{try{return window.localStorage;}catch{return null;}})();
   store=api.createSaveStore({storage,key:'quest.v2.test.'+entry.id});
   recognizer=api.createBrowserSpeech({env:window});
-  const savedSnapshot=resume?(store.read()||undefined):undefined;
+  let savedSnapshot=resume?(store.read()||undefined):undefined;
+  if(resume&&!savedSnapshot&&storage){
+   const raw=storage.getItem(api.LEGACY_KEY);
+   if(raw&&JSON.parse(raw).progress?.currentStoryId===entry.id){
+    const mappingResponse=await fetch(new URL('./stories/'+entry.path.replace(/story\.json$/,'legacy-cursors.json').replace(/^\.\//,''),location.href));
+    if(!mappingResponse.ok)throw Error('LEGACY_CURSOR_MAP_FETCH_FAILED');
+    const mapping=await mappingResponse.json();
+    if(epoch!==sessionEpoch)return;
+    savedSnapshot=api.legacySnapshot(storage,data,mapping);
+   }
+  }
   runner=api.createRunner(data,{recognize:recognizer.recognize,cancelSpeech:recognizer.cancel,storage:store,onEvent:(event)=>{if(epoch!==sessionEpoch)return;if(event.type==='scene'&&event.asset){lastSceneAsset=event.asset;setBackdrop(event.asset);}},initialSnapshot:savedSnapshot});
   if(!resume)store.clear();
   view.log.textContent='';view.backdrop.style.backgroundImage='';lastSceneAsset=null;documentCursor=0;documentLanguage='en';

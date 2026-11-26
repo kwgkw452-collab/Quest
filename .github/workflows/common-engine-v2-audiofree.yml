@@ -27,6 +27,14 @@ jobs:
         run: node --test prototype/common-engine-v2-audiofree/runtime.test.cjs prototype/common-engine-v2-audiofree/stories/S007/s007-migration.test.cjs prototype/common-engine-v2-audiofree/stories/legacy-migration.test.cjs prototype/common-engine-v2-audiofree/stories/qa35-judge.test.cjs prototype/common-engine-v2-audiofree/stories/qa38-tristate.test.cjs
       - name: Run isolation and original prototype tests
         run: node --test prototype/common-engine-isolation/check-isolation.test.cjs prototype/common-engine-v2/story-runtime.test.cjs
+      - name: Validate legacy save cursor maps and run compatibility tests
+        run: |
+          node prototype/common-engine-v2-audiofree/stories/generate-legacy-cursors.cjs --check
+          node --test prototype/common-engine-v2-audiofree/legacy-save.test.cjs
+      - name: Verify unchanged legacy Audio and Speech contract
+        run: |
+          node tests/speech-mode-audio-isolation-v1-phase1.test.js
+          node tests/speech-mode-audio-isolation-v1-phase2.test.js
       - name: Reject Story-specific code in common runtime
         run: node prototype/common-engine-v2-audiofree/check-runtime-isolation.cjs
       - name: Rebuild browser bundle
@@ -66,6 +74,8 @@ jobs:
         with:
           name: qa37-s006-graphic-screenshots
           path: ${{ runner.temp }}/qa37-graphic/*.png
+      - name: Resume old Save in Chromium and verify reload and Story switch
+        run: python prototype/common-engine-v2-audiofree/legacy-save-browser.py
       - name: Open immutable HTTPS preview with a mobile Chromium viewport and mock mic
         env:
           PREVIEW_SHA: ${{ github.event.pull_request.head.sha }}

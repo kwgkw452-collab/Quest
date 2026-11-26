@@ -5,7 +5,7 @@ const path=require('node:path');
 const assert=require('node:assert/strict');
 const {inspectSharedSource}=require('../common-engine-isolation/check-isolation.cjs');
 const root=__dirname;
-const runtime=['schema.cjs','judge.cjs','communication.cjs','runner.cjs','speech-browser.cjs','vocabulary-battle.cjs','save.cjs','play.js','play.css'];
+const runtime=['schema.cjs','judge.cjs','communication.cjs','runner.cjs','speech-browser.cjs','vocabulary-battle.cjs','save.cjs','legacy-save.cjs','play.js','play.css'];
 const findings=[];
 for(const filename of runtime){
  const full=path.join(root,filename);
