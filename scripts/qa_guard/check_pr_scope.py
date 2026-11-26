@@ -1,0 +1,66 @@
+#!/usr/bin/env python3
+"""Zero-cost, read-only PR scope guard for Eigo DE Quest.
+
+Always compare the PR base commit and PR head commit. No GitHub write token,
+external service, AI API, or proprietary dependency is required.
+"""
+import argparse
+import re
+import subprocess
+import sys
+from pathlib import PurePosixPath
+
+STORY_LOCK = re.compile(r"(?i)(?<![a-z0-9])s00[1-4](?![0-9])")
+AUDIO_LOCK = re.compile(r"(?i)(audio|voice|bgm|sound|music)")
+EARLY_IMAGE = re.compile(r"(?i)^images/(?:00[1-4])/")
+EARLY_DATA = re.compile(r"(?i)^(?:data|stories|story|scenes)/.*(?:s00[1-4]|00[1-4])(?:[/.\\_-]|$)")
+
+
+def reasons_for(path):
+    """Return reasons a modification needs explicit Director decision."""
+    path = path.replace("\\\\", "/").lstrip("./")
+    reasons = []
+    if STORY_LOCK.search(path) or EARLY_IMAGE.search(path) or EARLY_DATA.search(path):
+        reasons.append("S001-S004 freeze")
+    if AUDIO_LOCK.search(path):
+        reasons.append("Audio/Voice freeze until S015")
+    return reasons
+
+
+def changed_paths(base, head):
+    args = ["git", "diff", "--name-only", "-z", "--no-renames", base, head, "--"]
+    process = subprocess.run(args, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    return [p.decode("utf-8") for p in process.stdout.split(b"\0") if p]
+
+
+def evaluate(paths):
+    failures = []
+    for path in paths:
+        reasons = reasons_for(path)
+        if reasons:
+            failures.append((path, reasons))
+    return failures
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--base", required=True, help="PR base SHA")
+    parser.add_argument("--head", required=True, help="PR head SHA")
+    args = parser.parse_args(argv)
+    if not re.fullmatch(r"[0-9a-f]{40}", args.base) or not re.fullmatch(r"[0-9a-f]{40}", args.head):
+        parser.error("base and head must be complete commit SHAs")
+    paths = changed_paths(args.base, args.head)
+    problems = evaluate(paths)
+    print(f"PR scope: {len(paths)} changed paths; {len(problems)} frozen-path violations")
+    for path, reasons in problems:
+        print(f"::error title=Frozen production scope::{path}: {', '.join(reasons)}")
+    if problems:
+        print("FAIL. Separate the protected changes; Director authorization is required.")
+        return 1
+    print("PASS: no S001-S004 or Audio/Voice paths changed in this diff.")
+    print("Note: this is a path-scope check, not a behavioral QA PASS or Director merge approval.")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
