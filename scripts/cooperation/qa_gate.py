@@ -14,6 +14,8 @@ import tempfile
 
 from controller import decision, route
 from public_github import branch_tip
+from qa_trust import load_trust, check_context
+from controller import Hold
 
 NAMESPACE = "quest-independent-qa-v1"
 
@@ -22,7 +24,7 @@ def canonical(payload):
     return json.dumps(payload, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode()
 
 
-def verify_and_route(machine, qa, signers, signers_digest, candidate_repo, *, producer, repair_actor, fetch_tip=branch_tip):
+def verify_and_route(machine, qa, signers, signers_digest, candidate_repo, *, producer, repair_actor, fetch_tip=branch_tip, trust_file=None, trust_digest=None, policy_digest=None):
     machine_gate = route(machine)
     if machine_gate["gate"] != "INDEPENDENT_QA_PENDING":
         return machine_gate
@@ -41,6 +43,11 @@ def verify_and_route(machine, qa, signers, signers_digest, candidate_repo, *, pr
         if not isinstance(qa, dict) or set(qa) != {"payload", "signature"}:
             return decision("HOLD", "UNAUTHENTICATED_QA")
         payload, signature = qa["payload"], qa["signature"]
+        if trust_file is not None or trust_digest is not None:
+            trust=load_trust(trust_file,trust_digest,candidate_repo)
+            check_context(qa,trust,policy_digest)
+            if (signers_digest,producer,repair_actor)!=(trust['signers_sha256'],trust['producer'],trust['repair_actor']):
+                return decision('HOLD','QA_TRUST_BINDING_MISMATCH')
         actor = payload.get("reviewer")
         if not isinstance(actor, str) or not actor or actor in (producer, repair_actor):
             return decision("HOLD", "QA_SELF_APPROVAL")
@@ -71,6 +78,8 @@ def verify_and_route(machine, qa, signers, signers_digest, candidate_repo, *, pr
             return decision("HOLD", "QA_NOT_PASS")
         return decision("DIRECTOR_REVIEW_PENDING", target_sha=machine["head_sha"], reviewer=actor,
                         note="Verified publisher signature; Director still decides integration")
+    except Hold as exc:
+        return decision('HOLD',str(exc))
     except (OSError, ValueError, KeyError, TypeError, AttributeError, subprocess.SubprocessError):
         return decision("HOLD", "QA_TRUST_NOT_ESTABLISHED")
 
