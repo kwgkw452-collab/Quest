@@ -12,6 +12,7 @@ from urllib.request import Request, urlopen
 
 from run_cycle import run, head, branch, load_policy, machine
 from qa_gate import verify_and_route
+from qa_return import qa_return
 from public_github import branch_tip
 
 REPO = "kwgkw452-collab/Quest"
@@ -66,8 +67,14 @@ def advance(repo, policy, digest, state, *, node=None, publish=False, fetch=publ
         if not reports or not all([signers, signers_digest, producer, repair_actor]):
             result.update(gate="HOLD", reason="QA_TRUST_NOT_ESTABLISHED")
         else:
-            result.update(verify_and_route(machine(reports[-1], p["base_sha"]), qa, signers,
-                                          signers_digest, repo, producer=producer, repair_actor=repair_actor, fetch_tip=fetch_tip))
+            verified = verify_and_route(machine(reports[-1], p["base_sha"]), qa, signers,
+                                        signers_digest, repo, producer=producer, repair_actor=repair_actor, fetch_tip=fetch_tip)
+            if verified["gate"] == "QA_REPAIR_REQUIRED" or (verified["gate"] == "DIRECTOR_REVIEW_PENDING" and p.get("qa_file_sha256")):
+                result.update(qa_return(repo, policy, digest, state, machine(reports[-1], p["base_sha"]),
+                                        qa, signers, signers_digest, producer, repair_actor,
+                                        node=node, publish=publish, fetch_tip=fetch_tip))
+            else:
+                result.update(verified)
     if result.get("gate") != "HOLD" and (branch(repo) != p["branch"] or head(repo) != result.get("head_sha", current)):
         result.update(gate="HOLD", reason="BRANCH_OR_HEAD_CHANGED_DURING_HANDOFF")
     if result.get("gate") != "HOLD" and (publish or result.get("head_sha",current)==current) and fetch_tip(p["branch"]) != result.get("head_sha", current):
@@ -103,11 +110,16 @@ def main():
     a=p.parse_args()
     out=Path(a.out).resolve();root=Path(a.repo).resolve()
     if out==root or root in out.parents:raise SystemExit("Output must be external")
+    consumed_qa = False
     def step():
-        return advance(a.repo,a.policy,a.policy_sha256,a.state_dir,node=a.node,publish=a.publish,
-                  qa=json.loads(Path(a.qa).read_text()) if a.qa else None,
+        nonlocal consumed_qa
+        result = advance(a.repo,a.policy,a.policy_sha256,a.state_dir,node=a.node,publish=a.publish,
+                  qa=json.loads(Path(a.qa).read_text()) if a.qa and not consumed_qa else None,
                   signers=a.qa_signers,signers_digest=a.qa_signers_sha256,
                   producer=a.producer,repair_actor=a.repair_actor)
+        if result.get("gate") == "CI_RETEST_PENDING" and result.get("qa_repair_paths"):
+            consumed_qa = True
+        return result
     try:r=wait_for_handoff(step,polls=a.max_polls) if a.wait_for_ci else step()
     except Exception as exc:r={"gate":"HOLD","reason":str(exc),"merge_authorized":False}
     out.parent.mkdir(parents=True,exist_ok=True);out.write_text(json.dumps(r,ensure_ascii=False,indent=2)+'\n')
