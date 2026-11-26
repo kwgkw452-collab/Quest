@@ -32,6 +32,26 @@ class FrozenScopeTests(unittest.TestCase):
             with self.subTest(path=path):
                 self.assertEqual([], reasons_for(path))
 
+    def test_protect_self_and_director_approved_rules(self):
+        for path in (
+            "scripts/qa_guard/check_pr_scope.py",
+            ".github/workflows/qa-guard-free.yml",
+            "docs/approved/story-specs/S008.json",
+        ):
+            with self.subTest(path=path):
+                self.assertTrue(reasons_for(path))
+                self.assertFalse(reasons_for(path, bootstrap=True))
+
+    def test_freeze_does_not_confuse_audiofree_prototype(self):
+        for path in (
+            "prototype/common-engine-v2-audiofree/play.js",
+            "prototype/common-engine-v2-audio-free/play.css",
+        ):
+            with self.subTest(path=path):
+                self.assertFalse(reasons_for(path), path)
+        self.assertTrue(reasons_for("js/AudioManager.js"))
+        self.assertTrue(reasons_for("data/sound-effects.js"))
+
     def test_fail_closed_multiple_paths(self):
         result = evaluate(["images/003/scene.png", "stories/S008/story.json", "js/AudioManager.js"])
         self.assertEqual(2, len(result))
