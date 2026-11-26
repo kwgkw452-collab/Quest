@@ -93,16 +93,18 @@ def main():
     a.add_argument("mode",choices=["prepare","operate"])
     for k in ("repo","out"):a.add_argument("--"+k,required=True)
     for k in ("source","policy","policy-sha256","state-dir","node","response","qa","trust-file","trust-digest","signers"):a.add_argument("--"+k)
-    a.add_argument("--live",action="store_true");a.add_argument("--publish",action="store_true")
+    a.add_argument("--live",action="store_true");a.add_argument("--publish",action="store_true");a.add_argument("--offline",action="store_true")
     x=a.parse_args()
     out=external(x.out,x.repo)
     def read(p):return json.loads(external(p,x.repo).read_text()) if p else None
     try:
         if x.mode=="prepare":r=prepare(read(x.source))
         else:
+            if x.offline and (x.publish or x.qa):raise Hold("OFFLINE_CANNOT_PUBLISH_OR_VERIFY_QA")
+            network=dict(fetch_tip=lambda _:None,fetch=lambda _:[]) if x.offline else {}
             r=operate(x.repo,x.policy,x.policy_sha256,x.state_dir,node=x.node,response=read(x.response),
                       live=x.live,publish=x.publish,qa=read(x.qa),trust_file=x.trust_file,
-                      trust_digest=x.trust_digest,signers=x.signers)
+                      trust_digest=x.trust_digest,signers=x.signers,**network)
     except Exception as exc:r=decision("HOLD",str(exc))
     out.parent.mkdir(parents=True,exist_ok=True);out.write_text(json.dumps(r,ensure_ascii=False,indent=2)+"\n")
     print(json.dumps({k:v for k,v in r.items() if k not in ("history","request","pack","spec")},ensure_ascii=False))
