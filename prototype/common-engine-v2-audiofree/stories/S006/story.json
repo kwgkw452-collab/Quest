@@ -303,7 +303,8 @@
         "rejectPatterns": [
           "(?:.*\\b(?:do not|not|cannot)\\s+(?:look|check)\\b.*)",
           "(?:.*\\b(?:cart|bus|bag|bird|birds|box|boxes)\\b.*)",
-          "(?:.*\\b(?:watch|watches)\\b.*)"
+          "(?:.*\\b(?:watch|watches)\\b.*)",
+          "(?:(?:please )?(?:(?:can|could|would|will) you )?(?:look at|take a look at|check) (?!(?:[a-z]+ )*ribbons?(?: please)?$)(?!(?:[a-z]+ )*(?:red|rib|rib on)(?: please)?$)(?:(?:the|this|that|these|those|your|my|a|an) )+[a-z]+(?: [a-z]+)*)"
         ]
       }
     },
@@ -484,30 +485,12 @@
       ],
       "rule": {
         "accept": [
-          "I found the box!",
-          "We found the box!",
-          "I found your box!",
-          "We found your box!",
-          "I find the box!",
-          "We find the box!",
           "Here is your box!",
           "This is your box!",
-          "I got the box!",
-          "We got the box!",
-          "I have the box!",
-          "We have the box!",
-          "I have your box!",
-          "We have your box!",
-          "I get the box!",
-          "We get the box!",
-          "I get your box!",
-          "We get your box!",
-          "We've found your box!",
-          "I've got the box!",
           "Here are your boxes!"
         ],
         "fullPatterns": [
-          "(?:(?:i|we) (?:found|find|got|get|have|have found|have got) (?:(?:the|that|this|your|my|our|a|those|these) )*box(?:es)?(?: (?:now|at last|finally))?|(?:here (?:is|are)|this is|these are) (?:(?:the|that|this|your|my|our|a|those|these) )*box(?:es)?|(?:(?:the|that|this|your|my|our|a|those|these) )*box(?:es)? (?:is|are) here)"
+          "(?:(?:(?:here (?:is|are)|this is|these are) (?:(?:the|that|this|your|those|these) )*box(?:es)?|your box(?:es)? (?:is|are) here))"
         ],
         "patternNormalization": "contractions",
         "stripPlease": true,
@@ -531,7 +514,10 @@
           "(?:.*\\b(?:lost|lose|not your|is not|are not|cannot)\\b.*)",
           "(?:.*\\bbooks?\\s+about\\b.*)",
           "(?:\\s*this is my (?:box|boxes|book|books)\\s*)",
-          "(?:.*\\bsomeone else(?: s)?\\s+(?:box|boxes|book|books)\\b.*)"
+          "(?:.*\\bsomeone else(?: s)?\\s+(?:box|boxes|book|books)\\b.*)",
+          "(?:(?:i|we) (?:found|find|got|get|have|have found|have got) (?:(?:the|that|this|your|my|our|a|those|these) )*(?:box|boxes|book|books)(?: (?:now|at last|finally))?(?: please)?)",
+          "(?:(?:please )?(?:here (?:is|are)|this is|these are) (?:my|our|his|her|their) (?:box|boxes|book|books)(?: please)?)",
+          "(?:(?:please )?(?:here (?:is|are)|this is|these are) (?:your |the |a )?(?:bag|cart|suitcase|ribbon)s?(?: please)?)"
         ]
       }
     }

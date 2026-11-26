@@ -42,7 +42,7 @@ for(const id of ['S005','S006']){
    assert.equal(migrated.goalJa,revisedQ10?'これはあなたの箱です。':q.prompt);
    assert.equal(migrated.modelEn,revisedQ10?'This is your box!':q.communicative.expectedUtterance);
    assert.deepEqual(migrated.hints,revisedQ10?['見つけた箱を持ち主に渡すピコ。『これはあなたの箱です。』と伝えるピコ。','『これは』は This is、『あなたの箱』は your box だピコ。','This is your box! と言うピコ。']:q.picoSupport);
-   assert.deepEqual(migrated.rule.accept,q6Recognition?[...q.answers,'Look at the','Look at that','Please look at the','Please look at that']:q.answers);
+   assert.deepEqual(migrated.rule.accept,q6Recognition?[...q.answers,'Look at the','Look at that','Please look at the','Please look at that']:revisedQ10?q.answers.filter(answer=>/^(Here|This)/.test(answer)):q.answers);
   }
   assert.deepEqual(flatNew(p).filter(s=>s.type==='challenge').map(s=>s.id),src.steps.filter(s=>s.type==='question').map(s=>s.questionId));
  });
@@ -65,10 +65,10 @@ for(const id of ['S005','S006']){
  });
  test(id+' all enumerated answer variants pass generic local Judge',()=>{
   const p=pack(id),src=original(id);
-  for(const q of src.questions){for(const phrase of q.answers){assert.equal(judge(p.challenges[q.id].rule,phrase).decision,'ACCEPT',q.id+': '+phrase);}}
+  for(const q of src.questions){for(const phrase of q.answers){assert.equal(judge(p.challenges[q.id].rule,phrase).decision,id==='S006'&&q.id.endsWith('.10')&&!/^(Here|This)/.test(phrase)?'REJECT':'ACCEPT',q.id+': '+phrase);}}
  });
 }
-test('S005 12 separate question calls are faithfully retained; director approval conflict is not silently resolved',()=>{
+test('S005 12 separate question calls are faithfully retained; Director approved 12 questions and Q2 Four',()=>{
  const p=pack('S005'),src=original('S005');assert.equal(src.steps.filter(x=>x.type==='question').length,12);
  assert.equal(flatNew(p).filter(s=>s.type==='challenge').length,12);
 });
@@ -169,7 +169,8 @@ test('S006 grammar parity with legacy predicates with approved corrections on 60
    const sourceAccept=Boolean(legacy.accept(phrase));
    const approvedAsrExtension=({2:['Where is the book?'],3:['Can you show me a book?'],4:['Do you have a book?'],8:['Please find a book'],9:['I found the book']}[i]||[]).includes(phrase);
    const differentBoxQ2=i===1&&['What color is another box?','Can you describe another box?'].includes(phrase);
-   const expected=!differentBoxQ2&&(sourceAccept||approvedAsrExtension);
+   const lockQ10=i===9&&['We have found the boxes now','I found the book'].includes(phrase);
+   const expected=!differentBoxQ2&&!lockQ10&&(sourceAccept||approvedAsrExtension);
    const actual=judge(rule,phrase).decision==='ACCEPT';
    assert.equal(actual,expected,id+' source with approved corrections: '+phrase);
    count++;

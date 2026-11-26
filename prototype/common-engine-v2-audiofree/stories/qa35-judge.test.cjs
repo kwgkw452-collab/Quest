@@ -30,8 +30,9 @@ test('QA35-04: Q4 accepts described boxes in affirmative show me/us requests', (
   ], 'REJECT');
 });
 
-test('QA35-05: Q10 rejects a different box and keeps the approved handover and legacy behavior', () => {
+test('QA35-05: Q10 rejects a different box and keeps the approved handover and rejects legacy discovery', () => {
   assert.equal(challenges['s006.communication.10'].goalJa, 'これはあなたの箱です。');
   expectDecision(10, ['This is another box.', 'This is another book.', 'I found another box.'], 'REJECT');
-  expectDecision(10, ['This is your box.', 'This is your book.', 'I found the box.'], 'ACCEPT');
+  expectDecision(10, ['This is your box.', 'This is your book.'], 'ACCEPT');
+  expectDecision(10, ['I found the box.'], 'REJECT');
 });
