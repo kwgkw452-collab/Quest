@@ -56,6 +56,15 @@ class PackageTests(unittest.TestCase):
     def codes(self):
         return {x["code"] for x in self.check()["failures"]}
 
+    def test_unknown_checker_failure_holds_even_with_known_data_failure(self):
+        del self.package["scenes"][0]["communication"]
+        self.put(self.package_path, json.dumps(self.package))
+        self.commit()
+        result = validate(self.root, self.head, self.package_path, self.spec, node_path="/nonexistent/quest-node")
+        self.assertEqual(result["status"], "HOLD")
+        self.assertTrue(result["holds"])
+        self.assertTrue(result["failures"])
+
     def test_normal_fixture_passes_exact_commit(self):
         r = self.check()
         self.assertEqual(r["status"], "PASS")

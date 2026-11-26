@@ -65,7 +65,7 @@ def validate(root, commit, package_path, approved_spec, node_path=None):
 
     def report():
         return {"schema": "quest-fictional-package-result-v1", "head_sha": commit,
-                "status": "FAIL" if failures else "HOLD" if holds else "PASS",
+                "status": "HOLD" if holds else "FAIL" if failures else "PASS",
                 "failures": failures, "holds": holds, "checked_paths": checked,
                 "independent_qa": "NOT_ASSESSED", "production_merge": "NOT_AUTHORIZED"}
 

@@ -46,6 +46,9 @@ def load_policy(file, digest, repo):
             raise Hold("V3_EXECUTOR_IS_FICTIONAL_ONLY")
     if not p["allowed_paths"] or len(set(p["allowed_paths"])) != len(p["allowed_paths"]):
         raise Hold("INVALID_SCOPE")
+    cap = p.get("max_files_per_attempt", len(p["allowed_paths"]))
+    if type(cap) is not int or not 1 <= cap <= len(p["allowed_paths"]):
+        raise Hold("INVALID_PER_ATTEMPT_SCOPE_LIMIT")
     return p
 
 
@@ -140,12 +143,18 @@ def run(repo, policy_file, policy_digest, state_dir, *, runner=propose, node_pat
                 if gate["gate"] != "REPAIR_RUNNING":
                     result.update(gate)
                     return result
-                task = {"allowed_paths": p["allowed_paths"], "approved_spec": p["approved_spec"],
+                cap = p.get("max_files_per_attempt", len(p["allowed_paths"]))
+                failing_paths = {f["path"] for f in report["failures"]}
+                selected = ([f for f in p["allowed_paths"] if f in failing_paths][:cap]
+                            if "max_files_per_attempt" in p else p["allowed_paths"])
+                if not selected:
+                    raise Hold("FAILURE_OUTSIDE_REPAIR_SCOPE")
+                task = {"allowed_paths": selected, "approved_spec": p["approved_spec"],
                         "failures": report["failures"], "files": {
-                            f: committed_text(repo, current, f) for f in p["allowed_paths"]}}
+                            f: committed_text(repo, current, f) for f in selected}}
                 response = runner(task)
                 load_policy(policy_file, policy_digest, repo)
-                after = commit_proposal(repo, p["branch"], current, response["proposal"], p["allowed_paths"])
+                after = commit_proposal(repo, p["branch"], current, response["proposal"], selected)
                 c.record_repair(current, after)
                 events.append({"stage": "repair", "before_sha": current, "after_sha": after,
                                "proposal_sha256": response.get("proposal_sha256"),

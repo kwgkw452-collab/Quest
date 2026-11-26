@@ -26,3 +26,11 @@
 
 ## 固定事項
 S001〜S004一切変更なし。音響関連は調査も変更もしない。承認済みStory/Graphic/Communicationの再制作なし。全ての架空Packageはtests/cooperation/fictional/だけ。Productionへmergeするコード／権限付与／自動承認なし。Directorだけが最終統合判断を行う。
+
+## 実証到達点
+
+PR43を作成済み。PR44は故障SHA4b8af7628b2ec0d64af9f045e90315929f7b672fから、実ChatGPT提案でadd7279a32aedb18ee4cd5a1e743b0e3a706bc78へ2ファイルだけ修正・push済み。CI45842932315失敗→45843227944成功（99/99）。追加の人による修正操作なし。外部固定Policy SHA256=1799212fa8ebb102de74e3bb9ac101c051369d104e7a7f24e2eafa104399f2fb。実行・再検査JSONをevidence/へ保存。署名用秘密鍵は作成・登録していない（テスト鍵は隔離一時データ）。
+
+独立QAの既存イベント型チャット「Quest 独立PR検証」には、PR44の2ファイル限定実証PASS（対象外23ファイル一致、JS3/3、CI99/99）が記録されていることをread_threadで確認。システム全体の最終QAや正式Story量産PASSとは別。新たなQA依頼の別チャット送信は自動承認レビューで拒否（具体的送信への明示承認不足）されたため、再送・迂回はしていない。
+
+拡張後ローカル132件成功。署名未登録なので機械QAゲートは独立QA待ちを維持。次の実行：max_files_per_attempt=1の別架空branchで実AIの2段階修正を検証し、結果を追記する。state/Policyの再開用コピーはworkspace output/free-ai-cooperation-v3/trusted-state/に保存。ここは候補repo外でありGitHubへ秘密情報をpushしない。
