@@ -22,6 +22,10 @@ jobs:
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
           python3 scripts/cooperation/ci_evidence.py --repo "$GITHUB_WORKSPACE" --base "$BASE_SHA" --head "$HEAD_SHA" --out "$RUNNER_TEMP/quest-evidence"
+      - name: Demonstrate fictional Story repair lifecycle
+        if: always()
+        run: |
+          python3 scripts/cooperation/story_demo.py --out "$RUNNER_TEMP/quest-evidence/story-demo"
       - name: Preserve candidate evidence even when tests fail
         if: always()
         uses: actions/upload-artifact@v4
