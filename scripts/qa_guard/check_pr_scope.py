@@ -8,10 +8,10 @@ import argparse
 import re
 import subprocess
 import sys
-from pathlib import PurePosixPath
 
 STORY_LOCK = re.compile(r"(?i)(?<![a-z0-9])s00[1-4](?![0-9])")
-AUDIO_LOCK = re.compile(r"(?i)(?:^|[/_.-])(?:audio(?!free)|voice|bgm|sound|music)")
+AUDIO_LOCK = re.compile(r"(?i)(?:^|[/_.-])(?:audio(?![-_]?free(?:[/_.-]|$))|voice|bgm|sound|music)")
+GUARD_LOCK = re.compile(r"^(?:scripts/qa_guard/|\\.github/workflows/qa-guard-free\\.yml$|docs/approved/)", re.I)
 EARLY_IMAGE = re.compile(r"(?i)^images/(?:00[1-4])/")
 EARLY_DATA = re.compile(r"(?i)^(?:data|stories|story|scenes)/.*(?:s00[1-4]|00[1-4])(?:[/.\\_-]|$)")
 
@@ -24,6 +24,8 @@ def reasons_for(path):
         reasons.append("S001-S004 freeze")
     if AUDIO_LOCK.search(path):
         reasons.append("Audio/Voice freeze until S015")
+    if GUARD_LOCK.search(path):
+        reasons.append("QA guard or Director-approved rules changed; require independent review")
     return reasons
 
 
