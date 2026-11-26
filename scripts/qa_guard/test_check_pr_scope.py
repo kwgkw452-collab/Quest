@@ -1,7 +1,7 @@
 """Offline regression tests for the no-cost PR guard."""
 import unittest
 
-from check_pr_scope import evaluate, reasons_for
+from check_pr_scope import evaluate, reasons_for, escape_actions
 
 
 class FrozenScopeTests(unittest.TestCase):
@@ -52,6 +52,15 @@ class FrozenScopeTests(unittest.TestCase):
         self.assertTrue(reasons_for("data/sound-effects.js"))
         self.assertTrue(reasons_for("assets/intro.mp3"))
         self.assertTrue(reasons_for("resources/signal.wav"))
+
+    def test_actions_command_injection_is_escaped(self):
+        raw = "images/004/scene%evil\n::warning::forged\r.png"
+        safe = escape_actions(raw)
+        self.assertNotIn("\n", safe)
+        self.assertNotIn("\r", safe)
+        self.assertIn("%25", safe)
+        self.assertIn("%0A", safe)
+        self.assertIn("%0D", safe)
 
     def test_fail_closed_multiple_paths(self):
         result = evaluate(["images/003/scene.png", "stories/S008/story.json", "js/AudioManager.js"])
