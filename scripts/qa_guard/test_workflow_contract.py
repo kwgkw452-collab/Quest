@@ -17,6 +17,7 @@ class WorkflowContractTests(unittest.TestCase):
         self.assertIn("github.event.pull_request.head.sha", workflow)
         self.assertIn("permissions:\n  contents: read", workflow)
         self.assertNotIn("pull_request_target:", workflow)
+        self.assertNotIn("workflow_dispatch:", workflow)
 
     def test_guard_mutations_are_detected_by_path_rule(self):
         for protected in (
