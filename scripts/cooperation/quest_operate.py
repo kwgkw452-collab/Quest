@@ -38,7 +38,7 @@ def operate(repo,policy,digest,state,*,node=None,response=None,live=False,publis
         if p["approved_spec"].get("schema")!="quest-v5-story-spec-v1":raise Hold("V9_STORY_SPEC_REQUIRED")
         if any(k not in p["approved_spec"] for k in ("layout","saveContract")):raise Hold("V9_CONTRACT_REQUIRED")
         if publish and fetch_tip(p["branch"])!=head(repo):raise Hold("REMOTE_HEAD_CHANGED")
-        if qa is not None and (response is not None or live):raise Hold("QA_AND_MACHINE_REPAIR_MIXED")
+        if qa is not None and response is not None:raise Hold("QA_AND_MACHINE_REPAIR_MIXED")
         if qa is not None:
             if not all((trust_file,trust_digest,signers)):raise Hold("QA_TRUST_NOT_ESTABLISHED")
             trust=load_trust(trust_file,trust_digest,repo)
@@ -47,6 +47,8 @@ def operate(repo,policy,digest,state,*,node=None,response=None,live=False,publis
             response=None
             history.append(r)
             gate=r["gate"]
+            if gate=="CI_RETEST_PENDING":
+                return {**r,"history":history}
             if gate=="LOCAL_RETEST_COMPLETE":
                 continue
             if gate=="EXTERNAL_AI_PENDING":
@@ -75,7 +77,10 @@ def operate(repo,policy,digest,state,*,node=None,response=None,live=False,publis
                                       trust_file=trust_file,trust_digest=trust_digest,policy_digest=digest,**args)
             if verified["gate"]=="QA_REPAIR_REQUIRED":
                 # Reuse signed QA return. Without explicit live opt-in no AI is started.
-                return decision("QA_REPAIR_REQUIRED",history=history,**evidence)
+                if not live:return decision("QA_REPAIR_REQUIRED",history=history,**evidence)
+                fixed=qa_return(repo,policy,digest,state,baseline,qa,signers,trust["signers_sha256"],
+                                trust["producer"],trust["repair_actor"],node=node,publish=publish,runner=worker,fetch_tip=fetch_tip)
+                return {**evidence,**fixed,"history":history}
             if verified["gate"]=="DIRECTOR_REVIEW_PENDING" and p.get("qa_file_sha256"):
                 verified=qa_return(repo,policy,digest,state,baseline,qa,signers,trust["signers_sha256"],
                                    trust["producer"],trust["repair_actor"],node=node,publish=False,fetch_tip=fetch_tip)
