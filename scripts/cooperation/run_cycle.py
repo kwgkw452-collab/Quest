@@ -10,7 +10,7 @@ import sys
 import tempfile
 
 from controller import Controller, Hold, route, safe_path
-from package_check import validate
+from story_adapter import validate
 from repair_worker import propose, validate_proposal
 
 
