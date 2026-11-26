@@ -6,6 +6,7 @@ from pathlib import Path
 import subprocess
 import tempfile
 import unittest
+from unittest.mock import patch
 
 from check_pr_scope import main
 
@@ -50,6 +51,21 @@ class GitGuardIntegrationTests(unittest.TestCase):
         head = self.write(".github/workflows/qa-guard-free.yml", "different guard\n")
         self.assertEqual(1, self.check(head))
         self.assertEqual(0, self.check(head, bootstrap=True))
+
+    def test_actions_summary_is_generated_for_both_outcomes(self):
+        head = self.write("stories/S008/story.json", '{"id":"S008"}\\n')
+        output = self.root / "github-summary.md"
+        with patch.dict(os.environ, {"GITHUB_STEP_SUMMARY": str(output)}):
+            self.assertEqual(0, self.check(head))
+        text = output.read_text(encoding="utf-8")
+        self.assertIn("Result: **PASS**", text)
+        self.assertIn("Base SHA:", text)
+        self.assertIn("Head SHA:", text)
+        self.assertIn("independent QA PASS", text)
+        head2 = self.write("resources/intro.wav", "binary fixture\\n")
+        with patch.dict(os.environ, {"GITHUB_STEP_SUMMARY": str(output)}):
+            self.assertEqual(1, self.check(head2))
+        self.assertIn("Result: **FAIL**", output.read_text(encoding="utf-8"))
 
     def test_pre_s005_images_fail(self):
         head = self.write("images/004/Scene-01.png", "placeholder\n")
