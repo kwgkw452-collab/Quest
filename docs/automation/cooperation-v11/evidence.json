@@ -1,0 +1,38 @@
+{
+  "schema": "quest-independent-qa-handoff-v11",
+  "repository": "kwgkw452-collab/Quest",
+  "pr": 48,
+  "base_sha": "70706cfa8dd7efd404b1fb45ef2ec9254e82ca4f",
+  "tested_head_sha": "daf7fbcd095019ac7c0af567662528ce0d608edd",
+  "run_id": 45895995868,
+  "job_id": 140169903106,
+  "ci_url": "https://github.com/kwgkw452-collab/Quest/actions/runs/45895995868/job/140169903106",
+  "tests": {
+    "passed": 169,
+    "failed": 0,
+    "cli_passed": 7
+  },
+  "scope": {
+    "changed_paths": 61,
+    "frozen_violations": 0
+  },
+  "evidence": {
+    "cli": "real subprocess",
+    "git": "real temporary repository",
+    "node": "real reference engine",
+    "ci_job": "real GitHub Actions",
+    "ci_response_inside_cli": "test double",
+    "ai_proposal": "test double",
+    "ssh_signature": "disposable test key",
+    "artifact": "none"
+  },
+  "holds": [
+    "official QA trust root",
+    "actual V10/V11 subscription AI repair",
+    "physical browser and visual safe area",
+    "legacy production save",
+    "real approved Story integration"
+  ],
+  "independent_qa": "NOT_ASSESSED",
+  "merge_authorized": false
+}
