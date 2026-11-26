@@ -81,7 +81,7 @@ def main(argv=None):
     if args.report_file:
         with open(args.report_file, "w", encoding="utf-8") as handoff:
             json.dump(report, handoff, ensure_ascii=False, indent=2, sort_keys=True)
-            handoff.write("\\n")
+            handoff.write("\n")
     print(f"PR scope: {len(paths)} changed paths; {len(problems)} frozen-path violations")
     for path, reasons in problems:
         print(f"::error title=Frozen production scope::{path}: {', '.join(reasons)}")
