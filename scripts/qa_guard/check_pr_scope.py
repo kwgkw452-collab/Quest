@@ -5,6 +5,7 @@ Always compare the PR base commit and PR head commit. No GitHub write token,
 external service, AI API, or proprietary dependency is required.
 """
 import argparse
+import os
 import re
 import subprocess
 import sys
@@ -58,6 +59,19 @@ def main(argv=None):
     print(f"PR scope: {len(paths)} changed paths; {len(problems)} frozen-path violations")
     for path, reasons in problems:
         print(f"::error title=Frozen production scope::{path}: {', '.join(reasons)}")
+    # A deterministic, human-readable handoff in the PR's Actions summary.
+    # This file is written by the trusted base guard when deployed.
+    summary_path = os.environ.get("GITHUB_STEP_SUMMARY")
+    if summary_path:
+        with open(summary_path, "a", encoding="utf-8") as summary:
+            summary.write("### Eigo DE Quest frozen-scope check\\n\\n")
+            summary.write(f"- Result: **{'FAIL' if problems else 'PASS'}**\\n")
+            summary.write(f"- Examined: {len(paths)} changed file paths\\n")
+            summary.write(f"- Protected-path violations: {len(problems)}\\n")
+            summary.write(f"- Base SHA: \`{args.base}\`\\n- Head SHA: \`{args.head}\`\\n")
+            if problems:
+                summary.write("\\nProtected paths require independent review and Director authorization.\\n")
+            summary.write("\\nA scope PASS is not independent QA PASS or Production merge authorization.\\n")
     if problems:
         print("FAIL. Separate the protected changes; Director authorization is required.")
         return 1
