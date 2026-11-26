@@ -27,11 +27,13 @@ jobs:
         run: |
           set -euo pipefail
           git fetch origin "$BASE_SHA" "$HEAD_SHA"
+          export REPORT_FILE="$RUNNER_TEMP/quest-qa-handoff.json"
+          trap 'if [ -f "$REPORT_FILE" ]; then echo "QA handoff JSON (exact base/head):"; cat "$REPORT_FILE"; fi' EXIT
           # Run the approved guard from the BASE if already installed.
           # A PR must not change its own evaluator to evade this check.
           if git cat-file -e "$BASE_SHA:scripts/qa_guard/check_pr_scope.py" 2>/dev/null; then
             git show "$BASE_SHA:scripts/qa_guard/check_pr_scope.py" > /tmp/quest-qa-guard.py
-            python3 /tmp/quest-qa-guard.py --base "$BASE_SHA" --head "$HEAD_SHA"
+            python3 /tmp/quest-qa-guard.py --base "$BASE_SHA" --head "$HEAD_SHA" --report-file "$REPORT_FILE"
           else
             # Bootstrap exception applies ONLY if base lacks the guard.
             cp scripts/qa_guard/check_pr_scope.py /tmp/quest-qa-guard.py
