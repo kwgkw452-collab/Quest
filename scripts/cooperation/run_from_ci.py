@@ -52,6 +52,19 @@ def advance(repo, policy, digest, state, *, node=None, publish=False, fetch=publ
         return {"gate":"HOLD", "reason":"BRANCH_OR_HEAD_CHANGED_BEFORE_EXECUTION", "merge_authorized":False, **evidence}
     if fetch_tip(p["branch"]) != current:
         return {"gate":"HOLD", "reason":"REMOTE_HEAD_CHANGED_BEFORE_EXECUTION", "merge_authorized":False, **evidence}
+    if qa is not None:
+        if latest["conclusion"] != "success":
+            return {"gate":"HOLD","reason":"QA_REQUIRES_SUCCESSFUL_CI","merge_authorized":False, **evidence}
+        if not all([signers, signers_digest, producer, repair_actor]):
+            return {"gate":"HOLD","reason":"QA_TRUST_NOT_ESTABLISHED","merge_authorized":False, **evidence}
+        # Validate signed evidence before any worker can run.
+        baseline = {"schema":"quest-cooperation-machine-v1","base_sha":p["base_sha"],
+                    "head_sha":current,"status":"PASS","violations":[],
+                    "production_merge":"NOT_AUTHORIZED","independent_qa":"NOT_ASSESSED"}
+        verified = verify_and_route(baseline, qa, signers, signers_digest, repo,
+                                    producer=producer, repair_actor=repair_actor, fetch_tip=fetch_tip)
+        if verified["gate"] == "HOLD":
+            return {**verified, **evidence}
     result = execute(repo, policy, digest, state, node_path=node, publish=publish)
     result.update(evidence)
     if result.get("gate") != "HOLD" and (branch(repo) != p["branch"] or head(repo) != result.get("head_sha", current)):
