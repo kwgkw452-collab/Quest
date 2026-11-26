@@ -1,0 +1,44 @@
+name: Free QA Guard — frozen Story and Audio paths
+
+on:
+  pull_request:
+    branches:
+      - s005-fixed-195-stage-clean-test
+    types: [opened, synchronize, reopened, ready_for_review]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  frozen-scope:
+    name: Protect S001-S004 and Audio (no paid API)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out proposed change, with base history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Verify frozen scope on exact PR commits
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          git fetch origin "$BASE_SHA" "$HEAD_SHA"
+          # Run the approved guard from the BASE if already installed.
+          # A PR must not change its own evaluator to evade this check.
+          if git cat-file -e "$BASE_SHA:scripts/qa_guard/check_pr_scope.py" 2>/dev/null; then
+            git show "$BASE_SHA:scripts/qa_guard/check_pr_scope.py" > /tmp/quest-qa-guard.py
+          else
+            cp scripts/qa_guard/check_pr_scope.py /tmp/quest-qa-guard.py
+          fi
+          python3 /tmp/quest-qa-guard.py --base "$BASE_SHA" --head "$HEAD_SHA"
+      - name: Verify guard test coverage
+        run: PYTHONPATH=scripts/qa_guard python3 -m unittest discover -s scripts/qa_guard -p 'test_*.py' -v
+      - name: State approval boundaries
+        run: |
+          echo "This PASS covers path freeze only, not Story correctness or independent QA."
+          echo "Production merge requires independent QA PASS and Director approval."
