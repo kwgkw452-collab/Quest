@@ -27,11 +27,11 @@ test('QA38 S006 ten-question ACCEPT / REJECT / UNKNOWN matrix including approved
  }
  assert.equal(count,57);
 });
-test('QA38 explicitly protects Q2 / Q3 / Q10 another-box distinction and old Q10 HOLD',()=>{
+test('QA38 explicitly protects Q2 / Q3 / Q10 another-box distinction and the Q10 Director LOCK',()=>{
  assert.equal(judge(q(2).rule,'What color is another box?').decision,'REJECT');
  assert.equal(judge(q(3).rule,'Where is another box?').decision,'ACCEPT');
  assert.equal(judge(q(10).rule,'This is another box.').decision,'REJECT');
- assert.equal(judge(q(10).rule,'I found the box.').decision,'ACCEPT'); // preserve old behavior, formal approval HOLD
+ assert.equal(judge(q(10).rule,'I found the box.').decision,'REJECT'); // Director LOCK supersedes the historical expectation
  assert.equal(judge(q(4).rule,'Show us that little box, please.').decision,'ACCEPT');
 });
 test('QA38 exclusion precedence and declaration schema are independent of Story ID',()=>{
@@ -85,9 +85,24 @@ test('Independent QA PR39: all six reported mismatches are corrected without bro
  assert.equal(judge(q(2).rule,'What color is it?').decision,'ACCEPT');
  assert.equal(judge(q(3).rule,'Where is another box?').decision,'ACCEPT');
  assert.equal(judge(q(4).rule,'Show us that little box, please.').decision,'ACCEPT');
- assert.equal(judge(q(6).rule,'Look at the').decision,'ACCEPT'); // preserve existing ASR HOLD boundary
+ assert.equal(judge(q(6).rule,'Look at the').decision,'ACCEPT'); // Director-approved ASR truncation
  assert.equal(judge(q(10).rule,'This is your box.').decision,'ACCEPT');
- assert.equal(judge(q(10).rule,'I found the box.').decision,'ACCEPT'); // legacy HOLD
+ assert.equal(judge(q(10).rule,'I found the box.').decision,'REJECT'); // Director LOCK
  assert.equal(judge(q(10).rule,'This is another box.').decision,'REJECT');
  assert.equal(judge(q(10).rule,'This is').decision,'UNKNOWN');
+});
+
+test('Director LOCK: Q6 ribbon and four truncations, Q10 presentation and ASR',()=>{
+ const cases=[
+  [6,'Look at the ribbon.','ACCEPT'],[6,'Look at the','ACCEPT'],[6,'Look at that','ACCEPT'],
+  [6,'Please look at the','ACCEPT'],[6,'Please look at that','ACCEPT'],
+  [6,'Look at the window.','REJECT'],[6,'Look at the watch.','REJECT'],
+  [6,'Look at that table.','REJECT'],[6,'Look at window.','REJECT'],[6,'Look at the other','UNKNOWN'],[6,'Look at','UNKNOWN'],[6,'Look at the rib on.','UNKNOWN'],
+  [10,'Here is your box.','ACCEPT'],[10,'This is your book.','ACCEPT'],[10,'Here are your books.','ACCEPT'],
+  [10,'I found the box.','REJECT'],[10,'We found your box.','REJECT'],
+  [10,'I have the box.','REJECT'],[10,'We got the box.','REJECT'],[10,'I found the book.','REJECT'],
+  [10,'Here is my box.','REJECT'],[10,'Here is your bag.','REJECT'],[10,'I found it.','REJECT'],[10,'I found','UNKNOWN'],
+  [10,'This is','UNKNOWN']
+ ];
+ for(const [n,phrase,expected] of cases)assert.equal(judge(q(n).rule,phrase).decision,expected,'Q'+n+' '+phrase);
 });

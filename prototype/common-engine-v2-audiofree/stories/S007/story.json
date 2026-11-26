@@ -914,6 +914,9 @@
           "Good evening!",
           "Nice to meet you!",
           "Nice to meet you, Meg!"
+        ],
+        "rejectPatterns": [
+          "(?:(?:goodbye|bye|see you|good night)(?: meg)?)"
         ]
       }
     },
@@ -932,39 +935,16 @@
           "Do you take picture of bird?",
           "Do you take picture of birds?",
           "Do you take a picture of a bird?",
-          "Do you take a picture?",
-          "Do you take pictures?",
           "Do you take photos of birds?",
-          "Do you take photos?",
-          "Do you take a photo?",
           "Did you take pictures of birds?",
           "Did you take a picture of a bird?",
-          "Did you take a picture?",
-          "Did you take pictures?",
-          "Did you take photos?",
           "You take pictures of birds?",
-          "You take pictures?",
-          "You take photos?",
           "Do you take bird pictures?",
           "Do you like taking pictures of birds?",
-          "Do you like to take pictures?",
           "Did you take picture of bird?",
           "Do you take pictures of bird?",
           "Did you take pictures of bird?",
           "Do you take photos of a bird?"
-        ],
-        "orderedGroups": [
-          [
-            "take",
-            "takes",
-            "took"
-          ],
-          [
-            "picture",
-            "pictures",
-            "photo",
-            "photos"
-          ]
         ],
         "exclude": [
           "do not",
@@ -972,11 +952,15 @@
           "dont",
           "never"
         ],
-        "requireAnyWords": [
-          [
-            "you"
-          ]
-        ]
+        "rejectPatterns": [
+          "(?:.*\\b(?:do not|never|not|videos?|movies?)\\b.*|.*\\b(?:pictures?|photos?|photographs?)(?: of)? (?:an? |the |some |your )?(?:cars?|trucks?|people|flowers?|dogs?|cats?|buildings?|trains?|trees?|nests?)\\b.*|.*\\b(?:cars?|trucks?|people|flowers?|dogs?|cats?|buildings?|trains?|trees?|nests?) (?:pictures?|photos?|photographs?)\\b.*)",
+          "(?:(?:do |did |can |could |would |will )?you (?:take|like taking|like to take) (?:[a-z]+ )*(?:pictures?|photos?|photographs?) of (?!(?:[a-z]+ )*birds?$)(?!(?:it|them|that|this|these|those|him|her|an?|the|some|my|your|his|their)$)(?!(?:an?|the|some|my|your|his|their) (?:one|ones|other)$)[a-z]+(?: [a-z]+)*)"
+        ],
+        "fullPatterns": [
+          "(?:(?:(?:do|did) )?you (?:take|like taking|like to take) (?:(?:a|some|many|beautiful|lovely) )?(?:(?:pictures?|photos?|photographs?) of (?:(?:(?:a|the|this|that|these|those|some) )?birds?|them)|bird (?:pictures?|photos?|photographs?)))"
+        ],
+        "patternNormalization": "contractions",
+        "stripPlease": true
       }
     },
     "s007.communication.3": {
@@ -999,9 +983,11 @@
           "We should walk slowly.",
           "Walk slowly.",
           "Slowly, please.",
-          "Let's walk.",
           "Please walk slowly.",
           "Let's move slowly."
+        ],
+        "rejectPatterns": [
+          "(?:.*\\b(?:fast|quickly|faster|run|rush)\\b.*|.*\\b(?:do not|never) (?:walk|go|move) slowly\\b.*)"
         ]
       }
     },
@@ -1022,7 +1008,6 @@
           "Look at a bird!",
           "Look at bird!",
           "Look at the birds!",
-          "Look at birds!",
           "Look at the baby birds!",
           "Look at a baby bird!",
           "Please look at the bird!",
@@ -1037,15 +1022,15 @@
           "dont",
           "never"
         ],
-        "requirePhrases": [
-          "look at"
+        "rejectPatterns": [
+          "(?:.*\\b(?:do not|never)\\b.*|.*\\b(?:adult|grown up|fully grown|mature) birds?\\b.*|(?:please )?(?:(?:can|could|would|will) you )?look at (?:some |an? |the |this |that |those |these )?(?:trees?|nests?|butterfl(?:y|ies)|cars?|flowers?|(?:bird )?feathers?)(?: please)?|(?:please )?look for .*)",
+          "(?:(?:please )?(?:(?:can|could|would|will) you )?look at (?!(?:[a-z]+ )*(?:birds?|chicks?)(?: please)?$)(?!(?:it|them|that|this|these|those|him|her|me|an?|the|some)(?: please)?$)(?!(?:[a-z]+ )*(?:one|ones|other|little|baby|small|big|beautiful|blue|red)(?: please)?$)(?:(?:an?|the|this|that|these|those|some) )+[a-z]+(?: [a-z]+)*)"
         ],
-        "requireAnyWords": [
-          [
-            "bird",
-            "birds"
-          ]
-        ]
+        "fullPatterns": [
+          "(?:(?:(?:can|could|would|will) you )?look at (?:(?:an?|the|this|that|these|those|some) )?(?:(?:beautiful |little |colorful |blue )?(?:baby birds?|chicks?|bird)|(?:baby |little |young )birds|it))"
+        ],
+        "patternNormalization": "contractions",
+        "stripPlease": true
       }
     },
     "s007.communication.5": {
@@ -1073,6 +1058,9 @@
           "Do not go near it.",
           "Don't go near the bird!",
           "Don't touch the bird!"
+        ],
+        "rejectPatterns": [
+          "(?:(?:please )?(?:move|go|walk|run|touch)(?: (?:now|there|closer|the bird|towards? the bird|to the bird|near the bird))?(?: please)?)"
         ]
       }
     },
@@ -1102,6 +1090,9 @@
           "No need to worry.",
           "It will be OK.",
           "You will be OK."
+        ],
+        "rejectPatterns": [
+          "(?:you (?:should|must|need to) (?:worry|be nervous)|(?:please )?(?:worry|be nervous)(?: please)?|(?:it|you|everything) (?:is|are|will be) not (?:ok|okay|all right))"
         ]
       }
     },
@@ -1121,10 +1112,12 @@
           "Stay here, please.",
           "Can you wait here?",
           "Could you wait here?",
-          "Please wait.",
           "Wait here please.",
           "Stay here.",
           "Wait a little here."
+        ],
+        "rejectPatterns": [
+          "(?:.*\\b(?:wait|stay) (?:over there|there|outside|at home|by the door|in the car|somewhere else)\\b.*|.*\\bdo not (?:wait|stay) here\\b.*|(?:please )?(?:leave|go away|move away)(?: please)?)"
         ]
       }
     },
@@ -1149,6 +1142,9 @@
           "Just a minute.",
           "A moment, please.",
           "Please wait a moment."
+        ],
+        "rejectPatterns": [
+          "(?:.*\\b(?:wait|hold on) (?:for )?(?:an? |one |two |three |several |[0-9]+ )?(?:hours?|days?|weeks?)\\b.*|(?:please )?(?:go|leave|come) now(?: please)?|.*\\bdo not wait\\b.*)"
         ]
       }
     },
@@ -1172,6 +1168,9 @@
           "Quiet!",
           "Please lower your voice.",
           "Don't make a noise."
+        ],
+        "rejectPatterns": [
+          "(?:.*\\b(?:speak|talk) (?:up|louder|loudly)\\b.*|(?:please )?(?:shout|make (?:a |some )?noise)(?: please)?|.*\\bdo not be quiet\\b.*)"
         ]
       }
     },
@@ -1205,7 +1204,11 @@
           "I like your photo!",
           "What a nice photo!",
           "How wonderful!",
-          "Such a nice picture!"
+          "Such a nice picture!",
+          "Great shot!"
+        ],
+        "rejectPatterns": [
+          "(?:.*\\b(?:nice|good|great|beautiful|wonderful) (?:camera|cameras|coat|hat|bag|bird|ribbon|lens)\\b.*|.*\\b(?:bad|ugly|terrible|awful) (?:picture|pictures|photo|photos|shot|photograph)\\b.*|.*\\bdo not like (?:the|your|this|that) (?:picture|photo|shot)\\b.*)"
         ]
       }
     }
