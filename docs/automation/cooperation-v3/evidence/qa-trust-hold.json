@@ -1,0 +1,5 @@
+{
+  "gate": "HOLD",
+  "merge_authorized": false,
+  "reason": "QA_TRUST_NOT_ESTABLISHED"
+}

@@ -1,0 +1,35 @@
+{
+  "schema": "quest-cooperation-execution-v1",
+  "fictional": true,
+  "merge_authorized": false,
+  "independent_qa": "NOT_ASSESSED",
+  "additional_paid_service": false,
+  "events": [
+    {
+      "stage": "validate",
+      "report": {
+        "schema": "quest-fictional-package-result-v1",
+        "head_sha": "add7279a32aedb18ee4cd5a1e743b0e3a706bc78",
+        "status": "PASS",
+        "failures": [],
+        "holds": [],
+        "checked_paths": [
+          "tests/cooperation/fictional/package.json",
+          "tests/cooperation/fictional/scene1.js",
+          "tests/cooperation/fictional/assets/box.svg",
+          "tests/cooperation/fictional/helpers.js",
+          "tests/cooperation/fictional/scene2.js"
+        ],
+        "independent_qa": "NOT_ASSESSED",
+        "production_merge": "NOT_AUTHORIZED"
+      }
+    }
+  ],
+  "gate": "INDEPENDENT_QA_PENDING",
+  "target_sha": "add7279a32aedb18ee4cd5a1e743b0e3a706bc78",
+  "head_sha": "add7279a32aedb18ee4cd5a1e743b0e3a706bc78",
+  "ci_run_id": 45843227944,
+  "ci_url": "https://github.com/kwgkw452-collab/Quest/actions/runs/45843227944",
+  "ci_head_sha": "add7279a32aedb18ee4cd5a1e743b0e3a706bc78",
+  "ci_conclusion": "success"
+}
