@@ -32,10 +32,12 @@ jobs:
           # A PR must not change its own evaluator to evade this check.
           if git cat-file -e "$BASE_SHA:scripts/qa_guard/check_pr_scope.py" 2>/dev/null; then
             git show "$BASE_SHA:scripts/qa_guard/check_pr_scope.py" > /tmp/quest-qa-guard.py
+            python3 /tmp/quest-qa-guard.py --base "$BASE_SHA" --head "$HEAD_SHA"
           else
+            # Bootstrap exception applies ONLY if base lacks the guard.
             cp scripts/qa_guard/check_pr_scope.py /tmp/quest-qa-guard.py
+            python3 /tmp/quest-qa-guard.py --base "$BASE_SHA" --head "$HEAD_SHA" --bootstrap
           fi
-          python3 /tmp/quest-qa-guard.py --base "$BASE_SHA" --head "$HEAD_SHA"
       - name: Verify guard test coverage
         run: PYTHONPATH=scripts/qa_guard python3 -m unittest discover -s scripts/qa_guard -p 'test_*.py' -v
       - name: State approval boundaries
