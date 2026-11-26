@@ -20,6 +20,12 @@ async function check(pack,spec){
  if(!same(pack,spec.pack))errors.push('PINNED_STORY_MISMATCH');
  if(errors.length)return errors;
  const questions=pack.challenges||{};
+ const order=spec.challengeOrder||Object.keys(spec.pack.challenges||{});
+ const registered=new Set(spec.assets);
+ const declaredAssets=Object.values(pack.scenes).flatMap(s=>s.steps.filter(t=>t.type==='scene').map(t=>t.asset));
+ if(declaredAssets.some(a=>!registered.has(a))||spec.assets.some(a=>!declaredAssets.includes(a)))errors.push('GRAPHIC_REGISTRY');
+ if(!same(pack.sceneOrder,Object.keys(pack.scenes).sort((a,b)=>pack.sceneOrder.indexOf(a)-pack.sceneOrder.indexOf(b))))errors.push('SCENE_ORDER');
+ if(!same([...order].sort(),Object.keys(questions).sort()))errors.push('CHALLENGE_ORDER');
  for(const [id,q] of Object.entries(questions)){
   if(!/[\u3040-\u30ff\u3400-\u9fff]/.test(q.goalJa)||!/[a-z]/i.test(q.modelEn)||q.hints.some(h=>!/[\u3040-\u30ff\u3400-\u9fff]/.test(h)))errors.push('COMMUNICATION_LANGUAGE:'+id);
   const cases=spec.judgeCases[id]||[];
@@ -33,13 +39,16 @@ async function check(pack,spec){
  for(let n=0;n<500;n++){
   const e=await runner.advance();
   if(e.type==='end'){
-   if(!same(seen,Object.keys(questions))||!same(scenes,spec.sceneAssets||spec.assets))errors.push('FLOW_COVERAGE');
+   if(!same(seen,order)||!same(scenes,spec.sceneAssets||spec.assets))errors.push('FLOW_COVERAGE');
    return errors;
   }
   if(e.type==='challenge'){
    seen.push(e.id);
-   if(e.view.supportStage!==0||!same(e.view.actions,['talk','support','return']))errors.push('QUESTION_RESET');
-   for(const stage of [1,2,3,3])if(runner.support().view.supportStage!==stage)errors.push('SUPPORT_STAGE');
+   if(e.view.goalJa!==questions[e.id].goalJa||e.view.supportStage!==0||!same(e.view.actions,['talk','support','return']))errors.push('QUESTION_RESET');
+   for(const stage of [1,2,3,3]){
+    const view=runner.support().view;
+    if(view.supportStage!==stage||view.supportText!==questions[e.id].hints[stage-1]||view.goalJa!==questions[e.id].goalJa)errors.push('SUPPORT_STAGE');
+   }
    for(const d of ['REJECT','UNKNOWN']){
     utterance=spec.judgeCases[e.id].find(c=>c.decision===d).text;
     const r=await runner.talk();
