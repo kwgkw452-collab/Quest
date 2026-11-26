@@ -44,3 +44,20 @@ The repository is public, and standard GitHub-hosted GitHub Actions are free. A 
 **Important:** GitHub branch/ruleset configuration itself has NOT been changed. Without these settings, an Actions FAIL is observable but does not reliably block an administrator or direct push. Do not present the system as a fully automated multi-agent system.
 
 **Zero-cost boundary:** no additional provider subscription, AI API, premium runner, paid marketplace app, or new secrets. GitHub Free standard runners for this PUBLIC repository; plan/repo visibility changes require reassessment. An AI that writes fixes automatically would need an independently authorized, budgeted execution route and is intentionally excluded from V1.
+
+## Trusted-base CI security improvement (November 26, 2026)
+
+A second workflow `.github/workflows/qa-guard-trusted.yml` runs on **`pull_request_target`**. Once this PR is installed in Production, its workflow definition and checkout are resolved from **the trusted Production base**, not the submitted branch. It fetches the PR's GitHub read-only head ref for a name-only diff, validates the fetched SHA matches the event's expected SHA, and executes **only the guard and tests from the base checkout**, never an untrusted PR script.
+
+This avoids the central limitation of the initial `pull_request` workflow, where a PR can also edit its own CI workflow file. The initial `pull_request` job stays as an unprivileged bootstrap/fast check; the **trusted check must be the required branch rule** once this pilot is installed. The trusted workflow will not run on PR #41 itself because it is not yet present in the Production base; its static contract is regression-tested now, but its live activation must be checked after the Director authorizes installation.
+
+**Required GitHub rule check name:** `Trusted Production frozen-scope check`. Do not rely solely on `Protect S001-S004 and Audio (no paid API)`, the less-trusted bootstrap check. Both jobs use only GitHub-hosted Ubuntu, local Python, and `contents: read` permissions.
+
+Any change to either workflow, `scripts/qa_guard/`, or `docs/approved/` intentionally fails the guard after bootstrap. Thus updates to the guard itself require explicit administrative exception and independent review, not a silent PR edit. This is a security property, not a promise that routine updates will pass without maintenance.
+
+## Deliberate limits of V1
+
+- The path policy checks changed **filenames**, not semantically equivalent changes to generic files, runtime imports, browser behavior, or Story dialogue. Independent QA remains necessary.
+- The trusted check is not active until the workflow is installed on the Production branch and a GitHub admin makes it a required status check. **No branch/ruleset configuration is changed here.**
+- Rulesets and approval restrictions must be checked on the actual repository Settings screen; no automatic Production merge is requested.
+- No AI review/fix scheduler or agent-to-agent handoff is installed. Without an authorized agent runtime, claiming an autonomous AI relay would be inaccurate.
