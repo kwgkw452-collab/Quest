@@ -1,5 +1,6 @@
 """V5 read-only adapter: committed JSON and graphics; no candidate code execution."""
 import json
+import hashlib
 import re
 import struct
 import zlib
@@ -62,6 +63,11 @@ def validate(root, commit, package_path, spec, node_path=None):
                 if not ended or not count:raise ValueError("incomplete PNG")
                 checked.append(asset)
             except Exception as exc:fail("GRAPHIC_REFERENCE",asset,str(exc))
+        for file, expected in spec.get("file_sha256", {}).items():
+            if not isinstance(expected,str) or not re.fullmatch(r"[a-f0-9]{64}",expected):
+                raise ValueError("invalid pinned hash")
+            if hashlib.sha256(_read(root,commit,file)).hexdigest()!=expected:
+                fail("SPEC_MISMATCH",file,"file content differs from fixed SHA-256")
         # Safe area requires human visual inspection; dimensions alone are not approval.
     except Exception as exc:
         holds.append(str(exc))
