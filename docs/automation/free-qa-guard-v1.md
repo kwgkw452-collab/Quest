@@ -73,3 +73,26 @@ Never feed an unverified repository comment or an arbitrary filename into an aut
 
 - GitHub Actions run `45805073491`, candidate SHA `c94ab6bc6480ee634a8b2e225876d195b8eacb3d`: 15 offline tests passed, including a temporary Git repository checking that both PASS and FAIL reports are strict JSON and preserve independent-QA/Director authority.
 - Production remains unchanged. Independent QA and branch-rule deployment are still HOLD.
+
+## Free coordination state machine (implemented)
+
+`scripts/qa_guard/coordination.py` is a read-only **role router** that consumes the exact-SHA machine report, and optionally a future independent QA verdict of schema `quest-independent-qa-verdict-v1`. It neither invokes an AI API nor changes GitHub branches, issues, PRs or QA verdicts.
+
+The current `pull_request` workflow actually calls this program following the scope scan and displays the next role in the GitHub Actions summary. On the first installation, and on all future ordinary PRs, both modes must generate a JSON handoff. The bootstrap and normal branches are checked by an automated workflow-contract test.
+
+| Input | Next machine-reported gate | Intended role |
+|---|---|---|
+| Frozen-scope FAIL | `DEVELOPER_REPAIR` | Production developer fixes the same PR |
+| Frozen-scope PASS, no independent QA evidence | `INDEPENDENT_QA_PENDING` | Independent QA |
+| QA evidence with different head/base SHA | `QA_SHA_STALE` | Independent QA rechecks latest exact SHA |
+| QA FAIL | `QA_REPAIR_REQUIRED` | Production developer |
+| QA HOLD / UNKNOWN | `INDEPENDENT_QA_PENDING` | Independent QA |
+| Matching QA PASS | `DIRECTOR_REVIEW_PENDING` | Director verifies the QA decision and decides separately |
+
+**Every output contains `merge_authorized: false`.** A forged machine report claiming independent QA PASS or Director authorization is rejected. The future QA input is *advisory until the authenticity of its independent source is verified*. Even a matching QA PASS does not trigger a merge or prove the reviewer identity.
+
+This is the most that can be safely automated with a **zero-cost, read-only** GitHub Actions worker and no AI agent execution credentials. Running an actual coding agent on the next role is a separate, unavailable deployment step; it cannot be claimed complete in V1.
+
+### Current evidence
+
+The coordination workflow was tested in GitHub Actions `45805996029`: it printed `INDEPENDENT_QA_PENDING` with `merge_authorized: false` for the exact PR head; **26 Python tests passed**. The bootstrap JSON missing-report defect found in a previous CI run was fixed before that successful run. Machine scope PASS is not independent QA PASS.
