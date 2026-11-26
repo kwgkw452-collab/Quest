@@ -1,0 +1,57 @@
+name: Free QA Guard — frozen Story and Audio paths
+
+on:
+  pull_request:
+    branches:
+      - s005-fixed-195-stage-clean-test
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+
+jobs:
+  frozen-scope:
+    name: Protect S001-S004 and Audio (no paid API)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out proposed change, with base history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Verify frozen scope on exact PR commits
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          git fetch origin "$BASE_SHA" "$HEAD_SHA"
+          export REPORT_FILE="$RUNNER_TEMP/quest-qa-handoff.json"
+          trap 'if [ -f "$REPORT_FILE" ]; then echo "QA handoff JSON (exact base/head):"; cat "$REPORT_FILE"; fi' EXIT
+          # Run the approved guard from the BASE if already installed.
+          # A PR must not change its own evaluator to evade this check.
+          if git cat-file -e "$BASE_SHA:scripts/qa_guard/check_pr_scope.py" 2>/dev/null; then
+            git show "$BASE_SHA:scripts/qa_guard/check_pr_scope.py" > /tmp/quest-qa-guard.py
+            python3 /tmp/quest-qa-guard.py --base "$BASE_SHA" --head "$HEAD_SHA" --report-file "$REPORT_FILE"
+          else
+            # Bootstrap exception applies ONLY if base lacks the guard.
+            cp scripts/qa_guard/check_pr_scope.py /tmp/quest-qa-guard.py
+            python3 /tmp/quest-qa-guard.py --base "$BASE_SHA" --head "$HEAD_SHA" --bootstrap --report-file "$REPORT_FILE"
+          fi
+      - name: Route immutable QA handoff to the next role
+        if: always()
+        run: |
+          set -euo pipefail
+          REPORT_FILE="$RUNNER_TEMP/quest-qa-handoff.json"
+          if [ ! -f "$REPORT_FILE" ]; then
+            echo "::error title=Missing QA report::Guard did not produce a valid handoff"
+            exit 1
+          fi
+          python3 scripts/qa_guard/coordination.py --machine "$REPORT_FILE"
+      - name: Verify guard test coverage
+        run: PYTHONPATH=scripts/qa_guard python3 -m unittest discover -s scripts/qa_guard -p 'test_*.py' -v
+      - name: State approval boundaries
+        run: |
+          echo "This PASS covers path freeze only, not Story correctness or independent QA."
+          echo "Production merge requires independent QA PASS and Director approval."
