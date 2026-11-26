@@ -5,6 +5,7 @@ Always compare the PR base commit and PR head commit. No GitHub write token,
 external service, AI API, or proprietary dependency is required.
 """
 import argparse
+import json
 import os
 import re
 import subprocess
@@ -51,11 +52,36 @@ def main(argv=None):
     parser.add_argument("--base", required=True, help="PR base SHA")
     parser.add_argument("--head", required=True, help="PR head SHA")
     parser.add_argument("--bootstrap", action="store_true", help="First installation only; audited by Director")
+    parser.add_argument("--report-file", help="Write a deterministic QA handoff JSON file")
     args = parser.parse_args(argv)
     if not re.fullmatch(r"[0-9a-f]{40}", args.base) or not re.fullmatch(r"[0-9a-f]{40}", args.head):
         parser.error("base and head must be complete commit SHAs")
     paths = changed_paths(args.base, args.head)
     problems = evaluate(paths, bootstrap=args.bootstrap)
+    report = {
+        "schema": "quest-free-qa-handoff-v1",
+        "scope": "filename-diff-only",
+        "base_sha": args.base,
+        "head_sha": args.head,
+        "status": "FAIL" if problems else "PASS",
+        "independent_qa": "NOT_ASSESSED",
+        "production_merge": "NOT_AUTHORIZED",
+        "changed_count": len(paths),
+        "violations": [
+            {"path": path, "reasons": reasons, "action": "Restore frozen path; request Director exception if necessary"}
+            for path, reasons in problems
+        ],
+        "next_action": (
+            "Developer: repair the reported protected paths on the same PR, then rerun. "
+            "Independent QA must independently verify the exact updated SHA."
+            if problems else
+            "Independent QA: review Story behavior and evidence at this SHA; do not infer independent PASS."
+        ),
+    }
+    if args.report_file:
+        with open(args.report_file, "w", encoding="utf-8") as handoff:
+            json.dump(report, handoff, ensure_ascii=False, indent=2, sort_keys=True)
+            handoff.write("\\n")
     print(f"PR scope: {len(paths)} changed paths; {len(problems)} frozen-path violations")
     for path, reasons in problems:
         print(f"::error title=Frozen production scope::{path}: {', '.join(reasons)}")
@@ -70,7 +96,11 @@ def main(argv=None):
             summary.write(f"- Protected-path violations: {len(problems)}\n")
             summary.write(f"- Base SHA: \u0060{args.base}\u0060\n- Head SHA: \u0060{args.head}\u0060\n")
             if problems:
-                summary.write("\nProtected paths require independent review and Director authorization.\n")
+                summary.write("\\n#### Developer repair handoff\\n\\n")
+                for path, reasons in problems:
+                    safe_path = path.replace("\\n", "\\u000a").replace("\\r", "\\u000d").replace("`", "'")
+                    summary.write(f"- \`{safe_path}\`: {', '.join(reasons)} — restore protected change or escalate to Director\\n")
+            summary.write(f"\\n**Next:** {report['next_action']}\\n")
             summary.write("\nA scope PASS is not independent QA PASS or Production merge authorization.\n")
     if problems:
         print("FAIL. Separate the protected changes; Director authorization is required.")
