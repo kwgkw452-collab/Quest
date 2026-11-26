@@ -1,0 +1,47 @@
+# Trusted-base verification: run only code from the target Production branch.
+# A PR cannot change this workflow's behavior for its own pull_request_target event.
+name: Free QA Guard — trusted Production scope
+
+on:
+  pull_request_target:
+    branches:
+      - s005-fixed-195-stage-clean-test
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+
+jobs:
+  trusted-frozen-scope:
+    name: Trusted Production frozen-scope check
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out trusted target branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Compare immutable PR base and head without executing PR code
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          set -euo pipefail
+          git fetch origin "$BASE_SHA" "refs/pull/$PR_NUMBER/head"
+          ACTUAL_HEAD="$(git rev-parse FETCH_HEAD)"
+          if [ "$ACTUAL_HEAD" != "$HEAD_SHA" ]; then
+            echo "::error title=PR changed::PR HEAD moved during check; re-run on the new SHA"
+            exit 1
+          fi
+          # The guard, workflow and fixtures below are all from the trusted base.
+          python3 scripts/qa_guard/check_pr_scope.py --base "$BASE_SHA" --head "$HEAD_SHA"
+      - name: Test trusted base policy
+        run: |
+          PYTHONPATH=scripts/qa_guard python3 -m unittest discover -s scripts/qa_guard -p 'test_*.py' -v
+      - name: Boundaries
+        run: |
+          echo "PASS means changed-path policy only, not independent QA or Director approval."
+          echo "Production merging is prohibited without separate Director authorization."
