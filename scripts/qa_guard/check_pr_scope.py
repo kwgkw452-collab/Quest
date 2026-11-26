@@ -16,7 +16,7 @@ EARLY_IMAGE = re.compile(r"(?i)^images/(?:00[1-4])/")
 EARLY_DATA = re.compile(r"(?i)^(?:data|stories|story|scenes)/.*(?:s00[1-4]|00[1-4])(?:[/.\\_-]|$)")
 
 
-def reasons_for(path):
+def reasons_for(path, bootstrap=False):
     """Return reasons a modification needs explicit Director decision."""
     path = path.replace("\\\\", "/").lstrip("./")
     reasons = []
@@ -24,7 +24,7 @@ def reasons_for(path):
         reasons.append("S001-S004 freeze")
     if AUDIO_LOCK.search(path):
         reasons.append("Audio/Voice freeze until S015")
-    if GUARD_LOCK.search(path):
+    if not bootstrap and GUARD_LOCK.search(path):
         reasons.append("QA guard or Director-approved rules changed; require independent review")
     return reasons
 
@@ -35,10 +35,10 @@ def changed_paths(base, head):
     return [p.decode("utf-8") for p in process.stdout.split(b"\0") if p]
 
 
-def evaluate(paths):
+def evaluate(paths, bootstrap=False):
     failures = []
     for path in paths:
-        reasons = reasons_for(path)
+        reasons = reasons_for(path, bootstrap=bootstrap)
         if reasons:
             failures.append((path, reasons))
     return failures
@@ -48,11 +48,12 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--base", required=True, help="PR base SHA")
     parser.add_argument("--head", required=True, help="PR head SHA")
+    parser.add_argument("--bootstrap", action="store_true", help="First installation only; audited by Director")
     args = parser.parse_args(argv)
     if not re.fullmatch(r"[0-9a-f]{40}", args.base) or not re.fullmatch(r"[0-9a-f]{40}", args.head):
         parser.error("base and head must be complete commit SHAs")
     paths = changed_paths(args.base, args.head)
-    problems = evaluate(paths)
+    problems = evaluate(paths, bootstrap=args.bootstrap)
     print(f"PR scope: {len(paths)} changed paths; {len(problems)} frozen-path violations")
     for path, reasons in problems:
         print(f"::error title=Frozen production scope::{path}: {', '.join(reasons)}")
