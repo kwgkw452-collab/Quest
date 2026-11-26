@@ -2,7 +2,7 @@
 import copy
 from controller import Controller, Hold, decision
 from run_cycle import head, branch, clean, load_policy, committed_text, commit_proposal, git, machine
-from package_check import validate
+from story_adapter import validate
 from qa_gate import verify_and_route
 from repair_worker import propose
 from public_github import branch_tip
@@ -25,6 +25,8 @@ def qa_return(repo, policy_file, digest, state_dir, machine_report, qa, signers,
             return gate
         # Additional QA expectations must be pinned externally before the candidate runs.
         spec = copy.deepcopy(p["approved_spec"])
+        if spec.get("schema") == "quest-v5-story-spec-v1":
+            raise Hold("V5_INDEPENDENT_QA_REPRODUCTION_NOT_CONFIGURED")
         extra = p.get("qa_file_sha256", {})
         if not isinstance(extra, dict) or not extra or not set(extra) <= set(p["allowed_paths"]):
             raise Hold("QA_CRITERIA_NOT_PINNED")
