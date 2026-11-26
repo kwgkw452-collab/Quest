@@ -39,6 +39,16 @@ jobs:
             cp scripts/qa_guard/check_pr_scope.py /tmp/quest-qa-guard.py
             python3 /tmp/quest-qa-guard.py --base "$BASE_SHA" --head "$HEAD_SHA" --bootstrap
           fi
+      - name: Route immutable QA handoff to the next role
+        if: always()
+        run: |
+          set -euo pipefail
+          REPORT_FILE="$RUNNER_TEMP/quest-qa-handoff.json"
+          if [ ! -f "$REPORT_FILE" ]; then
+            echo "::error title=Missing QA report::Guard did not produce a valid handoff"
+            exit 1
+          fi
+          python3 scripts/qa_guard/coordination.py --machine "$REPORT_FILE"
       - name: Verify guard test coverage
         run: PYTHONPATH=scripts/qa_guard python3 -m unittest discover -s scripts/qa_guard -p 'test_*.py' -v
       - name: State approval boundaries
