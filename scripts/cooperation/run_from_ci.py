@@ -45,6 +45,12 @@ def advance(repo, policy, digest, state, *, node=None, publish=False, fetch=publ
         return {"gate":"HOLD", "reason":"EXACT_SHA_CI_PENDING", "merge_authorized":False, **evidence}
     if latest.get("conclusion") not in ("success","failure"):
         return {"gate":"HOLD", "reason":"UNKNOWN_CI_RESULT", "merge_authorized":False, **evidence}
+    # Recheck after the network read, before invoking any repair worker.
+    # Never feed evidence for a previous checkout to the execution path.
+    if branch(repo) != p["branch"] or head(repo) != current:
+        return {"gate":"HOLD", "reason":"BRANCH_OR_HEAD_CHANGED_BEFORE_EXECUTION", "merge_authorized":False, **evidence}
+    if fetch_tip(p["branch"]) != current:
+        return {"gate":"HOLD", "reason":"REMOTE_HEAD_CHANGED_BEFORE_EXECUTION", "merge_authorized":False, **evidence}
     result = execute(repo, policy, digest, state, node_path=node, publish=publish)
     result.update(evidence)
     if result.get("gate") != "HOLD" and (branch(repo) != p["branch"] or head(repo) != result.get("head_sha", current)):
