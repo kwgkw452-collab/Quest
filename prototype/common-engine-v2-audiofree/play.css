@@ -116,3 +116,6 @@
   #dialogue:is(.twoRow,.threeRow){padding:4px 7px;}
   #dialogue #actions button {padding:4px 3px;font-size:12px;}
 }
+
+#dialogue:is(.twoRow,.threeRow) > #text {flex:1 1 auto;min-height:0;overflow-y:auto;}
+#dialogue:is(.twoRow,.threeRow) > #actions {flex:0 0 auto;}
