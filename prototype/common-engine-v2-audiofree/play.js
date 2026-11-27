@@ -80,7 +80,7 @@ async function reset(resume){
  view.backdrop.removeAttribute('aria-label');
  lastSceneAsset=null;documentCursor=0;documentLanguage='en';
  try{
-  previousRecognizer?.cancel();
+  await (previousRecognizer?.stop?.() ?? previousRecognizer?.cancel?.());
   const entry=catalog.find(x=>x.id===view.select.value);if(!entry)throw Error('STORY_NOT_REGISTERED');
   const response=await fetch(new URL('./stories/'+entry.path.replace(/^\.\//,''),location.href));
   if(!response.ok)throw Error('STORY_FETCH_FAILED:'+response.status);
@@ -89,7 +89,10 @@ async function reset(resume){
   if(data.id!==entry.id)throw Error('CATALOG_ID_MISMATCH');
   const storage=(()=>{try{return window.localStorage;}catch{return null;}})();
   store=api.createSaveStore({storage,key:'quest.v2.test.'+entry.id});
-  recognizer=api.createBrowserSpeech({env:window});
+  const nativeRecognizer=api.createBrowserSpeech({env:window});
+  recognizer=window.AudioManager&&window.QuestV2LegacySpeechBridge
+   ?window.QuestV2LegacySpeechBridge.createLegacySpeechBridge({recognizer:nativeRecognizer,audioManager:window.AudioManager})
+   :nativeRecognizer;
   let savedSnapshot=resume?(store.read()||undefined):undefined;
   if(resume&&!savedSnapshot&&storage){
    const raw=storage.getItem(api.LEGACY_KEY);
