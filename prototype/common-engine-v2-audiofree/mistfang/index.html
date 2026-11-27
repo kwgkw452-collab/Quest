@@ -1,0 +1,13 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Mistfang — Eigo DE Quest / Isolated QA</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#142137;color:white;font:16px/1.4 system-ui,sans-serif}main{max-width:1050px;margin:auto;padding:12px}h1{font-size:1.2rem}.warning{color:#ffdf95;font-size:.9rem}
+#battle{position:relative;aspect-ratio:13/6;background:#223247;border-radius:12px;overflow:hidden}
+#graphic{display:block;width:100%;height:100%;object-fit:contain}
+#dialogue{position:absolute;bottom:0;left:0;right:0;min-height:19.444444%;background:rgba(5,15,33,.92);padding:10px}
+#actions{display:flex;gap:8px;flex-wrap:wrap}button{padding:9px 16px;font:inherit;border-radius:7px}
+#message{margin:0 0 8px}#stage{font-weight:700}#debug{font-size:.85rem;white-space:pre-wrap}
+@media(max-width:640px) and (orientation:portrait){#battle{aspect-ratio:auto}#graphic{aspect-ratio:13/6;height:auto}#dialogue{position:static;min-height:0}}
+</style></head><body><main><h1>Mistfang — 4段階Vocabulary Battle（検証用）</h1><p class="warning">Productionではありません。音響再生OFF。画像が存在しない場合は未登録と表示します。</p>
+<div id="battle"><img id="graphic" alt="Mistfang"><section id="dialogue"><p id="stage"></p><p id="message">読み込み中…</p><div id="actions"><button id="speak" disabled>英単語を話す</button><button id="restart">最初から</button></div></section></div>
+<pre id="debug"></pre>
+</main><script src="../quest-v2.browser.js"></script><script src="./stage-browser.js"></script></body></html>

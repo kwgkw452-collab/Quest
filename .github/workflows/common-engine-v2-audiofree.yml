@@ -33,6 +33,8 @@ jobs:
           node --test prototype/common-engine-v2-audiofree/legacy-save.test.cjs
       - name: Verify optional legacy speech-mode bridge
         run: node --test prototype/common-engine-v2-audiofree/legacy-audio-bridge.test.cjs prototype/common-engine-v2-audiofree/legacy-dialogue-bridge.test.cjs
+      - name: Verify Mistfang 10-word stage logic and registered PNG dimensions
+        run: node --test prototype/common-engine-v2-audiofree/mistfang/stage.test.cjs
       - name: Verify unchanged legacy Audio and Speech contract
         run: |
           node tests/speech-mode-audio-isolation-v1-phase1.test.js
@@ -68,6 +70,8 @@ jobs:
         env:
           DIALOGUE_SCREENSHOTS: ${{ runner.temp }}/qa37-graphic
         run: python prototype/common-engine-v2-audiofree/legacy-browser-smoke.py
+      - name: Verify Mistfang 4-stage PNG battle in Chromium with mock mic
+        run: python prototype/common-engine-v2-audiofree/mistfang/browser-smoke.py
       - name: QA38 tri-state Chromium interactions (ACCEPT / REJECT / UNKNOWN)
         run: python prototype/common-engine-v2-audiofree/qa38-browser-smoke.py
       - name: Upload portrait Graphic and Dialogue screenshots
