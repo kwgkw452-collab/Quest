@@ -25,6 +25,8 @@ jobs:
           node-version: '22'
       - name: Run common engine tests and S007 source parity checks
         run: node --test prototype/common-engine-v2-audiofree/runtime.test.cjs prototype/common-engine-v2-audiofree/stories/S007/s007-migration.test.cjs prototype/common-engine-v2-audiofree/stories/legacy-migration.test.cjs prototype/common-engine-v2-audiofree/stories/qa35-judge.test.cjs prototype/common-engine-v2-audiofree/stories/qa38-tristate.test.cjs
+      - name: Validate isolated unapproved S008 story candidate
+        run: node --test prototype/common-engine-v2-audiofree/stories/S008/s008-candidate.test.cjs
       - name: Run isolation and original prototype tests
         run: node --test prototype/common-engine-isolation/check-isolation.test.cjs prototype/common-engine-v2/story-runtime.test.cjs
       - name: Validate legacy save cursor maps and run compatibility tests
