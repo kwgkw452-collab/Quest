@@ -39,7 +39,7 @@ window.SpeechRecognition=class {
     page.goto(f'http://127.0.0.1:{port}/prototype/common-engine-v2-audiofree/mistfang/index.html')
     page.wait_for_function("() => document.getElementById('graphic').naturalWidth===1560")
     def verify(stage):
-        page.wait_for_function("(s) => document.querySelector('#graphic').dataset.stage===String(s)",stage)
+        page.wait_for_function("(s) => document.querySelector('#graphic').dataset.stage===String(s)",arg=stage)
         assert page.locator('#graphic').evaluate("(img)=>img.complete && img.naturalWidth===1560 && img.naturalHeight===720")
         assert page.locator('#stage').inner_text().endswith(f'{stage+1} / 4')
     verify(0)
@@ -48,7 +48,7 @@ window.SpeechRecognition=class {
     verify(0)
     for i,word in enumerate(WORDS):
         page.get_by_role('button',name='英単語を話す').click()
-        page.wait_for_function("(n) => {const d=document.querySelector('#debug').textContent;try{return JSON.parse(d).index===n}catch{return false}}",i+1)
+        page.wait_for_function("(n) => {const d=document.querySelector('#debug').textContent;try{return JSON.parse(d).index===n}catch{return false}}",arg=i+1)
         verify(STAGES[i+1])
     assert '霧が晴れました' in page.locator('#message').inner_text()
     assert page.get_by_role('button',name='英単語を話す').is_disabled()
