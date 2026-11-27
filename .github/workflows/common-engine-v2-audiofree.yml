@@ -32,7 +32,7 @@ jobs:
           node prototype/common-engine-v2-audiofree/stories/generate-legacy-cursors.cjs --check
           node --test prototype/common-engine-v2-audiofree/legacy-save.test.cjs
       - name: Verify optional legacy speech-mode bridge
-        run: node --test prototype/common-engine-v2-audiofree/legacy-audio-bridge.test.cjs
+        run: node --test prototype/common-engine-v2-audiofree/legacy-audio-bridge.test.cjs prototype/common-engine-v2-audiofree/legacy-dialogue-bridge.test.cjs
       - name: Verify unchanged legacy Audio and Speech contract
         run: |
           node tests/speech-mode-audio-isolation-v1-phase1.test.js
