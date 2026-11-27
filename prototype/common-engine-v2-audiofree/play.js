@@ -1,7 +1,7 @@
 (function(){'use strict';
 const api=window.QuestV2;
 const view={backdrop:document.getElementById('backdrop'),dialogue:document.getElementById('dialogue'),text:document.getElementById('text'),support:document.getElementById('support'),actions:document.getElementById('actions'),status:document.getElementById('status'),log:document.getElementById('log'),select:document.getElementById('story-select')};
-let catalog=[],runner=null,store=null,recognizer=null,documentCursor=0,documentLanguage='en',lastSceneAsset=null,sessionEpoch=0,advanceBusy=false,speechBusy=false;
+let catalog=[],runner=null,store=null,recognizer=null,dialogueVoice=null,documentCursor=0,documentLanguage='en',lastSceneAsset=null,sessionEpoch=0,advanceBusy=false,speechBusy=false;
 const showStatus=s=>{view.status.textContent=s;};
 const setText=(main,secondary='')=>{view.text.textContent=main;view.support.textContent=secondary;};
 const clearButtons=()=>view.actions.replaceChildren();
@@ -50,7 +50,7 @@ function checkpoint(event){
  try{store.write(snapshot);}catch(e){report({warning:'CHECKPOINT_FAILED',reason:String(e?.message||e)});}
 }
 function paint(event){
- report(event);checkpoint(event);view.dialogue.className='';
+ report(event);checkpoint(event);dialogueVoice?.stop();if(event.type==='line'&&event.voice)dialogueVoice?.play(event.voice);view.dialogue.className='';
  const state=runner.state();
  showStatus('Scene: '+state.scene+' / '+state.status+' / マイク: '+(recognizer.isSupported()?'対応':'非対応')+' / 音楽・Voice: OFF');
  clearButtons();
@@ -71,6 +71,7 @@ async function reset(resume){
  const epoch=++sessionEpoch;
  advanceBusy=false;speechBusy=false;
  const previousRecognizer=recognizer;
+ dialogueVoice?.stop();dialogueVoice=null;
  // A Story change invalidates old controls before the new pack finishes loading.
  runner=null;store=null;recognizer=null;
  clearButtons();setText('Storyを読み込み中…');
@@ -90,6 +91,9 @@ async function reset(resume){
   const storage=(()=>{try{return window.localStorage;}catch{return null;}})();
   store=api.createSaveStore({storage,key:'quest.v2.test.'+entry.id});
   const nativeRecognizer=api.createBrowserSpeech({env:window});
+  dialogueVoice=window.AudioManager&&window.DialogueVoiceAudioInternal&&window.QuestV2LegacyDialogueBridge
+   ?window.QuestV2LegacyDialogueBridge.createLegacyDialogueBridge({voiceInternal:window.DialogueVoiceAudioInternal})
+   :null;
   recognizer=window.AudioManager&&window.QuestV2LegacySpeechBridge
    ?window.QuestV2LegacySpeechBridge.createLegacySpeechBridge({recognizer:nativeRecognizer,audioManager:window.AudioManager})
    :nativeRecognizer;
