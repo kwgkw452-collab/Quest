@@ -406,13 +406,13 @@ window.finishRecognition=(text)=>{
      page.locator('.game').screenshot(path=evidence/f's006-{width}x{height}-{label}.png')
 
    reach_question()
-   measure('initial',100.2,q1['goalJa'])
+   measure('initial',108,q1['goalJa'])
    button('話す').click()
-   measure('listening',100.2,q1['goalJa'],'聞き取り中…',listening=True)
+   measure('listening',108,q1['goalJa'],'聞き取り中…',listening=True)
    page.evaluate("window.finishRecognition('purple bananas')")
    button('話す').wait_for()
    assert json.loads(page.locator('#log').text_content().splitlines()[-1])['type']=='unknown'  # QA38: unrelated ASR lacks enough evidence
-   measure('rejected',100.2,q1['goalJa'],'認識：purple bananas')
+   measure('rejected',108,q1['goalJa'],'認識：purple bananas')
    for press,stage in enumerate((1,2,3,3),start=1):
     button('ピコサポート').click()
     event=json.loads(page.locator('#log').text_content().splitlines()[-1])
@@ -424,7 +424,7 @@ window.finishRecognition=(text)=>{
    button('次へ').wait_for()
    assert page.locator('#support').inner_text()=='成功しました！'
    reach_question()
-   measure('next-question',100.2,q2['goalJa'])
+   measure('next-question',108,q2['goalJa'])
    assert not page.locator('#support').inner_text()
    button('冒険に戻る').click()
    assert page.locator('#text').inner_text()=='冒険に戻りました。'
