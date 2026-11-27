@@ -1,0 +1,96 @@
+name: Common Engine V2 Audio-Free Prototype
+on:
+  pull_request:
+    paths:
+      - 'prototype/common-engine-v2-audiofree/**'
+      - '.github/workflows/common-engine-v2-audiofree.yml'
+  push:
+    branches:
+      - common-engine-v2-audiofree-integration-20261125
+    paths:
+      - 'prototype/common-engine-v2-audiofree/**'
+      - '.github/workflows/common-engine-v2-audiofree.yml'
+permissions:
+  contents: read
+jobs:
+  node-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run common engine tests and S007 source parity checks
+        run: node --test prototype/common-engine-v2-audiofree/runtime.test.cjs prototype/common-engine-v2-audiofree/stories/S007/s007-migration.test.cjs prototype/common-engine-v2-audiofree/stories/legacy-migration.test.cjs prototype/common-engine-v2-audiofree/stories/qa35-judge.test.cjs prototype/common-engine-v2-audiofree/stories/qa38-tristate.test.cjs
+      - name: Run isolation and original prototype tests
+        run: node --test prototype/common-engine-isolation/check-isolation.test.cjs prototype/common-engine-v2/story-runtime.test.cjs
+      - name: Validate legacy save cursor maps and run compatibility tests
+        run: |
+          node prototype/common-engine-v2-audiofree/stories/generate-legacy-cursors.cjs --check
+          node --test prototype/common-engine-v2-audiofree/legacy-save.test.cjs
+      - name: Verify optional legacy speech-mode bridge
+        run: node --test prototype/common-engine-v2-audiofree/legacy-audio-bridge.test.cjs prototype/common-engine-v2-audiofree/legacy-dialogue-bridge.test.cjs
+      - name: Verify unchanged legacy Audio and Speech contract
+        run: |
+          node tests/speech-mode-audio-isolation-v1-phase1.test.js
+          node tests/speech-mode-audio-isolation-v1-phase2.test.js
+      - name: Reject Story-specific code in common runtime
+        run: node prototype/common-engine-v2-audiofree/check-runtime-isolation.cjs
+      - name: Rebuild browser bundle
+        run: node prototype/common-engine-v2-audiofree/build-browser.cjs
+      - name: Check committed bundle is reproducible
+        run: git diff --exit-code -- prototype/common-engine-v2-audiofree/quest-v2.browser.js
+
+  browser-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Japanese fonts for layout and screenshots
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y fonts-noto-cjk
+      - name: Install Python browser testing library (use runner preinstalled Chrome)
+        run: python -m pip install playwright==1.56.0
+      - name: Test complete synthetic story in real Chromium with mock SpeechRecognition
+        run: python prototype/common-engine-v2-audiofree/browser-smoke.py
+      - name: Run full real S007 migration in shared browser player with mocked SpeechRecognition
+        run: python prototype/common-engine-v2-audiofree/s007-browser-smoke.py
+      - name: Run actual S005 and S006 in shared browser player with mock SpeechRecognition
+        env:
+          DIALOGUE_SCREENSHOTS: ${{ runner.temp }}/qa37-graphic
+        run: python prototype/common-engine-v2-audiofree/legacy-browser-smoke.py
+      - name: QA38 tri-state Chromium interactions (ACCEPT / REJECT / UNKNOWN)
+        run: python prototype/common-engine-v2-audiofree/qa38-browser-smoke.py
+      - name: Upload portrait Graphic and Dialogue screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: qa37-s006-graphic-screenshots
+          path: ${{ runner.temp }}/qa37-graphic/*.png
+      - name: Resume old Save in Chromium and verify reload and Story switch
+        run: python prototype/common-engine-v2-audiofree/legacy-save-browser.py
+      - name: Open immutable HTTPS preview with a mobile Chromium viewport and mock mic
+        env:
+          PREVIEW_SHA: ${{ github.event.pull_request.head.sha }}
+        run: python prototype/common-engine-v2-audiofree/staging-browser-smoke.py
+
+  staging-https-preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Verify browser-deliverable immutable HTTPS preview files
+        env:
+          PREVIEW_SHA: ${{ github.event.pull_request.head.sha }}
+        run: python3 prototype/common-engine-v2-audiofree/preview-url-check.py

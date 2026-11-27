@@ -1,0 +1,1216 @@
+{
+  "schemaVersion": 1,
+  "id": "S007",
+  "title": "写真家メグとHappiness Bird — 幸せを運ぶ翼",
+  "entry": "scene01",
+  "sceneOrder": [
+    "scene01",
+    "scene02",
+    "scene03",
+    "scene04",
+    "scene05",
+    "scene06",
+    "scene07",
+    "scene08",
+    "scene09",
+    "scene10",
+    "scene11",
+    "scene12",
+    "scene13"
+  ],
+  "scenes": {
+    "scene01": {
+      "steps": [
+        {
+          "type": "scene",
+          "asset": "images/007/S007-Scene-01.png"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "夕暮れ、霧の森の小道。"
+        },
+        {
+          "type": "line",
+          "speaker": "Bernie",
+          "text": "Look at the trees! They're beautiful!",
+          "supportText": "あの木を見て！きれいだね！"
+        },
+        {
+          "type": "line",
+          "speaker": "Kong",
+          "text": "Let's go this way. It's hard to see.",
+          "supportText": "こっちの道を行こう。よく見えないね。"
+        },
+        {
+          "type": "line",
+          "speaker": "Pico",
+          "text": "Yes. There's a lot of fog.",
+          "supportText": "そうだね。霧がとても濃いピコ。"
+        },
+        {
+          "type": "line",
+          "speaker": "Bernie",
+          "text": "It's so quiet here.",
+          "supportText": "ここはとても静かだね。"
+        },
+        {
+          "type": "line",
+          "speaker": "Pico",
+          "text": "Wait! I can hear a bird.",
+          "supportText": "待って！鳥の声が聞こえるピコ。"
+        },
+        {
+          "type": "line",
+          "speaker": "Kong",
+          "text": "Where?",
+          "supportText": "どこ？"
+        },
+        {
+          "type": "line",
+          "speaker": "Pico",
+          "text": "Over there... Oh, I can't hear it now.",
+          "supportText": "あっち……あれ、今は聞こえないピコ。"
+        },
+        {
+          "type": "goto",
+          "to": "scene02"
+        }
+      ]
+    },
+    "scene02": {
+      "steps": [
+        {
+          "type": "scene",
+          "asset": "images/007/S007-Scene-02.png"
+        },
+        {
+          "type": "line",
+          "speaker": "Pico",
+          "text": "Look! A girl with a camera.",
+          "supportText": "見て！カメラを持った女の子だピコ。"
+        },
+        {
+          "type": "line",
+          "speaker": "Meg",
+          "text": "Hello. I'm Meg.",
+          "supportText": "こんにちは。私はメグよ。"
+        },
+        {
+          "type": "challenge",
+          "id": "s007.communication.1"
+        },
+        {
+          "type": "line",
+          "speaker": "Meg",
+          "text": "Nice to meet you.",
+          "supportText": "はじめまして。"
+        },
+        {
+          "type": "line",
+          "speaker": "Bernie",
+          "text": "I'm Bernie. This is Kong. And this is Pico.",
+          "supportText": "僕はバーニー。こちらはコング、そしてピコだよ。"
+        },
+        {
+          "type": "line",
+          "speaker": "Pico",
+          "text": "Hi, Meg!",
+          "supportText": "やあ、メグ！"
+        },
+        {
+          "type": "line",
+          "speaker": "Meg",
+          "text": "I want to find a bird.",
+          "supportText": "ある鳥を探しているの。"
+        },
+        {
+          "type": "line",
+          "speaker": "Pico",
+          "text": "What are you looking for?",
+          "supportText": "何を探しているの？"
+        },
+        {
+          "type": "line",
+          "speaker": "Meg",
+          "text": "A Happiness Bird. A very special bird.",
+          "supportText": "ハピネスバードよ。とても特別な鳥なの。"
+        },
+        {
+          "type": "challenge",
+          "id": "s007.communication.2"
+        },
+        {
+          "type": "line",
+          "speaker": "Meg",
+          "text": "Yes. I watch birds and take pictures.",
+          "supportText": "ええ。鳥を観察して写真を撮っているの。"
+        },
+        {
+          "type": "line",
+          "speaker": "Meg",
+          "text": "I can hear a bird today. But I can't see it.",
+          "supportText": "今日は鳥の声が聞こえる。でも姿は見えないの。"
+        },
+        {
+          "type": "goto",
+          "to": "scene03"
+        }
+      ]
+    },
+    "scene03": {
+      "steps": [
+        {
+          "type": "scene",
+          "asset": "images/007/S007-Scene-03.png"
+        },
+        {
+          "type": "line",
+          "speaker": "Bernie",
+          "text": "Wait! I hear something over there!",
+          "supportText": "待って！あそこで何か聞こえるよ！"
+        },
+        {
+          "type": "line",
+          "speaker": "Pico",
+          "text": "A bird?",
+          "supportText": "鳥かな？"
+        },
+        {
+          "type": "line",
+          "speaker": "Meg",
+          "text": "Yes. Over there.",
+          "supportText": "ええ、あそこよ。"
+        },
+        {
+          "type": "challenge",
+          "id": "s007.communication.3"
+        },
+        {
+          "type": "line",
+          "speaker": "Kong",
+          "text": "OK. Let's go slowly.",
+          "supportText": "分かった。ゆっくり行こう。"
+        },
+        {
+          "type": "line",
+          "speaker": "Bernie",
+          "text": "Behind those trees?",
+          "supportText": "あの木の向こう？"
+        },
+        {
+          "type": "line",
+          "speaker": "Meg",
+          "text": "Yes. Let's look from here.",
+          "supportText": "そうよ。ここから見てみよう。"
+        },
+        {
+          "type": "line",
+          "speaker": "Pico",
+          "text": "I can hear it again!",
+          "supportText": "また聞こえるピコ！"
+        },
+        {
+          "type": "goto",
+          "to": "scene04"
+        }
+      ]
+    },
+    "scene04": {
+      "steps": [
+        {
+          "type": "scene",
+          "asset": "images/007/S007-Scene-04.png"
+        },
+        {
+          "type": "line",
+          "speaker": "Pico",
+          "text": "Something is on that low branch.",
+          "supportText": "あの低い枝に何かいるピコ。"
+        },
+        {
+          "type": "challenge",
+          "id": "s007.communication.4"
+        },
+        {
+          "type": "line",
+          "speaker": "Meg",
+          "text": "Yes. A baby Happiness Bird.",
+          "supportText": "そうよ。ハピネスバードのひな鳥よ。"
+        },
+        {
+          "type": "line",
+          "speaker": "Bernie",
+          "text": "Is it alone?",
+          "supportText": "一羽だけなの？"
+        },
+        {
+          "type": "line",
+          "speaker": "Pico",
+          "text": "It's moving its wings.",
+          "supportText": "翼を動かしているピコ。"
+        },
+        {
+          "type": "line",
+          "speaker": "Kong",
+          "text": "But it's still on the branch.",
+          "supportText": "でも、まだ枝の上にいるね。"
+        },
+        {
+          "type": "line",
+          "speaker": "Meg",
+          "text": "Let's look at the trees around it.",
+          "supportText": "周りの木を見てみよう。"
+        },
+        {
+          "type": "line",
+          "speaker": "Bernie",
+          "text": "I want to go near the bird. Does it need help?",
+          "supportText": "鳥に近づきたいな。助けが必要かな？"
+        },
+        {
+          "type": "goto",
+          "to": "scene05"
+        }
+      ]
+    },
+    "scene05": {
+      "steps": [
+        {
+          "type": "scene",
+          "asset": "images/007/S007-Scene-05.png"
+        },
+        {
+          "type": "line",
+          "speaker": "Meg",
+          "text": "Listen. Its mother is near.",
+          "supportText": "聞いて。お母さん鳥が近くにいるわ。"
+        },
+        {
+          "type": "line",
+          "speaker": "Pico",
+          "text": "Its mother? Where?",
+          "supportText": "お母さん？どこにいるの？"
+        },
+        {
+          "type": "line",
+          "speaker": "Meg",
+          "text": "In those trees. Listen to the two birds.",
+          "supportText": "あの木の中よ。二羽の声を聞いて。"
+        },
+        {
+          "type": "line",
+          "speaker": "Meg",
+          "text": "The baby calls. Then its mother calls back.",
+          "supportText": "ひな鳥が鳴くと、お母さんが返事をするの。"
+        },
+        {
+          "type": "line",
+          "speaker": "Pico",
+          "text": "Oh! Now I hear her too.",
+          "supportText": "あっ！お母さんの声も聞こえたピコ。"
+        },
+        {
+          "type": "line",
+          "speaker": "Meg",
+          "text": "Let's leave the baby here. Its mother is near.",
+          "supportText": "ひな鳥はここに置いておこう。お母さんが近くにいるから。"
+        },
+        {
+          "type": "line",
+          "speaker": "Bernie",
+          "text": "I'll go near the bird.",
+          "supportText": "鳥の近くに行ってくるよ。"
+        },
+        {
+          "type": "challenge",
+          "id": "s007.communication.5"
+        },
+        {
+          "type": "line",
+          "speaker": "Bernie",
+          "text": "Oh, OK. I'll stay here.",
+          "supportText": "あっ、分かった。ここにいるよ。"
+        },
+        {
+          "type": "line",
+          "speaker": "Meg",
+          "text": "Thank you. They need space.",
+          "supportText": "ありがとう。鳥たちには距離が必要なの。"
+        },
+        {
+          "type": "line",
+          "speaker": "Pico",
+          "text": "We can watch from here.",
+          "supportText": "ここから見守れるよ。"
+        },
+        {
+          "type": "goto",
+          "to": "scene06"
+        }
+      ]
+    },
+    "scene06": {
+      "steps": [
+        {
+          "type": "scene",
+          "asset": "images/007/S007-Scene-06.png"
+        },
+        {
+          "type": "line",
+          "speaker": "Pico",
+          "text": "The baby is calling again.",
+          "supportText": "ひな鳥がまた鳴いているピコ。"
+        },
+        {
+          "type": "line",
+          "speaker": "Meg",
+          "text": "Where is its mother? I'm worried.",
+          "supportText": "お母さんはどこ？心配だわ。"
+        },
+        {
+          "type": "challenge",
+          "id": "s007.communication.6"
+        },
+        {
+          "type": "line",
+          "speaker": "Meg",
+          "text": "Thank you. We can wait.",
+          "supportText": "ありがとう。待つことにするわ。"
+        },
+        {
+          "type": "line",
+          "speaker": "Bernie",
+          "text": "It's getting dark, Meg!",
+          "supportText": "暗くなってきたよ、メグ！"
+        },
+        {
+          "type": "line",
+          "speaker": "Meg",
+          "text": "I want to take pictures now. But I can't go near the bird.",
+          "supportText": "今すぐ写真を撮りたい。でも鳥には近づけないわ。"
+        },
+        {
+          "type": "challenge",
+          "id": "s007.communication.7"
+        },
+        {
+          "type": "line",
+          "speaker": "Meg",
+          "text": "OK. I'll wait here.",
+          "supportText": "分かった。ここで待つわ。"
+        },
+        {
+          "type": "line",
+          "speaker": "Pico",
+          "text": "Yes! They need time, too.",
+          "supportText": "そうだピコ！鳥たちにも時間が必要だピコ。"
+        },
+        {
+          "type": "line",
+          "speaker": "Kong",
+          "text": "We can stay here.",
+          "supportText": "ここにいよう。"
+        },
+        {
+          "type": "line",
+          "speaker": "Meg",
+          "text": "I'll wait. I won't move the birds.",
+          "supportText": "待つわ。鳥たちを動かしたりしない。"
+        },
+        {
+          "type": "goto",
+          "to": "scene07"
+        }
+      ]
+    },
+    "scene07": {
+      "steps": [
+        {
+          "type": "scene",
+          "asset": "images/007/S007-Scene-07.png"
+        },
+        {
+          "type": "line",
+          "speaker": "Pico",
+          "text": "What's that sound?",
+          "supportText": "今の音は何だピコ？"
+        },
+        {
+          "type": "line",
+          "speaker": "Bernie",
+          "text": "Wings! The sound is near us!",
+          "supportText": "羽音だ！すぐ近くから聞こえるよ！"
+        },
+        {
+          "type": "line",
+          "speaker": "Meg",
+          "text": "Maybe it's the mother.",
+          "supportText": "お母さんかもしれないわ。"
+        },
+        {
+          "type": "line",
+          "speaker": "Kong",
+          "text": "Shall we go and look?",
+          "supportText": "見に行こうか？"
+        },
+        {
+          "type": "challenge",
+          "id": "s007.communication.8"
+        },
+        {
+          "type": "line",
+          "speaker": "Kong",
+          "text": "OK. Let's stay here.",
+          "supportText": "分かった。ここにいよう。"
+        },
+        {
+          "type": "line",
+          "speaker": "Pico",
+          "text": "Look at the baby. It hears her, too.",
+          "supportText": "ひな鳥を見て。ひな鳥にもお母さんの声が聞こえているピコ。"
+        },
+        {
+          "type": "line",
+          "speaker": "Meg",
+          "text": "Yes. Let's watch from here.",
+          "supportText": "そうね。ここから見守ろう。"
+        },
+        {
+          "type": "goto",
+          "to": "scene08"
+        }
+      ]
+    },
+    "scene08": {
+      "steps": [
+        {
+          "type": "scene",
+          "asset": "images/007/S007-Scene-08.png"
+        },
+        {
+          "type": "line",
+          "speaker": "Pico",
+          "text": "Look at those wings!",
+          "supportText": "あの翼を見てピコ！"
+        },
+        {
+          "type": "line",
+          "speaker": "Meg",
+          "text": "There she is. The mother.",
+          "supportText": "あそこよ。お母さん鳥だわ。"
+        },
+        {
+          "type": "line",
+          "speaker": "Bernie",
+          "text": "WOW! She's so BIG!",
+          "supportText": "わあ！すごく大きい！"
+        },
+        {
+          "type": "challenge",
+          "id": "s007.communication.9"
+        },
+        {
+          "type": "line",
+          "speaker": "Bernie",
+          "text": "Oh... OK. I'll be quiet.",
+          "supportText": "あっ……分かった。静かにするよ。"
+        },
+        {
+          "type": "line",
+          "speaker": "Kong",
+          "text": "She's coming to the branch.",
+          "supportText": "お母さんが枝に近づいてくるよ。"
+        },
+        {
+          "type": "line",
+          "speaker": "Pico",
+          "text": "What a long tail!",
+          "supportText": "なんて長い尾なんだピコ！"
+        },
+        {
+          "type": "line",
+          "speaker": "Meg",
+          "text": "Let's stay back and watch.",
+          "supportText": "離れたところから見守ろう。"
+        },
+        {
+          "type": "goto",
+          "to": "scene09"
+        }
+      ]
+    },
+    "scene09": {
+      "steps": [
+        {
+          "type": "scene",
+          "asset": "images/007/S007-Scene-09.png"
+        },
+        {
+          "type": "line",
+          "speaker": "Meg",
+          "text": "Welcome back.",
+          "supportText": "おかえりなさい。"
+        },
+        {
+          "type": "line",
+          "speaker": "Pico",
+          "text": "Look! They're together now!",
+          "supportText": "見て！親子が一緒になったピコ！"
+        },
+        {
+          "type": "line",
+          "speaker": "Bernie",
+          "text": "The baby isn't alone. I'm so happy!",
+          "supportText": "ひな鳥はもう一羽じゃない。うれしいな！"
+        },
+        {
+          "type": "line",
+          "speaker": "Meg",
+          "text": "Its mother is here. The baby can stay with her.",
+          "supportText": "お母さんが来たわ。ひな鳥は一緒にいられるの。"
+        },
+        {
+          "type": "line",
+          "speaker": "Kong",
+          "text": "Waiting is hard!",
+          "supportText": "待つのって難しいね！"
+        },
+        {
+          "type": "line",
+          "speaker": "Bernie",
+          "text": "Yes. I wanted to help.",
+          "supportText": "うん。助けたかったんだ。"
+        },
+        {
+          "type": "line",
+          "speaker": "Meg",
+          "text": "We did help. We gave them space.",
+          "supportText": "私たちは助けたわ。近づかずに見守ったの。"
+        },
+        {
+          "type": "line",
+          "speaker": "Pico",
+          "text": "And now they're together!",
+          "supportText": "そして今は親子が一緒だピコ！"
+        },
+        {
+          "type": "line",
+          "speaker": "Meg",
+          "text": "Let's watch. This is their time.",
+          "supportText": "見守りましょう。今は親子の時間よ。"
+        },
+        {
+          "type": "goto",
+          "to": "scene10"
+        }
+      ]
+    },
+    "scene10": {
+      "steps": [
+        {
+          "type": "scene",
+          "asset": "images/007/S007-Scene-10.png"
+        },
+        {
+          "type": "line",
+          "speaker": "Meg",
+          "text": "They're quiet now. I can take pictures from here.",
+          "supportText": "今は静かね。ここから写真を撮れるわ。"
+        },
+        {
+          "type": "line",
+          "speaker": "Pico",
+          "text": "Is the flash off?",
+          "supportText": "フラッシュは消してあるピコ？"
+        },
+        {
+          "type": "line",
+          "speaker": "Meg",
+          "text": "Yes. No flash. I can take pictures from here.",
+          "supportText": "ええ。フラッシュは使わない。ここから撮るわ。"
+        },
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "メグは鳥たちを驚かせないよう、離れた場所からフラッシュを使わずに写真を何枚か撮る。"
+        },
+        {
+          "type": "line",
+          "speaker": "Meg",
+          "text": "Look. They're together in the picture.",
+          "supportText": "見て。写真に親子が一緒に写っているわ。"
+        },
+        {
+          "type": "challenge",
+          "id": "s007.communication.10"
+        },
+        {
+          "type": "line",
+          "speaker": "Meg",
+          "text": "Thank you. We waited for this moment.",
+          "supportText": "ありがとう。ずっとこの瞬間を待っていたの。"
+        },
+        {
+          "type": "line",
+          "speaker": "Pico",
+          "text": "I can see the baby's face!",
+          "supportText": "ひな鳥の顔が見えるピコ！"
+        },
+        {
+          "type": "line",
+          "speaker": "Bernie",
+          "text": "It looks so happy!",
+          "supportText": "とても幸せそうだね！"
+        },
+        {
+          "type": "line",
+          "speaker": "Kong",
+          "text": "And its mother is right there.",
+          "supportText": "お母さんもすぐそばにいるね。"
+        },
+        {
+          "type": "goto",
+          "to": "scene11"
+        }
+      ]
+    },
+    "scene11": {
+      "steps": [
+        {
+          "type": "scene",
+          "asset": "images/007/S007-Scene-11.png"
+        },
+        {
+          "type": "line",
+          "speaker": "Pico",
+          "text": "Look! They're flying!",
+          "supportText": "見て！飛んでいくピコ！"
+        },
+        {
+          "type": "line",
+          "speaker": "Bernie",
+          "text": "Bye, little bird! Bye, Mom!",
+          "supportText": "さようなら、ひな鳥！お母さんも！"
+        },
+        {
+          "type": "line",
+          "speaker": "Kong",
+          "text": "They're flying into the sunset.",
+          "supportText": "夕焼けの中へ飛んでいくね。"
+        },
+        {
+          "type": "line",
+          "speaker": "Meg",
+          "text": "Happiness Birds... I feel happy, too.",
+          "supportText": "ハピネスバード……私まで幸せな気持ちになるわ。"
+        },
+        {
+          "type": "line",
+          "speaker": "Bernie",
+          "text": "Me too!",
+          "supportText": "僕も！"
+        },
+        {
+          "type": "line",
+          "speaker": "Meg",
+          "text": "We didn't go near the birds. And we saw this.",
+          "supportText": "鳥たちに近づかなかった。だから、この光景が見られたのね。"
+        },
+        {
+          "type": "line",
+          "speaker": "Kong",
+          "text": "I'm glad we waited.",
+          "supportText": "待ってよかったよ。"
+        },
+        {
+          "type": "line",
+          "speaker": "Meg",
+          "text": "You helped me. Thank you.",
+          "supportText": "みんなが助けてくれたわ。ありがとう。"
+        },
+        {
+          "type": "line",
+          "speaker": "Pico",
+          "text": "We stayed back. And we helped!",
+          "supportText": "僕たちは離れていた。それが助けになったピコ！"
+        },
+        {
+          "type": "line",
+          "speaker": "Bernie",
+          "text": "You have a picture, Meg.",
+          "supportText": "メグ、写真も撮れたね。"
+        },
+        {
+          "type": "line",
+          "speaker": "Meg",
+          "text": "And we all have a happy memory.",
+          "supportText": "そして、みんなに幸せな思い出ができたわ。"
+        },
+        {
+          "type": "goto",
+          "to": "scene12"
+        }
+      ]
+    },
+    "scene12": {
+      "steps": [
+        {
+          "type": "scene",
+          "asset": "images/007/S007-Scene-12.png"
+        },
+        {
+          "type": "line",
+          "speaker": "Meg",
+          "text": "What will you do next?",
+          "supportText": "次は何をするの？"
+        },
+        {
+          "type": "line",
+          "speaker": "Kong",
+          "text": "We are looking for the Best Thing.",
+          "supportText": "僕たちは「最高のもの」を探しているんだ。"
+        },
+        {
+          "type": "line",
+          "speaker": "Meg",
+          "text": "The Best Thing? What's that?",
+          "supportText": "最高のもの？それって何？"
+        },
+        {
+          "type": "line",
+          "speaker": "Kong",
+          "text": "We don't know yet.",
+          "supportText": "まだ分からないんだ。"
+        },
+        {
+          "type": "line",
+          "speaker": "Kong",
+          "text": "We travel around the world.",
+          "supportText": "僕たちは世界中を旅している。"
+        },
+        {
+          "type": "line",
+          "speaker": "Kong",
+          "text": "We go to many countries.",
+          "supportText": "いろいろな国へ行くんだ。"
+        },
+        {
+          "type": "line",
+          "speaker": "Kong",
+          "text": "We meet many people and animals.",
+          "supportText": "たくさんの人や動物に会うんだよ。"
+        },
+        {
+          "type": "line",
+          "speaker": "Pico",
+          "text": "And we see many beautiful places!",
+          "supportText": "そして、美しい場所もたくさん見るピコ！"
+        },
+        {
+          "type": "line",
+          "speaker": "Meg",
+          "text": "Wow! I can take many pictures!",
+          "supportText": "わあ！たくさん写真が撮れそう！"
+        },
+        {
+          "type": "line",
+          "speaker": "Meg",
+          "text": "Pictures of people, animals, and places!",
+          "supportText": "人や動物や景色の写真ね！"
+        },
+        {
+          "type": "line",
+          "speaker": "Kong",
+          "text": "Do you want to come with us?",
+          "supportText": "僕たちと一緒に来ない？"
+        },
+        {
+          "type": "line",
+          "speaker": "Meg",
+          "text": "Yes! I want to see the world!",
+          "supportText": "ええ！世界を見てみたい！"
+        },
+        {
+          "type": "line",
+          "speaker": "Bernie",
+          "text": "Welcome, Meg!",
+          "supportText": "ようこそ、メグ！"
+        },
+        {
+          "type": "line",
+          "speaker": "Pico",
+          "text": "Let's go together!",
+          "supportText": "一緒に行くピコ！"
+        },
+        {
+          "type": "setFlag",
+          "key": "s007.megJoined",
+          "value": true
+        },
+        {
+          "type": "goto",
+          "to": "scene13"
+        }
+      ]
+    },
+    "scene13": {
+      "steps": [
+        {
+          "type": "scene",
+          "asset": "images/007/S007-Scene-13.png"
+        },
+        {
+          "type": "line",
+          "speaker": "Meg",
+          "text": "Look! The Happiness Birds!",
+          "supportText": "見て！ハピネスバードだわ！"
+        },
+        {
+          "type": "line",
+          "speaker": "Pico",
+          "text": "They're flying together!",
+          "supportText": "一緒に飛んでいるピコ！"
+        },
+        {
+          "type": "line",
+          "speaker": "Kong",
+          "text": "Let's go!",
+          "supportText": "さあ、行こう！"
+        },
+        {
+          "type": "line",
+          "speaker": "Meg",
+          "text": "Yes! Our new adventure!",
+          "supportText": "ええ！新しい冒険の始まりね！"
+        },
+        {
+          "type": "end"
+        }
+      ]
+    }
+  },
+  "saveKeys": {
+    "s007.megJoined": "boolean"
+  },
+  "challenges": {
+    "s007.communication.1": {
+      "goalJa": "メグに「こんにちは」と英語で挨拶を返す。",
+      "modelEn": "Hello!",
+      "hints": [
+        "挨拶を返しましょう。短い一言で大丈夫です。",
+        "「こんにちは」はHelloです。Hiでも伝わります。",
+        "例：Hello!（こんにちは！）"
+      ],
+      "rule": {
+        "accept": [
+          "Hello!",
+          "Hi!",
+          "Hello, Meg!",
+          "Hi Meg!",
+          "Good morning!",
+          "Morning!",
+          "Good afternoon!",
+          "Good evening!",
+          "Nice to meet you!",
+          "Nice to meet you, Meg!"
+        ],
+        "rejectPatterns": [
+          "(?:(?:goodbye|bye|see you|good night)(?: meg)?)"
+        ]
+      }
+    },
+    "s007.communication.2": {
+      "goalJa": "メグに「あなたは鳥の写真を撮りますか？」と尋ねよう。",
+      "modelEn": "Do you take pictures of birds?",
+      "hints": [
+        "鳥の写真を撮るか、メグに質問しよう。",
+        "「あなたは〜しますか？」はDo you ...?。「写真を撮る」はtake picturesです。",
+        "例：Do you take pictures of birds?（あなたは鳥の写真を撮りますか？）"
+      ],
+      "rule": {
+        "accept": [
+          "Do you take pictures of birds?",
+          "Do you take pictures of a bird?",
+          "Do you take picture of bird?",
+          "Do you take picture of birds?",
+          "Do you take a picture of a bird?",
+          "Do you take photos of birds?",
+          "Did you take pictures of birds?",
+          "Did you take a picture of a bird?",
+          "You take pictures of birds?",
+          "Do you take bird pictures?",
+          "Do you like taking pictures of birds?",
+          "Did you take picture of bird?",
+          "Do you take pictures of bird?",
+          "Did you take pictures of bird?",
+          "Do you take photos of a bird?"
+        ],
+        "exclude": [
+          "do not",
+          "don't",
+          "dont",
+          "never"
+        ],
+        "rejectPatterns": [
+          "(?:.*\\b(?:do not|never|not|videos?|movies?)\\b.*|.*\\b(?:pictures?|photos?|photographs?)(?: of)? (?:an? |the |some |your )?(?:cars?|trucks?|people|flowers?|dogs?|cats?|buildings?|trains?|trees?|nests?)\\b.*|.*\\b(?:cars?|trucks?|people|flowers?|dogs?|cats?|buildings?|trains?|trees?|nests?) (?:pictures?|photos?|photographs?)\\b.*)",
+          "(?:(?:do |did |can |could |would |will )?you (?:take|like taking|like to take) (?:[a-z]+ )*(?:pictures?|photos?|photographs?) of (?!(?:[a-z]+ )*birds?$)(?!(?:it|them|that|this|these|those|him|her|an?|the|some|my|your|his|their)$)(?!(?:an?|the|some|my|your|his|their) (?:one|ones|other)$)[a-z]+(?: [a-z]+)*)"
+        ],
+        "fullPatterns": [
+          "(?:(?:(?:do|did) )?you (?:take|like taking|like to take) (?:(?:a|some|many|beautiful|lovely) )?(?:(?:pictures?|photos?|photographs?) of (?:(?:(?:a|the|this|that|these|those|some) )?birds?|them)|bird (?:pictures?|photos?|photographs?)))"
+        ],
+        "patternNormalization": "contractions",
+        "stripPlease": true
+      }
+    },
+    "s007.communication.3": {
+      "goalJa": "みんなに「ゆっくり歩こう」と提案しよう。",
+      "modelEn": "Let's walk slowly.",
+      "hints": [
+        "みんなに歩く速さをゆっくりにしようと提案しよう。",
+        "「〜しよう」はLet's。「歩く」はwalk。「ゆっくり」はslowlyです。",
+        "例：Let's walk slowly.（ゆっくり歩こう。）"
+      ],
+      "rule": {
+        "accept": [
+          "Let's walk slowly.",
+          "Let's go slowly.",
+          "Let's walk slow.",
+          "Let's go slow.",
+          "Let us walk slowly.",
+          "Let us go slowly.",
+          "We can walk slowly.",
+          "We should walk slowly.",
+          "Walk slowly.",
+          "Slowly, please.",
+          "Please walk slowly.",
+          "Let's move slowly."
+        ],
+        "rejectPatterns": [
+          "(?:.*\\b(?:fast|quickly|faster|run|rush)\\b.*|.*\\b(?:do not|never) (?:walk|go|move) slowly\\b.*)"
+        ]
+      }
+    },
+    "s007.communication.4": {
+      "goalJa": "メグに「あのひな鳥を見て！」と言おう。",
+      "modelEn": "Look at the baby bird!",
+      "hints": [
+        "メグに、ひな鳥を見るよう伝えよう。",
+        "「〜を見て」はLook at ...。「鳥」はbirdです。",
+        "例：Look at the baby bird!（あのひな鳥を見て！）"
+      ],
+      "rule": {
+        "accept": [
+          "Look at the baby bird!",
+          "Look at that baby bird!",
+          "Look at the bird!",
+          "Look at that bird!",
+          "Look at a bird!",
+          "Look at bird!",
+          "Look at the birds!",
+          "Look at the baby birds!",
+          "Look at a baby bird!",
+          "Please look at the bird!",
+          "Look at that beautiful bird!",
+          "Look! A baby bird!",
+          "A baby bird!",
+          "There is a baby bird!"
+        ],
+        "exclude": [
+          "do not",
+          "don't",
+          "dont",
+          "never"
+        ],
+        "rejectPatterns": [
+          "(?:.*\\b(?:do not|never)\\b.*|.*\\b(?:adult|grown up|fully grown|mature) birds?\\b.*|(?:please )?(?:(?:can|could|would|will) you )?look at (?:some |an? |the |this |that |those |these )?(?:trees?|nests?|butterfl(?:y|ies)|cars?|flowers?|(?:bird )?feathers?)(?: please)?|(?:please )?look for .*)",
+          "(?:(?:please )?(?:(?:can|could|would|will) you )?look at (?!(?:[a-z]+ )*(?:birds?|chicks?)(?: please)?$)(?!(?:it|them|that|this|these|those|him|her|me|an?|the|some)(?: please)?$)(?!(?:[a-z]+ )*(?:one|ones|other|little|baby|small|big|beautiful|blue|red)(?: please)?$)(?:(?:an?|the|this|that|these|those|some) )+[a-z]+(?: [a-z]+)*)"
+        ],
+        "fullPatterns": [
+          "(?:(?:(?:can|could|would|will) you )?look at (?:(?:an?|the|this|that|these|those|some) )?(?:(?:beautiful |little |colorful |blue )?(?:baby birds?|chicks?|bird)|(?:baby |little |young )birds|it))"
+        ],
+        "patternNormalization": "contractions",
+        "stripPlease": true
+      }
+    },
+    "s007.communication.5": {
+      "goalJa": "ひな鳥に近づこうとするバーニーに「動かないで！」と言おう。",
+      "modelEn": "Don't move!",
+      "hints": [
+        "バーニーがひな鳥に近づこうとしているよ。まず止めよう。",
+        "「〜しないで」はDon't。「動く」はmoveです。",
+        "例：Don't move!（動かないで！）"
+      ],
+      "rule": {
+        "accept": [
+          "Don't move!",
+          "Do not move!",
+          "Please don't move.",
+          "Don't go!",
+          "Please don't go.",
+          "Don't go there!",
+          "Stop!",
+          "Stop there!",
+          "Stay here!",
+          "Please stay here!",
+          "Wait!",
+          "Wait here!",
+          "Do not go near it.",
+          "Don't go near the bird!",
+          "Don't touch the bird!"
+        ],
+        "rejectPatterns": [
+          "(?:(?:please )?(?:move|go|walk|run|touch)(?: (?:now|there|closer|the bird|towards? the bird|to the bird|near the bird))?(?: please)?)"
+        ]
+      }
+    },
+    "s007.communication.6": {
+      "goalJa": "心配そうなメグに「心配しないで」と声をかける。",
+      "modelEn": "Don't worry.",
+      "hints": [
+        "心配しているメグを安心させよう。",
+        "「心配しないで」はDon't worry.。「大丈夫」はIt's OK.でも伝わります。",
+        "例：Don't worry.（心配しないで。）"
+      ],
+      "rule": {
+        "accept": [
+          "Don't worry.",
+          "Do not worry.",
+          "Don't worry, Meg.",
+          "Don't be nervous.",
+          "Do not be nervous.",
+          "Not nervous.",
+          "No worries.",
+          "It's OK.",
+          "It's all right.",
+          "It is OK.",
+          "You're OK.",
+          "Everything is OK.",
+          "No problem.",
+          "No need to worry.",
+          "It will be OK.",
+          "You will be OK."
+        ],
+        "rejectPatterns": [
+          "(?:you (?:should|must|need to) (?:worry|be nervous)|(?:please )?(?:worry|be nervous)(?: please)?|(?:it|you|everything) (?:is|are|will be) not (?:ok|okay|all right))"
+        ]
+      }
+    },
+    "s007.communication.7": {
+      "goalJa": "写真を撮ろうとするメグに「ここで待ってください」と頼もう。",
+      "modelEn": "Please wait here.",
+      "hints": [
+        "メグに、この場所で待ってもらおう。",
+        "「待つ」はwait。「ここで」はhere。「〜してください」はPleaseを使います。",
+        "例：Please wait here.（ここで待ってください。）"
+      ],
+      "rule": {
+        "accept": [
+          "Please wait here.",
+          "Wait here.",
+          "Please stay here.",
+          "Stay here, please.",
+          "Can you wait here?",
+          "Could you wait here?",
+          "Wait here please.",
+          "Stay here.",
+          "Wait a little here."
+        ],
+        "rejectPatterns": [
+          "(?:.*\\b(?:wait|stay) (?:over there|there|outside|at home|by the door|in the car|somewhere else)\\b.*|.*\\bdo not (?:wait|stay) here\\b.*|(?:please )?(?:leave|go away|move away)(?: please)?)"
+        ]
+      }
+    },
+    "s007.communication.8": {
+      "goalJa": "見に行こうとするコングに「ちょっと待って」と言おう。",
+      "modelEn": "Just a moment.",
+      "hints": [
+        "コングが見に行こうとしているよ。少し待ってもらおう。",
+        "「ちょっと待って」は決まった表現Just a moment.です。Wait a minute.でも大丈夫。",
+        "例：Just a moment.（ちょっと待って。）"
+      ],
+      "rule": {
+        "accept": [
+          "Just a moment.",
+          "Wait a minute.",
+          "Just a second.",
+          "One moment.",
+          "Hold on.",
+          "Wait!",
+          "Wait a moment.",
+          "One second.",
+          "Just a minute.",
+          "A moment, please.",
+          "Please wait a moment."
+        ],
+        "rejectPatterns": [
+          "(?:.*\\b(?:wait|hold on) (?:for )?(?:an? |one |two |three |several |[0-9]+ )?(?:hours?|days?|weeks?)\\b.*|(?:please )?(?:go|leave|come) now(?: please)?|.*\\bdo not wait\\b.*)"
+        ]
+      }
+    },
+    "s007.communication.9": {
+      "goalJa": "大声を出したバーニーに「静かにしてください」と言おう。",
+      "modelEn": "Be quiet, please.",
+      "hints": [
+        "バーニーの大きな声を小さくしてもらおう。",
+        "「静かに」はBe quiet.。「お願いします」はpleaseです。",
+        "例：Be quiet, please.（静かにしてください。）"
+      ],
+      "rule": {
+        "accept": [
+          "Be quiet, please.",
+          "Please be quiet.",
+          "Be quiet!",
+          "Quiet, please.",
+          "Shh!",
+          "Shhh!",
+          "Keep quiet.",
+          "Quiet!",
+          "Please lower your voice.",
+          "Don't make a noise."
+        ],
+        "rejectPatterns": [
+          "(?:.*\\b(?:speak|talk) (?:up|louder|loudly)\\b.*|(?:please )?(?:shout|make (?:a |some )?noise)(?: please)?|.*\\bdo not be quiet\\b.*)"
+        ]
+      }
+    },
+    "s007.communication.10": {
+      "goalJa": "メグが撮った写真を見て「すてきな写真だね！」とほめよう。",
+      "modelEn": "Nice picture!",
+      "hints": [
+        "メグの撮った写真をほめよう。",
+        "「すてきな写真」はnice pictureやgreat picture。What a ...! でも気持ちが伝わります。",
+        "例：Nice picture!（すてきな写真だね！）"
+      ],
+      "rule": {
+        "accept": [
+          "Nice picture!",
+          "Great picture!",
+          "Beautiful picture!",
+          "Good picture!",
+          "Nice photo!",
+          "Great photo!",
+          "Beautiful photo!",
+          "Wonderful picture!",
+          "What a wonderful picture!",
+          "What a nice picture!",
+          "What a beautiful picture!",
+          "What a great picture!",
+          "What a beautiful photo!",
+          "How nice it is!",
+          "How beautiful!",
+          "It's wonderful!",
+          "I like your picture!",
+          "I like your photo!",
+          "What a nice photo!",
+          "How wonderful!",
+          "Such a nice picture!",
+          "Great shot!"
+        ],
+        "rejectPatterns": [
+          "(?:.*\\b(?:nice|good|great|beautiful|wonderful) (?:camera|cameras|coat|hat|bag|bird|ribbon|lens)\\b.*|.*\\b(?:bad|ugly|terrible|awful) (?:picture|pictures|photo|photos|shot|photograph)\\b.*|.*\\bdo not like (?:the|your|this|that) (?:picture|photo|shot)\\b.*)"
+        ]
+      }
+    }
+  }
+}

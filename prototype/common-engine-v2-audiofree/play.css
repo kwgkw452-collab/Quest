@@ -1,0 +1,70 @@
+*{box-sizing:border-box}body{background:#0c1523;color:#f5f8ff;font:16px/1.5 system-ui,sans-serif;margin:0}main{max-width:1120px;margin:auto;padding:12px}header h1{font-size:1.35rem;margin:.3rem 0}.warning{font-size:.9rem;color:#ffda96}select,button{font:inherit;padding:9px 12px;border-radius:8px}select{margin:4px 0 12px;background:#27374b;color:#fff}.game{position:relative;aspect-ratio:13/6;background:#192539;overflow:hidden;border-radius:16px;border:1px solid #43536a}#backdrop{position:absolute;inset:0;background-size:cover;background-position:center;pointer-events:none}#dialogue{position:absolute;bottom:0;left:0;right:0;min-height:108px;background:rgba(7,15,30,.92);padding:10px 16px 12px;display:flex;flex-direction:column;justify-content:space-between;gap:5px}#text{font-size:clamp(.85rem,1.5vw,1.16rem);font-weight:600;white-space:pre-wrap}#support{font-size:.83rem;color:#ffdf91;white-space:pre-wrap}#actions{display:flex;flex-wrap:wrap;gap:6px}button{background:#acd8ff;color:#061b33;border:0;cursor:pointer}button:hover{background:#e0f1ff}button:disabled{opacity:.5}.status{margin:12px 0;font-size:.9rem}.utility{display:flex;gap:8px}#log{max-height:260px;overflow:auto}details{margin-top:18px}@media(max-width:640px){main{padding:6px}.game{aspect-ratio:13/6}#dialogue{padding:7px 9px}#actions button{padding:5px 8px;font-size:.85rem}.warning{font-size:.78rem}#text{font-size:.85rem}}
+
+#dialogue.twoRow {
+  --communication-height: 108px;
+}
+
+#dialogue.threeRow {
+  --communication-height: 140px;
+}
+
+#dialogue:is(.twoRow, .threeRow) {
+  height: var(--communication-height);
+  min-height: var(--communication-height);
+  max-height: var(--communication-height);
+  padding-block: 5px;
+  gap: 3px;
+  overflow-y: auto;
+}
+
+#dialogue:is(.twoRow, .threeRow) > :is(#text, #actions) {
+  flex: 0 0 auto;
+}
+
+#dialogue:is(.twoRow, .threeRow) > #support {
+  min-height: 0;
+  line-height: 1.25;
+  overflow-y: auto;
+  overflow-wrap: anywhere;
+}
+
+#dialogue:is(.twoRow, .threeRow) #actions button {
+  padding-block: 5px;
+}
+
+#dialogue:is(.twoRow, .threeRow) > :empty {
+  display: none;
+}
+
+/* Portrait artwork gets its own full-width row above the dialogue. */
+@media (max-width: 640px) and (orientation: portrait) {
+  main {
+    padding-bottom: max(6px, env(safe-area-inset-bottom));
+  }
+
+  select {
+    max-width: 100%;
+  }
+
+  .game {
+    aspect-ratio: auto;
+  }
+
+  #backdrop {
+    position: static;
+    aspect-ratio: 13 / 6;
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+  #dialogue {
+    position: static;
+    min-width: 0;
+  }
+}
+
+/* Eigo DE Quest graphic contract: all Story/Battle source artwork 1560x720 (13:6).
+   Dialogue twoRow reserves 108px; threeRow reserves 140px.
+   Artwork shared by both modes must keep key subjects clear of the bottom 140px.
+   Portrait mobile uses a separate artwork row, so dialogue does not overlay it.
+   Do not modify original Story graphics to satisfy this CSS-only contract. */

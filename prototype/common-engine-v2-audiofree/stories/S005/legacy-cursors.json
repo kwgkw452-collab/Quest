@@ -1,0 +1,53 @@
+{
+  "storyId": "S005",
+  "cursors": [
+    {
+      "scene": "scene01",
+      "index": 0
+    },
+    {
+      "scene": "scene02",
+      "index": 0
+    },
+    {
+      "scene": "scene03",
+      "index": 0
+    },
+    {
+      "scene": "scene04",
+      "index": 0
+    },
+    {
+      "scene": "scene05",
+      "index": 0
+    },
+    {
+      "scene": "scene06",
+      "index": 0
+    },
+    {
+      "scene": "scene07",
+      "index": 0
+    },
+    {
+      "scene": "scene08",
+      "index": 0
+    },
+    {
+      "scene": "scene09",
+      "index": 0
+    },
+    {
+      "scene": "scene10",
+      "index": 0
+    },
+    {
+      "scene": "scene11",
+      "index": 0
+    },
+    {
+      "scene": "scene11",
+      "index": 11
+    }
+  ]
+}

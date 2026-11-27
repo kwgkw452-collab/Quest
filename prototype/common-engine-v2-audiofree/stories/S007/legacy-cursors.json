@@ -1,0 +1,605 @@
+{
+  "storyId": "S007",
+  "cursors": [
+    {
+      "scene": "scene01",
+      "index": 0
+    },
+    {
+      "scene": "scene01",
+      "index": 0
+    },
+    {
+      "scene": "scene01",
+      "index": 1
+    },
+    {
+      "scene": "scene01",
+      "index": 2
+    },
+    {
+      "scene": "scene01",
+      "index": 3
+    },
+    {
+      "scene": "scene01",
+      "index": 4
+    },
+    {
+      "scene": "scene01",
+      "index": 5
+    },
+    {
+      "scene": "scene01",
+      "index": 6
+    },
+    {
+      "scene": "scene01",
+      "index": 7
+    },
+    {
+      "scene": "scene01",
+      "index": 8
+    },
+    {
+      "scene": "scene02",
+      "index": 0
+    },
+    {
+      "scene": "scene02",
+      "index": 0
+    },
+    {
+      "scene": "scene02",
+      "index": 1
+    },
+    {
+      "scene": "scene02",
+      "index": 2
+    },
+    {
+      "scene": "scene02",
+      "index": 3
+    },
+    {
+      "scene": "scene02",
+      "index": 4
+    },
+    {
+      "scene": "scene02",
+      "index": 5
+    },
+    {
+      "scene": "scene02",
+      "index": 6
+    },
+    {
+      "scene": "scene02",
+      "index": 7
+    },
+    {
+      "scene": "scene02",
+      "index": 8
+    },
+    {
+      "scene": "scene02",
+      "index": 9
+    },
+    {
+      "scene": "scene02",
+      "index": 10
+    },
+    {
+      "scene": "scene02",
+      "index": 11
+    },
+    {
+      "scene": "scene02",
+      "index": 12
+    },
+    {
+      "scene": "scene03",
+      "index": 0
+    },
+    {
+      "scene": "scene03",
+      "index": 0
+    },
+    {
+      "scene": "scene03",
+      "index": 1
+    },
+    {
+      "scene": "scene03",
+      "index": 2
+    },
+    {
+      "scene": "scene03",
+      "index": 3
+    },
+    {
+      "scene": "scene03",
+      "index": 4
+    },
+    {
+      "scene": "scene03",
+      "index": 5
+    },
+    {
+      "scene": "scene03",
+      "index": 6
+    },
+    {
+      "scene": "scene03",
+      "index": 7
+    },
+    {
+      "scene": "scene03",
+      "index": 8
+    },
+    {
+      "scene": "scene04",
+      "index": 0
+    },
+    {
+      "scene": "scene04",
+      "index": 0
+    },
+    {
+      "scene": "scene04",
+      "index": 1
+    },
+    {
+      "scene": "scene04",
+      "index": 2
+    },
+    {
+      "scene": "scene04",
+      "index": 3
+    },
+    {
+      "scene": "scene04",
+      "index": 4
+    },
+    {
+      "scene": "scene04",
+      "index": 5
+    },
+    {
+      "scene": "scene04",
+      "index": 6
+    },
+    {
+      "scene": "scene04",
+      "index": 7
+    },
+    {
+      "scene": "scene04",
+      "index": 8
+    },
+    {
+      "scene": "scene05",
+      "index": 0
+    },
+    {
+      "scene": "scene05",
+      "index": 0
+    },
+    {
+      "scene": "scene05",
+      "index": 1
+    },
+    {
+      "scene": "scene05",
+      "index": 2
+    },
+    {
+      "scene": "scene05",
+      "index": 3
+    },
+    {
+      "scene": "scene05",
+      "index": 4
+    },
+    {
+      "scene": "scene05",
+      "index": 5
+    },
+    {
+      "scene": "scene05",
+      "index": 6
+    },
+    {
+      "scene": "scene05",
+      "index": 7
+    },
+    {
+      "scene": "scene05",
+      "index": 8
+    },
+    {
+      "scene": "scene05",
+      "index": 9
+    },
+    {
+      "scene": "scene05",
+      "index": 10
+    },
+    {
+      "scene": "scene05",
+      "index": 11
+    },
+    {
+      "scene": "scene06",
+      "index": 0
+    },
+    {
+      "scene": "scene06",
+      "index": 0
+    },
+    {
+      "scene": "scene06",
+      "index": 1
+    },
+    {
+      "scene": "scene06",
+      "index": 2
+    },
+    {
+      "scene": "scene06",
+      "index": 3
+    },
+    {
+      "scene": "scene06",
+      "index": 4
+    },
+    {
+      "scene": "scene06",
+      "index": 5
+    },
+    {
+      "scene": "scene06",
+      "index": 6
+    },
+    {
+      "scene": "scene06",
+      "index": 7
+    },
+    {
+      "scene": "scene06",
+      "index": 8
+    },
+    {
+      "scene": "scene06",
+      "index": 9
+    },
+    {
+      "scene": "scene06",
+      "index": 10
+    },
+    {
+      "scene": "scene06",
+      "index": 11
+    },
+    {
+      "scene": "scene07",
+      "index": 0
+    },
+    {
+      "scene": "scene07",
+      "index": 0
+    },
+    {
+      "scene": "scene07",
+      "index": 1
+    },
+    {
+      "scene": "scene07",
+      "index": 2
+    },
+    {
+      "scene": "scene07",
+      "index": 3
+    },
+    {
+      "scene": "scene07",
+      "index": 4
+    },
+    {
+      "scene": "scene07",
+      "index": 5
+    },
+    {
+      "scene": "scene07",
+      "index": 6
+    },
+    {
+      "scene": "scene07",
+      "index": 7
+    },
+    {
+      "scene": "scene07",
+      "index": 8
+    },
+    {
+      "scene": "scene08",
+      "index": 0
+    },
+    {
+      "scene": "scene08",
+      "index": 0
+    },
+    {
+      "scene": "scene08",
+      "index": 1
+    },
+    {
+      "scene": "scene08",
+      "index": 2
+    },
+    {
+      "scene": "scene08",
+      "index": 3
+    },
+    {
+      "scene": "scene08",
+      "index": 4
+    },
+    {
+      "scene": "scene08",
+      "index": 5
+    },
+    {
+      "scene": "scene08",
+      "index": 6
+    },
+    {
+      "scene": "scene08",
+      "index": 7
+    },
+    {
+      "scene": "scene08",
+      "index": 8
+    },
+    {
+      "scene": "scene09",
+      "index": 0
+    },
+    {
+      "scene": "scene09",
+      "index": 0
+    },
+    {
+      "scene": "scene09",
+      "index": 1
+    },
+    {
+      "scene": "scene09",
+      "index": 2
+    },
+    {
+      "scene": "scene09",
+      "index": 3
+    },
+    {
+      "scene": "scene09",
+      "index": 4
+    },
+    {
+      "scene": "scene09",
+      "index": 5
+    },
+    {
+      "scene": "scene09",
+      "index": 6
+    },
+    {
+      "scene": "scene09",
+      "index": 7
+    },
+    {
+      "scene": "scene09",
+      "index": 8
+    },
+    {
+      "scene": "scene09",
+      "index": 9
+    },
+    {
+      "scene": "scene10",
+      "index": 0
+    },
+    {
+      "scene": "scene10",
+      "index": 0
+    },
+    {
+      "scene": "scene10",
+      "index": 1
+    },
+    {
+      "scene": "scene10",
+      "index": 2
+    },
+    {
+      "scene": "scene10",
+      "index": 3
+    },
+    {
+      "scene": "scene10",
+      "index": 4
+    },
+    {
+      "scene": "scene10",
+      "index": 5
+    },
+    {
+      "scene": "scene10",
+      "index": 6
+    },
+    {
+      "scene": "scene10",
+      "index": 7
+    },
+    {
+      "scene": "scene10",
+      "index": 8
+    },
+    {
+      "scene": "scene10",
+      "index": 9
+    },
+    {
+      "scene": "scene10",
+      "index": 10
+    },
+    {
+      "scene": "scene11",
+      "index": 0
+    },
+    {
+      "scene": "scene11",
+      "index": 0
+    },
+    {
+      "scene": "scene11",
+      "index": 1
+    },
+    {
+      "scene": "scene11",
+      "index": 2
+    },
+    {
+      "scene": "scene11",
+      "index": 3
+    },
+    {
+      "scene": "scene11",
+      "index": 4
+    },
+    {
+      "scene": "scene11",
+      "index": 5
+    },
+    {
+      "scene": "scene11",
+      "index": 6
+    },
+    {
+      "scene": "scene11",
+      "index": 7
+    },
+    {
+      "scene": "scene11",
+      "index": 8
+    },
+    {
+      "scene": "scene11",
+      "index": 9
+    },
+    {
+      "scene": "scene11",
+      "index": 10
+    },
+    {
+      "scene": "scene11",
+      "index": 11
+    },
+    {
+      "scene": "scene12",
+      "index": 0
+    },
+    {
+      "scene": "scene12",
+      "index": 0
+    },
+    {
+      "scene": "scene12",
+      "index": 1
+    },
+    {
+      "scene": "scene12",
+      "index": 2
+    },
+    {
+      "scene": "scene12",
+      "index": 3
+    },
+    {
+      "scene": "scene12",
+      "index": 4
+    },
+    {
+      "scene": "scene12",
+      "index": 5
+    },
+    {
+      "scene": "scene12",
+      "index": 6
+    },
+    {
+      "scene": "scene12",
+      "index": 7
+    },
+    {
+      "scene": "scene12",
+      "index": 8
+    },
+    {
+      "scene": "scene12",
+      "index": 9
+    },
+    {
+      "scene": "scene12",
+      "index": 10
+    },
+    {
+      "scene": "scene12",
+      "index": 11
+    },
+    {
+      "scene": "scene12",
+      "index": 12
+    },
+    {
+      "scene": "scene12",
+      "index": 13
+    },
+    {
+      "scene": "scene12",
+      "index": 14
+    },
+    {
+      "scene": "scene12",
+      "index": 15
+    },
+    {
+      "scene": "scene13",
+      "index": 0
+    },
+    {
+      "scene": "scene13",
+      "index": 0
+    },
+    {
+      "scene": "scene13",
+      "index": 1
+    },
+    {
+      "scene": "scene13",
+      "index": 2
+    },
+    {
+      "scene": "scene13",
+      "index": 3
+    },
+    {
+      "scene": "scene13",
+      "index": 4
+    },
+    {
+      "scene": "scene13",
+      "index": 5
+    }
+  ]
+}
