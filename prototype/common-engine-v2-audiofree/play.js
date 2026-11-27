@@ -31,6 +31,29 @@ function paintQuestion(v,{listening=false}={}){
  view.support.scrollTop=0;
  clearButtons();if(listening)return;addButton('話す',()=>void speech());addButton('ピコサポート',()=>{try{paint(runner.support());}catch(e){error(e);}});addButton('冒険に戻る',()=>paint(runner.returnToAdventure()));
 }
+// Director-LOCK: ordinary dialogue = 108px and two controls; Pico mode = 140px and four.
+function paintDialogueLine(event){
+ const english=(event.speaker?event.speaker+'：':'')+event.text;
+ let picoOpen=false;
+ function showLine(language){
+  view.dialogue.className=picoOpen?'threeRow':'twoRow';
+  setText(english,picoOpen?(language==='ja'?(event.supportText||'日本語訳は登録されていません。'):language==='en'?event.text:'ピコサポート：表示したい内容を選んでください。'):'');
+  clearButtons();
+  addButton('次へ',()=>void next());
+  if(!picoOpen){
+   addButton('ピコサポート',()=>{picoOpen=true;showLine(null);});
+  }else{
+   addButton('英文を見る',()=>showLine('en'));
+   addButton('日本語を見る',()=>showLine('ja'));
+   const replay=addButton('もう一度聞く',()=>{});
+   // Do not simulate playback: Director has frozen Audio/Voice until S015.
+   replay.disabled=true;
+   replay.title='音声再生はS015実装後まで凍結中です';
+   replay.setAttribute('aria-label','もう一度聞く（S015まで音声凍結中）');
+  }
+ }
+ showLine(null);
+}
 function showDocument(content){
  const lines=Array.isArray(content.lines)?content.lines:[];
  if(!lines.length){setText(content.title||'文書',(content.body||[]).join('\n'));clearButtons();addButton('読み終えた',()=>{runner.documentDone();if(lastSceneAsset)setBackdrop(lastSceneAsset);void next();});return;}
@@ -54,7 +77,7 @@ function paint(event){
  const state=runner.state();
  showStatus('Scene: '+state.scene+' / '+state.status+' / マイク: '+(recognizer.isSupported()?'対応':'非対応')+' / 音楽・Voice: OFF');
  clearButtons();
- if(event.type==='line'){setText((event.speaker?event.speaker+'：':'')+event.text,event.supportText||'');addButton('次へ',()=>void next());}
+ if(event.type==='line')paintDialogueLine(event);
  else if(event.type==='challenge'||event.type==='hint'||(state.status==='QUESTION'&&['no-speech','rejected','unknown'].includes(event.type)))paintQuestion(event.view);
  else if(state.status==='BATTLE'&&['battle','accepted','rejected','no-speech'].includes(event.type)){setText(event.view?.prompt||state.battle?.prompt||'単語を言おう',event.view?.feedback||'');addButton('英単語を話す',()=>void speech());addButton('冒険に戻る',()=>paint(runner.returnToAdventure()));}
  else if(event.type==='document'){documentCursor=0;documentLanguage='en';if(event.content.card)setBackdrop(event.content.card);showDocument(event.content);}
