@@ -1,0 +1,279 @@
+{
+  "schemaVersion": 1,
+  "id": "S008",
+  "title": "願いと青いランタン（未承認・開発候補）",
+  "entry": "scene01",
+  "sceneOrder": [
+    "scene01",
+    "scene02",
+    "scene03",
+    "scene04",
+    "scene05",
+    "scene06"
+  ],
+  "scenes": {
+    "scene01": {
+      "steps": [
+        {
+          "type": "line",
+          "speaker": null,
+          "text": "森を抜けた先で、光る小さなモンスターが立ち止まっている。"
+        },
+        {
+          "type": "line",
+          "speaker": "Pico",
+          "text": "Look! Someone is over there.",
+          "supportText": "見て！あそこに誰かいるピコ。"
+        },
+        {
+          "type": "line",
+          "speaker": "Meg",
+          "text": "It looks worried.",
+          "supportText": "心配そうね。"
+        },
+        {
+          "type": "challenge",
+          "id": "s008.communication.1"
+        },
+        {
+          "type": "line",
+          "speaker": "Wish Monster",
+          "text": "I can't find my little lantern.",
+          "supportText": "小さなランタンが見つからないんだ。"
+        },
+        {
+          "type": "goto",
+          "to": "scene02"
+        }
+      ]
+    },
+    "scene02": {
+      "steps": [
+        {
+          "type": "line",
+          "speaker": "Kong",
+          "text": "I can carry heavy things!",
+          "supportText": "重いものなら運べるよ！"
+        },
+        {
+          "type": "line",
+          "speaker": "Bernie",
+          "text": "What does the lantern look like?",
+          "supportText": "どんなランタンなの？"
+        },
+        {
+          "type": "challenge",
+          "id": "s008.communication.2"
+        },
+        {
+          "type": "line",
+          "speaker": "Wish Monster",
+          "text": "It's small and blue.",
+          "supportText": "小さくて青いんだ。"
+        },
+        {
+          "type": "goto",
+          "to": "scene03"
+        }
+      ]
+    },
+    "scene03": {
+      "steps": [
+        {
+          "type": "line",
+          "speaker": "Meg",
+          "text": "There are two paths.",
+          "supportText": "道が二つあるわ。"
+        },
+        {
+          "type": "line",
+          "speaker": "Pico",
+          "text": "We need to ask, not guess.",
+          "supportText": "決めつけずに聞くピコ。"
+        },
+        {
+          "type": "challenge",
+          "id": "s008.communication.3"
+        },
+        {
+          "type": "line",
+          "speaker": "Wish Monster",
+          "text": "I went to the bridge.",
+          "supportText": "橋に行ったよ。"
+        },
+        {
+          "type": "goto",
+          "to": "scene04"
+        }
+      ]
+    },
+    "scene04": {
+      "steps": [
+        {
+          "type": "line",
+          "speaker": "Bernie",
+          "text": "I see something blue near the bridge.",
+          "supportText": "橋の近くに青いものが見えるよ。"
+        },
+        {
+          "type": "line",
+          "speaker": "Meg",
+          "text": "Let's check it together.",
+          "supportText": "一緒に確かめよう。"
+        },
+        {
+          "type": "challenge",
+          "id": "s008.communication.4"
+        },
+        {
+          "type": "line",
+          "speaker": "Wish Monster",
+          "text": "Yes! That's my lantern!",
+          "supportText": "そう！僕のランタンだ！"
+        },
+        {
+          "type": "goto",
+          "to": "scene05"
+        }
+      ]
+    },
+    "scene05": {
+      "steps": [
+        {
+          "type": "line",
+          "speaker": "Wish Monster",
+          "text": "I wished for someone to help me.",
+          "supportText": "誰か助けてほしいと願っていたんだ。"
+        },
+        {
+          "type": "line",
+          "speaker": "Kong",
+          "text": "We didn't use magic. We talked!",
+          "supportText": "魔法じゃなくて、話して探したんだね！"
+        },
+        {
+          "type": "challenge",
+          "id": "s008.communication.5"
+        },
+        {
+          "type": "line",
+          "speaker": "Wish Monster",
+          "text": "Thank you, everyone.",
+          "supportText": "みんな、ありがとう。"
+        },
+        {
+          "type": "goto",
+          "to": "scene06"
+        }
+      ]
+    },
+    "scene06": {
+      "steps": [
+        {
+          "type": "line",
+          "speaker": "Meg",
+          "text": "Now we can keep traveling.",
+          "supportText": "これでまた旅を続けられるわ。"
+        },
+        {
+          "type": "line",
+          "speaker": "Pico",
+          "text": "A small question can make a big difference.",
+          "supportText": "小さな質問が大きな力になるピコ。"
+        },
+        {
+          "type": "line",
+          "speaker": "Bernie",
+          "text": "Let's go together!",
+          "supportText": "一緒に行こう！"
+        },
+        {
+          "type": "end"
+        }
+      ]
+    }
+  },
+  "challenges": {
+    "s008.communication.1": {
+      "goalJa": "困っている相手に「大丈夫ですか？」と尋ねよう。",
+      "modelEn": "Are you OK?",
+      "hints": [
+        "相手の様子を確かめよう。",
+        "Are you ...? で質問できるよ。",
+        "例：Are you OK?"
+      ],
+      "rule": {
+        "accept": [
+          "Are you OK?",
+          "Are you all right?",
+          "Are you alright?"
+        ]
+      }
+    },
+    "s008.communication.2": {
+      "goalJa": "ランタンの色を尋ねよう。",
+      "modelEn": "What color is it?",
+      "hints": [
+        "色を聞いてみよう。",
+        "What color ...? を使おう。",
+        "例：What color is it?"
+      ],
+      "rule": {
+        "accept": [
+          "What color is it?",
+          "What color is the lantern?",
+          "What color is your lantern?"
+        ]
+      }
+    },
+    "s008.communication.3": {
+      "goalJa": "どこへ行ったか尋ねよう。",
+      "modelEn": "Where did you go?",
+      "hints": [
+        "行った場所を聞いてみよう。",
+        "Where did you ...? を使おう。",
+        "例：Where did you go?"
+      ],
+      "rule": {
+        "accept": [
+          "Where did you go?",
+          "Where were you?",
+          "Where did you walk?"
+        ]
+      }
+    },
+    "s008.communication.4": {
+      "goalJa": "これがあなたのランタンか尋ねよう。",
+      "modelEn": "Is this your lantern?",
+      "hints": [
+        "青い物が本人の物か確かめよう。",
+        "Is this your ...? を使おう。",
+        "例：Is this your lantern?"
+      ],
+      "rule": {
+        "accept": [
+          "Is this your lantern?",
+          "Is that your lantern?",
+          "Is it your lantern?"
+        ]
+      }
+    },
+    "s008.communication.5": {
+      "goalJa": "相手に「どういたしまして」と返そう。",
+      "modelEn": "You're welcome.",
+      "hints": [
+        "お礼に返事をしよう。",
+        "You're welcome. と言えるよ。",
+        "例：You're welcome."
+      ],
+      "rule": {
+        "accept": [
+          "You're welcome.",
+          "You are welcome.",
+          "No problem."
+        ]
+      }
+    }
+  },
+  "saveKeys": {}
+}
