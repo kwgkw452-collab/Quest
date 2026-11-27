@@ -23,3 +23,16 @@ test('existing V2 vocabulary engine advances all 10 prompts, ends and rejects wr
  e=await runner.advance();assert.equal(e.type,'line');
  e=await runner.advance();assert.equal(e.type,'end');
 });
+
+test('all four checked-in PNG assets are exactly 1560 by 720',()=>{
+ const fs=require('node:fs'),p=require('node:path');
+ for(let i=0;i<4;i++){
+  const file=p.join(__dirname,'assets','mistfang_stage_'+i+'.png');
+  assert.ok(fs.existsSync(file),'MISSING_GRAPHIC_STAGE_'+i);
+  const header=fs.readFileSync(file);
+  assert.equal(header.subarray(0,8).toString('hex'),'89504e470d0a1a0a');
+  assert.equal(header.toString('ascii',12,16),'IHDR');
+  assert.equal(header.readUInt32BE(16),1560);
+  assert.equal(header.readUInt32BE(20),720);
+ }
+});
