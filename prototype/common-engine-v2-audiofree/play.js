@@ -46,10 +46,10 @@ function paintDialogueLine(event){
    addButton('英文を見る',()=>showLine('en'));
    addButton('日本語を見る',()=>showLine('ja'));
    const replay=addButton('もう一度聞く',()=>{});
-   // Do not simulate playback: Director has frozen Audio/Voice until S015.
+   // Do not simulate playback: Director has frozen Audio/Voice until 音響凍結期間.
    replay.disabled=true;
-   replay.title='音声再生はS015実装後まで凍結中です';
-   replay.setAttribute('aria-label','もう一度聞く（S015まで音声凍結中）');
+   replay.title='音声再生は音響凍結期間実装後まで凍結中です';
+   replay.setAttribute('aria-label','もう一度聞く（音響凍結期間まで音声凍結中）');
   }
  }
  showLine(null);
