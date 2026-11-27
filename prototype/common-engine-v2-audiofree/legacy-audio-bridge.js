@@ -7,7 +7,7 @@
     if(!audioManager||typeof audioManager.enterSpeechMode!=='function'||typeof audioManager.exitSpeechMode!=='function')throw Error('AUDIO_CONTRACT_REQUIRED');
     let generation=0,queue=Promise.resolve(),active=false;
     function serialized(task){const p=queue.then(task,task);queue=p.catch(()=>{});return p;}
-    function cancel(){++generation;recognizer.cancel();}
+    function cancel(){++generation;try{recognizer.cancel();}catch(e){/* A failed microphone abort must not block queued audio restoration. */}}
     async function recognize(input){
       const id=++generation;
       return serialized(async()=>{
