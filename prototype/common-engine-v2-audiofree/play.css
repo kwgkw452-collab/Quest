@@ -68,3 +68,51 @@
    Artwork shared by both modes must keep key subjects clear of the bottom 140px.
    Portrait mobile uses a separate artwork row, so dialogue does not overlay it.
    Do not modify original Story graphics to satisfy this CSS-only contract. */
+
+/* Director-LOCK: pixel heights are never content-driven, including portrait.
+   The buttons and long text must scroll or wrap inside the reserved region. */
+#dialogue {
+  height:108px;
+  min-height:108px;
+  max-height:108px;
+  overflow:hidden;
+}
+#dialogue.twoRow { height:108px;min-height:108px;max-height:108px; }
+#dialogue.threeRow { height:140px;min-height:140px;max-height:140px; }
+#dialogue:is(.twoRow,.threeRow) {
+  overflow:hidden;
+  padding:5px 9px;
+  gap:3px;
+}
+#dialogue > #text {
+  flex: 1 1 auto;
+  min-height:0;
+  line-height:1.2;
+  overflow-y:auto;
+  overflow-wrap:anywhere;
+}
+#dialogue > #support {
+  flex: 0 1 auto;
+  max-height:44px;
+  overflow-y:auto;
+  overflow-wrap:anywhere;
+}
+#dialogue > #actions {
+  flex: 0 0 auto;
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:4px;
+  max-height:72px;
+  overflow-y:auto;
+}
+#dialogue #actions button {
+  padding:3px 5px;
+  min-width:0;
+  font-size:clamp(.7rem,1.7vw,.85rem);
+  line-height:1.2;
+}
+#dialogue #actions button:disabled {cursor:not-allowed;}
+@media(max-width:640px) {
+  #dialogue:is(.twoRow,.threeRow){padding:4px 7px;}
+  #dialogue #actions button {padding:4px 3px;font-size:12px;}
+}
