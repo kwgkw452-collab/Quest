@@ -32,12 +32,12 @@ select{margin:4px 0 12px;max-width:100%;background:#27374b;color:#fff}
 }
 #text{
  grid-column:1;grid-row:1;min-width:0;min-height:0;max-height:100%;overflow-y:auto;overflow-wrap:anywhere;
- font-size:1.5384615cqw;line-height:1.12;font-weight:600;white-space:pre-wrap;
+ font-size:1.5384615cqw;line-height:1.5;font-weight:600;white-space:pre-wrap;
 }
 #support{
  grid-column:2;grid-row:1;min-width:0;min-height:0;max-height:100%;
  overflow-y:auto;overflow-wrap:anywhere;white-space:pre-wrap;
- font-size:1.3461538cqw;line-height:1.1;color:#ffdf91;
+ font-size:1.3461538cqw;line-height:1.5;color:#ffdf91;
 }
 #support:empty{display:none}
 #dialogue:not(.threeRow):has(#support:empty) #text{grid-column:1/-1}
