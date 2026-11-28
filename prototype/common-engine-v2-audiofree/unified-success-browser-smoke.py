@@ -61,7 +61,7 @@ window.SpeechRecognition=class {{
         buttonLeft:button.left-panel.left};
     }""")
     assert abs(geo['stageH']-108)<2,(story,width,geo)
-    assert geo['leftInset']>0 and geo['leftInset']<20 and geo['align']=='left',(story,width,geo)
+    assert geo['leftInset']>0 and geo['leftInset']<20 and geo['align'] in ('left','start'),(story,width,geo)
     assert geo['buttonLeft']<20,(story,width,geo)
     page.close()
    print(story+' accepted speech → next Story line PASS')
