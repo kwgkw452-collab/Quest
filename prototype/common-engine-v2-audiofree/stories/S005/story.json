@@ -22,7 +22,7 @@
       "goalJa": "いいえ、予約していません。",
       "modelEn": "No, we don’t.",
       "hints": [
-        "「いいえ」だから……ピコ。",
+        "“No” から始めるピコ。",
         "“No” を使って答えるピコ。",
         "No, we don’t."
       ],
@@ -50,7 +50,7 @@
       "goalJa": "4人です。",
       "modelEn": "Four.",
       "hints": [
-        "4人だから……ピコ。",
+        "“Four” と言えば人数が伝わるピコ。",
         "“Four” を使って答えるピコ。",
         "Four."
       ],
@@ -119,7 +119,7 @@
       "goalJa": "キングサイズのベッドを1つお願いします。",
       "modelEn": "One king-size bed, please.",
       "hints": [
-        "1つお願いするピコ。",
+        "“One” と “bed” を使うピコ。",
         "“One king-size bed” を使うピコ。",
         "One king-size bed, please."
       ],
@@ -144,7 +144,7 @@
       "goalJa": "2部屋お願いします。",
       "modelEn": "Two rooms, please.",
       "hints": [
-        "2だから……ピコ。",
+        "“Two” と “rooms” を使うピコ。",
         "“Two” から始めるピコ。",
         "Two rooms, please."
       ],
@@ -176,7 +176,7 @@
       "goalJa": "はい、お願いします。",
       "modelEn": "Yes, please.",
       "hints": [
-        "「はい」だから……ピコ。",
+        "“Yes” から始めるピコ。",
         "“Yes” を使って答えるピコ。",
         "Yes, please."
       ],
