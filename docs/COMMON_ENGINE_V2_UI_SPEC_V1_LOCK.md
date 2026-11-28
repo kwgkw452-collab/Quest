@@ -76,3 +76,17 @@ Automated real-browser tests must compare reference-stage geometry across landsc
 7. Record screenshot/measurements for S005–S007. Mock-mic CI alone is not independent or physical-device QA.
 
 **Explicit non-approval:** Current PR #53 was developed with incorrect rules (support-triggered 140 and speculative English hint generation). It remains HOLD and must not be treated as proof of this specification. Correct implementation requires a separate reviewed diff and independent QA.
+
+## 8. Future interactive English conversation at ordinary Story dialogue — reserved contract (Director request)
+
+Ordinary Story dialogue is currently a **display-and-next** interaction, but later the same dialogue location may become **a player-spoken English exchange**. Do not make a separate incompatible player or change the artwork/layout contract.
+
+**Already reserved in the V2 schema and runner, but deliberately inactive:**
+- A Story `line` step may optionally contain `"futureConversation":{"mode":"reserved","challengeId":"<existing approved challenge ID>"}`.
+- The referenced `challengeId` must exist in the Story's `challenges` dictionary and follow the shared Communication/Judge contract. No new or dynamic executable fields are accepted.
+- The runner exposes `conversationHook:{mode:"reserved",challengeId:"..."}` on the line event. It **does not begin microphone recognition, change UI buttons, alter progression, call an API, or require Audio/Voice**.
+- Existing `line` records without this optional field run unchanged, including save/resume. All published S005–S007 records remain unmodified.
+- When dialogue speaking is explicitly activated in a future approved phase, it must reuse the common `Communication` pipeline: Goal, recognition/Judge tri-state, support stages, listening/feedback and cancellation. The 108 reference-stage baseline and 140 speech-feedback-only rule continue to apply.
+- Any future mode besides `reserved` is rejected until a separately approved and tested schema revision. **No Audio/Voice freeze exception** is implied.
+
+This reserves the data/runtime seam while keeping the feature disabled. It is a concrete implementation reservation, **not a claim that interactive spoken dialogue is already operational**.
