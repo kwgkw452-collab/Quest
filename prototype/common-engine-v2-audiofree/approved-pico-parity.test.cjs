@@ -32,7 +32,11 @@ for(const storyId of ['S005','S006','S007']){
    if(q.id==='s006.communication.10'){
     assert.equal(pack.challenges[q.id].goalJa,'これはあなたの箱です。');
     assert.equal(pack.challenges[q.id].modelEn,'This is your box!');
-    assert.equal(pack.challenges[q.id].hints.length,3);
+    assert.deepEqual(pack.challenges[q.id].hints,[
+     '見つけた箱を持ち主に渡すピコ。『これはあなたの箱です。』と伝えるピコ。',
+     '『これは』は This is、『あなたの箱』は your box だピコ。',
+     'This is your box! と言うピコ。'
+    ]);
     continue;
    }
    assert.equal(pack.challenges[q.id].goalJa,q.prompt,'Goal mismatch: '+q.id);
