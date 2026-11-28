@@ -64,8 +64,12 @@ try:
       const a=document.querySelector('#text').getBoundingClientRect();
       const h=document.querySelector('#support').getBoundingClientRect();
       const b=document.querySelector('#actions').getBoundingClientRect();
-      return Math.abs(a.top-h.top)<2 && a.bottom<=b.top+1 && h.bottom<=b.top+1;
-    }"""), (story,width,'Normal Pico must be two visual rows, not 3')
+      const stage=document.querySelector('.game').getBoundingClientRect();
+      const gap=h.left-a.right;
+      return Math.abs(a.top-h.top)<2 && a.bottom<=b.top+1 && h.bottom<=b.top+1
+        && gap>=0 && gap<=stage.width*0.035;
+
+    }"""), (story,width,'Pico must be adjacent to white Goal in the first visual row (not stage midpoint)')
     check(108)
     page.get_by_role('button',name='話す').click()
     page.wait_for_function("()=>document.querySelector('#support')?.textContent.includes('と聞こえたよ')",timeout=10000)
