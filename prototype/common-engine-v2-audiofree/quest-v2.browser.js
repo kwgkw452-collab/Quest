@@ -85,6 +85,15 @@ function createCommunication(q,{recognize,judge=localJudge,cancelSpeech}={}){
   };
  };
  function support(){if(state!=='READY')throw Error('NOT_READY');stage=Math.min(stage+1,3);return view();}
+ // User may open Pico Support even if Safari's ASR is still listening.
+ // Invalidate the pending attempt without cancelling the question itself.
+ function stopListening(){
+  if(state!=='LISTENING')return view();
+  active=++attempt;state='READY';
+  try{cancelSpeech?.();}catch{}
+  feedback=null;
+  return view();
+ }
  function cancel(){active=++attempt;state='CANCELLED';cancelSpeech?.();return view();}
  async function speak(){if(state!=='READY')throw Error('NOT_READY');if(typeof recognize!=='function')throw Error('NO_RECOGNIZER');
   state='LISTENING';feedback=null;const token=++attempt;active=token;let r;
@@ -97,7 +106,7 @@ function createCommunication(q,{recognize,judge=localJudge,cancelSpeech}={}){
   if(decision==='ACCEPT'){state='ACCEPTED';return {type:'accepted',view:view(),recognizedText:r.text};}
   state='READY';feedback={recognizedText:r.text,feedbackJa:`${r.text} と聞こえたよ。もう一度話してみよう。`};return {type:decision==='UNKNOWN'?'unknown':'rejected',view:view()};
  }
- return {view,support,cancel,speak};
+ return {view,support,stopListening,cancel,speak};
 }
 module.exports={createCommunication};
 
@@ -264,6 +273,7 @@ function createRunner(pack,{recognize,judge,cancelSpeech,storage,onEvent,initial
    }
   }throw Error('RUNAWAY_STORY');} finally {advancing=false;}
  }
+ const stopSpeech=()=>{if(status!=='QUESTION')throw Error('NOT_QUESTION');return communication.stopListening();};
  const support=()=>{if(status!=='QUESTION')throw Error('NOT_QUESTION');return emit({type:'hint',view:communication.support()});};
  async function talk(){if(status!=='QUESTION'&&status!=='BATTLE')throw Error('NOT_SPEECH_STEP');const previous=serial;const target=status==='QUESTION'?communication:battle;const result=await target.speak();if(serial!==previous||!['QUESTION','BATTLE'].includes(status))return emit({type:'stale'});
   if(result.type==='accepted'&&status==='QUESTION'){status='READY';communication=null;index++;return emit(result);}
@@ -272,7 +282,7 @@ function createRunner(pack,{recognize,judge,cancelSpeech,storage,onEvent,initial
  }
  function documentDone(){if(status!=='DOCUMENT')throw Error('NOT_DOCUMENT');status='READY';feature=null;index++;return emit({type:'document-complete'});}
  function back(){if(advancing)return emit({type:'ignored',reason:'save-in-progress'});serial++;communication?.cancel();battle?.cancel();communication=null;battle=null;feature=null;status='RETURNED';return emit({type:'return'});}
- return {advance,talk,support,documentDone,returnToAdventure:back,state,snapshot};
+ return {advance,talk,support,stopSpeech,documentDone,returnToAdventure:back,state,snapshot};
 }
 module.exports={createRunner};
 
