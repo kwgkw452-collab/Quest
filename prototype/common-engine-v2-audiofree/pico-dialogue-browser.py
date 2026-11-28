@@ -31,10 +31,22 @@ try:
     page.get_by_role('button',name='ピコサポート').wait_for(timeout=20000)
     assert height(page)==108,(story_id,width,height(page))
     assert page.locator('#actions button').all_text_contents()==['次へ','ピコサポート']
+    assert page.locator('#actions').evaluate("""el => {
+      const buttons=[...el.querySelectorAll('button')];
+      const rows=buttons.map(b=>Math.round(b.getBoundingClientRect().top));
+      return rows.every(y=>y===rows[0]) && buttons.every(b=>b.getBoundingClientRect().width<el.getBoundingClientRect().width*0.85);
+    }"""),'Normal buttons must be compact in one row'
+
     assert page.locator('#support').inner_text()=='','Translation must not be revealed without request'
     page.get_by_role('button',name='ピコサポート').click()
     assert height(page)==140,(story_id,width,height(page))
     assert page.locator('#actions button').all_text_contents()==['次へ','英文を見る','日本語を見る','もう一度聞く']
+    assert page.locator('#actions').evaluate("""el => {
+      const buttons=[...el.querySelectorAll('button')];
+      const rows=buttons.map(b=>Math.round(b.getBoundingClientRect().top));
+      return rows.every(y=>y===rows[0]) && buttons.every(b=>b.getBoundingClientRect().width<el.getBoundingClientRect().width*0.85);
+    }"""),'Four buttons must share one compact row'
+
     assert page.locator('#support').inner_text().startswith('ピコサポート')
     replay=page.get_by_role('button',name='もう一度聞く',exact=False)
     assert replay.is_disabled(),'Replay must stay off while Audio/Voice are frozen'
@@ -47,6 +59,21 @@ try:
     assert page.evaluate('document.documentElement.scrollWidth<=innerWidth'),'Horizontal overflow'
     page.get_by_role('button',name='次へ').click()
     page.locator('#text').wait_for()
+    for i in range(110):
+     if page.get_by_role('button',name='話す',exact=True).count(): break
+     if page.get_by_role('button',name='次へ',exact=True).count():
+      page.get_by_role('button',name='次へ',exact=True).click()
+    assert page.get_by_role('button',name='話す',exact=True).count(),(story_id,'missing challenge')
+    assert height(page)==108
+    assert page.locator('#actions button').all_text_contents()==['話す','ピコサポート','冒険に戻る']
+    assert page.locator('#actions').evaluate("""el => {
+      const tops=[...el.querySelectorAll('button')].map(b=>Math.round(b.getBoundingClientRect().top));
+      return tops.every(y=>y===tops[0]);
+    }"""),'Three challenge controls wrapped to two rows'
+    page.get_by_role('button',name='ピコサポート').click()
+    assert height(page)==140
+    first=page.locator('#support').inner_text()
+    assert any(ch.isascii() and ch.isalpha() for ch in first),(story_id,'Stage 1 must provide English starter')
     page.close()
   browser.close()
 finally:
