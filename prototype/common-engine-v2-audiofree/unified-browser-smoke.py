@@ -58,7 +58,14 @@ try:
     assert page.locator('#actions button').all_text_contents()==['話す','ピコサポート','冒険に戻る']
     check(108)
     page.get_by_role('button',name='ピコサポート').click()
-    assert 'How would you say this in English?' in page.locator('#support').inner_text()
+    assert 'How would you say this in English?' not in page.locator('#support').inner_text()
+    assert 'ピコ：' in page.locator('#support').inner_text()
+    assert page.evaluate("""() => {
+      const a=document.querySelector('#text').getBoundingClientRect();
+      const h=document.querySelector('#support').getBoundingClientRect();
+      const b=document.querySelector('#actions').getBoundingClientRect();
+      return Math.abs(a.top-h.top)<2 && a.bottom<=b.top+1 && h.bottom<=b.top+1;
+    }"""), (story,width,'Normal Pico must be two visual rows, not 3')
     check(108)
     page.get_by_role('button',name='話す').click()
     page.wait_for_function("()=>document.querySelector('#support')?.textContent.includes('と聞こえたよ')",timeout=10000)
