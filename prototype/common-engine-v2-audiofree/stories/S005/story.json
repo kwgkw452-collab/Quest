@@ -22,7 +22,7 @@
       "goalJa": "いいえ、予約していません。",
       "modelEn": "No, we don’t.",
       "hints": [
-        "“No ...” で答え始めてみよう。予約していないことを伝えるピコ。",
+        "「いいえ」だから……ピコ。",
         "“No” を使って答えるピコ。",
         "No, we don’t."
       ],
@@ -50,7 +50,7 @@
       "goalJa": "4人です。",
       "modelEn": "Four.",
       "hints": [
-        "“One, two, three ...” の次は何と言うかな？ 英語の数で答えるピコ。",
+        "4人だから……ピコ。",
         "“Four” を使って答えるピコ。",
         "Four."
       ],
@@ -78,7 +78,7 @@
       "goalJa": "キングサイズのベッドはありますか？",
       "modelEn": "Do you have a king-size bed?",
       "hints": [
-        "“Do you ...?” から質問してみよう。ベッドがあるか聞くピコ。",
+        "“Do you...” から始めてみるピコ。",
         "“king-size bed” を使うピコ。",
         "Do you have a king-size bed?"
       ],
@@ -119,7 +119,7 @@
       "goalJa": "キングサイズのベッドを1つお願いします。",
       "modelEn": "One king-size bed, please.",
       "hints": [
-        "“One ...” から始めてみよう。ベッドを1つお願いするピコ。",
+        "1つお願いするピコ。",
         "“One king-size bed” を使うピコ。",
         "One king-size bed, please."
       ],
@@ -144,7 +144,7 @@
       "goalJa": "2部屋お願いします。",
       "modelEn": "Two rooms, please.",
       "hints": [
-        "“Two ...” から始めてみよう。部屋の数を伝えるピコ。",
+        "2だから……ピコ。",
         "“Two” から始めるピコ。",
         "Two rooms, please."
       ],
@@ -176,7 +176,7 @@
       "goalJa": "はい、お願いします。",
       "modelEn": "Yes, please.",
       "hints": [
-        "“Yes ...” から始めてみよう。丁寧にお願いするピコ。",
+        "「はい」だから……ピコ。",
         "“Yes” を使って答えるピコ。",
         "Yes, please."
       ],
@@ -198,7 +198,7 @@
       "goalJa": "大丈夫ですか？",
       "modelEn": "Are you OK?",
       "hints": [
-        "“Are you ...?” と相手の様子を聞くピコ。",
+        "“Are you...” から始めるピコ。",
         "“OK” を使うピコ。",
         "Are you OK?"
       ],
@@ -222,7 +222,7 @@
       "goalJa": "（あなたの）名前は何ですか？",
       "modelEn": "What’s your name?",
       "hints": [
-        "“What’s ...?” から名前を尋ねてみよう。",
+        "“What’s...” から始めてみるピコ。",
         "“your name” を使うピコ。",
         "What’s your name?"
       ],
@@ -259,7 +259,7 @@
       "goalJa": "物を盗みましたか？",
       "modelEn": "Do you steal things?",
       "hints": [
-        "“Do you ...?” と質問してみよう。盗んだかどうか確かめるピコ。",
+        "“Did you...” または “Do you...” から始めるピコ。",
         "“steal” を使うピコ。",
         "Did you steal something?"
       ],
@@ -293,7 +293,7 @@
       "goalJa": "私たちと一緒に来て。",
       "modelEn": "Come with us.",
       "hints": [
-        "“Come ...” から誘ってみよう。一緒に来てもらうピコ。",
+        "“Come” または “Let’s” から始めるピコ。",
         "“with us” または “go” を使うピコ。",
         "Come with us.\nLet’s go."
       ],
@@ -317,7 +317,7 @@
       "goalJa": "バッグを見ましたか？",
       "modelEn": "Did you see a bag?",
       "hints": [
-        "“Did you ...?” から尋ねてみよう。バッグを見たか確かめるピコ。",
+        "“Did you...” から始めるピコ。",
         "“see” と “bag” を使うピコ。",
         "Did you see a bag?"
       ],
@@ -360,7 +360,7 @@
       "goalJa": "彼の名前はBenです。",
       "modelEn": "His name is Ben.",
       "hints": [
-        "“His ...” から始めてみよう。Benの名前を伝えるピコ。",
+        "“His...” から始めるピコ。",
         "“name” と “Ben” を使うピコ。",
         "His name is Ben."
       ],
