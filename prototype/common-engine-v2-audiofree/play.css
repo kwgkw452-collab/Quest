@@ -119,3 +119,38 @@
 
 #dialogue:is(.twoRow,.threeRow) > #text {flex:1 1 auto;min-height:0;overflow-y:auto;}
 #dialogue:is(.twoRow,.threeRow) > #actions {flex:0 0 auto;}
+
+/* Director UI correction: control bars are horizontal, compact buttons, no wrapping.
+   Two/four dialogue and three challenge actions share the same row on narrow screens. */
+#dialogue > #actions,
+#dialogue:is(.twoRow,.threeRow) > #actions {
+  display:flex;
+  flex-direction:row;
+  flex-wrap:nowrap;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  min-width:0;
+  max-height:none;
+  overflow-x:auto;
+  overflow-y:hidden;
+  gap:4px;
+}
+#dialogue #actions button,
+#dialogue:is(.twoRow,.threeRow) #actions button {
+  flex:0 1 auto;
+  width:auto;
+  max-width:max-content;
+  min-width:0;
+  white-space:nowrap;
+  padding:4px 6px;
+  font-size:12px;
+  line-height:1.2;
+}
+@media(max-width:390px){
+  #dialogue #actions button,
+  #dialogue:is(.twoRow,.threeRow) #actions button {
+    padding:4px 3px;
+    font-size:11px;
+  }
+}
