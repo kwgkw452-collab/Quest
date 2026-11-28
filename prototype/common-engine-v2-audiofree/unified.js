@@ -1,7 +1,7 @@
 (function(){'use strict';
 const api=window.QuestV2;
 const view={backdrop:document.getElementById('backdrop'),dialogue:document.getElementById('dialogue'),text:document.getElementById('text'),support:document.getElementById('support'),actions:document.getElementById('actions'),status:document.getElementById('status'),log:document.getElementById('log'),select:document.getElementById('story-select')};
-let catalog=[],runner=null,store=null,recognizer=null,dialogueVoice=null,documentCursor=0,documentLanguage='en',lastSceneAsset=null,sessionEpoch=0,advanceBusy=false,speechBusy=false;
+let catalog=[],runner=null,store=null,recognizer=null,dialogueVoice=null,documentCursor=0,documentLanguage='en',lastSceneAsset=null,sessionEpoch=0,advanceBusy=false,speechBusy=false,speechRequest=0;
 const showStatus=s=>{view.status.textContent=s;};
 const setText=(main,secondary='')=>{view.text.textContent=main;view.support.textContent=secondary;};
 const clearButtons=()=>view.actions.replaceChildren();
@@ -34,10 +34,10 @@ function paintQuestion(v,{listening=false}={}){
  setText(v.goalJa,heard?v.feedbackJa:[help,listening?'聞き取り中…':'',!listening&&v.feedbackJa?v.feedbackJa:''].filter(Boolean).join('　'));
  view.support.scrollTop=0;
  clearButtons();
- if(listening)return;
- addButton('話す',()=>void speech());
- addButton('ピコサポート',()=>{try{paint(runner.support());}catch(e){error(e);}});
- addButton('冒険に戻る',()=>paint(runner.returnToAdventure()));
+ if(!listening)addButton('話す',()=>void speech());
+ else addButton('聞き取りをやめる',()=>{try{interruptSpeech();paintQuestion(runner.state().question);}catch(e){error(e);}});
+ addButton('ピコサポート',()=>{try{if(listening)interruptSpeech();paint(runner.support());}catch(e){error(e);}});
+ addButton('冒険に戻る',()=>{if(listening)interruptSpeech();paint(runner.returnToAdventure());});
 }
 function paintDialogueLine(event){
  view.dialogue.className='twoRow';
@@ -98,9 +98,34 @@ function paint(event){
  else {setText('処理状態：'+event.type);if(state.status==='READY')addButton('次へ',()=>void next());}
 }
 async function next(){const epoch=sessionEpoch,current=runner;if(!current||advanceBusy)return;advanceBusy=true;clearButtons();try{const event=await current.advance();if(epoch===sessionEpoch&&current===runner)paint(event);}catch(e){if(epoch===sessionEpoch&&current===runner)error(e);}finally{if(epoch===sessionEpoch&&current===runner)advanceBusy=false;}}
-async function speech(){const epoch=sessionEpoch,current=runner;if(!current||speechBusy)return;speechBusy=true;try{const question=current.state().question;if(question)paintQuestion(question,{listening:true});else{clearButtons();setText('聞き取り中…');}const event=await current.talk();if(epoch===sessionEpoch&&current===runner)paint(event);}catch(e){if(epoch===sessionEpoch&&current===runner)error(e);}finally{if(epoch===sessionEpoch&&current===runner)speechBusy=false;}}
+function interruptSpeech(){
+ // A support/return tap must be usable even if browser recognition never fires onend.
+ const current=runner;
+ if(!current||current.state().status!=='QUESTION')return;
+ ++speechRequest;
+ speechBusy=false;
+ current.stopSpeech();
+}
+async function speech(){
+ const epoch=sessionEpoch,current=runner;
+ if(!current||speechBusy)return;
+ speechBusy=true;
+ const request=++speechRequest;
+ try{
+  const question=current.state().question;
+  if(question)paintQuestion(question,{listening:true});
+  else{clearButtons();setText('聞き取り中…');}
+  const event=await current.talk();
+  if(epoch===sessionEpoch&&current===runner&&request===speechRequest)paint(event);
+ }catch(e){
+  if(epoch===sessionEpoch&&current===runner&&request===speechRequest)error(e);
+ }finally{
+  if(epoch===sessionEpoch&&current===runner&&request===speechRequest)speechBusy=false;
+ }
+}
 async function reset(resume){
  const epoch=++sessionEpoch;
+ ++speechRequest;
  advanceBusy=false;speechBusy=false;
  const previousRecognizer=recognizer;
  dialogueVoice=null;
