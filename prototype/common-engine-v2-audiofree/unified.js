@@ -29,8 +29,8 @@ function paintQuestion(v,{listening=false}={}){
  const heard=Boolean(!listening&&v.feedbackJa&&/と聞こえたよ/.test(v.feedbackJa));
  view.dialogue.className=heard?'threeRow':'twoRow';
  // Reserve the third (yellow) row ONLY for recognized-result feedback.
- const guidance=v.supportStage===1?'How would you say this in English?　':'';
- const help=v.supportText?guidance+'ピコ：'+v.supportText:'';
+ // Show the authored, question-specific Pico hint only; never inject an invented generic English prompt.
+ const help=v.supportText?'ピコ：'+v.supportText:'';
  setText(v.goalJa,heard?v.feedbackJa:[help,listening?'聞き取り中…':'',!listening&&v.feedbackJa?v.feedbackJa:''].filter(Boolean).join('　'));
  view.support.scrollTop=0;
  clearButtons();
