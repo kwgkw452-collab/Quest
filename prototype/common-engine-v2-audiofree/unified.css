@@ -19,13 +19,15 @@ select{margin:4px 0 12px;max-width:100%;background:#27374b;color:#fff}
  position:absolute;bottom:0;left:0;right:0;
  height:6.9230769cqw;min-height:6.9230769cqw;max-height:6.9230769cqw;
  background:rgba(7,15,30,.94);display:grid;
- grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+ /* Goal uses its natural width, so Pico starts immediately beside it rather than at stage midpoint. */
+ grid-template-columns:fit-content(55%) minmax(0,1fr);
  grid-template-rows:minmax(0,1fr) auto;align-items:center;
  padding:0.3846154cqw 1.025641cqw;gap:0.1923077cqw;
  overflow:hidden;
 }
 #dialogue.threeRow{
  height:8.9743589cqw;min-height:8.9743589cqw;max-height:8.9743589cqw;
+ grid-template-columns:minmax(0,1fr);
  grid-template-rows:minmax(0,1fr) auto auto;
 }
 #text{
