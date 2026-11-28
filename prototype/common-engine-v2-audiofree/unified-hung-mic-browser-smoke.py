@@ -52,11 +52,13 @@ window.SpeechRecognition=class {
    assert page.locator('#actions button').all_text_contents()==['話す','ピコサポート','冒険に戻る']
    assert page.locator('#text').inner_text()==goal
    assert hint[0] in page.locator('#support').inner_text()
+   assert page.locator('#dialogue').evaluate("el=>el.classList.contains('threeRow')"),story+' Support 1 must use 3-row mode'
    assert page.evaluate('window.__micAborted')==1
    assert not any('成功しました' in t for t in page.locator('#actions button').all_text_contents())
    for target in (2,3,3):
     button('ピコサポート').click()
     assert hint[target-1] in page.locator('#support').inner_text()
+    assert page.locator('#dialogue').evaluate("el=>el.classList.contains('threeRow')"),story+' Support '+str(target)+' must stay 3-row'
    button('話す').click()
    page.wait_for_function('()=>window.__micStarted===2')
    assert button('冒険に戻る').is_visible()
