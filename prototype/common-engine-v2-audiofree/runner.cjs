@@ -28,6 +28,7 @@ function createRunner(pack,{recognize,judge,cancelSpeech,storage,onEvent,initial
    }
   }throw Error('RUNAWAY_STORY');} finally {advancing=false;}
  }
+ const stopSpeech=()=>{if(status!=='QUESTION')throw Error('NOT_QUESTION');return communication.stopListening();};
  const support=()=>{if(status!=='QUESTION')throw Error('NOT_QUESTION');return emit({type:'hint',view:communication.support()});};
  async function talk(){if(status!=='QUESTION'&&status!=='BATTLE')throw Error('NOT_SPEECH_STEP');const previous=serial;const target=status==='QUESTION'?communication:battle;const result=await target.speak();if(serial!==previous||!['QUESTION','BATTLE'].includes(status))return emit({type:'stale'});
   if(result.type==='accepted'&&status==='QUESTION'){status='READY';communication=null;index++;return emit(result);}
@@ -36,7 +37,7 @@ function createRunner(pack,{recognize,judge,cancelSpeech,storage,onEvent,initial
  }
  function documentDone(){if(status!=='DOCUMENT')throw Error('NOT_DOCUMENT');status='READY';feature=null;index++;return emit({type:'document-complete'});}
  function back(){if(advancing)return emit({type:'ignored',reason:'save-in-progress'});serial++;communication?.cancel();battle?.cancel();communication=null;battle=null;feature=null;status='RETURNED';return emit({type:'return'});}
- return {advance,talk,support,documentDone,returnToAdventure:back,state,snapshot};
+ return {advance,talk,support,stopSpeech,documentDone,returnToAdventure:back,state,snapshot};
 }
 module.exports={createRunner};
 
