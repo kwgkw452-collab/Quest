@@ -39,8 +39,6 @@ select{margin:4px 0 12px;max-width:100%;background:#27374b;color:#fff}
 }
 #support:empty{display:none}
 #dialogue:not(.threeRow):has(#support:empty) #text{grid-column:1/-1}
-/* Success uses the ordinary 108px/two-row panel and stays LEFT-aligned, like dialogue and Goal. */
-#dialogue.successFeedback #text{grid-column:1/-1;grid-row:1;text-align:left;align-self:center;justify-self:stretch}
 #dialogue.threeRow #text{grid-column:1/-1;grid-row:1}
 #dialogue.threeRow #support{grid-column:1/-1;grid-row:2;max-height:2.051282cqw}
 #actions{
