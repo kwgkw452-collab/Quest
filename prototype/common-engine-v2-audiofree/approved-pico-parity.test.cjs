@@ -45,5 +45,7 @@ for(const storyId of ['S005','S006','S007']){
 test('common UI never adds an invented generic English support prompt',()=>{
  const src=fs.readFileSync(path.join(__dirname,'unified.js'),'utf8');
  assert(!src.includes('How would you say this in English?'));
- assert(src.includes("v.supportText?'ピコ：'+v.supportText:''"));
+ const engine=fs.readFileSync(path.join(__dirname,'communication.cjs'),'utf8');
+ assert(engine.includes("supportText?'ピコ：'+supportText:''"));
+ assert(src.includes('setText(v.goalJa,v.displayText)'));
 });

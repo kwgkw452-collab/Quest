@@ -1,0 +1,21 @@
+S005 SAVE RELOAD PASS: automatic last-scene checkpoint restores completed Story
+S005 BROWSER PASS: 141 dialogues, 12 spoken challenges, 0 document(s), all scenes complete
+S006 SAVE RELOAD PASS: automatic last-scene checkpoint restores completed Story
+S006 BROWSER PASS: 59 dialogues, 10 spoken challenges, 1 document(s), all scenes complete
+SESSION SWITCH PASS: late old-Story microphone result cannot alter S006 screen
+STALE SCENE CALLBACK PASS: old onEvent cannot overwrite current Story background
+LOADING GUARD PASS: Story controls are disabled while network request is pending
+NEXT SINGLE-FLIGHT PASS: double click processes one Story advance
+SPEECH SINGLE-FLIGHT PASS: double activation starts one recognition
+RETRY SAVE PASS: temporary fetch error preserves and resumes prior Story checkpoint
+RESTART SAVE PASS: invalid replacement package preserves prior checkpoint
+QA35-02 PASS: Goal persists through listening, rejection, timeout, retry and acceptance
+QA37-01 S006 1280x800 initial: {"gameHeight": 505.84375, "height": 108, "css": "108px", "min": "108px", "max": "108px", "goalAndButtonsInside": true, "detailVisible": true, "bottomInset": 1, "background": [1094, 503.84375], "asset": "images/006/S006-Scene-04.png?v=s006-v22", "image": [1560, 720], "horizontalCropEachSide": 0, "artworkHeight": 504.9230769230769, "verticalCrop": 1.5390767824496834, "backgroundEndsAtPanel": false, "documentFitsWidth": true, "canReachControls": true, "pageHeight": 803, "visibleAbovePanel": 395.84375, "backdropFillsStage": true, "backgroundSize": "cover", "backgroundPosition": "50% 50%"}
+QA37-01 S006 1280x800 listening: {"gameHeight": 505.84375, "height": 108, "css": "108px", "min": "108px", "max": "108px", "goalAndButtonsInside": true, "detailVisible": true, "bottomInset": 1, "background": [1094, 503.84375], "asset": "images/006/S006-Scene-04.png?v=s006-v22", "image": [1560, 720], "horizontalCropEachSide": 0, "artworkHeight": 504.9230769230769, "verticalCrop": 1.5390767824496834, "backgroundEndsAtPanel": false, "documentFitsWidth": true, "canReachControls": true, "pageHeight": 803, "visibleAbovePanel": 395.84375, "backdropFillsStage": true, "backgroundSize": "cover", "backgroundPosition": "50% 50%"}
+Traceback (most recent call last):
+  File "/Users/mac/Downloads/project 43/pico-support-v2-refactor/prototype/common-engine-v2-audiofree/legacy-browser-smoke.py", line 415, in <module>
+    measure('rejected',108,q1['goalJa'],'認識：purple bananas')
+  File "/Users/mac/Downloads/project 43/pico-support-v2-refactor/prototype/common-engine-v2-audiofree/legacy-browser-smoke.py", line 392, in measure
+    assert abs(result['height']-expected)<=1/64,result
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'gameHeight': 505.84375, 'height': 140, 'css': '140px', 'min': '140px', 'max': '140px', 'goalAndButtonsInside': True, 'detailVisible': True, 'bottomInset': 1, 'background': [1094, 503.84375], 'asset': 'images/006/S006-Scene-04.png?v=s006-v22', 'image': [1560, 720], 'horizontalCropEachSide': 0, 'artworkHeight': 504.9230769230769, 'verticalCrop': 1.5390767824496834, 'backgroundEndsAtPanel': False, 'documentFitsWidth': True, 'canReachControls': True, 'pageHeight': 803, 'visibleAbovePanel': 363.84375, 'backdropFillsStage': True, 'backgroundSize': 'cover', 'backgroundPosition': '50% 50%'}

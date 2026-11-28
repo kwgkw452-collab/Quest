@@ -1,0 +1,16 @@
+✔ enter before microphone and restore after result (9.172438ms)
+✔ cancel during recognition discards stale result but still restores (4.668766ms)
+✔ cancel before queued entry prevents microphone activation (0.739488ms)
+✔ recognition exception still exits speech mode (1.128328ms)
+✔ missing legacy contract is explicit HOLD (0.413902ms)
+✔ plays only approved static voice IDs and stops previous line (3.194719ms)
+✔ rejects dynamic unsafe keys without playing voice (0.346318ms)
+✔ explicitly reports missing legacy dialogue API (1.01796ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 268.714285

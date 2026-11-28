@@ -1,0 +1,52 @@
+[
+  {
+    "file": "prototype/common-engine-v2-audiofree/approved-pico-stage1-lock.json",
+    "sha256": "29b24fb7976c9f15d60c84608c638ed035a500bcfa840f20c5c1e7188ebaf653",
+    "unchanged": true
+  },
+  {
+    "file": "prototype/common-engine-v2-audiofree/judge.cjs",
+    "sha256": "7f40823b3c104e3ff67a28116d2772baa4d623f06855dfed7631ef8e54965414",
+    "unchanged": true
+  },
+  {
+    "file": "prototype/common-engine-v2-audiofree/save.cjs",
+    "sha256": "e909373337452ce43e66585dcbf351b4dbe5943cf1fb3df10c514e230d8026f2",
+    "unchanged": true
+  },
+  {
+    "file": "prototype/common-engine-v2-audiofree/legacy-save.cjs",
+    "sha256": "b856a39a88b78e44916172b3d8c2825bd742e23173b5a9a34027d59e98a80acf",
+    "unchanged": true
+  },
+  {
+    "file": "prototype/common-engine-v2-audiofree/vocabulary-battle.cjs",
+    "sha256": "3deb976ff6708df03f91632824dd176b19220b1d95ae3628055891bbd1153240",
+    "unchanged": true
+  },
+  {
+    "file": "prototype/common-engine-v2-audiofree/speech-browser.cjs",
+    "sha256": "ed6c45ac96626e3c97564b1c746525e9aceba1a16a8d86781458b04a9af79510",
+    "unchanged": true
+  },
+  {
+    "file": "prototype/common-engine-v2-audiofree/runner.cjs",
+    "sha256": "c090defe9d4fabd30ad933764cf2a1a23afcc8bbab07d4ca24cbd36ba828ebba",
+    "unchanged": true
+  },
+  {
+    "file": "prototype/common-engine-v2-audiofree/stories/S005/story.json",
+    "sha256": "5396fb6ac53c8978132bd23a9edb2f04b6e457f4a125244fbebda6ce5c17806e",
+    "unchanged": true
+  },
+  {
+    "file": "prototype/common-engine-v2-audiofree/stories/S006/story.json",
+    "sha256": "c308c4fcf4787fe327a5ba4deb2666ddf04c101a78a7ec4912ace8efdf35877d",
+    "unchanged": true
+  },
+  {
+    "file": "prototype/common-engine-v2-audiofree/stories/S007/story.json",
+    "sha256": "27c4d8e430851df1c39386a751468bf8665d6bfbfb7b5242cb82ae6bb9550289",
+    "unchanged": true
+  }
+]

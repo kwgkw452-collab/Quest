@@ -76,3 +76,8 @@ try:
 finally:
  server.shutdown()
 print('UNIFIED_UI_PASS: 3 migrated Stories x 4 sizes, 108/140 scaled heights, left 2/3/4 controls, three-row Pico, feedback')
+
+# Issue57 full 32-question/4-width regression; failures propagate to the existing CI job.
+import runpy
+runpy.run_path(str(Path(__file__).with_name('pico-support-v2-browser.py')),run_name='__main__')
+runpy.run_path(str(Path(__file__).with_name('pico-support-battle-browser.py')),run_name='__main__')

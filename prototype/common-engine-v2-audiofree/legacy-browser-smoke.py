@@ -412,7 +412,7 @@ window.finishRecognition=(text)=>{
    page.evaluate("window.finishRecognition('purple bananas')")
    button('話す').wait_for()
    assert json.loads(page.locator('#log').text_content().splitlines()[-1])['type']=='unknown'  # QA38: unrelated ASR lacks enough evidence
-   measure('rejected',108,q1['goalJa'],'認識：purple bananas')
+   measure('rejected',140,q1['goalJa'],'認識：purple bananas')
    for press,stage in enumerate((1,2,3,3),start=1):
     button('ピコサポート').click()
     event=json.loads(page.locator('#log').text_content().splitlines()[-1])

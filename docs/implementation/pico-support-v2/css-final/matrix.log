@@ -1,0 +1,5 @@
+PICO_MATRIX_WIDTH_PASS 320 32
+PICO_MATRIX_WIDTH_PASS 390 64
+PICO_MATRIX_WIDTH_PASS 844 96
+PICO_MATRIX_WIDTH_PASS 1280 128
+PICO_MATRIX_PASS: 32 questions x 4 widths; wrong->Support 1/2/3/3, stop, retry, stale callbacks, exact authored text, no overflow, next-step/reset
