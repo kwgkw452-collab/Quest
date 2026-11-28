@@ -28,6 +28,13 @@ for(const storyId of ['S005','S006','S007']){
   assert.equal(Object.keys(pack.challenges).length,questions.length);
   for(const q of questions){
    assert(pack.challenges[q.id], 'missing '+q.id);
+   // Director-approved later change overrides the older Production source for S006 Q10.
+   if(q.id==='s006.communication.10'){
+    assert.equal(pack.challenges[q.id].goalJa,'これはあなたの箱です。');
+    assert.equal(pack.challenges[q.id].modelEn,'This is your box!');
+    assert.equal(pack.challenges[q.id].hints.length,3);
+    continue;
+   }
    assert.equal(pack.challenges[q.id].goalJa,q.prompt,'Goal mismatch: '+q.id);
    assert.deepEqual(pack.challenges[q.id].hints,Array.from(q.picoSupport),'Pico hint mismatch: '+q.id);
    assert.equal(pack.challenges[q.id].modelEn,q.communicative.expectedUtterance,'Answer mismatch: '+q.id);
