@@ -1,7 +1,7 @@
 (function(){'use strict';
 const api=window.QuestV2;
 const view={backdrop:document.getElementById('backdrop'),dialogue:document.getElementById('dialogue'),text:document.getElementById('text'),support:document.getElementById('support'),actions:document.getElementById('actions'),status:document.getElementById('status'),log:document.getElementById('log'),select:document.getElementById('story-select')};
-let catalog=[],runner=null,store=null,recognizer=null,dialogueVoice=null,documentCursor=0,documentLanguage='en',lastSceneAsset=null,sessionEpoch=0,advanceBusy=false,speechBusy=false;
+let catalog=[],runner=null,currentPack=null,store=null,recognizer=null,dialogueVoice=null,documentCursor=0,documentLanguage='en',lastSceneAsset=null,sessionEpoch=0,advanceBusy=false,speechBusy=false;
 const showStatus=s=>{view.status.textContent=s;};
 const setText=(main,secondary='')=>{view.text.textContent=main;view.support.textContent=secondary;};
 const clearButtons=()=>view.actions.replaceChildren();
@@ -25,11 +25,46 @@ function lastBackdropBeforeCursor(pack,snapshot){
  }
  return backdrop;
 }
+// Presentation-only starter for the FIRST Pico hint. Story data and Judge remain immutable.
+function firstPicoEnglishStarter(view){
+ if(view.supportStage!==1||/[A-Za-z]/.test(view.supportText||''))return '';
+ const cursor=runner?.snapshot();
+ const item=currentPack?.scenes?.[cursor?.scene]?.steps?.[cursor?.index];
+ const model=item?.type==='challenge'?currentPack?.challenges?.[item.id]?.modelEn:null;
+ if(typeof model!=='string')return 'English: How would you start?';
+ const words=model.match(/[A-Za-z]+(?:['’][A-Za-z]+)*/g)||[];
+ if(!words.length)return 'English: How would you start?';
+ const opening=words.length===1?words[0][0].toUpperCase()+'...':words[0]+' ...';
+ return '英語の出だし：'+opening;
+}
 function paintQuestion(v,{listening=false}={}){
  view.dialogue.className=v.layoutMode==='threeRow'?'threeRow':'twoRow';
- setText(v.goalJa,[v.supportText?'ピコ：'+v.supportText:'',listening?'聞き取り中…':'',!listening&&v.recognizedText?'認識：'+v.recognizedText:'',!listening&&v.feedbackJa].filter(Boolean).join('　'));
+ setText(v.goalJa,[firstPicoEnglishStarter(v),v.supportText?'ピコ：'+v.supportText:'',listening?'聞き取り中…':'',!listening&&v.recognizedText?'認識：'+v.recognizedText:'',!listening&&v.feedbackJa].filter(Boolean).join('　'));
  view.support.scrollTop=0;
  clearButtons();if(listening)return;addButton('話す',()=>void speech());addButton('ピコサポート',()=>{try{paint(runner.support());}catch(e){error(e);}});addButton('冒険に戻る',()=>paint(runner.returnToAdventure()));
+}
+// Director-LOCK: ordinary dialogue = 108px and two controls; Pico mode = 140px and four.
+function paintDialogueLine(event){
+ const english=(event.speaker?event.speaker+'：':'')+event.text;
+ let picoOpen=false;
+ function showLine(language){
+  view.dialogue.className=picoOpen?'threeRow':'twoRow';
+  setText(english,picoOpen?(language==='ja'?(event.supportText||'日本語訳は登録されていません。'):language==='en'?event.text:'ピコサポート：表示したい内容を選んでください。'):'');
+  clearButtons();
+  addButton('次へ',()=>void next());
+  if(!picoOpen){
+   addButton('ピコサポート',()=>{picoOpen=true;showLine(null);});
+  }else{
+   addButton('英文を見る',()=>showLine('en'));
+   addButton('日本語を見る',()=>showLine('ja'));
+   const replay=addButton('もう一度聞く',()=>{});
+   // Do not simulate playback: Director has frozen Audio/Voice until 音響凍結期間.
+   replay.disabled=true;
+   replay.title='音声再生は音響凍結期間実装後まで凍結中です';
+   replay.setAttribute('aria-label','もう一度聞く（音響凍結期間まで音声凍結中）');
+  }
+ }
+ showLine(null);
 }
 function showDocument(content){
  const lines=Array.isArray(content.lines)?content.lines:[];
@@ -54,7 +89,7 @@ function paint(event){
  const state=runner.state();
  showStatus('Scene: '+state.scene+' / '+state.status+' / マイク: '+(recognizer.isSupported()?'対応':'非対応')+' / 音楽・Voice: OFF');
  clearButtons();
- if(event.type==='line'){setText((event.speaker?event.speaker+'：':'')+event.text,event.supportText||'');addButton('次へ',()=>void next());}
+ if(event.type==='line')paintDialogueLine(event);
  else if(event.type==='challenge'||event.type==='hint'||(state.status==='QUESTION'&&['no-speech','rejected','unknown'].includes(event.type)))paintQuestion(event.view);
  else if(state.status==='BATTLE'&&['battle','accepted','rejected','no-speech'].includes(event.type)){setText(event.view?.prompt||state.battle?.prompt||'単語を言おう',event.view?.feedback||'');addButton('英単語を話す',()=>void speech());addButton('冒険に戻る',()=>paint(runner.returnToAdventure()));}
  else if(event.type==='document'){documentCursor=0;documentLanguage='en';if(event.content.card)setBackdrop(event.content.card);showDocument(event.content);}
@@ -73,7 +108,7 @@ async function reset(resume){
  const previousRecognizer=recognizer;
  dialogueVoice?.stop();dialogueVoice=null;
  // A Story change invalidates old controls before the new pack finishes loading.
- runner=null;store=null;recognizer=null;
+ runner=null;currentPack=null;store=null;recognizer=null;
  clearButtons();setText('Storyを読み込み中…');
  showStatus('Story: LOADING / 音楽・Voice: OFF');
  view.dialogue.className='';
@@ -88,6 +123,7 @@ async function reset(resume){
   const data=await response.json();
   if(epoch!==sessionEpoch)return;
   if(data.id!==entry.id)throw Error('CATALOG_ID_MISMATCH');
+  currentPack=data;
   const storage=(()=>{try{return window.localStorage;}catch{return null;}})();
   store=api.createSaveStore({storage,key:'quest.v2.test.'+entry.id});
   const nativeRecognizer=api.createBrowserSpeech({env:window});
