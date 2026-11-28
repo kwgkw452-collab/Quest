@@ -39,7 +39,7 @@ function firstPicoEnglishStarter(view){
 }
 function paintQuestion(v,{listening=false}={}){
  view.dialogue.className=v.layoutMode==='threeRow'?'threeRow':'twoRow';
- setText(v.goalJa,[v.supportText?'ピコ：'+v.supportText:'',firstPicoEnglishStarter(v),listening?'聞き取り中…':'',!listening&&v.recognizedText?'認識：'+v.recognizedText:'',!listening&&v.feedbackJa].filter(Boolean).join('　'));
+ setText(v.goalJa,[firstPicoEnglishStarter(v),v.supportText?'ピコ：'+v.supportText:'',listening?'聞き取り中…':'',!listening&&v.recognizedText?'認識：'+v.recognizedText:'',!listening&&v.feedbackJa].filter(Boolean).join('　'));
  view.support.scrollTop=0;
  clearButtons();if(listening)return;addButton('話す',()=>void speech());addButton('ピコサポート',()=>{try{paint(runner.support());}catch(e){error(e);}});addButton('冒険に戻る',()=>paint(runner.returnToAdventure()));
 }
