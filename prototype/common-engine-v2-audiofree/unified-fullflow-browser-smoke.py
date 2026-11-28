@@ -293,10 +293,11 @@ window.finishRecognition=(text)=>{
   assert '聞き取り時間' in goal_page.locator('#support').inner_text()
   begin_attempt()
   goal_page.evaluate("window.finishRecognition('No, we do not.')")
-  goal_page.get_by_role('button',name='次へ',exact=True).wait_for()
-  assert goal_page.locator('#text').inner_text()==goal
-  assert '成功しました' in goal_page.locator('#support').inner_text()
-  print('QA35-02 PASS: Goal persists through listening, rejection, timeout, retry and acceptance')
+  goal_page.wait_for_function("()=>document.querySelector('#text')?.textContent?.includes('How many people?')",timeout=15000)
+  assert goal_page.locator('#text').inner_text().endswith('How many people?')
+  assert '成功しました' not in goal_page.locator('#text').inner_text()
+  assert goal_page.get_by_role('button',name='次へ',exact=True).count()==1
+  print('QA35-02 PASS: Goal persists through retries; accepted English continues directly to next Story line')
   goal_context.close()
   browser.close()
 finally:
