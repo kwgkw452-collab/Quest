@@ -50,7 +50,7 @@ window.SpeechRecognition=class {{
     assert page.locator('#actions button').all_text_contents()==['次へ','ピコサポート'],(story,width,'original next dialogue missing')
     assert '成功しました！' not in page.locator('#text').inner_text(),(story,width,'invented success interstitial')
     assert not page.locator('#dialogue').evaluate("(el)=>el.classList.contains('successFeedback')"),(story,width,'old success state remains')
-    events=[json.loads(line) for line in page.locator('#log').inner_text().splitlines() if line.strip()]
+    events=[json.loads(line) for line in page.locator('#log').text_content().splitlines() if line.strip()]
     assert events[-2]['type']=='accepted' and events[-1]['type']=='line',(story,width,'not automatically continued',events[-2:])
     geo=page.evaluate("""() => {
       const r=el=>el.getBoundingClientRect();
