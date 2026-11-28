@@ -86,8 +86,8 @@ function paint(event){
  else if(event.type==='challenge'||event.type==='hint'||(state.status==='QUESTION'&&['no-speech','rejected','unknown'].includes(event.type)))paintQuestion(event.view);
  else if(state.status==='BATTLE'&&['battle','accepted','rejected','no-speech'].includes(event.type)){setText(event.view?.prompt||state.battle?.prompt||'単語を言おう',event.view?.feedback||'');addButton('英単語を話す',()=>void speech());addButton('冒険に戻る',()=>paint(runner.returnToAdventure()));}
  else if(event.type==='document'){documentCursor=0;documentLanguage='en';if(event.content.card)setBackdrop(event.content.card);showDocument(event.content);}
- else if(event.type==='accepted'&&event.view?.goalJa){view.dialogue.className='twoRow';setText(event.view.goalJa,'成功しました！');addButton('次へ',()=>void next());}
- else if(event.type==='accepted'||event.type==='complete'||event.type==='document-complete'){setText('成功しました！');addButton('次へ',()=>void next());}
+ else if(event.type==='accepted'&&event.view?.goalJa){view.dialogue.className='twoRow successFeedback';setText('成功しました！');addButton('次へ',()=>void next());}
+ else if(event.type==='accepted'||event.type==='complete'||event.type==='document-complete'){view.dialogue.className='twoRow successFeedback';setText('成功しました！');addButton('次へ',()=>void next());}
  else if(event.type==='end'){setText('このStoryをクリアしました。',JSON.stringify(event.flags));}
  else if(event.type==='return'){setText('冒険に戻りました。','再開するStoryを選択できます。保存地点がある場合は、そこから再開します。');addButton('冒険を再開',()=>void reset(true));addButton('最初からやり直す',()=>void reset(false));}
  else if(event.type==='stale'){setText('古い音声認識結果を無視しました。');}
