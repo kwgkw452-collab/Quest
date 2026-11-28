@@ -1,0 +1,42 @@
+127.0.0.1 - - [28/Nov/2026 15:25:52] "GET /prototype/common-engine-v2-audiofree/play.html?story=S005 HTTP/1.1" 200 -
+127.0.0.1 - - [28/Nov/2026 15:25:53] "GET /prototype/common-engine-v2-audiofree/play.css HTTP/1.1" 200 -
+127.0.0.1 - - [28/Nov/2026 15:25:53] "GET /prototype/common-engine-v2-audiofree/legacy-audio-bridge.js HTTP/1.1" 200 -
+127.0.0.1 - - [28/Nov/2026 15:25:53] "GET /prototype/common-engine-v2-audiofree/quest-v2.browser.js HTTP/1.1" 200 -
+127.0.0.1 - - [28/Nov/2026 15:25:53] "GET /prototype/common-engine-v2-audiofree/legacy-dialogue-bridge.js HTTP/1.1" 200 -
+127.0.0.1 - - [28/Nov/2026 15:25:53] "GET /prototype/common-engine-v2-audiofree/play.js HTTP/1.1" 200 -
+127.0.0.1 - - [28/Nov/2026 15:25:53] "GET /prototype/common-engine-v2-audiofree/stories/catalog.json HTTP/1.1" 200 -
+127.0.0.1 - - [28/Nov/2026 15:25:53] "GET /prototype/common-engine-v2-audiofree/stories/S005/story.json HTTP/1.1" 200 -
+127.0.0.1 - - [28/Nov/2026 15:25:53] "GET /prototype/common-engine-v2-audiofree/stories/S005/legacy-cursors.json HTTP/1.1" 200 -
+127.0.0.1 - - [28/Nov/2026 15:25:53] "GET /images/005/reference-v1/Scene3.png HTTP/1.1" 200 -
+127.0.0.1 - - [28/Nov/2026 15:25:53] "GET /prototype/common-engine-v2-audiofree/play.html?story=S005 HTTP/1.1" 304 -
+127.0.0.1 - - [28/Nov/2026 15:25:53] "GET /prototype/common-engine-v2-audiofree/stories/S006/story.json HTTP/1.1" 200 -
+127.0.0.1 - - [28/Nov/2026 15:25:53] "GET /images/006/S006-Scene-01.png?v=s006-v22 HTTP/1.1" 200 -
+S005 LEGACY BROWSER PASS: cursor 2 -> {'scene': 'scene03', 'index': 0}, reload, switch, original bytes preserved
+127.0.0.1 - - [28/Nov/2026 15:25:53] "GET /prototype/common-engine-v2-audiofree/play.html?story=S006 HTTP/1.1" 200 -
+127.0.0.1 - - [28/Nov/2026 15:25:53] "GET /prototype/common-engine-v2-audiofree/quest-v2.browser.js HTTP/1.1" 200 -
+127.0.0.1 - - [28/Nov/2026 15:25:53] "GET /prototype/common-engine-v2-audiofree/play.css HTTP/1.1" 200 -
+127.0.0.1 - - [28/Nov/2026 15:25:53] "GET /prototype/common-engine-v2-audiofree/legacy-audio-bridge.js HTTP/1.1" 200 -
+127.0.0.1 - - [28/Nov/2026 15:25:53] "GET /prototype/common-engine-v2-audiofree/legacy-dialogue-bridge.js HTTP/1.1" 200 -
+127.0.0.1 - - [28/Nov/2026 15:25:53] "GET /prototype/common-engine-v2-audiofree/play.js HTTP/1.1" 200 -
+127.0.0.1 - - [28/Nov/2026 15:25:53] "GET /prototype/common-engine-v2-audiofree/stories/catalog.json HTTP/1.1" 200 -
+127.0.0.1 - - [28/Nov/2026 15:25:53] "GET /prototype/common-engine-v2-audiofree/stories/S006/story.json HTTP/1.1" 200 -
+127.0.0.1 - - [28/Nov/2026 15:25:53] "GET /prototype/common-engine-v2-audiofree/stories/S006/legacy-cursors.json HTTP/1.1" 200 -
+127.0.0.1 - - [28/Nov/2026 15:25:53] "GET /images/006/S006-Scene-02.png?v=s006-v22 HTTP/1.1" 200 -
+127.0.0.1 - - [28/Nov/2026 15:25:54] "GET /prototype/common-engine-v2-audiofree/play.html?story=S006 HTTP/1.1" 304 -
+127.0.0.1 - - [28/Nov/2026 15:25:54] "GET /prototype/common-engine-v2-audiofree/stories/S005/story.json HTTP/1.1" 200 -
+127.0.0.1 - - [28/Nov/2026 15:25:54] "GET /images/005/reference-v1/Scene1.png HTTP/1.1" 200 -
+S006 LEGACY BROWSER PASS: cursor 4 -> {'scene': 'scene02', 'index': 0}, reload, switch, original bytes preserved
+127.0.0.1 - - [28/Nov/2026 15:25:54] "GET /prototype/common-engine-v2-audiofree/play.html?story=S007 HTTP/1.1" 200 -
+127.0.0.1 - - [28/Nov/2026 15:25:54] "GET /prototype/common-engine-v2-audiofree/legacy-audio-bridge.js HTTP/1.1" 200 -
+127.0.0.1 - - [28/Nov/2026 15:25:54] "GET /prototype/common-engine-v2-audiofree/legacy-dialogue-bridge.js HTTP/1.1" 200 -
+127.0.0.1 - - [28/Nov/2026 15:25:54] "GET /prototype/common-engine-v2-audiofree/quest-v2.browser.js HTTP/1.1" 200 -
+127.0.0.1 - - [28/Nov/2026 15:25:54] "GET /prototype/common-engine-v2-audiofree/play.js HTTP/1.1" 200 -
+127.0.0.1 - - [28/Nov/2026 15:25:54] "GET /prototype/common-engine-v2-audiofree/play.css HTTP/1.1" 200 -
+127.0.0.1 - - [28/Nov/2026 15:25:54] "GET /prototype/common-engine-v2-audiofree/stories/catalog.json HTTP/1.1" 200 -
+127.0.0.1 - - [28/Nov/2026 15:25:54] "GET /prototype/common-engine-v2-audiofree/stories/S007/story.json HTTP/1.1" 200 -
+127.0.0.1 - - [28/Nov/2026 15:25:54] "GET /prototype/common-engine-v2-audiofree/stories/S007/legacy-cursors.json HTTP/1.1" 200 -
+127.0.0.1 - - [28/Nov/2026 15:25:54] "GET /images/007/S007-Scene-02.png HTTP/1.1" 200 -
+127.0.0.1 - - [28/Nov/2026 15:25:54] "GET /prototype/common-engine-v2-audiofree/play.html?story=S007 HTTP/1.1" 304 -
+127.0.0.1 - - [28/Nov/2026 15:25:54] "GET /prototype/common-engine-v2-audiofree/stories/S005/story.json HTTP/1.1" 200 -
+127.0.0.1 - - [28/Nov/2026 15:25:54] "GET /images/005/reference-v1/Scene1.png HTTP/1.1" 200 -
+S007 LEGACY BROWSER PASS: cursor 10 -> {'scene': 'scene02', 'index': 0}, reload, switch, original bytes preserved

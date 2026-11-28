@@ -73,6 +73,10 @@ function createCommunication(q,{recognize,judge=localJudge,cancelSpeech}={}){
  let stage=0,state='READY',attempt=0,active=0,feedback=null;
  const view=()=>{
   const supportText=stage?q.hints[stage-1]:null;
+  const listening=state==='LISTENING';
+  const displayMode=listening?'listening':feedback?'feedback':supportText?'support':'normal';
+  const help=supportText?'ピコ：'+supportText:'';
+  const displayText=feedback?.feedbackJa??[help,listening?'聞き取り中…':''].filter(Boolean).join('　');
   return {
    state,
    goalJa:q.goalJa,
@@ -80,11 +84,13 @@ function createCommunication(q,{recognize,judge=localJudge,cancelSpeech}={}){
    supportText,
    recognizedText:feedback?.recognizedText??null,
    feedbackJa:feedback?.feedbackJa??null,
-   layoutMode:supportText?'threeRow':'twoRow',
-   actions:state==='READY'?['talk','support','return']:[],
+   displayMode,
+   displayText,
+   layoutMode:(supportText||feedback)?'threeRow':'twoRow',
+   actions:state==='LISTENING'?['stop','support','return']:state==='READY'?['talk','support','return']:[],
   };
  };
- function support(){if(state!=='READY')throw Error('NOT_READY');stage=Math.min(stage+1,3);return view();}
+ function support(){if(state!=='READY')throw Error('NOT_READY');feedback=null;stage=Math.min(stage+1,3);return view();}
  // User may open Pico Support even if Safari's ASR is still listening.
  // Invalidate the pending attempt without cancelling the question itself.
  function stopListening(){
@@ -100,7 +106,7 @@ function createCommunication(q,{recognize,judge=localJudge,cancelSpeech}={}){
   try{r=await recognize({attemptId:token});}catch(e){r={status:'error',reason:String(e)};}
   if(active!==token||state==='CANCELLED')return {type:'stale',view:view()};
   if(r?.status!=='final'||!r.text){state='READY';feedback={feedbackJa:r?.status==='permission-denied'?'マイクの許可を確認してください。':r?.status==='unsupported'?'このブラウザは音声認識に対応していません。':r?.status==='timeout'?'聞き取り時間を超えたピコ。もう一度話してみよう。':'うまく聞き取れなかったピコ。'};return {type:'no-speech',view:view()};}
-  let answer;try{answer=await judge(q.rule||{accept:q.accept||[]},r.text);}catch(e){state='READY';throw e;}
+  let answer;try{answer=await judge(q.rule||{accept:q.accept||[]},r.text);}catch(e){if(active!==token||state==='CANCELLED')return {type:'stale',view:view()};state='READY';throw e;}
   if(active!==token||state==='CANCELLED')return {type:'stale',view:view()};
   const decision=typeof answer==='string'?answer:answer?.decision;
   if(decision==='ACCEPT'){state='ACCEPTED';return {type:'accepted',view:view(),recognizedText:r.text};}

@@ -1,0 +1,578 @@
+[
+  {
+    "key": "s005.communication.1",
+    "stages": [
+      0,
+      1,
+      2,
+      3,
+      3
+    ],
+    "accepted": "accepted",
+    "english": true,
+    "stage1": true,
+    "stage23": true,
+    "goal": true,
+    "model": true,
+    "feedbackLayout": "threeRow",
+    "feedback": "xyzzy と聞こえたよ。もう一度話してみよう。"
+  },
+  {
+    "key": "s005.communication.2",
+    "stages": [
+      0,
+      1,
+      2,
+      3,
+      3
+    ],
+    "accepted": "accepted",
+    "english": true,
+    "stage1": true,
+    "stage23": true,
+    "goal": true,
+    "model": true,
+    "feedbackLayout": "threeRow",
+    "feedback": "xyzzy と聞こえたよ。もう一度話してみよう。"
+  },
+  {
+    "key": "s005.communication.3",
+    "stages": [
+      0,
+      1,
+      2,
+      3,
+      3
+    ],
+    "accepted": "accepted",
+    "english": true,
+    "stage1": true,
+    "stage23": true,
+    "goal": true,
+    "model": true,
+    "feedbackLayout": "threeRow",
+    "feedback": "xyzzy と聞こえたよ。もう一度話してみよう。"
+  },
+  {
+    "key": "s005.communication.4",
+    "stages": [
+      0,
+      1,
+      2,
+      3,
+      3
+    ],
+    "accepted": "accepted",
+    "english": true,
+    "stage1": true,
+    "stage23": true,
+    "goal": true,
+    "model": true,
+    "feedbackLayout": "threeRow",
+    "feedback": "xyzzy と聞こえたよ。もう一度話してみよう。"
+  },
+  {
+    "key": "s005.communication.5",
+    "stages": [
+      0,
+      1,
+      2,
+      3,
+      3
+    ],
+    "accepted": "accepted",
+    "english": true,
+    "stage1": true,
+    "stage23": true,
+    "goal": true,
+    "model": true,
+    "feedbackLayout": "threeRow",
+    "feedback": "xyzzy と聞こえたよ。もう一度話してみよう。"
+  },
+  {
+    "key": "s005.communication.6",
+    "stages": [
+      0,
+      1,
+      2,
+      3,
+      3
+    ],
+    "accepted": "accepted",
+    "english": true,
+    "stage1": true,
+    "stage23": true,
+    "goal": true,
+    "model": true,
+    "feedbackLayout": "threeRow",
+    "feedback": "xyzzy と聞こえたよ。もう一度話してみよう。"
+  },
+  {
+    "key": "s005.communication.7",
+    "stages": [
+      0,
+      1,
+      2,
+      3,
+      3
+    ],
+    "accepted": "accepted",
+    "english": true,
+    "stage1": true,
+    "stage23": true,
+    "goal": true,
+    "model": true,
+    "feedbackLayout": "threeRow",
+    "feedback": "xyzzy と聞こえたよ。もう一度話してみよう。"
+  },
+  {
+    "key": "s005.communication.8",
+    "stages": [
+      0,
+      1,
+      2,
+      3,
+      3
+    ],
+    "accepted": "accepted",
+    "english": true,
+    "stage1": true,
+    "stage23": true,
+    "goal": true,
+    "model": true,
+    "feedbackLayout": "threeRow",
+    "feedback": "xyzzy と聞こえたよ。もう一度話してみよう。"
+  },
+  {
+    "key": "s005.communication.9",
+    "stages": [
+      0,
+      1,
+      2,
+      3,
+      3
+    ],
+    "accepted": "accepted",
+    "english": true,
+    "stage1": true,
+    "stage23": true,
+    "goal": true,
+    "model": true,
+    "feedbackLayout": "threeRow",
+    "feedback": "xyzzy と聞こえたよ。もう一度話してみよう。"
+  },
+  {
+    "key": "s005.communication.10",
+    "stages": [
+      0,
+      1,
+      2,
+      3,
+      3
+    ],
+    "accepted": "accepted",
+    "english": true,
+    "stage1": true,
+    "stage23": true,
+    "goal": true,
+    "model": true,
+    "feedbackLayout": "threeRow",
+    "feedback": "xyzzy と聞こえたよ。もう一度話してみよう。"
+  },
+  {
+    "key": "s005.communication.11",
+    "stages": [
+      0,
+      1,
+      2,
+      3,
+      3
+    ],
+    "accepted": "accepted",
+    "english": true,
+    "stage1": true,
+    "stage23": true,
+    "goal": true,
+    "model": true,
+    "feedbackLayout": "threeRow",
+    "feedback": "xyzzy と聞こえたよ。もう一度話してみよう。"
+  },
+  {
+    "key": "s005.communication.12",
+    "stages": [
+      0,
+      1,
+      2,
+      3,
+      3
+    ],
+    "accepted": "accepted",
+    "english": true,
+    "stage1": true,
+    "stage23": true,
+    "goal": true,
+    "model": true,
+    "feedbackLayout": "threeRow",
+    "feedback": "xyzzy と聞こえたよ。もう一度話してみよう。"
+  },
+  {
+    "key": "s006.communication.1",
+    "stages": [
+      0,
+      1,
+      2,
+      3,
+      3
+    ],
+    "accepted": "accepted",
+    "english": true,
+    "stage1": true,
+    "stage23": true,
+    "goal": true,
+    "model": true,
+    "feedbackLayout": "threeRow",
+    "feedback": "xyzzy と聞こえたよ。もう一度話してみよう。"
+  },
+  {
+    "key": "s006.communication.2",
+    "stages": [
+      0,
+      1,
+      2,
+      3,
+      3
+    ],
+    "accepted": "accepted",
+    "english": true,
+    "stage1": true,
+    "stage23": true,
+    "goal": true,
+    "model": true,
+    "feedbackLayout": "threeRow",
+    "feedback": "xyzzy と聞こえたよ。もう一度話してみよう。"
+  },
+  {
+    "key": "s006.communication.3",
+    "stages": [
+      0,
+      1,
+      2,
+      3,
+      3
+    ],
+    "accepted": "accepted",
+    "english": true,
+    "stage1": true,
+    "stage23": true,
+    "goal": true,
+    "model": true,
+    "feedbackLayout": "threeRow",
+    "feedback": "xyzzy と聞こえたよ。もう一度話してみよう。"
+  },
+  {
+    "key": "s006.communication.4",
+    "stages": [
+      0,
+      1,
+      2,
+      3,
+      3
+    ],
+    "accepted": "accepted",
+    "english": true,
+    "stage1": true,
+    "stage23": true,
+    "goal": true,
+    "model": true,
+    "feedbackLayout": "threeRow",
+    "feedback": "xyzzy と聞こえたよ。もう一度話してみよう。"
+  },
+  {
+    "key": "s006.communication.5",
+    "stages": [
+      0,
+      1,
+      2,
+      3,
+      3
+    ],
+    "accepted": "accepted",
+    "english": true,
+    "stage1": true,
+    "stage23": true,
+    "goal": true,
+    "model": true,
+    "feedbackLayout": "threeRow",
+    "feedback": "xyzzy と聞こえたよ。もう一度話してみよう。"
+  },
+  {
+    "key": "s006.communication.6",
+    "stages": [
+      0,
+      1,
+      2,
+      3,
+      3
+    ],
+    "accepted": "accepted",
+    "english": true,
+    "stage1": true,
+    "stage23": true,
+    "goal": true,
+    "model": true,
+    "feedbackLayout": "threeRow",
+    "feedback": "xyzzy と聞こえたよ。もう一度話してみよう。"
+  },
+  {
+    "key": "s006.communication.7",
+    "stages": [
+      0,
+      1,
+      2,
+      3,
+      3
+    ],
+    "accepted": "accepted",
+    "english": true,
+    "stage1": true,
+    "stage23": true,
+    "goal": true,
+    "model": true,
+    "feedbackLayout": "threeRow",
+    "feedback": "xyzzy と聞こえたよ。もう一度話してみよう。"
+  },
+  {
+    "key": "s006.communication.8",
+    "stages": [
+      0,
+      1,
+      2,
+      3,
+      3
+    ],
+    "accepted": "accepted",
+    "english": true,
+    "stage1": true,
+    "stage23": true,
+    "goal": true,
+    "model": true,
+    "feedbackLayout": "threeRow",
+    "feedback": "xyzzy と聞こえたよ。もう一度話してみよう。"
+  },
+  {
+    "key": "s006.communication.9",
+    "stages": [
+      0,
+      1,
+      2,
+      3,
+      3
+    ],
+    "accepted": "accepted",
+    "english": true,
+    "stage1": true,
+    "stage23": true,
+    "goal": true,
+    "model": true,
+    "feedbackLayout": "threeRow",
+    "feedback": "xyzzy と聞こえたよ。もう一度話してみよう。"
+  },
+  {
+    "key": "s006.communication.10",
+    "stages": [
+      0,
+      1,
+      2,
+      3,
+      3
+    ],
+    "accepted": "accepted",
+    "english": true,
+    "stage1": false,
+    "stage23": false,
+    "goal": false,
+    "model": false,
+    "feedbackLayout": "threeRow",
+    "feedback": "xyzzy と聞こえたよ。もう一度話してみよう。"
+  },
+  {
+    "key": "s007.communication.1",
+    "stages": [
+      0,
+      1,
+      2,
+      3,
+      3
+    ],
+    "accepted": "accepted",
+    "english": true,
+    "stage1": true,
+    "stage23": true,
+    "goal": true,
+    "model": true,
+    "feedbackLayout": "threeRow",
+    "feedback": "xyzzy と聞こえたよ。もう一度話してみよう。"
+  },
+  {
+    "key": "s007.communication.2",
+    "stages": [
+      0,
+      1,
+      2,
+      3,
+      3
+    ],
+    "accepted": "accepted",
+    "english": true,
+    "stage1": true,
+    "stage23": true,
+    "goal": true,
+    "model": true,
+    "feedbackLayout": "threeRow",
+    "feedback": "xyzzy と聞こえたよ。もう一度話してみよう。"
+  },
+  {
+    "key": "s007.communication.3",
+    "stages": [
+      0,
+      1,
+      2,
+      3,
+      3
+    ],
+    "accepted": "accepted",
+    "english": true,
+    "stage1": true,
+    "stage23": true,
+    "goal": true,
+    "model": true,
+    "feedbackLayout": "threeRow",
+    "feedback": "xyzzy と聞こえたよ。もう一度話してみよう。"
+  },
+  {
+    "key": "s007.communication.4",
+    "stages": [
+      0,
+      1,
+      2,
+      3,
+      3
+    ],
+    "accepted": "accepted",
+    "english": true,
+    "stage1": true,
+    "stage23": true,
+    "goal": true,
+    "model": true,
+    "feedbackLayout": "threeRow",
+    "feedback": "xyzzy と聞こえたよ。もう一度話してみよう。"
+  },
+  {
+    "key": "s007.communication.5",
+    "stages": [
+      0,
+      1,
+      2,
+      3,
+      3
+    ],
+    "accepted": "accepted",
+    "english": true,
+    "stage1": true,
+    "stage23": true,
+    "goal": true,
+    "model": true,
+    "feedbackLayout": "threeRow",
+    "feedback": "xyzzy と聞こえたよ。もう一度話してみよう。"
+  },
+  {
+    "key": "s007.communication.6",
+    "stages": [
+      0,
+      1,
+      2,
+      3,
+      3
+    ],
+    "accepted": "accepted",
+    "english": true,
+    "stage1": true,
+    "stage23": true,
+    "goal": true,
+    "model": true,
+    "feedbackLayout": "threeRow",
+    "feedback": "xyzzy と聞こえたよ。もう一度話してみよう。"
+  },
+  {
+    "key": "s007.communication.7",
+    "stages": [
+      0,
+      1,
+      2,
+      3,
+      3
+    ],
+    "accepted": "accepted",
+    "english": true,
+    "stage1": true,
+    "stage23": true,
+    "goal": true,
+    "model": true,
+    "feedbackLayout": "threeRow",
+    "feedback": "xyzzy と聞こえたよ。もう一度話してみよう。"
+  },
+  {
+    "key": "s007.communication.8",
+    "stages": [
+      0,
+      1,
+      2,
+      3,
+      3
+    ],
+    "accepted": "accepted",
+    "english": true,
+    "stage1": true,
+    "stage23": true,
+    "goal": true,
+    "model": true,
+    "feedbackLayout": "threeRow",
+    "feedback": "xyzzy と聞こえたよ。もう一度話してみよう。"
+  },
+  {
+    "key": "s007.communication.9",
+    "stages": [
+      0,
+      1,
+      2,
+      3,
+      3
+    ],
+    "accepted": "accepted",
+    "english": true,
+    "stage1": true,
+    "stage23": true,
+    "goal": true,
+    "model": true,
+    "feedbackLayout": "threeRow",
+    "feedback": "xyzzy と聞こえたよ。もう一度話してみよう。"
+  },
+  {
+    "key": "s007.communication.10",
+    "stages": [
+      0,
+      1,
+      2,
+      3,
+      3
+    ],
+    "accepted": "accepted",
+    "english": true,
+    "stage1": true,
+    "stage23": true,
+    "goal": true,
+    "model": true,
+    "feedbackLayout": "threeRow",
+    "feedback": "xyzzy と聞こえたよ。もう一度話してみよう。"
+  }
+]

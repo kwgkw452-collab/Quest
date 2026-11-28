@@ -1,0 +1,44 @@
+[
+  {
+    "script": "browser-smoke.py",
+    "exit_code": 0,
+    "seconds": 2.68
+  },
+  {
+    "script": "s007-browser-smoke.py",
+    "exit_code": 0,
+    "seconds": 10.0
+  },
+  {
+    "script": "unified-s007-browser-smoke.py",
+    "exit_code": 0,
+    "seconds": 10.35
+  },
+  {
+    "script": "unified-success-browser-smoke.py",
+    "exit_code": 0,
+    "seconds": 11.5
+  },
+  {
+    "script": "unified-hung-mic-browser-smoke.py",
+    "exit_code": 0,
+    "seconds": 9.26
+  },
+  {
+    "script": "legacy-browser-smoke.py",
+    "exit_code": 0,
+    "note": "Retest passed after correcting obsolete 108px feedback assertion to approved140px",
+    "initial_failed_run_seconds": 31.75,
+    "retest_log": "legacy-browser-smoke.py.log"
+  },
+  {
+    "script": "qa38-browser-smoke.py",
+    "exit_code": 0,
+    "seconds": 3.85
+  },
+  {
+    "script": "legacy-save-browser.py",
+    "exit_code": 0,
+    "seconds": 4.38
+  }
+]

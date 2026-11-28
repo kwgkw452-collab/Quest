@@ -19,7 +19,7 @@ select{margin:4px 0 12px;max-width:100%;background:#27374b;color:#fff}
  position:absolute;bottom:0;left:0;right:0;
  height:6.9230769cqw;min-height:6.9230769cqw;max-height:6.9230769cqw;
  background:rgba(7,15,30,.94);display:grid;
- /* Goal uses its natural width, so Pico starts immediately beside it rather than at stage midpoint. */
+ /* Dialogue/secondary documents retain their two-row layout; questions own full-width rows. */
  grid-template-columns:fit-content(55%) minmax(0,1fr);
  grid-template-rows:minmax(0,1fr) auto;align-items:center;
  padding:0.3846154cqw 1.025641cqw;gap:0.1923077cqw;
@@ -28,7 +28,7 @@ select{margin:4px 0 12px;max-width:100%;background:#27374b;color:#fff}
 #dialogue.threeRow{
  height:8.9743589cqw;min-height:8.9743589cqw;max-height:8.9743589cqw;
  grid-template-columns:minmax(0,1fr);
- grid-template-rows:minmax(0,1fr) auto auto;
+ grid-template-rows:auto minmax(0,1fr) auto;
 }
 #text{
  grid-column:1;grid-row:1;min-width:0;min-height:0;max-height:100%;overflow-y:auto;overflow-wrap:anywhere;
@@ -41,8 +41,7 @@ select{margin:4px 0 12px;max-width:100%;background:#27374b;color:#fff}
 }
 #support:empty{display:none}
 #dialogue:not(.threeRow):has(#support:empty) #text{grid-column:1/-1}
-#dialogue.threeRow #text{grid-column:1/-1;grid-row:1}
-#dialogue.threeRow #support{grid-column:1/-1;grid-row:2;max-height:2.051282cqw}
+#dialogue.threeRow #support{grid-column:1;grid-row:2}
 #actions{
  grid-column:1/-1;grid-row:2;
  display:flex;flex-direction:row;flex-wrap:nowrap;

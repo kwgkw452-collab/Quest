@@ -1,0 +1,890 @@
+✖ s005.communication.1: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (6.316525ms)
+✖ s005.communication.2: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.519418ms)
+✖ s005.communication.3: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.320381ms)
+✖ s005.communication.4: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.328124ms)
+✖ s005.communication.5: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.411112ms)
+✖ s005.communication.6: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.309494ms)
+✖ s005.communication.7: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.313936ms)
+✖ s005.communication.8: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.344611ms)
+✖ s005.communication.9: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.409951ms)
+✖ s005.communication.10: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.512074ms)
+✖ s005.communication.11: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.371601ms)
+✖ s005.communication.12: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.257821ms)
+✖ s006.communication.1: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.259761ms)
+✖ s006.communication.2: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.21876ms)
+✖ s006.communication.3: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.202353ms)
+✖ s006.communication.4: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.212523ms)
+✖ s006.communication.5: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.200636ms)
+✖ s006.communication.6: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.197569ms)
+✖ s006.communication.7: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.218733ms)
+✖ s006.communication.8: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.220671ms)
+✖ s006.communication.9: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.238988ms)
+✖ s006.communication.10: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.23477ms)
+✖ s007.communication.1: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.224702ms)
+✖ s007.communication.2: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.245203ms)
+✖ s007.communication.3: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.323818ms)
+✖ s007.communication.4: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.227019ms)
+✖ s007.communication.5: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.225075ms)
+✖ s007.communication.6: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.221209ms)
+✖ s007.communication.7: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.274578ms)
+✖ s007.communication.8: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.374911ms)
+✖ s007.communication.9: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.263505ms)
+✖ s007.communication.10: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.406443ms)
+✖ PICO-04: stale Judge resolve cannot overwrite the newer LISTENING attempt (45.805515ms)
+✖ PICO-04: stale Judge reject cannot overwrite the newer LISTENING attempt (1.469838ms)
+✔ latest Judge rejection still propagates and permits support/retry (1.402679ms)
+✖ timeout is declarative feedback and clears on Support (0.427172ms)
+✖ unsupported is declarative feedback and clears on Support (0.194194ms)
+✖ permission-denied is declarative feedback and clears on Support (0.226565ms)
+✖ no-speech is declarative feedback and clears on Support (0.187841ms)
+✔ runner resets support on consecutive questions without altering the story cursor contract (3.749103ms)
+ℹ tests 40
+ℹ suites 0
+ℹ pass 2
+ℹ fail 38
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 234.204843
+
+✖ failing tests:
+
+test at ../../../../../private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:9:2
+✖ s005.communication.1: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (6.316525ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'normal'
+  
+      at TestContext.<anonymous> (/private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:12:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'normal',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../../../private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:9:2
+✖ s005.communication.2: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.519418ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'normal'
+  
+      at TestContext.<anonymous> (/private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:12:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'normal',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../../../private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:9:2
+✖ s005.communication.3: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.320381ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'normal'
+  
+      at TestContext.<anonymous> (/private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:12:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'normal',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../../../private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:9:2
+✖ s005.communication.4: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.328124ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'normal'
+  
+      at TestContext.<anonymous> (/private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:12:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'normal',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../../../private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:9:2
+✖ s005.communication.5: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.411112ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'normal'
+  
+      at TestContext.<anonymous> (/private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:12:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'normal',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../../../private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:9:2
+✖ s005.communication.6: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.309494ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'normal'
+  
+      at TestContext.<anonymous> (/private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:12:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'normal',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../../../private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:9:2
+✖ s005.communication.7: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.313936ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'normal'
+  
+      at TestContext.<anonymous> (/private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:12:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'normal',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../../../private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:9:2
+✖ s005.communication.8: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.344611ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'normal'
+  
+      at TestContext.<anonymous> (/private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:12:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'normal',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../../../private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:9:2
+✖ s005.communication.9: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.409951ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'normal'
+  
+      at TestContext.<anonymous> (/private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:12:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'normal',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../../../private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:9:2
+✖ s005.communication.10: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.512074ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'normal'
+  
+      at TestContext.<anonymous> (/private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:12:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'normal',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../../../private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:9:2
+✖ s005.communication.11: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.371601ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'normal'
+  
+      at TestContext.<anonymous> (/private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:12:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'normal',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../../../private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:9:2
+✖ s005.communication.12: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.257821ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'normal'
+  
+      at TestContext.<anonymous> (/private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:12:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'normal',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../../../private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:9:2
+✖ s006.communication.1: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.259761ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'normal'
+  
+      at TestContext.<anonymous> (/private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:12:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'normal',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../../../private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:9:2
+✖ s006.communication.2: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.21876ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'normal'
+  
+      at TestContext.<anonymous> (/private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:12:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'normal',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../../../private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:9:2
+✖ s006.communication.3: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.202353ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'normal'
+  
+      at TestContext.<anonymous> (/private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:12:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'normal',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../../../private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:9:2
+✖ s006.communication.4: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.212523ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'normal'
+  
+      at TestContext.<anonymous> (/private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:12:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'normal',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../../../private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:9:2
+✖ s006.communication.5: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.200636ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'normal'
+  
+      at TestContext.<anonymous> (/private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:12:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'normal',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../../../private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:9:2
+✖ s006.communication.6: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.197569ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'normal'
+  
+      at TestContext.<anonymous> (/private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:12:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'normal',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../../../private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:9:2
+✖ s006.communication.7: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.218733ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'normal'
+  
+      at TestContext.<anonymous> (/private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:12:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'normal',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../../../private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:9:2
+✖ s006.communication.8: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.220671ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'normal'
+  
+      at TestContext.<anonymous> (/private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:12:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'normal',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../../../private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:9:2
+✖ s006.communication.9: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.238988ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'normal'
+  
+      at TestContext.<anonymous> (/private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:12:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'normal',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../../../private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:9:2
+✖ s006.communication.10: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.23477ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'normal'
+  
+      at TestContext.<anonymous> (/private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:12:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'normal',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../../../private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:9:2
+✖ s007.communication.1: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.224702ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'normal'
+  
+      at TestContext.<anonymous> (/private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:12:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'normal',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../../../private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:9:2
+✖ s007.communication.2: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.245203ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'normal'
+  
+      at TestContext.<anonymous> (/private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:12:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'normal',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../../../private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:9:2
+✖ s007.communication.3: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.323818ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'normal'
+  
+      at TestContext.<anonymous> (/private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:12:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'normal',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../../../private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:9:2
+✖ s007.communication.4: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.227019ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'normal'
+  
+      at TestContext.<anonymous> (/private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:12:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'normal',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../../../private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:9:2
+✖ s007.communication.5: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.225075ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'normal'
+  
+      at TestContext.<anonymous> (/private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:12:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'normal',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../../../private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:9:2
+✖ s007.communication.6: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.221209ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'normal'
+  
+      at TestContext.<anonymous> (/private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:12:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'normal',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../../../private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:9:2
+✖ s007.communication.7: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.274578ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'normal'
+  
+      at TestContext.<anonymous> (/private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:12:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'normal',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../../../private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:9:2
+✖ s007.communication.8: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.374911ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'normal'
+  
+      at TestContext.<anonymous> (/private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:12:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'normal',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../../../private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:9:2
+✖ s007.communication.9: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.263505ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'normal'
+  
+      at TestContext.<anonymous> (/private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:12:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'normal',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../../../private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:9:2
+✖ s007.communication.10: single view contract, wrong/unknown -> Pico, stop/retry and 1/2/3/3 (0.406443ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'normal'
+  
+      at TestContext.<anonymous> (/private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:12:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'normal',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../../../private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:33:43
+✖ PICO-04: stale Judge resolve cannot overwrite the newer LISTENING attempt (45.805515ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + []
+  - [
+  -   'stop',
+  -   'support',
+  -   'return'
+  - ]
+  
+      at TestContext.<anonymous> (/private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:38:87)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [],
+    expected: [ 'stop', 'support', 'return' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../../../private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:33:43
+✖ PICO-04: stale Judge reject cannot overwrite the newer LISTENING attempt (1.469838ms)
+  Error: old Judge failure
+      at TestContext.<anonymous> (/private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:37:35)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at ../../../../../private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:46:79
+✖ timeout is declarative feedback and clears on Support (0.427172ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'feedback'
+  
+      at TestContext.<anonymous> (/private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:49:33)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'feedback',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../../../private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:46:79
+✖ unsupported is declarative feedback and clears on Support (0.194194ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'feedback'
+  
+      at TestContext.<anonymous> (/private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:49:33)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'feedback',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../../../private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:46:79
+✖ permission-denied is declarative feedback and clears on Support (0.226565ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'feedback'
+  
+      at TestContext.<anonymous> (/private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:49:33)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'feedback',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../../../private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:46:79
+✖ no-speech is declarative feedback and clears on Support (0.187841ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'feedback'
+  
+      at TestContext.<anonymous> (/private/tmp/quest-pico-baseline/prototype/common-engine-v2-audiofree/pico-support-v2.test.cjs:49:33)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'feedback',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

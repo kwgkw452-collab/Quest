@@ -1,0 +1,102 @@
+{
+  "baseline": "6e579f36ab3cc609428da1a27719fc65088fc384",
+  "definition": "Physical LOC, UTF-8 bytes, lexical if/case/catch after comments/string removal; short circuit separate; no AST/cyclomatic claim",
+  "files": [
+    {
+      "file": "communication.cjs",
+      "generated": false,
+      "before": {
+        "lines": 43,
+        "bytes": 2514,
+        "conditional_keywords": 11,
+        "short_circuits": 5
+      },
+      "after": {
+        "lines": 49,
+        "bytes": 2991,
+        "conditional_keywords": 12,
+        "short_circuits": 7
+      }
+    },
+    {
+      "file": "unified.js",
+      "generated": false,
+      "before": {
+        "lines": 189,
+        "bytes": 11916,
+        "conditional_keywords": 57,
+        "short_circuits": 45
+      },
+      "after": {
+        "lines": 183,
+        "bytes": 11089,
+        "conditional_keywords": 52,
+        "short_circuits": 37
+      }
+    },
+    {
+      "file": "unified.css",
+      "generated": false,
+      "before": {
+        "lines": 67,
+        "bytes": 3069,
+        "conditional_keywords": 0,
+        "short_circuits": 0
+      },
+      "after": {
+        "lines": 66,
+        "bytes": 2981,
+        "conditional_keywords": 0,
+        "short_circuits": 0
+      }
+    },
+    {
+      "file": "runner.cjs",
+      "generated": false,
+      "before": {
+        "lines": 43,
+        "bytes": 4528,
+        "conditional_keywords": 28,
+        "short_circuits": 19
+      },
+      "after": {
+        "lines": 43,
+        "bytes": 4528,
+        "conditional_keywords": 28,
+        "short_circuits": 19
+      }
+    },
+    {
+      "file": "speech-browser.cjs",
+      "generated": false,
+      "before": {
+        "lines": 24,
+        "bytes": 1941,
+        "conditional_keywords": 11,
+        "short_circuits": 10
+      },
+      "after": {
+        "lines": 24,
+        "bytes": 1941,
+        "conditional_keywords": 11,
+        "short_circuits": 10
+      }
+    },
+    {
+      "file": "quest-v2.browser.js",
+      "generated": true,
+      "before": {
+        "lines": 294,
+        "bytes": 22673,
+        "conditional_keywords": 28,
+        "short_circuits": 19
+      },
+      "after": {
+        "lines": 300,
+        "bytes": 23150,
+        "conditional_keywords": 28,
+        "short_circuits": 19
+      }
+    }
+  ]
+}

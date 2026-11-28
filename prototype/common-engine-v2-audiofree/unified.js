@@ -1,7 +1,7 @@
 (function(){'use strict';
 const api=window.QuestV2;
 const view={backdrop:document.getElementById('backdrop'),dialogue:document.getElementById('dialogue'),text:document.getElementById('text'),support:document.getElementById('support'),actions:document.getElementById('actions'),status:document.getElementById('status'),log:document.getElementById('log'),select:document.getElementById('story-select')};
-let catalog=[],runner=null,store=null,recognizer=null,dialogueVoice=null,documentCursor=0,documentLanguage='en',lastSceneAsset=null,sessionEpoch=0,advanceBusy=false,speechBusy=false,speechRequest=0;
+let catalog=[],runner=null,store=null,recognizer=null,documentCursor=0,documentLanguage='en',lastSceneAsset=null,sessionEpoch=0,advanceBusy=false,speechRequest=0;
 const showStatus=s=>{view.status.textContent=s;};
 const setText=(main,secondary='')=>{view.text.textContent=main;view.support.textContent=secondary;};
 const clearButtons=()=>view.actions.replaceChildren();
@@ -25,22 +25,23 @@ function lastBackdropBeforeCursor(pack,snapshot){
  }
  return backdrop;
 }
-function paintQuestion(v,{listening=false}={}){
- const heard=Boolean(!listening&&v.feedbackJa&&/と聞こえたよ/.test(v.feedbackJa));
- const help=v.supportText?'ピコ：'+v.supportText:'';
- // Approved 3-row mode: Goal (white) / Pico hint or recognition feedback (yellow) / controls.
- // Only the initial question with no hint or feedback stays in the 108px 2-row mode.
- view.dialogue.className=(help||heard)?'threeRow':'twoRow';
- setText(v.goalJa,heard?v.feedbackJa:[help,listening?'聞き取り中…':'',!listening&&v.feedbackJa?v.feedbackJa:''].filter(Boolean).join('　'));
+const questionActions={
+ talk:['話す',()=>void speech()],
+ stop:['聞き取りをやめる',()=>{interruptSpeech();paintQuestion(runner.state().question);}],
+ support:['ピコサポート',()=>{interruptSpeech();paint(runner.support());}],
+ return:['冒険に戻る',()=>{interruptSpeech();paint(runner.returnToAdventure());}],
+};
+function paintQuestion(v){
+ view.dialogue.className=v.layoutMode;
+ setText(v.goalJa,v.displayText);
  view.support.scrollTop=0;
  clearButtons();
- if(!listening)addButton('話す',()=>void speech());
- else addButton('聞き取りをやめる',()=>{try{interruptSpeech();paintQuestion(runner.state().question);}catch(e){error(e);}});
- addButton('ピコサポート',()=>{try{if(listening)interruptSpeech();paint(runner.support());}catch(e){error(e);}});
- addButton('冒険に戻る',()=>{if(listening)interruptSpeech();paint(runner.returnToAdventure());});
+ for(const action of v.actions){
+  const [label,handle]=questionActions[action];
+  addButton(label,()=>{try{handle();}catch(e){error(e);}});
+ }
 }
 function paintDialogueLine(event){
- view.dialogue.className='twoRow';
  const english=(event.speaker?event.speaker+'：':'')+event.text;
  const japanese=event.supportText||'';
  let opened=false;
@@ -78,13 +79,13 @@ function checkpoint(event){
  try{store.write(snapshot);}catch(e){report({warning:'CHECKPOINT_FAILED',reason:String(e?.message||e)});}
 }
 function paint(event){
- report(event);checkpoint(event);view.dialogue.className='twoRow';
+ report(event);if(event.type==='stale')return;checkpoint(event);
  const state=runner.state();
  showStatus('Scene: '+state.scene+' / '+state.status+' / マイク: '+(recognizer.isSupported()?'対応':'非対応')+' / 音楽・Voice: OFF');
- clearButtons();
- if(event.type==='line')paintDialogueLine(event);
- else if(event.type==='challenge'||event.type==='hint'||(state.status==='QUESTION'&&['no-speech','rejected','unknown'].includes(event.type)))paintQuestion(event.view);
- else if(state.status==='BATTLE'&&['battle','accepted','rejected','no-speech'].includes(event.type)){setText(event.view?.prompt||state.battle?.prompt||'単語を言おう',event.view?.feedback||'');addButton('英単語を話す',()=>void speech());addButton('冒険に戻る',()=>paint(runner.returnToAdventure()));}
+ if(event.type==='line'){paintDialogueLine(event);return;}
+ if(state.status==='QUESTION'){paintQuestion(state.question);return;}
+ view.dialogue.className='twoRow';clearButtons();
+ if(state.status==='BATTLE'&&['battle','accepted','rejected','no-speech'].includes(event.type)){setText(event.view?.prompt||state.battle?.prompt||'単語を言おう',event.view?.feedback||'');addButton('英単語を話す',()=>void speech());addButton('冒険に戻る',()=>paint(runner.returnToAdventure()));}
  else if(event.type==='document'){documentCursor=0;documentLanguage='en';if(event.content.card)setBackdrop(event.content.card);showDocument(event.content);}
  // Accepted Communication goes straight to the next authored dialogue.
  // No extra success screen or extra Next tap. A vocabulary Battle's intermediate
@@ -94,7 +95,6 @@ function paint(event){
  }
  else if(event.type==='end'){setText('このStoryをクリアしました。',JSON.stringify(event.flags));}
  else if(event.type==='return'){setText('冒険に戻りました。','再開するStoryを選択できます。保存地点がある場合は、そこから再開します。');addButton('冒険を再開',()=>void reset(true));addButton('最初からやり直す',()=>void reset(false));}
- else if(event.type==='stale'){setText('古い音声認識結果を無視しました。');}
  else {setText('処理状態：'+event.type);if(state.status==='READY')addButton('次へ',()=>void next());}
 }
 async function next(){const epoch=sessionEpoch,current=runner;if(!current||advanceBusy)return;advanceBusy=true;clearButtons();try{const event=await current.advance();if(epoch===sessionEpoch&&current===runner)paint(event);}catch(e){if(epoch===sessionEpoch&&current===runner)error(e);}finally{if(epoch===sessionEpoch&&current===runner)advanceBusy=false;}}
@@ -103,32 +103,28 @@ function interruptSpeech(){
  const current=runner;
  if(!current||current.state().status!=='QUESTION')return;
  ++speechRequest;
- speechBusy=false;
  current.stopSpeech();
 }
 async function speech(){
  const epoch=sessionEpoch,current=runner;
- if(!current||speechBusy)return;
- speechBusy=true;
+ if(!current||current.state().question?.state==='LISTENING'||current.state().battle?.status==='LISTENING')return;
  const request=++speechRequest;
  try{
+  const pending=current.talk();
   const question=current.state().question;
-  if(question)paintQuestion(question,{listening:true});
+  if(question)paintQuestion(question);
   else{clearButtons();setText('聞き取り中…');}
-  const event=await current.talk();
+  const event=await pending;
   if(epoch===sessionEpoch&&current===runner&&request===speechRequest)paint(event);
  }catch(e){
   if(epoch===sessionEpoch&&current===runner&&request===speechRequest)error(e);
- }finally{
-  if(epoch===sessionEpoch&&current===runner&&request===speechRequest)speechBusy=false;
  }
 }
 async function reset(resume){
  const epoch=++sessionEpoch;
  ++speechRequest;
- advanceBusy=false;speechBusy=false;
+ advanceBusy=false;
  const previousRecognizer=recognizer;
- dialogueVoice=null;
  // A Story change invalidates old controls before the new pack finishes loading.
  runner=null;store=null;recognizer=null;
  clearButtons();setText('Storyを読み込み中…');
@@ -138,7 +134,7 @@ async function reset(resume){
  view.backdrop.removeAttribute('aria-label');
  lastSceneAsset=null;documentCursor=0;documentLanguage='en';
  try{
-  await (previousRecognizer?.stop?.() ?? previousRecognizer?.cancel?.());
+  await previousRecognizer?.cancel();
   const entry=catalog.find(x=>x.id===view.select.value);if(!entry)throw Error('STORY_NOT_REGISTERED');
   const response=await fetch(new URL('./stories/'+entry.path.replace(/^\.\//,''),location.href));
   if(!response.ok)throw Error('STORY_FETCH_FAILED:'+response.status);
@@ -147,10 +143,8 @@ async function reset(resume){
   if(data.id!==entry.id)throw Error('CATALOG_ID_MISMATCH');
   const storage=(()=>{try{return window.localStorage;}catch{return null;}})();
   store=api.createSaveStore({storage,key:'quest.v2.test.'+entry.id});
-  const nativeRecognizer=api.createBrowserSpeech({env:window});
   // Common V2 is audio-free until S015. Speech recognition is not Audio/Voice playback.
-  dialogueVoice=null;
-  recognizer=nativeRecognizer;
+   recognizer=api.createBrowserSpeech({env:window});
   let savedSnapshot=resume?(store.read()||undefined):undefined;
   if(resume&&!savedSnapshot&&storage){
    const raw=storage.getItem(api.LEGACY_KEY);

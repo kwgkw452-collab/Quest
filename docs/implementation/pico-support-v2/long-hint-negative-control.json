@@ -1,0 +1,58 @@
+[
+  {
+    "width": 320,
+    "baseline_css": true,
+    "client": 6,
+    "scroll": 9,
+    "text": "ピコ：Come with us.\nLet’s go."
+  },
+  {
+    "width": 320,
+    "baseline_css": false,
+    "client": 9,
+    "scroll": 9,
+    "text": "ピコ：Come with us.\nLet’s go."
+  },
+  {
+    "width": 390,
+    "baseline_css": true,
+    "client": 8,
+    "scroll": 11,
+    "text": "ピコ：Come with us.\nLet’s go."
+  },
+  {
+    "width": 390,
+    "baseline_css": false,
+    "client": 11,
+    "scroll": 11,
+    "text": "ピコ：Come with us.\nLet’s go."
+  },
+  {
+    "width": 844,
+    "baseline_css": true,
+    "client": 17,
+    "scroll": 24,
+    "text": "ピコ：Come with us.\nLet’s go."
+  },
+  {
+    "width": 844,
+    "baseline_css": false,
+    "client": 24,
+    "scroll": 24,
+    "text": "ピコ：Come with us.\nLet’s go."
+  },
+  {
+    "width": 1280,
+    "baseline_css": true,
+    "client": 26,
+    "scroll": 38,
+    "text": "ピコ：Come with us.\nLet’s go."
+  },
+  {
+    "width": 1280,
+    "baseline_css": false,
+    "client": 37,
+    "scroll": 38,
+    "text": "ピコ：Come with us.\nLet’s go."
+  }
+]
