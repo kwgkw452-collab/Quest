@@ -1,6 +1,5 @@
-"""CI regression for Director-reported successful speech feedback alignment.
-Checks left-aligned accepted Communication in S005/S006/S007 on actual unified UI,
-with mocked speech recognition, without touching Production, Audio or Voice.
+"""CI regression: accepted speech flows directly to next Story line.
+No invented 'success' interstitial, no extra Next tap, and no changes to original Story.
 """
 import functools
 import http.server
@@ -28,6 +27,10 @@ try:
    data=json.loads((HERE/'stories'/story/'story.json').read_text(encoding='utf8'))
    first=next(s['id'] for scene in data['sceneOrder'] for s in data['scenes'][scene]['steps'] if s['type']=='challenge')
    answer=data['challenges'][first]['modelEn']
+   sequence=[s for sc in data['sceneOrder'] for s in data['scenes'][sc]['steps']]
+   position=next(i for i,s in enumerate(sequence) if s['type']=='challenge' and s['id']==first)
+   following=next(s for s in sequence[position+1:] if s['type']=='line')
+   expected_line=(following.get('speaker','')+'：' if following.get('speaker') else '')+following['text']
    for width,height in ((390,844),(844,390)):
     page=browser.new_page(viewport={'width':width,'height':height})
     page.add_init_script(script=f"""
@@ -43,10 +46,12 @@ window.SpeechRecognition=class {{
      page.get_by_role('button',name='次へ',exact=True).click()
     else:raise AssertionError(story+' never reached challenge')
     page.get_by_role('button',name='話す',exact=True).click()
-    page.get_by_role('button',name='次へ',exact=True).wait_for(timeout=10000)
-    assert page.locator('#text').inner_text()=='成功しました！',(story,width,'missing success text')
-    assert page.locator('#dialogue').evaluate("(el)=>el.classList.contains('successFeedback')"),(story,width,'not success mode')
-    assert page.locator('#actions button').all_text_contents()==['次へ'],(story,width,'button list changed')
+    page.wait_for_function("(text)=>document.querySelector('#text')?.textContent===text",arg=expected_line,timeout=10000)
+    assert page.locator('#actions button').all_text_contents()==['次へ','ピコサポート'],(story,width,'original next dialogue missing')
+    assert '成功しました！' not in page.locator('#text').inner_text(),(story,width,'invented success interstitial')
+    assert not page.locator('#dialogue').evaluate("(el)=>el.classList.contains('successFeedback')"),(story,width,'old success state remains')
+    events=[json.loads(line) for line in page.locator('#log').inner_text().splitlines() if line.strip()]
+    assert events[-2]['type']=='accepted' and events[-1]['type']=='line',(story,width,'not automatically continued',events[-2:])
     geo=page.evaluate("""() => {
       const r=el=>el.getBoundingClientRect();
       const root=r(document.querySelector('.game')),text=r(document.querySelector('#text'));
@@ -59,7 +64,7 @@ window.SpeechRecognition=class {{
     assert geo['leftInset']>0 and geo['leftInset']<20 and geo['align']=='left',(story,width,geo)
     assert geo['buttonLeft']<20,(story,width,geo)
     page.close()
-   print(story+' success left alignment PASS')
+   print(story+' accepted speech → next Story line PASS')
   browser.close()
 finally:
  server.shutdown()
