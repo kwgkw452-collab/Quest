@@ -2,6 +2,7 @@
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm'),path=require('node:path');
 const root=path.resolve(__dirname,'../../..');
 const read=p=>fs.readFileSync(path.join(root,p),'utf8');
+const stage1=require('../approved-pico-stage1-lock.json');
 const {createRunner}=require('../runner.cjs'),{validate}=require('../schema.cjs'),{judge}=require('../judge.cjs');
 function original(id){
  const ctx={window:null,StoryRegistry:{register(s){ctx.story=s;}},QuestionDatabase:{register(q){ctx.questions.push(q);}},CommunicativeJudgeRuleData:[],LotteryPoolData:[],LotteryEngine:{init(){}},questions:[]};ctx.window=ctx;
@@ -41,7 +42,7 @@ for(const id of ['S005','S006']){
    const q6Recognition=id==='S006'&&q.id==='s006.communication.6';
    assert.equal(migrated.goalJa,revisedQ10?'これはあなたの箱です。':q.prompt);
    assert.equal(migrated.modelEn,revisedQ10?'This is your box!':q.communicative.expectedUtterance);
-   assert.deepEqual(migrated.hints,revisedQ10?['見つけた箱を持ち主に渡すピコ。『これはあなたの箱です。』と伝えるピコ。','『これは』は This is、『あなたの箱』は your box だピコ。','This is your box! と言うピコ。']:q.picoSupport);
+   assert.deepEqual(migrated.hints,revisedQ10?[stage1[q.id],'『これは』は This is、『あなたの箱』は your box だピコ。','This is your box! と言うピコ。']:[stage1[q.id],...q.picoSupport.slice(1)]);
    assert.deepEqual(migrated.rule.accept,q6Recognition?[...q.answers,'Look at the','Look at that','Please look at the','Please look at that']:revisedQ10?q.answers.filter(answer=>/^(Here|This)/.test(answer)):q.answers);
   }
   assert.deepEqual(flatNew(p).filter(s=>s.type==='challenge').map(s=>s.id),src.steps.filter(s=>s.type==='question').map(s=>s.questionId));
