@@ -64,6 +64,10 @@ jobs:
         run: python prototype/common-engine-v2-audiofree/browser-smoke.py
       - name: Run full real S007 migration in shared browser player with mocked SpeechRecognition
         run: python prototype/common-engine-v2-audiofree/s007-browser-smoke.py
+      - name: Run unified S005-S006 complete stories, save resume and race regressions
+        run: python prototype/common-engine-v2-audiofree/unified-fullflow-browser-smoke.py
+      - name: Run unified S007 complete story
+        run: python prototype/common-engine-v2-audiofree/unified-s007-browser-smoke.py
       - name: Validate unified V2 left-aligned scaled dialogue in real Chromium
         run: python prototype/common-engine-v2-audiofree/unified-browser-smoke.py
       - name: Run actual S005 and S006 in shared browser player with mock SpeechRecognition
