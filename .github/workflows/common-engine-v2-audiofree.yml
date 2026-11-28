@@ -24,7 +24,7 @@ jobs:
         with:
           node-version: '22'
       - name: Run common engine tests and S007 source parity checks
-        run: node --test prototype/common-engine-v2-audiofree/future-conversation-contract.test.cjs prototype/common-engine-v2-audiofree/runtime.test.cjs prototype/common-engine-v2-audiofree/stories/S007/s007-migration.test.cjs prototype/common-engine-v2-audiofree/stories/legacy-migration.test.cjs prototype/common-engine-v2-audiofree/stories/qa35-judge.test.cjs prototype/common-engine-v2-audiofree/stories/qa38-tristate.test.cjs
+        run: node --test prototype/common-engine-v2-audiofree/approved-pico-parity.test.cjs prototype/common-engine-v2-audiofree/future-conversation-contract.test.cjs prototype/common-engine-v2-audiofree/runtime.test.cjs prototype/common-engine-v2-audiofree/stories/S007/s007-migration.test.cjs prototype/common-engine-v2-audiofree/stories/legacy-migration.test.cjs prototype/common-engine-v2-audiofree/stories/qa35-judge.test.cjs prototype/common-engine-v2-audiofree/stories/qa38-tristate.test.cjs
       - name: Run isolation and original prototype tests
         run: node --test prototype/common-engine-isolation/check-isolation.test.cjs prototype/common-engine-v2/story-runtime.test.cjs
       - name: Validate legacy save cursor maps and run compatibility tests
@@ -64,6 +64,16 @@ jobs:
         run: python prototype/common-engine-v2-audiofree/browser-smoke.py
       - name: Run full real S007 migration in shared browser player with mocked SpeechRecognition
         run: python prototype/common-engine-v2-audiofree/s007-browser-smoke.py
+      - name: Run unified S005-S006 complete stories, save resume and race regressions
+        run: python prototype/common-engine-v2-audiofree/unified-fullflow-browser-smoke.py
+      - name: Run unified S007 complete story
+        run: python prototype/common-engine-v2-audiofree/unified-s007-browser-smoke.py
+      - name: Verify accepted English directly resumes next dialogue (S005-S007)
+        run: python prototype/common-engine-v2-audiofree/unified-success-browser-smoke.py
+      - name: Verify Pico Support and Return remain usable while SpeechRecognition hangs
+        run: python prototype/common-engine-v2-audiofree/unified-hung-mic-browser-smoke.py
+      - name: Validate unified V2 left-aligned scaled dialogue in real Chromium
+        run: python prototype/common-engine-v2-audiofree/unified-browser-smoke.py
       - name: Run actual S005 and S006 in shared browser player with mock SpeechRecognition
         env:
           DIALOGUE_SCREENSHOTS: ${{ runner.temp }}/qa37-graphic

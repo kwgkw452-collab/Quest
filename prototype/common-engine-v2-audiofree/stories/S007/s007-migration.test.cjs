@@ -7,6 +7,7 @@ const vm=require('node:vm');
 const root=path.resolve(__dirname,'../../../../');
 const load=p=>fs.readFileSync(path.join(root,p),'utf8');
 const pack=require('./story.json');
+const stage1=require('../../approved-pico-stage1-lock.json');
 const {validate}=require('../../schema.cjs');
 const {createRunner}=require('../../runner.cjs');
 const {judge}=require('../../judge.cjs');
@@ -74,7 +75,7 @@ test('source variants audited against the Director LOCK; Pico hints unchanged',(
  for(const q of questions){
   const migrated=pack.challenges[q.id];
   assert.deepEqual(migrated.rule.accept,[...sourceReplacement(q),...(q.id.endsWith('.10')?['Great shot!']:[])],'answers changed: '+q.id);
-  assert.deepEqual(migrated.hints,q.picoSupport,'hints changed: '+q.id);
+  assert.deepEqual(migrated.hints,[stage1[q.id],...q.picoSupport.slice(1)],'hints changed: '+q.id);
   assert.equal(migrated.goalJa,q.prompt);
   assert.equal(migrated.modelEn,q.communicative.expectedUtterance);
  }

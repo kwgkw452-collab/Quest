@@ -16,6 +16,15 @@ function createCommunication(q,{recognize,judge=localJudge,cancelSpeech}={}){
   };
  };
  function support(){if(state!=='READY')throw Error('NOT_READY');stage=Math.min(stage+1,3);return view();}
+ // User may open Pico Support even if Safari's ASR is still listening.
+ // Invalidate the pending attempt without cancelling the question itself.
+ function stopListening(){
+  if(state!=='LISTENING')return view();
+  active=++attempt;state='READY';
+  try{cancelSpeech?.();}catch{}
+  feedback=null;
+  return view();
+ }
  function cancel(){active=++attempt;state='CANCELLED';cancelSpeech?.();return view();}
  async function speak(){if(state!=='READY')throw Error('NOT_READY');if(typeof recognize!=='function')throw Error('NO_RECOGNIZER');
   state='LISTENING';feedback=null;const token=++attempt;active=token;let r;
@@ -28,7 +37,7 @@ function createCommunication(q,{recognize,judge=localJudge,cancelSpeech}={}){
   if(decision==='ACCEPT'){state='ACCEPTED';return {type:'accepted',view:view(),recognizedText:r.text};}
   state='READY';feedback={recognizedText:r.text,feedbackJa:`${r.text} と聞こえたよ。もう一度話してみよう。`};return {type:decision==='UNKNOWN'?'unknown':'rejected',view:view()};
  }
- return {view,support,cancel,speak};
+ return {view,support,stopListening,cancel,speak};
 }
 module.exports={createCommunication};
 
