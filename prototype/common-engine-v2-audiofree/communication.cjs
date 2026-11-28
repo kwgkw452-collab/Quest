@@ -11,7 +11,7 @@ function createCommunication(q,{recognize,judge=localJudge,cancelSpeech}={}){
    supportText,
    recognizedText:feedback?.recognizedText??null,
    feedbackJa:feedback?.feedbackJa??null,
-   layoutMode:feedback?.recognizedText&&feedback?.feedbackJa?.includes('と聞こえたよ')?'threeRow':'twoRow',
+   layoutMode:supportText?'threeRow':'twoRow',
    actions:state==='READY'?['talk','support','return']:[],
   };
  };
