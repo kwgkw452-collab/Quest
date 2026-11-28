@@ -68,7 +68,7 @@ jobs:
         run: python prototype/common-engine-v2-audiofree/unified-fullflow-browser-smoke.py
       - name: Run unified S007 complete story
         run: python prototype/common-engine-v2-audiofree/unified-s007-browser-smoke.py
-      - name: Verify left-aligned success message S005-S007 in Chromium
+      - name: Verify accepted English directly resumes next dialogue (S005-S007)
         run: python prototype/common-engine-v2-audiofree/unified-success-browser-smoke.py
       - name: Validate unified V2 left-aligned scaled dialogue in real Chromium
         run: python prototype/common-engine-v2-audiofree/unified-browser-smoke.py
