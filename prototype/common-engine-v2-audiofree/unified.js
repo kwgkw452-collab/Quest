@@ -78,7 +78,7 @@ function checkpoint(event){
  try{store.write(snapshot);}catch(e){report({warning:'CHECKPOINT_FAILED',reason:String(e?.message||e)});}
 }
 function paint(event){
- report(event);checkpoint(event);dialogueVoice?.stop();if(event.type==='line'&&event.voice)dialogueVoice?.play(event.voice);view.dialogue.className='twoRow';
+ report(event);checkpoint(event);view.dialogue.className='twoRow';
  const state=runner.state();
  showStatus('Scene: '+state.scene+' / '+state.status+' / マイク: '+(recognizer.isSupported()?'対応':'非対応')+' / 音楽・Voice: OFF');
  clearButtons();
@@ -99,7 +99,7 @@ async function reset(resume){
  const epoch=++sessionEpoch;
  advanceBusy=false;speechBusy=false;
  const previousRecognizer=recognizer;
- dialogueVoice?.stop();dialogueVoice=null;
+ dialogueVoice=null;
  // A Story change invalidates old controls before the new pack finishes loading.
  runner=null;store=null;recognizer=null;
  clearButtons();setText('Storyを読み込み中…');
@@ -119,12 +119,9 @@ async function reset(resume){
   const storage=(()=>{try{return window.localStorage;}catch{return null;}})();
   store=api.createSaveStore({storage,key:'quest.v2.test.'+entry.id});
   const nativeRecognizer=api.createBrowserSpeech({env:window});
-  dialogueVoice=window.AudioManager&&window.DialogueVoiceAudioInternal&&window.QuestV2LegacyDialogueBridge
-   ?window.QuestV2LegacyDialogueBridge.createLegacyDialogueBridge({voiceInternal:window.DialogueVoiceAudioInternal})
-   :null;
-  recognizer=window.AudioManager&&window.QuestV2LegacySpeechBridge
-   ?window.QuestV2LegacySpeechBridge.createLegacySpeechBridge({recognizer:nativeRecognizer,audioManager:window.AudioManager})
-   :nativeRecognizer;
+  // Common V2 is audio-free until S015. Speech recognition is not Audio/Voice playback.
+  dialogueVoice=null;
+  recognizer=nativeRecognizer;
   let savedSnapshot=resume?(store.read()||undefined):undefined;
   if(resume&&!savedSnapshot&&storage){
    const raw=storage.getItem(api.LEGACY_KEY);
