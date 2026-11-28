@@ -70,6 +70,8 @@ jobs:
         run: python prototype/common-engine-v2-audiofree/unified-s007-browser-smoke.py
       - name: Verify accepted English directly resumes next dialogue (S005-S007)
         run: python prototype/common-engine-v2-audiofree/unified-success-browser-smoke.py
+      - name: Verify Pico Support and Return remain usable while SpeechRecognition hangs
+        run: python prototype/common-engine-v2-audiofree/unified-hung-mic-browser-smoke.py
       - name: Validate unified V2 left-aligned scaled dialogue in real Chromium
         run: python prototype/common-engine-v2-audiofree/unified-browser-smoke.py
       - name: Run actual S005 and S006 in shared browser player with mock SpeechRecognition
