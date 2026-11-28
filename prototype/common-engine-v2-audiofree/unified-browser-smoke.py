@@ -64,13 +64,10 @@ try:
       const a=document.querySelector('#text').getBoundingClientRect();
       const h=document.querySelector('#support').getBoundingClientRect();
       const b=document.querySelector('#actions').getBoundingClientRect();
-      const stage=document.querySelector('.game').getBoundingClientRect();
-      const gap=h.left-a.right;
-      return Math.abs(a.top-h.top)<2 && a.bottom<=b.top+1 && h.bottom<=b.top+1
-        && gap>=0 && gap<=stage.width*0.035;
-
-    }"""), (story,width,'Pico must be adjacent to white Goal in the first visual row (not stage midpoint)')
-    check(108)
+      return a.bottom<=h.top+2 && h.bottom<=b.top+2 &&
+        document.querySelector('#dialogue').classList.contains('threeRow');
+    }"""), (story,width,'Pico Support must occupy second visible row of three')
+    check(140)
     page.get_by_role('button',name='話す').click()
     page.wait_for_function("()=>document.querySelector('#support')?.textContent.includes('と聞こえたよ')",timeout=10000)
     check(140)
@@ -78,4 +75,4 @@ try:
   browser.close()
 finally:
  server.shutdown()
-print('UNIFIED_UI_PASS: 3 migrated Stories x 4 sizes, 108/140 scaled heights, left 2/3/4 controls, Pico, feedback')
+print('UNIFIED_UI_PASS: 3 migrated Stories x 4 sizes, 108/140 scaled heights, left 2/3/4 controls, three-row Pico, feedback')
