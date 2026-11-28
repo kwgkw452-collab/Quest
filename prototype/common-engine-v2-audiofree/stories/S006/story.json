@@ -24,7 +24,7 @@
       "goalJa": "お手伝いしましょうか？",
       "modelEn": "Can we help you?",
       "hints": [
-        "“Can we ...?” を使って、駅員さんに手伝いを申し出よう。",
+        "駅員さんに、お手伝いを申し出るピコ。",
         "『手伝う』は help。Can I ...? などを使うピコ。",
         "Can we help you? と言うピコ。"
       ],
@@ -71,7 +71,7 @@
       "goalJa": "その箱は何色ですか？",
       "modelEn": "What color is the box?",
       "hints": [
-        "“What color ...?” と箱の色を尋ねてみよう。",
+        "箱の色を聞いてみるピコ。",
         "『何色』は What color、『箱』は box だピコ。",
         "What color is the box? と聞くピコ。"
       ],
@@ -120,7 +120,7 @@
       "goalJa": "ほかの箱はどこにありますか？",
       "modelEn": "Where are the other boxes?",
       "hints": [
-        "“Where ...?” から始めて、箱の場所を尋ねよう。",
+        "場所を尋ねるピコ。",
         "“Where” と “boxes” を使ってみるピコ。",
         "Where are the other boxes?"
       ],
@@ -166,7 +166,7 @@
       "goalJa": "その箱を見せてもらえますか？",
       "modelEn": "Can we see that box?",
       "hints": [
-        "“Can we ...?” と丁寧に箱を見せてもらうお願いをしよう。",
+        "箱を見せてもらうようお願いするピコ。",
         "“Can we see” と “box” を使うピコ。",
         "Can we see that box?"
       ],
@@ -215,7 +215,7 @@
       "goalJa": "その箱を持っていますか？",
       "modelEn": "Do you have the box?",
       "hints": [
-        "“Do you ...?” で箱を持っているか確認しよう。",
+        "荷物係さんが、その箱を持っているか聞くピコ。",
         "『持っていますか？』は Do you have ...? を使うピコ。",
         "Do you have the box? と聞くピコ。"
       ],
@@ -264,7 +264,7 @@
       "goalJa": "このリボンを見てください。",
       "modelEn": "Please look at this ribbon.",
       "hints": [
-        "“Please ...” から始め、赤いリボンを見てもらおう。",
+        "赤い切れ端に注目してもらうピコ。",
         "“Look at” と “ribbon” を使うピコ。",
         "Please look at this ribbon."
       ],
@@ -313,7 +313,7 @@
       "goalJa": "箱を見ましたか？",
       "modelEn": "Did you see the box?",
       "hints": [
-        "“Did you ...?” と箱を見たか尋ねてみよう。",
+        "荷物係の人に「箱を見ましたか？」と尋ねるピコ。",
         "「見ましたか？」は Did you see ...?。「箱」は box だピコ。",
         "Did you see the box? と尋ねるピコ。"
       ],
@@ -371,7 +371,7 @@
       "goalJa": "ちょっと待ってください！",
       "modelEn": "Please wait!",
       "hints": [
-        "“Please ...” と運転手さんに少し待ってもらおう。",
+        "運転手さんに、ちょっと待ってもらうピコ！",
         "『待つ』は wait。一言でもいいピコ！",
         "Please wait! と言うピコ！"
       ],
@@ -426,7 +426,7 @@
       "goalJa": "その箱を見つけてください。",
       "modelEn": "Please find the box.",
       "hints": [
-        "“Please ...” で箱を探してもらうお願いをしよう。",
+        "運転手さんに、その箱を見つけてくれるようお願いするピコ。",
         "「見つける」は find。「〜してください」は Please ... だピコ。",
         "Please find the box. とお願いするピコ。"
       ],
@@ -480,7 +480,7 @@
       "goalJa": "これはあなたの箱です。",
       "modelEn": "This is your box!",
       "hints": [
-        "“This is ...” から始めて、見つけた箱を持ち主に渡そう。",
+        "見つけた箱を持ち主に渡すピコ。『これはあなたの箱です。』と伝えるピコ。",
         "『これは』は This is、『あなたの箱』は your box だピコ。",
         "This is your box! と言うピコ。"
       ],
