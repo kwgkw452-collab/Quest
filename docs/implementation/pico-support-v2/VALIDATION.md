@@ -48,3 +48,5 @@ Playwright1.56.0と対応Chromium、Node22以上が必要。PICO_EVIDENCEでmatr
 PICO01〜04、同一viewからの行数／表示文／操作一覧、誤答・UNKNOWN・timeoutからSupport、遅延Judge resolve/reject、32問4幅、変更なしの承認文言、台詞Supportの独立、Battle/Save/Graphicを再検証してください。出典はIssue57と固定監査SHA509de4d。制作側PASSを独立QA認定の代わりにしないでください。Production統合はDirector承認まで禁止です。
 
 物理iPhoneのSafari・実マイク・可読性／Safe Area、独立QAの最終認定はHOLD。正式Graphicの美術的再認定や全旧Saveデータ／Monster独立実戦の完全検収はこの限定改修から自動認定しません。
+
+提出用テキストログは末尾空白のみ正規化し、SHA256SUMS.jsonを再計算した。実行結果・期待値・数値は変更していない。
