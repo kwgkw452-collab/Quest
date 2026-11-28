@@ -299,6 +299,6 @@ window.finishRecognition=(text)=>{
   print('QA35-02 PASS: Goal persists through listening, rejection, timeout, retry and acceptance')
   goal_context.close()
   browser.close()
- finally:
-  server.shutdown()
-  server.server_close()
+finally:
+ server.shutdown()
+ server.server_close()
