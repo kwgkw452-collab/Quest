@@ -480,7 +480,7 @@
       "goalJa": "これはあなたの箱です。",
       "modelEn": "This is your box!",
       "hints": [
-        "“This is” を使って、持ち主に箱を渡すピコ。",
+        "“This is” を使って「あなたの箱です」と伝え、箱を渡すピコ。",
         "『これは』は This is、『あなたの箱』は your box だピコ。",
         "This is your box! と言うピコ。"
       ],
