@@ -1,5 +1,5 @@
 """CI regression for Director-reported successful speech feedback alignment.
-Checks first accepted Communication in S005/S006/S007 on actual unified UI,
+Checks left-aligned accepted Communication in S005/S006/S007 on actual unified UI,
 with mocked speech recognition, without touching Production, Audio or Voice.
 """
 import functools
@@ -51,15 +51,15 @@ window.SpeechRecognition=class {{
       const r=el=>el.getBoundingClientRect();
       const root=r(document.querySelector('.game')),text=r(document.querySelector('#text'));
       const panel=r(document.querySelector('#dialogue')),button=r(document.querySelector('#actions button'));
-      return {stageH:panel.height/root.width*1560,centerOffset:Math.abs((text.left+text.width/2)-(panel.left+panel.width/2)),
+      return {stageH:panel.height/root.width*1560,leftInset:text.left-panel.left,
         align:getComputedStyle(document.querySelector('#text')).textAlign,
         buttonLeft:button.left-panel.left};
     }""")
     assert abs(geo['stageH']-108)<2,(story,width,geo)
-    assert geo['centerOffset']<2 and geo['align']=='center',(story,width,geo)
+    assert geo['leftInset']>0 and geo['leftInset']<20 and geo['align']=='left',(story,width,geo)
     assert geo['buttonLeft']<20,(story,width,geo)
     page.close()
-   print(story+' success center alignment PASS')
+   print(story+' success left alignment PASS')
   browser.close()
 finally:
  server.shutdown()
