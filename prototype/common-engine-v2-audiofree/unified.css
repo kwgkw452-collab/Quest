@@ -1,0 +1,57 @@
+/* Eigo DE Quest V2: one reference-stage UI for every Story.
+   Heights are REFERENCE (1560x720) pixels, not device CSS pixels.
+   108/1560*100 = 6.9230769 cqw; 140/1560*100 = 8.9743589 cqw.
+   The game and dialogue scale as ONE stage; no portrait-specific relocation. */
+*{box-sizing:border-box}
+body{background:#0c1523;color:#f5f8ff;font:16px/1.5 system-ui,sans-serif;margin:0}
+main{max-width:1584px;margin:auto;padding:12px}
+header h1{font-size:1.35rem;margin:.3rem 0}
+.warning{font-size:.9rem;color:#ffda96}
+select,button{font:inherit;padding:9px 12px;border-radius:8px}
+select{margin:4px 0 12px;max-width:100%;background:#27374b;color:#fff}
+.game{
+  position:relative;width:100%;aspect-ratio:13/6;
+  background:#192539;overflow:hidden;border-radius:10px;
+  border:1px solid #43536a;container-type:inline-size;
+}
+#backdrop{position:absolute;inset:0;background-size:cover;background-position:center;pointer-events:none}
+#dialogue{
+ position:absolute;bottom:0;left:0;right:0;
+ height:6.9230769cqw;min-height:6.9230769cqw;max-height:6.9230769cqw;
+ background:rgba(7,15,30,.94);display:flex;flex-direction:column;
+ padding:0.3846154cqw 1.025641cqw;gap:0.1923077cqw;
+ overflow:hidden;
+}
+#dialogue.threeRow{
+ height:8.9743589cqw;min-height:8.9743589cqw;max-height:8.9743589cqw;
+}
+#text{
+ flex:1 1 auto;min-height:0;overflow-y:auto;overflow-wrap:anywhere;
+ font-size:1.5384615cqw;line-height:1.12;font-weight:600;white-space:pre-wrap;
+}
+#support{
+ flex:0 0 auto;min-height:0;max-height:2.051282cqw;
+ overflow-y:auto;overflow-wrap:anywhere;white-space:pre-wrap;
+ font-size:1.3461538cqw;line-height:1.1;color:#ffdf91;
+}
+#support:empty{display:none}
+#actions{
+ display:flex;flex:0 0 auto;flex-direction:row;flex-wrap:nowrap;
+ align-items:center;justify-content:flex-start;
+ width:100%;min-width:0;gap:0.7692308cqw;
+ overflow-x:auto;overflow-y:hidden;scrollbar-width:thin;
+}
+#actions button{
+ box-sizing:border-box;flex:0 0 auto;width:max-content;min-width:0;max-width:none;
+ background:#acd8ff;color:#061b33;border:0;border-radius:0.3846154cqw;
+ font-size:1.2820513cqw;line-height:1;
+ padding:0.3846154cqw 0.7692308cqw;white-space:nowrap;
+ cursor:pointer;
+}
+#actions button:hover{background:#e0f1ff}
+#actions button:disabled{opacity:.5;cursor:not-allowed}
+.status{margin:12px 0;font-size:.9rem}
+.utility{display:flex;gap:8px}
+#log{max-height:260px;overflow:auto}
+details{margin-top:18px}
+@media(max-width:640px){main{padding:6px}.warning{font-size:.78rem}header h1{font-size:1rem}}
